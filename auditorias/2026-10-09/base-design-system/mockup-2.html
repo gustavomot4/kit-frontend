@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoje — Catraca</title>
+<!-- Mockup 2 (ferramenta) construído seguindo DESIGNSYSTEM.md. Produto fictício. -->
+<!-- Fonte: exatamente o <link> da linha 195 do documento -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600&display=swap" rel="stylesheet">
+<style>
+/* ===== Tokens: cópia literal da seção 12 (linhas 760–829) ===== */
+:root {
+  color-scheme: light;
+  --paper:    #FAF9F7;
+  --surface:  #FFFFFF;
+  --sunken:   #F4F2EC;
+  --fill:     rgba(118, 114, 106, 0.12);
+  --fill-2:   rgba(120, 116, 108, 0.18);
+  --line:     #E8E4DC;
+  --line-2:   #CBC6BC;
+  --ink:      #1C1B19;
+  --ink-2:    #6B6862;
+  --ink-3:    #8A867E;
+  --accent:        #8E2C26;
+  --accent-hover:  #9C332C;
+  --accent-active: #7A2520;
+  --accent-tint:   #F1E6E5;
+  --on-accent:     #FFFFFF;
+  --t-display: 3.5rem;
+  --t1: 1.75rem;
+  --t2: 1.3125rem;
+  --t3: 1.0625rem;
+  --t4: 0.875rem;
+  --t5: 0.75rem;
+  --lh-titulo: calc(1em + 4px);
+  --lh-corpo:  calc(1em + 8px);
+  --lh-denso:  calc(1em + 6px);
+  --lh-botao:  calc(1em + 3px);
+  --tr-56: -0.005em;
+  --tr-48: -0.003em;
+  --tr-40:  0em;
+  --tr-17: -0.011em;
+  --tr-14: -0.008em;
+  --tr-12: -0.005em;
+  --r-pill: 980px;
+  --r-28:   28px;
+  --r-18:   18px;
+  --r-12:   12px;
+  --r-8:     8px;
+  --r-6:     6px;
+  --shell:  1024px;
+  --prosa:   692px;
+  --gutter:   22px;
+  --secao-pt: 96px;
+  --secao-pb: 104px;
+  --ease: cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+
+/* ===== Base — ferramenta: corpo 14px (linha 710); 4 tamanhos: 28 · 17 · 14 · 12 (linha 142) ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: var(--t4);
+  line-height: var(--lh-denso);
+  letter-spacing: var(--tr-14);
+  color: var(--ink);
+  background: var(--paper);
+}
+h1, h2, p, ul { margin: 0; padding: 0; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; letter-spacing: inherit; color: inherit; }
+.t1 { font-size: var(--t1); line-height: var(--lh-titulo); letter-spacing: 0; font-weight: 600; }
+.t3 { font-size: var(--t3); line-height: var(--lh-titulo); letter-spacing: var(--tr-17); font-weight: 600; }
+.t5 { font-size: var(--t5); line-height: var(--lh-denso);  letter-spacing: var(--tr-12); }
+.w6 { font-weight: 600; }
+.sec { color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }                 /* linha 513 */
+tr:focus-visible, .card:focus-visible { outline-offset: 3px; }                             /* linha 514 */
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* ===== Estrutura ===== */
+.app { display: grid; grid-template-columns: 264px minmax(0, 1fr); min-height: 100%; }
+
+/* Navegação lateral: linhas 615–616 */
+.lateral { background: var(--sunken); padding: 8px; display: flex; flex-direction: column; }
+.marca { display: flex; align-items: center; gap: 8px; padding: 14px 10px 18px; }
+.lateral ul { display: flex; flex-direction: column; gap: 2px; }
+.item { display: flex; align-items: center; height: 32px; padding: 0 10px; border-radius: var(--r-6); }
+.item:hover { background: var(--fill); }
+.item[aria-current="page"] { background: var(--fill); font-weight: 600; }                  /* pílula neutra + peso 600 */
+.lateral-fim { margin-top: auto; }
+.usuario { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 10px; margin-top: 2px; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--fill-2); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+
+/* Conteúdo: fluido, gutter 22 (linha 364) */
+.conteudo { padding: var(--gutter); min-width: 0; }
+.topo { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--gutter); }
+.heroi h1 { margin-top: 2px; }
+.heroi .aux { margin-top: 6px; }
+.heroi .btn { margin-top: 16px; }
+.acoes-topo { display: flex; align-items: center; gap: 8px; }
+
+/* Botão de ferramenta: 30–32px, padding 6/12, 14px, raio 8 (linha 548) */
+.btn { position: relative; display: inline-flex; align-items: center; justify-content: center; height: 32px;
+  padding: 6px 12px; border: 0; border-radius: var(--r-8); cursor: pointer; white-space: nowrap;
+  line-height: var(--lh-botao); transition: background-color 150ms var(--ease); }
+.btn::after { content: ''; position: absolute; inset: -6px; }                              /* linha 494 */
+.btn-primario { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.btn-primario:hover  { background: var(--accent-hover); }
+.btn-primario:active { background: var(--accent-active); }
+.btn-secundario { background: var(--fill); color: var(--ink); }
+.btn-secundario:hover { background: var(--fill-2); }
+
+/* Campo: 36px, raio 8, borda por box-shadow inset 1px, foco 2px no acento (linhas 560–562) */
+.campo { height: 36px; width: 288px; padding: 0 12px; border: 0; border-radius: var(--r-8);
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-2); }
+.campo::placeholder { color: var(--ink-2); opacity: 1; }
+.campo:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+
+/* Cartão de superfície densa: branco, raio 18, sombra única, sem borda (linha 608) */
+.colunas { margin-top: var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) 288px; gap: var(--gutter); align-items: start; }
+.pilha { display: grid; gap: var(--gutter); }
+.card { background: var(--surface); border-radius: var(--r-18); box-shadow: 2px 4px 12px 0 rgba(0,0,0,.08); padding: 24px; }
+.card-topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 32px; }
+.controles { display: flex; align-items: center; gap: 20px; }
+
+/* Segmented control: 32px, trilho fill raio 9, inset 2, pílula branca raio 7 (linhas 591–593) */
+.seg { display: inline-flex; height: 32px; padding: 2px; background: var(--fill); border-radius: 9px; }
+.seg button { height: 28px; padding: 0 12px; border: 0; border-radius: 7px; background: transparent; cursor: pointer; line-height: var(--lh-botao); }
+.seg button[aria-checked="true"] { background: #FFFFFF; font-weight: 600;
+  box-shadow: 0 3px 8px rgba(0,0,0,.12), 0 3px 1px rgba(0,0,0,.04); }
+
+/* Interruptor: 38×22, botão 18, curso 16, ligado em tinta (linhas 597–599) */
+.rotulo-chave { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.chave { position: relative; width: 38px; height: 22px; padding: 0; border: 0; border-radius: var(--r-pill); background: var(--fill-2); cursor: pointer; flex: none; }
+.chave::before { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
+  background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.18); transition: transform 150ms var(--ease); }
+.chave[aria-checked="true"] { background: var(--ink); }
+.chave[aria-checked="true"]::before { transform: translateX(16px); }
+
+/* Tabela: cabeçalho 28, linha 36, padding lateral 12, números à direita (linhas 579–581) */
+table { width: calc(100% + 24px); margin: 16px -12px -8px; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+th { height: 28px; padding: 0 12px; text-align: left; font-weight: 400; color: var(--ink-2); background: var(--sunken);
+  font-size: var(--t5); line-height: var(--lh-denso); letter-spacing: 0; }                 /* caixa normal, cinza secundário, tracking 0 */
+th:first-child { border-radius: var(--r-6) 0 0 var(--r-6); }
+th:last-child  { border-radius: 0 var(--r-6) var(--r-6) 0; }
+td { height: 36px; padding: 0 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid var(--line); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: var(--sunken); }
+.dir { text-align: right; }
+.st-critico { color: var(--accent); font-weight: 600; }                                    /* crítico = acento (linha 338) */
+/* Resolvido: --ink-3, peso 400, opacidade 50% (linha 335) — segue o doc; contraste medido 1,77:1 */
+tr.resolvido td { color: color-mix(in srgb, var(--ink-3) 50%, transparent); }
+
+/* Lista agrupada: linha 44px, separador recuado, hover = fundo (linhas 571–575) */
+.card.lista { padding: 24px 0 8px; }
+.card.lista h2 { padding: 0 24px; }
+.card.lista ul { margin-top: 10px; }
+.card.lista li { position: relative; }
+.card.lista li + li::before { content: ''; position: absolute; top: 0; left: 24px; right: 0; height: 1px; background: var(--line); }
+.linha { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px; align-content: center; min-height: 44px; padding: 3px 24px; }
+a.linha:hover { background: var(--sunken); }
+.linha .l2 { grid-column: 1 / -1; }
+.card.lista .rodape { padding: 12px 24px 16px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="lateral">
+    <a class="marca t3" href="#" aria-label="Catraca, início">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="10" cy="10" r="7.25" fill="none" stroke="#1C1B19" stroke-width="2.5"/>
+        <circle cx="10" cy="10" r="2.25" fill="#1C1B19"/>
+      </svg>
+      Catraca
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a class="item" href="#" aria-current="page">Hoje</a></li>
+        <li><a class="item" href="#">Ordens de serviço</a></li>
+        <li><a class="item" href="#">Agenda</a></li>
+        <li><a class="item" href="#">Clientes</a></li>
+        <li><a class="item" href="#">Peças</a></li>
+        <li><a class="item" href="#">Caixa</a></li>
+      </ul>
+    </nav>
+    <div class="lateral-fim">
+      <a class="item" href="#">Ajustes</a>
+      <div class="usuario"><span class="avatar t5 w6" aria-hidden="true">L</span><span>Luana Meireles</span></div>
+    </div>
+  </aside>
+
+  <main class="conteudo">
+    <div class="topo">
+      <!-- Informação herói: quem é o próximo e quando (linhas 84–86) -->
+      <section class="heroi" aria-labelledby="proxima">
+        <p class="sec">Próxima retirada</p>
+        <h1 id="proxima" class="t1">Rafael Monteiro retira a Caloi Elite às 15h30</h1>
+        <p class="aux">Revisão completa pronta desde <span class="num">11h20</span>. Falta receber <span class="num">R$ 380,00</span>.</p>
+        <button class="btn btn-secundario" type="button">Registrar retirada</button>
+      </section>
+      <div class="acoes-topo">
+        <input class="campo" type="search" placeholder="Buscar ordem, cliente ou bicicleta" aria-label="Buscar ordem, cliente ou bicicleta">
+        <!-- Ação primária: a mais frequente (linha 88) — único preenchimento em acento da tela -->
+        <button class="btn btn-primario" type="button">Nova ordem</button>
+      </div>
+    </div>
+
+    <div class="colunas">
+      <section class="card" aria-labelledby="t-ordens">
+        <div class="card-topo">
+          <h2 id="t-ordens" class="t3">Demais ordens de hoje</h2>
+          <div class="controles">
+            <label class="rotulo-chave"><span id="l-entregues">Mostrar entregues</span>
+              <button class="chave" type="button" role="switch" aria-checked="true" aria-labelledby="l-entregues"></button>
+            </label>
+            <div class="seg" role="radiogroup" aria-label="Filtrar por situação">
+              <button type="button" role="radio" aria-checked="true">Todas</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1">Na bancada</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1">Prontas</button>
+            </div>
+          </div>
+        </div>
+
+        <table>
+          <colgroup><col style="width:64px"><col style="width:156px"><col style="width:156px"><col><col style="width:148px"><col style="width:88px"></colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Ordem</th><th scope="col">Cliente</th><th scope="col">Bicicleta</th><th scope="col">Serviço</th>
+              <th scope="col">Situação</th><th scope="col" class="dir">Entrega</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">2471</td><td>Sérgio Nakamura</td><td>Scott Aspect 950</td><td>Revisão geral</td><td class="st-critico">Atrasada 2 dias</td><td class="num dir">qua. 7</td></tr>
+            <tr><td class="num">2483</td><td>Bianca Tavares</td><td>Trek Marlin 5</td><td>Troca de relação</td><td>Na bancada</td><td class="num dir">16h00</td></tr>
+            <tr><td class="num">2485</td><td>Otávio Reis</td><td>Caloi Explorer</td><td>Centragem de rodas</td><td>Na bancada</td><td class="num dir">16h30</td></tr>
+            <tr><td class="num">2486</td><td>Lívia Carvalho</td><td>Groove Hype 50</td><td>Montagem</td><td>Na bancada</td><td class="num dir">17h00</td></tr>
+            <tr><td class="num">2480</td><td>Vinícius Prado</td><td>Cannondale Trail 7</td><td>Revisão completa</td><td>Pronta</td><td class="num dir">17h30</td></tr>
+            <tr><td class="num">2482</td><td>Fernanda Lopes</td><td>Sense Fun Comp</td><td>Troca de pneus</td><td>Pronta</td><td class="num dir">18h00</td></tr>
+            <tr><td class="num">2487</td><td>Paulo Henrique Sá</td><td>Soul SL 129</td><td>Sangria de freios</td><td>Na fila</td><td class="num dir">18h00</td></tr>
+            <tr><td class="num">2488</td><td>Renata Guimarães</td><td>Audax Auge 40</td><td>Troca de câmbio</td><td>Na fila</td><td class="num dir">18h30</td></tr>
+            <tr><td class="num">2489</td><td>Daniel Furtado</td><td>TSW Hunch</td><td>Revisão básica</td><td>Na fila</td><td class="num dir">sáb. 10</td></tr>
+            <tr><td class="num">2490</td><td>Isabela Nunes</td><td>Caloi Vulcan</td><td>Troca de corrente</td><td>Na fila</td><td class="num dir">sáb. 10</td></tr>
+            <tr><td class="num">2478</td><td>Camila Rocha</td><td>Oggi 7.2</td><td>Suspensão dianteira</td><td>Aguardando peça</td><td class="num dir">seg. 12</td></tr>
+            <tr class="resolvido"><td class="num">2472</td><td>Eduardo Brandão</td><td>Monark Barra</td><td>Lavagem e lubrificação</td><td>Entregue</td><td class="num dir">9h40</td></tr>
+            <tr class="resolvido"><td class="num">2474</td><td>Aline Moraes</td><td>Houston Atlantis</td><td>Regulagem de marchas</td><td>Entregue</td><td class="num dir">11h05</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="pilha">
+        <section class="card lista" aria-labelledby="t-voce">
+          <h2 id="t-voce" class="t3">Aguardando você</h2>
+          <ul>
+            <li><a class="linha" href="#"><span class="w6">Aprovar orçamento</span><span class="num w6">R$ 640,00</span><span class="l2 t5 sec"><span class="num">2479</span> · Jonas Albuquerque · Sense Impact</span></a></li>
+            <li><a class="linha" href="#"><span class="w6">Ligar para Helena Prado</span><span class="l2 t5 sec"><span class="num">2476</span> · quadro com trinca, sem conserto</span></a></li>
+            <li><a class="linha" href="#"><span class="w6">Definir prazo de entrega</span><span class="l2 t5 sec"><span class="num">2484</span> · Marcos Vidal · Oggi Big Wheel</span></a></li>
+          </ul>
+        </section>
+
+        <section class="card lista" aria-labelledby="t-pecas">
+          <h2 id="t-pecas" class="t3">Peças em falta</h2>
+          <ul>
+            <li><div class="linha"><span class="w6">Pastilha Shimano B01S</span><span class="num w6">0 livres</span><span class="l2 t5 sec">Reservada em 2 ordens de hoje</span></div></li>
+            <li><div class="linha"><span>Câmara 29 × 2.10 presta</span><span class="num">1 livre</span><span class="l2 t5 sec">Reservada em 3 ordens até segunda</span></div></li>
+          </ul>
+          <div class="rodape"><button class="btn btn-secundario" type="button">Pedir ao fornecedor</button></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

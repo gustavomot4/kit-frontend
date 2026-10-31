@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedidos de hoje - Marmitaria da Tia</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="miolo topo-miolo">
+    <div>
+      <p class="marca">Marmitaria da Tia</p>
+      <h1>Pedidos de hoje</h1>
+    </div>
+    <p class="data">Sexta-feira, 30 de outubro · 58 pedidos</p>
+  </div>
+</header>
+
+<a class="novo-pedido" href="#novo">+ Novo pedido</a>
+
+<section class="miolo resumo" aria-label="Resumo do dia">
+  <ul class="numeros">
+    <li class="n-cozinha"><b>12</b> <span>Na cozinha</span></li>
+    <li class="n-pronto"><b>7</b> <span>Prontos</span></li>
+    <li class="n-rua"><b>8</b> <span>Na rua</span></li>
+    <li class="n-entregue"><b>31</b> <span>Entregues</span></li>
+  </ul>
+  <details class="falta-fazer">
+    <summary>Falta fazer: <b>22 marmitas</b> <span>ver quais</span></summary>
+    <ul><li><b>6</b> de feijoada</li><li><b>5</b> de carne de panela</li><li><b>5</b> de frango grelhado</li><li><b>3</b> de strogonoff de frango</li><li><b>2</b> de bife acebolado</li><li><b>1</b> de peixe frito</li></ul>
+  </details>
+</section>
+
+<main class="miolo painel">
+  <h2 class="titulo-lista">O que falta entregar</h2>
+  <input type="radio" name="ver" id="ver-todos" class="ver" checked>
+  <input type="radio" name="ver" id="ver-sem" class="ver">
+  <input type="radio" name="ver" id="ver-jorge" class="ver">
+  <input type="radio" name="ver" id="ver-rafael" class="ver">
+  <input type="radio" name="ver" id="ver-marcos" class="ver">
+  <input type="radio" name="ver" id="ver-balcao" class="ver">
+
+  <nav class="abas" aria-label="Escolher entregador">
+    <label for="ver-todos">Todos <b>27</b></label>
+    <label for="ver-sem" class="aba-alerta">Sem entregador <b>4</b></label>
+    <label for="ver-jorge">Jorge <b>7</b></label>
+    <label for="ver-rafael">Rafael <b>8</b></label>
+    <label for="ver-marcos">Marcos <b>6</b></label>
+    <label for="ver-balcao">Balcão <b>2</b></label>
+  </nav>
+
+  <div class="lista">
+
+<section class="grupo de de-sem" aria-labelledby="t-sem">
+  <div class="grupo-topo">
+    <h3 id="t-sem">Sem entregador</h3>
+    <p class="g-aviso">4 pedidos esperando: escolha quem leva</p>
+  </div>
+  <div class="cartoes">
+<article class="pedido estado-cozinha sem-quem">
+  <input type="checkbox" class="passo" id="passo-47">
+  <div class="p-topo">
+    <p class="p-num">Pedido 47 · 11:45</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Gilberto Faria</h4>
+  <p class="p-fone"><a href="tel:+5511900000047">(11) 90000-0047</a></p>
+  <ul class="p-itens"><li><b>1×</b> Feijoada <span class="tam">(G)</span></li><li><b>1×</b> Carne de panela <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>Centro</b> · Rua do Comércio, 140</p>
+  
+  <div class="quem-leva"><p class="quem-titulo">Quem leva este pedido?</p><div class="opcoes opcoes-quem"><input type="radio" name="quem-47" id="q47-jorge" value="jorge"><label for="q47-jorge">Jorge</label><input type="radio" name="quem-47" id="q47-rafael" value="rafael"><label for="q47-rafael">Rafael</label><input type="radio" name="quem-47" id="q47-marcos" value="marcos"><label for="q47-marcos">Marcos</label><input type="radio" name="quem-47" id="q47-balcao" value="balcao"><label for="q47-balcao">Cliente retira</label></div></div>
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;53,00</p>
+  <label class="botao passo-botao" for="passo-47"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  
+</article>
+<article class="pedido estado-cozinha sem-quem">
+  <input type="checkbox" class="passo" id="passo-55">
+  <div class="p-topo">
+    <p class="p-num">Pedido 55 · 12:15</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Jussara Campos</h4>
+  <p class="p-fone"><a href="tel:+5511900000055">(11) 90000-0055</a></p>
+  <ul class="p-itens"><li><b>1×</b> Frango grelhado <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>Vila Nova</b> · Rua das Hortênsias, 64</p>
+  
+  <div class="quem-leva"><p class="quem-titulo">Quem leva este pedido?</p><div class="opcoes opcoes-quem"><input type="radio" name="quem-55" id="q55-jorge" value="jorge"><label for="q55-jorge">Jorge</label><input type="radio" name="quem-55" id="q55-rafael" value="rafael"><label for="q55-rafael">Rafael</label><input type="radio" name="quem-55" id="q55-marcos" value="marcos"><label for="q55-marcos">Marcos</label><input type="radio" name="quem-55" id="q55-balcao" value="balcao"><label for="q55-balcao">Cliente retira</label></div></div>
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;27,00</p>
+  <label class="botao passo-botao" for="passo-55"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  
+</article>
+<article class="pedido estado-cozinha sem-quem">
+  <input type="checkbox" class="passo" id="passo-57">
+  <div class="p-topo">
+    <p class="p-num">Pedido 57 · 12:23</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Marlene Duarte</h4>
+  <p class="p-fone"><a href="tel:+5511900000057">(11) 90000-0057</a></p>
+  <ul class="p-itens"><li><b>1×</b> Feijoada <span class="tam">(M)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Pouco sal.</p>
+  <p class="p-local"><b>São José</b> · Rua Rio Branco, 91</p>
+  
+  <div class="quem-leva"><p class="quem-titulo">Quem leva este pedido?</p><div class="opcoes opcoes-quem"><input type="radio" name="quem-57" id="q57-jorge" value="jorge"><label for="q57-jorge">Jorge</label><input type="radio" name="quem-57" id="q57-rafael" value="rafael"><label for="q57-rafael">Rafael</label><input type="radio" name="quem-57" id="q57-marcos" value="marcos"><label for="q57-marcos">Marcos</label><input type="radio" name="quem-57" id="q57-balcao" value="balcao"><label for="q57-balcao">Cliente retira</label></div></div>
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;27,00</b> em dinheiro<span>Levar R$&nbsp;23,00 de troco (nota de R$&nbsp;50)</span></p>
+  <label class="botao passo-botao" for="passo-57"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  
+</article>
+<article class="pedido estado-cozinha sem-quem">
+  <input type="checkbox" class="passo" id="passo-58">
+  <div class="p-topo">
+    <p class="p-num">Pedido 58 · 12:27</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Thiago Brandão</h4>
+  <p class="p-fone"><a href="tel:+5511900000058">(11) 90000-0058</a></p>
+  <ul class="p-itens"><li><b>2×</b> Strogonoff de frango <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Bela Vista</b> · Rua Alecrim, 150, ap. 21</p>
+  <p class="p-prazo">Entregar até 13:15</p>
+  <div class="quem-leva"><p class="quem-titulo">Quem leva este pedido?</p><div class="opcoes opcoes-quem"><input type="radio" name="quem-58" id="q58-jorge" value="jorge"><label for="q58-jorge">Jorge</label><input type="radio" name="quem-58" id="q58-rafael" value="rafael"><label for="q58-rafael">Rafael</label><input type="radio" name="quem-58" id="q58-marcos" value="marcos"><label for="q58-marcos">Marcos</label><input type="radio" name="quem-58" id="q58-balcao" value="balcao"><label for="q58-balcao">Cliente retira</label></div></div>
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;57,00</p>
+  <label class="botao passo-botao" for="passo-58"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  
+</article>
+  </div>
+</section>
+
+<section class="grupo de de-jorge" aria-labelledby="t-jorge">
+  <div class="grupo-topo">
+    <h3 id="t-jorge">Jorge</h3>
+    <p class="g-info">7 para levar · <span class="g-coz">2 na cozinha</span> · <span class="g-pro">2 prontos</span> · <span class="g-rua">3 na rua</span></p><p class="g-bairros">Centro, Bela Vista</p>
+  </div>
+  <div class="cartoes">
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-32">
+  <div class="p-topo">
+    <p class="p-num">Pedido 32 · 10:48</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Cláudia Souza</h4>
+  <p class="p-fone"><a href="tel:+5511900000032">(11) 90000-0032</a></p>
+  <ul class="p-itens"><li><b>2×</b> Frango grelhado <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Centro</b> · Rua das Flores, 123, ap. 4</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;57,00</p>
+  <label class="botao passo-botao" for="passo-32"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-32" id="q32-jorge" value="jorge" checked><label for="q32-jorge">Jorge</label><input type="radio" name="quem-32" id="q32-rafael" value="rafael"><label for="q32-rafael">Rafael</label><input type="radio" name="quem-32" id="q32-marcos" value="marcos"><label for="q32-marcos">Marcos</label><input type="radio" name="quem-32" id="q32-balcao" value="balcao"><label for="q32-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-35">
+  <div class="p-topo">
+    <p class="p-num">Pedido 35 · 10:59</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Dona Neide</h4>
+  <p class="p-fone"><a href="tel:+5511900000035">(11) 90000-0035</a></p>
+  <ul class="p-itens"><li><b>1×</b> Bife acebolado <span class="tam">(P)</span></li></ul>
+  
+  <p class="p-local"><b>Bela Vista</b> · Rua do Comércio, 17</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;23,00</b> em dinheiro<span>Cliente paga certinho, sem troco</span></p>
+  <label class="botao passo-botao" for="passo-35"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-35" id="q35-jorge" value="jorge" checked><label for="q35-jorge">Jorge</label><input type="radio" name="quem-35" id="q35-rafael" value="rafael"><label for="q35-rafael">Rafael</label><input type="radio" name="quem-35" id="q35-marcos" value="marcos"><label for="q35-marcos">Marcos</label><input type="radio" name="quem-35" id="q35-balcao" value="balcao"><label for="q35-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-39">
+  <div class="p-topo">
+    <p class="p-num">Pedido 39 · 11:14</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Patrícia Gomes</h4>
+  <p class="p-fone"><a href="tel:+5511900000039">(11) 90000-0039</a></p>
+  <ul class="p-itens"><li><b>1×</b> Carne de panela <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Centro</b> · Praça da Matriz, 5, loja 2</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;31,00</p>
+  <label class="botao passo-botao" for="passo-39"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-39" id="q39-jorge" value="jorge" checked><label for="q39-jorge">Jorge</label><input type="radio" name="quem-39" id="q39-rafael" value="rafael"><label for="q39-rafael">Rafael</label><input type="radio" name="quem-39" id="q39-marcos" value="marcos"><label for="q39-marcos">Marcos</label><input type="radio" name="quem-39" id="q39-balcao" value="balcao"><label for="q39-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-pronto">
+  <input type="checkbox" class="passo" id="passo-41">
+  <div class="p-topo">
+    <p class="p-num">Pedido 41 · 11:22</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Saiu para entrega</span></p>
+  </div>
+  <h4 class="p-nome">Luciana Pereira</h4>
+  <p class="p-fone"><a href="tel:+5511900000041">(11) 90000-0041</a></p>
+  <ul class="p-itens"><li><b>2×</b> Frango grelhado <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>Centro</b> · Rua das Flores, 98</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;49,00</b> no cartão<span>Levar a maquininha</span></p>
+  <label class="botao passo-botao" for="passo-41"><span class="antes">Saiu para entrega</span><span class="depois">Saiu! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-41" id="q41-jorge" value="jorge" checked><label for="q41-jorge">Jorge</label><input type="radio" name="quem-41" id="q41-rafael" value="rafael"><label for="q41-rafael">Rafael</label><input type="radio" name="quem-41" id="q41-marcos" value="marcos"><label for="q41-marcos">Marcos</label><input type="radio" name="quem-41" id="q41-balcao" value="balcao"><label for="q41-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-pronto">
+  <input type="checkbox" class="passo" id="passo-44">
+  <div class="p-topo">
+    <p class="p-num">Pedido 44 · 11:33</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Saiu para entrega</span></p>
+  </div>
+  <h4 class="p-nome">Vanessa Moura</h4>
+  <p class="p-fone"><a href="tel:+5511900000044">(11) 90000-0044</a></p>
+  <ul class="p-itens"><li><b>1×</b> Peixe frito <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>Bela Vista</b> · Rua Alecrim, 233</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;27,00</p>
+  <label class="botao passo-botao" for="passo-44"><span class="antes">Saiu para entrega</span><span class="depois">Saiu! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-44" id="q44-jorge" value="jorge" checked><label for="q44-jorge">Jorge</label><input type="radio" name="quem-44" id="q44-rafael" value="rafael"><label for="q44-rafael">Rafael</label><input type="radio" name="quem-44" id="q44-marcos" value="marcos"><label for="q44-marcos">Marcos</label><input type="radio" name="quem-44" id="q44-balcao" value="balcao"><label for="q44-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-48">
+  <div class="p-topo">
+    <p class="p-num">Pedido 48 · 11:49</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Ana Paula Ribeiro</h4>
+  <p class="p-fone"><a href="tel:+5511900000048">(11) 90000-0048</a></p>
+  <ul class="p-itens"><li><b>1×</b> Strogonoff de frango <span class="tam">(M)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Sem arroz.</p>
+  <p class="p-local"><b>Bela Vista</b> · Rua Alecrim, 12</p>
+  <p class="p-prazo">Entregar até 13:00</p>
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;27,00</b> no cartão<span>Levar a maquininha</span></p>
+  <label class="botao passo-botao" for="passo-48"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-48" id="q48-jorge" value="jorge" checked><label for="q48-jorge">Jorge</label><input type="radio" name="quem-48" id="q48-rafael" value="rafael"><label for="q48-rafael">Rafael</label><input type="radio" name="quem-48" id="q48-marcos" value="marcos"><label for="q48-marcos">Marcos</label><input type="radio" name="quem-48" id="q48-balcao" value="balcao"><label for="q48-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-52">
+  <div class="p-topo">
+    <p class="p-num">Pedido 52 · 12:04</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Mercadinho Boa Compra</h4>
+  <p class="p-fone"><a href="tel:+5511900000052">(11) 90000-0052</a></p>
+  <ul class="p-itens"><li><b>3×</b> Frango grelhado <span class="tam">(M)</span></li><li><b>3×</b> Carne de panela <span class="tam">(M)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Deixar com o Paulo, no caixa.</p>
+  <p class="p-local"><b>Centro</b> · Rua das Flores, 300</p>
+  <p class="p-prazo urgente">Entregar até 12:50</p>
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;137,00</p>
+  <label class="botao passo-botao" for="passo-52"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-52" id="q52-jorge" value="jorge" checked><label for="q52-jorge">Jorge</label><input type="radio" name="quem-52" id="q52-rafael" value="rafael"><label for="q52-rafael">Rafael</label><input type="radio" name="quem-52" id="q52-marcos" value="marcos"><label for="q52-marcos">Marcos</label><input type="radio" name="quem-52" id="q52-balcao" value="balcao"><label for="q52-balcao">Cliente retira</label></div></details>
+</article>
+  </div>
+</section>
+
+<section class="grupo de de-rafael" aria-labelledby="t-rafael">
+  <div class="grupo-topo">
+    <h3 id="t-rafael">Rafael</h3>
+    <p class="g-info">8 para levar · <span class="g-coz">3 na cozinha</span> · <span class="g-pro">2 prontos</span> · <span class="g-rua">3 na rua</span></p><p class="g-bairros">Jardim América, Parque das Flores</p>
+  </div>
+  <div class="cartoes">
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-33">
+  <div class="p-topo">
+    <p class="p-num">Pedido 33 · 10:52</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Roberto Lima</h4>
+  <p class="p-fone"><a href="tel:+5511900000033">(11) 90000-0033</a></p>
+  <ul class="p-itens"><li><b>1×</b> Feijoada <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>Jardim América</b> · Av. Brasil, 450</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;27,00</b> em dinheiro<span>Levar R$&nbsp;23,00 de troco (nota de R$&nbsp;50)</span></p>
+  <label class="botao passo-botao" for="passo-33"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-33" id="q33-jorge" value="jorge"><label for="q33-jorge">Jorge</label><input type="radio" name="quem-33" id="q33-rafael" value="rafael" checked><label for="q33-rafael">Rafael</label><input type="radio" name="quem-33" id="q33-marcos" value="marcos"><label for="q33-marcos">Marcos</label><input type="radio" name="quem-33" id="q33-balcao" value="balcao"><label for="q33-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-36">
+  <div class="p-topo">
+    <p class="p-num">Pedido 36 · 11:03</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Fernanda Alves</h4>
+  <p class="p-fone"><a href="tel:+5511900000036">(11) 90000-0036</a></p>
+  <ul class="p-itens"><li><b>1×</b> Peixe frito <span class="tam">(M)</span></li><li><b>1×</b> Frango grelhado <span class="tam">(P)</span></li></ul>
+  
+  <p class="p-local"><b>Parque das Flores</b> · Rua das Acácias, 301</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;45,00</b> no cartão<span>Levar a maquininha</span></p>
+  <label class="botao passo-botao" for="passo-36"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-36" id="q36-jorge" value="jorge"><label for="q36-jorge">Jorge</label><input type="radio" name="quem-36" id="q36-rafael" value="rafael" checked><label for="q36-rafael">Rafael</label><input type="radio" name="quem-36" id="q36-marcos" value="marcos"><label for="q36-marcos">Marcos</label><input type="radio" name="quem-36" id="q36-balcao" value="balcao"><label for="q36-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-38">
+  <div class="p-topo">
+    <p class="p-num">Pedido 38 · 11:11</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Oficina do Beto</h4>
+  <p class="p-fone"><a href="tel:+5511900000038">(11) 90000-0038</a></p>
+  <ul class="p-itens"><li><b>3×</b> Feijoada <span class="tam">(G)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Portão azul, tocar a campainha.</p>
+  <p class="p-local"><b>Jardim América</b> · Av. Brasil, 1200</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;83,00</b> em dinheiro<span>Levar R$&nbsp;17,00 de troco (nota de R$&nbsp;100)</span></p>
+  <label class="botao passo-botao" for="passo-38"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-38" id="q38-jorge" value="jorge"><label for="q38-jorge">Jorge</label><input type="radio" name="quem-38" id="q38-rafael" value="rafael" checked><label for="q38-rafael">Rafael</label><input type="radio" name="quem-38" id="q38-marcos" value="marcos"><label for="q38-marcos">Marcos</label><input type="radio" name="quem-38" id="q38-balcao" value="balcao"><label for="q38-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-pronto">
+  <input type="checkbox" class="passo" id="passo-42">
+  <div class="p-topo">
+    <p class="p-num">Pedido 42 · 11:26</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Saiu para entrega</span></p>
+  </div>
+  <h4 class="p-nome">Clínica Sorriso</h4>
+  <p class="p-fone"><a href="tel:+5511900000042">(11) 90000-0042</a></p>
+  <ul class="p-itens"><li><b>5×</b> Frango grelhado <span class="tam">(M)</span></li><li><b>2×</b> Feijoada <span class="tam">(M)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Separar as de feijoada das outras.</p>
+  <p class="p-local"><b>Jardim América</b> · Rua dos Ipês, 40</p>
+  <p class="p-prazo">Entregar até 13:00</p>
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;159,00</p>
+  <label class="botao passo-botao" for="passo-42"><span class="antes">Saiu para entrega</span><span class="depois">Saiu! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-42" id="q42-jorge" value="jorge"><label for="q42-jorge">Jorge</label><input type="radio" name="quem-42" id="q42-rafael" value="rafael" checked><label for="q42-rafael">Rafael</label><input type="radio" name="quem-42" id="q42-marcos" value="marcos"><label for="q42-marcos">Marcos</label><input type="radio" name="quem-42" id="q42-balcao" value="balcao"><label for="q42-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-pronto">
+  <input type="checkbox" class="passo" id="passo-45">
+  <div class="p-topo">
+    <p class="p-num">Pedido 45 · 11:37</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Saiu para entrega</span></p>
+  </div>
+  <h4 class="p-nome">Edson Barros</h4>
+  <p class="p-fone"><a href="tel:+5511900000045">(11) 90000-0045</a></p>
+  <ul class="p-itens"><li><b>1×</b> Linguiça acebolada <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Parque das Flores</b> · Rua das Acácias, 77</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;31,00</b> em dinheiro<span>Levar R$&nbsp;19,00 de troco (nota de R$&nbsp;50)</span></p>
+  <label class="botao passo-botao" for="passo-45"><span class="antes">Saiu para entrega</span><span class="depois">Saiu! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-45" id="q45-jorge" value="jorge"><label for="q45-jorge">Jorge</label><input type="radio" name="quem-45" id="q45-rafael" value="rafael" checked><label for="q45-rafael">Rafael</label><input type="radio" name="quem-45" id="q45-marcos" value="marcos"><label for="q45-marcos">Marcos</label><input type="radio" name="quem-45" id="q45-balcao" value="balcao"><label for="q45-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-49">
+  <div class="p-topo">
+    <p class="p-num">Pedido 49 · 11:52</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Dr. Henrique Matos</h4>
+  <p class="p-fone"><a href="tel:+5511900000049">(11) 90000-0049</a></p>
+  <ul class="p-itens"><li><b>2×</b> Bife acebolado <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Jardim América</b> · Av. Brasil, 890, cj. 12</p>
+  <p class="p-prazo">Entregar até 13:00</p>
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;57,00</p>
+  <label class="botao passo-botao" for="passo-49"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-49" id="q49-jorge" value="jorge"><label for="q49-jorge">Jorge</label><input type="radio" name="quem-49" id="q49-rafael" value="rafael" checked><label for="q49-rafael">Rafael</label><input type="radio" name="quem-49" id="q49-marcos" value="marcos"><label for="q49-marcos">Marcos</label><input type="radio" name="quem-49" id="q49-balcao" value="balcao"><label for="q49-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-51">
+  <div class="p-topo">
+    <p class="p-num">Pedido 51 · 12:00</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Bruno Cardoso</h4>
+  <p class="p-fone"><a href="tel:+5511900000051">(11) 90000-0051</a></p>
+  <ul class="p-itens"><li><b>1×</b> Feijoada <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Parque das Flores</b> · Rua das Palmeiras, 15</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;31,00</p>
+  <label class="botao passo-botao" for="passo-51"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-51" id="q51-jorge" value="jorge"><label for="q51-jorge">Jorge</label><input type="radio" name="quem-51" id="q51-rafael" value="rafael" checked><label for="q51-rafael">Rafael</label><input type="radio" name="quem-51" id="q51-marcos" value="marcos"><label for="q51-marcos">Marcos</label><input type="radio" name="quem-51" id="q51-balcao" value="balcao"><label for="q51-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-56">
+  <div class="p-topo">
+    <p class="p-num">Pedido 56 · 12:19</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Igor Santana</h4>
+  <p class="p-fone"><a href="tel:+5511900000056">(11) 90000-0056</a></p>
+  <ul class="p-itens"><li><b>1×</b> Carne de panela <span class="tam">(G)</span></li><li><b>1×</b> Feijoada <span class="tam">(P)</span></li></ul>
+  
+  <p class="p-local"><b>Jardim América</b> · Rua dos Ipês, 8</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;49,00</b> no cartão<span>Levar a maquininha</span></p>
+  <label class="botao passo-botao" for="passo-56"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-56" id="q56-jorge" value="jorge"><label for="q56-jorge">Jorge</label><input type="radio" name="quem-56" id="q56-rafael" value="rafael" checked><label for="q56-rafael">Rafael</label><input type="radio" name="quem-56" id="q56-marcos" value="marcos"><label for="q56-marcos">Marcos</label><input type="radio" name="quem-56" id="q56-balcao" value="balcao"><label for="q56-balcao">Cliente retira</label></div></details>
+</article>
+  </div>
+</section>
+
+<section class="grupo de de-marcos" aria-labelledby="t-marcos">
+  <div class="grupo-topo">
+    <h3 id="t-marcos">Marcos</h3>
+    <p class="g-info">6 para levar · <span class="g-coz">2 na cozinha</span> · <span class="g-pro">2 prontos</span> · <span class="g-rua">2 na rua</span></p><p class="g-bairros">Vila Nova, São José, Santa Luzia</p>
+  </div>
+  <div class="cartoes">
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-34">
+  <div class="p-topo">
+    <p class="p-num">Pedido 34 · 10:55</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Escritório Silva &amp; Cia</h4>
+  <p class="p-fone"><a href="tel:+5511900000034">(11) 90000-0034</a></p>
+  <ul class="p-itens"><li><b>4×</b> Frango grelhado <span class="tam">(G)</span></li><li><b>1×</b> Carne de panela <span class="tam">(G)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Entregar na recepção. A de carne vai sem salada.</p>
+  <p class="p-local"><b>Vila Nova</b> · Rua Sete de Setembro, 88, sala 2</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;135,00</p>
+  <label class="botao passo-botao" for="passo-34"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-34" id="q34-jorge" value="jorge"><label for="q34-jorge">Jorge</label><input type="radio" name="quem-34" id="q34-rafael" value="rafael"><label for="q34-rafael">Rafael</label><input type="radio" name="quem-34" id="q34-marcos" value="marcos" checked><label for="q34-marcos">Marcos</label><input type="radio" name="quem-34" id="q34-balcao" value="balcao"><label for="q34-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-saiu">
+  <input type="checkbox" class="passo" id="passo-37">
+  <div class="p-topo">
+    <p class="p-num">Pedido 37 · 11:07</p>
+    <p class="selo"><span class="antes">Saiu para entrega</span><span class="depois">Entregue</span></p>
+  </div>
+  <h4 class="p-nome">Marcelo Tavares</h4>
+  <p class="p-fone"><a href="tel:+5511900000037">(11) 90000-0037</a></p>
+  <ul class="p-itens"><li><b>2×</b> Strogonoff de frango <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>São José</b> · Rua XV de Novembro, 560</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;49,00</p>
+  <label class="botao passo-botao" for="passo-37"><span class="antes">Foi entregue</span><span class="depois">Entregue! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-37" id="q37-jorge" value="jorge"><label for="q37-jorge">Jorge</label><input type="radio" name="quem-37" id="q37-rafael" value="rafael"><label for="q37-rafael">Rafael</label><input type="radio" name="quem-37" id="q37-marcos" value="marcos" checked><label for="q37-marcos">Marcos</label><input type="radio" name="quem-37" id="q37-balcao" value="balcao"><label for="q37-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-pronto">
+  <input type="checkbox" class="passo" id="passo-40">
+  <div class="p-topo">
+    <p class="p-num">Pedido 40 · 11:18</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Saiu para entrega</span></p>
+  </div>
+  <h4 class="p-nome">Sérgio Nascimento</h4>
+  <p class="p-fone"><a href="tel:+5511900000040">(11) 90000-0040</a></p>
+  <ul class="p-itens"><li><b>1×</b> Carne de panela <span class="tam">(G)</span></li></ul>
+  <p class="p-obs"><b>Atenção:</b> Sem cebola.</p>
+  <p class="p-local"><b>Santa Luzia</b> · Rua da Paz, 72</p>
+  <p class="p-prazo urgente">Entregar até 12:45</p>
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;31,00</p>
+  <label class="botao passo-botao" for="passo-40"><span class="antes">Saiu para entrega</span><span class="depois">Saiu! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-40" id="q40-jorge" value="jorge"><label for="q40-jorge">Jorge</label><input type="radio" name="quem-40" id="q40-rafael" value="rafael"><label for="q40-rafael">Rafael</label><input type="radio" name="quem-40" id="q40-marcos" value="marcos" checked><label for="q40-marcos">Marcos</label><input type="radio" name="quem-40" id="q40-balcao" value="balcao"><label for="q40-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-pronto">
+  <input type="checkbox" class="passo" id="passo-46">
+  <div class="p-topo">
+    <p class="p-num">Pedido 46 · 11:41</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Saiu para entrega</span></p>
+  </div>
+  <h4 class="p-nome">Tatiane Rocha</h4>
+  <p class="p-fone"><a href="tel:+5511900000046">(11) 90000-0046</a></p>
+  <ul class="p-itens"><li><b>2×</b> Frango grelhado <span class="tam">(P)</span></li></ul>
+  
+  <p class="p-local"><b>Vila Nova</b> · Rua Sete de Setembro, 310, casa 2</p>
+  
+  
+  <p class="p-pagar pago"><b>Já está pago</b> (Pix) · R$&nbsp;41,00</p>
+  <label class="botao passo-botao" for="passo-46"><span class="antes">Saiu para entrega</span><span class="depois">Saiu! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-46" id="q46-jorge" value="jorge"><label for="q46-jorge">Jorge</label><input type="radio" name="quem-46" id="q46-rafael" value="rafael"><label for="q46-rafael">Rafael</label><input type="radio" name="quem-46" id="q46-marcos" value="marcos" checked><label for="q46-marcos">Marcos</label><input type="radio" name="quem-46" id="q46-balcao" value="balcao"><label for="q46-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-50">
+  <div class="p-topo">
+    <p class="p-num">Pedido 50 · 11:56</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Rita de Cássia</h4>
+  <p class="p-fone"><a href="tel:+5511900000050">(11) 90000-0050</a></p>
+  <ul class="p-itens"><li><b>1×</b> Frango grelhado <span class="tam">(P)</span></li></ul>
+  
+  <p class="p-local"><b>São José</b> · Rua XV de Novembro, 20</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;23,00</b> em dinheiro<span>Levar R$&nbsp;27,00 de troco (nota de R$&nbsp;50)</span></p>
+  <label class="botao passo-botao" for="passo-50"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-50" id="q50-jorge" value="jorge"><label for="q50-jorge">Jorge</label><input type="radio" name="quem-50" id="q50-rafael" value="rafael"><label for="q50-rafael">Rafael</label><input type="radio" name="quem-50" id="q50-marcos" value="marcos" checked><label for="q50-marcos">Marcos</label><input type="radio" name="quem-50" id="q50-balcao" value="balcao"><label for="q50-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha">
+  <input type="checkbox" class="passo" id="passo-54">
+  <div class="p-topo">
+    <p class="p-num">Pedido 54 · 12:11</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Wagner Teixeira</h4>
+  <p class="p-fone"><a href="tel:+5511900000054">(11) 90000-0054</a></p>
+  <ul class="p-itens"><li><b>2×</b> Feijoada <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Santa Luzia</b> · Rua da Paz, 205</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;57,00</b> em dinheiro<span>Levar R$&nbsp;43,00 de troco (nota de R$&nbsp;100)</span></p>
+  <label class="botao passo-botao" for="passo-54"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-54" id="q54-jorge" value="jorge"><label for="q54-jorge">Jorge</label><input type="radio" name="quem-54" id="q54-rafael" value="rafael"><label for="q54-rafael">Rafael</label><input type="radio" name="quem-54" id="q54-marcos" value="marcos" checked><label for="q54-marcos">Marcos</label><input type="radio" name="quem-54" id="q54-balcao" value="balcao"><label for="q54-balcao">Cliente retira</label></div></details>
+</article>
+  </div>
+</section>
+
+<section class="grupo de de-balcao" aria-labelledby="t-balcao">
+  <div class="grupo-topo">
+    <h3 id="t-balcao">Retira no balcão</h3>
+    <p class="g-info">2 pedidos · <span class="g-coz">1 na cozinha</span> · <span class="g-pro">1 pronto</span></p>
+  </div>
+  <div class="cartoes">
+<article class="pedido estado-pronto e-balcao">
+  <input type="checkbox" class="passo" id="passo-43">
+  <div class="p-topo">
+    <p class="p-num">Pedido 43 · 11:30</p>
+    <p class="selo"><span class="antes">Pronto</span><span class="depois">Retirou</span></p>
+  </div>
+  <h4 class="p-nome">Seu Antônio</h4>
+  <p class="p-fone"><a href="tel:+5511900000043">(11) 90000-0043</a></p>
+  <ul class="p-itens"><li><b>1×</b> Feijoada <span class="tam">(G)</span></li></ul>
+  
+  <p class="p-local"><b>Cliente vem buscar</b> no balcão</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;26,00</b> em dinheiro<span>Cliente paga certinho, sem troco</span></p>
+  <label class="botao passo-botao" for="passo-43"><span class="antes">Cliente retirou</span><span class="depois">Retirou! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-43" id="q43-jorge" value="jorge"><label for="q43-jorge">Jorge</label><input type="radio" name="quem-43" id="q43-rafael" value="rafael"><label for="q43-rafael">Rafael</label><input type="radio" name="quem-43" id="q43-marcos" value="marcos"><label for="q43-marcos">Marcos</label><input type="radio" name="quem-43" id="q43-balcao" value="balcao" checked><label for="q43-balcao">Cliente retira</label></div></details>
+</article>
+<article class="pedido estado-cozinha e-balcao">
+  <input type="checkbox" class="passo" id="passo-53">
+  <div class="p-topo">
+    <p class="p-num">Pedido 53 · 12:08</p>
+    <p class="selo"><span class="antes">Na cozinha</span><span class="depois">Pronto</span></p>
+  </div>
+  <h4 class="p-nome">Carla Mendes</h4>
+  <p class="p-fone"><a href="tel:+5511900000053">(11) 90000-0053</a></p>
+  <ul class="p-itens"><li><b>1×</b> Peixe frito <span class="tam">(M)</span></li></ul>
+  
+  <p class="p-local"><b>Cliente vem buscar</b> no balcão</p>
+  
+  
+  <p class="p-pagar cobrar"><b>Cobrar R$&nbsp;22,00</b> no cartão</p>
+  <label class="botao passo-botao" for="passo-53"><span class="antes">Marcar como pronto</span><span class="depois">Pronto! Toque para desfazer</span></label>
+  <details class="trocar"><summary>Trocar entregador</summary><div class="opcoes opcoes-quem"><input type="radio" name="quem-53" id="q53-jorge" value="jorge"><label for="q53-jorge">Jorge</label><input type="radio" name="quem-53" id="q53-rafael" value="rafael"><label for="q53-rafael">Rafael</label><input type="radio" name="quem-53" id="q53-marcos" value="marcos"><label for="q53-marcos">Marcos</label><input type="radio" name="quem-53" id="q53-balcao" value="balcao" checked><label for="q53-balcao">Cliente retira</label></div></details>
+</article>
+  </div>
+</section>
+
+<details class="entregues">
+  <summary>Já entregues hoje: <span class="qtd"><span class="q-todos">31</span><span class="q-jorge">11</span><span class="q-rafael">10</span><span class="q-marcos">8</span><span class="q-balcao">2</span></span></summary>
+  <ul class="feitos">
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">10:44</span> <b class="f-nome">Helena Pires</b></p>
+  <p class="f-detalhe">Pedido 31 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">10:40</span> <b class="f-nome">Karina Barbosa</b></p>
+  <p class="f-detalhe">Pedido 30 · Jardim América · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">10:36</span> <b class="f-nome">Valdir Nunes</b></p>
+  <p class="f-detalhe">Pedido 29 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">10:33</span> <b class="f-nome">Simone Telles</b></p>
+  <p class="f-detalhe">Pedido 28 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;59,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">10:29</span> <b class="f-nome">Evandro Silva</b></p>
+  <p class="f-detalhe">Pedido 27 · Parque das Flores · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">10:25</span> <b class="f-nome">Cássio Vieira</b></p>
+  <p class="f-detalhe">Pedido 26 · Centro · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">10:21</span> <b class="f-nome">Beatriz Moraes</b></p>
+  <p class="f-detalhe">Pedido 25 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">10:17</span> <b class="f-nome">Auto Peças Irmãos</b></p>
+  <p class="f-detalhe">Pedido 24 · Jardim América · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;57,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">10:14</span> <b class="f-nome">Sandra Rezende</b></p>
+  <p class="f-detalhe">Pedido 23 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;23,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">10:10</span> <b class="f-nome">Júlio César</b></p>
+  <p class="f-detalhe">Pedido 22 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">10:06</span> <b class="f-nome">Débora Lima</b></p>
+  <p class="f-detalhe">Pedido 21 · Parque das Flores · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;83,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">10:02</span> <b class="f-nome">Wilson Batista</b></p>
+  <p class="f-detalhe">Pedido 20 · Centro · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;49,00</p>
+</li>
+<li class="feito de de-balcao">
+  <p class="f-linha"><span class="f-hora">09:58</span> <b class="f-nome">Cecília Araújo</b></p>
+  <p class="f-detalhe">Pedido 19 · Retirou no balcão</p>
+  <p class="f-valor">R$&nbsp;26,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">09:55</span> <b class="f-nome">Nilton Gomes</b></p>
+  <p class="f-detalhe">Pedido 18 · Jardim América · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;23,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">09:51</span> <b class="f-nome">Salão da Jô</b></p>
+  <p class="f-detalhe">Pedido 17 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">09:47</span> <b class="f-nome">Rodrigo Pinto</b></p>
+  <p class="f-detalhe">Pedido 16 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;57,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">09:43</span> <b class="f-nome">Elisângela Cruz</b></p>
+  <p class="f-detalhe">Pedido 15 · Parque das Flores · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">09:39</span> <b class="f-nome">Dr. Fábio Neves</b></p>
+  <p class="f-detalhe">Pedido 14 · Centro · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;83,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">09:36</span> <b class="f-nome">Márcia Prado</b></p>
+  <p class="f-detalhe">Pedido 13 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;23,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">09:32</span> <b class="f-nome">Aline Freitas</b></p>
+  <p class="f-detalhe">Pedido 12 · Jardim América · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;49,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">09:28</span> <b class="f-nome">Lúcio Ferreira</b></p>
+  <p class="f-detalhe">Pedido 11 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">09:24</span> <b class="f-nome">Padaria Pão Quente</b></p>
+  <p class="f-detalhe">Pedido 10 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">09:20</span> <b class="f-nome">Soraia Lopes</b></p>
+  <p class="f-detalhe">Pedido 9 · Parque das Flores · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">09:17</span> <b class="f-nome">Cleber Santos</b></p>
+  <p class="f-detalhe">Pedido 8 · Centro · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;41,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">09:13</span> <b class="f-nome">Renata Dias</b></p>
+  <p class="f-detalhe">Pedido 7 · São José · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;71,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">09:09</span> <b class="f-nome">Escritório Contábil Alfa</b></p>
+  <p class="f-detalhe">Pedido 6 · Jardim América · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">09:05</span> <b class="f-nome">Mariana Costa</b></p>
+  <p class="f-detalhe">Pedido 5 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-balcao">
+  <p class="f-linha"><span class="f-hora">09:01</span> <b class="f-nome">Josias Ramos</b></p>
+  <p class="f-detalhe">Pedido 4 · Retirou no balcão</p>
+  <p class="f-valor">R$&nbsp;52,00</p>
+</li>
+<li class="feito de de-marcos">
+  <p class="f-linha"><span class="f-hora">08:58</span> <b class="f-nome">Dona Lúcia</b></p>
+  <p class="f-detalhe">Pedido 3 · Vila Nova · levou o Marcos</p>
+  <p class="f-valor">R$&nbsp;23,00</p>
+</li>
+<li class="feito de de-rafael">
+  <p class="f-linha"><span class="f-hora">08:54</span> <b class="f-nome">Paulo Henrique</b></p>
+  <p class="f-detalhe">Pedido 2 · Jardim América · levou o Rafael</p>
+  <p class="f-valor">R$&nbsp;27,00</p>
+</li>
+<li class="feito de de-jorge">
+  <p class="f-linha"><span class="f-hora">08:50</span> <b class="f-nome">Ana Clara</b></p>
+  <p class="f-detalhe">Pedido 1 · Bela Vista · levou o Jorge</p>
+  <p class="f-valor">R$&nbsp;31,00</p>
+</li>
+  </ul>
+</details>
+  </div>
+</main>
+
+<footer class="miolo rodape">
+  <p>Tela de demonstração: os pedidos são de exemplo e os botões ainda não gravam nada.</p>
+</footer>
+
+<!-- Tela de novo pedido: abre sobre a principal, sem sair dela -->
+<span id="fechado" class="ancora-fixa"></span>
+<section id="novo" class="folha" aria-labelledby="novo-titulo">
+  <a class="folha-fundo" href="#fechado" tabindex="-1" aria-hidden="true"></a>
+  <form class="folha-caixa" action="#" method="get">
+    <div class="folha-topo">
+      <h2 id="novo-titulo">Novo pedido</h2>
+      <a class="fechar" href="#fechado">Fechar</a>
+    </div>
+
+    <div class="folha-corpo">
+      <div class="duas">
+        <div class="campo">
+          <label for="f-nome">Nome do cliente</label>
+          <input id="f-nome" name="nome" type="text" autocomplete="off">
+        </div>
+        <div class="campo">
+          <label for="f-fone">Telefone (WhatsApp)</label>
+          <input id="f-fone" name="telefone" type="tel" inputmode="tel" autocomplete="off" placeholder="(11) 90000-0000">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="f-pedido">O que o cliente pediu?</label>
+        <textarea id="f-pedido" name="pedido" rows="3" placeholder="Ex.: 2 marmitas G de frango e 1 M de carne, sem cebola"></textarea>
+      </div>
+
+      <div class="duas">
+        <div class="campo">
+          <label for="f-end">Endereço</label>
+          <input id="f-end" name="endereco" type="text" autocomplete="off" placeholder="Rua e número">
+        </div>
+        <div class="campo">
+          <label for="f-bairro">Bairro</label>
+          <input id="f-bairro" name="bairro" type="text" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="duas">
+        <div class="campo">
+          <label for="f-valor">Valor total (R$)</label>
+          <input id="f-valor" name="valor" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00">
+        </div>
+        <div class="campo">
+          <label for="f-ate">Entregar até que horas? (se tiver)</label>
+          <input id="f-ate" name="ate" type="time">
+        </div>
+      </div>
+
+      <fieldset class="escolha">
+        <legend>Como o cliente vai pagar?</legend>
+        <div class="opcoes">
+          <input type="radio" name="pagamento" id="pg-pix" value="pix" checked><label for="pg-pix">Já pagou (Pix)</label>
+          <input type="radio" name="pagamento" id="pg-dinheiro" value="dinheiro"><label for="pg-dinheiro">Dinheiro</label>
+          <input type="radio" name="pagamento" id="pg-cartao" value="cartao"><label for="pg-cartao">Cartão</label>
+          <div class="campo campo-troco">
+            <label for="f-troco">Vai precisar de troco para quanto?</label>
+            <input id="f-troco" name="troco" type="text" inputmode="decimal" autocomplete="off" placeholder="Ex.: 50 (deixe vazio se for certinho)">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="escolha">
+        <legend>Quem vai levar?</legend>
+        <div class="opcoes opcoes-quem">
+          <input type="radio" name="entregador" id="en-depois" value="depois" checked><label for="en-depois">Escolho depois</label>
+          <input type="radio" name="entregador" id="en-jorge" value="jorge"><label for="en-jorge">Jorge</label>
+          <input type="radio" name="entregador" id="en-rafael" value="rafael"><label for="en-rafael">Rafael</label>
+          <input type="radio" name="entregador" id="en-marcos" value="marcos"><label for="en-marcos">Marcos</label>
+          <input type="radio" name="entregador" id="en-balcao" value="balcao"><label for="en-balcao">Cliente retira</label>
+        </div>
+      </fieldset>
+
+      <div class="campo">
+        <label for="f-aviso">Aviso para o entregador (se tiver)</label>
+        <input id="f-aviso" name="aviso" type="text" autocomplete="off" placeholder="Ex.: portão azul, tocar a campainha">
+      </div>
+    </div>
+
+    <div class="folha-pe">
+      <button type="submit" class="botao botao-verde">Salvar pedido</button>
+      <a class="botao botao-cinza" href="#fechado">Cancelar</a>
+    </div>
+  </form>
+</section>
+
+</body>
+</html>

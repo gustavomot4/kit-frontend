@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marmitaria · Direção B, Sacolas</title>
+<style>
+*{box-sizing:border-box}
+html{font-size:100%}
+body{margin:0}
+h1,h2,h3,p,ul,ol{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.ico{width:1.2em;height:1.2em;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pular{position:absolute;left:8px;top:-80px;z-index:20;padding:12px 18px;background:#000;color:#fff;font-weight:700}
+.pular:focus{top:8px}
+:focus-visible{outline:3px solid var(--foco);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:480px){.fixo{position:static!important}}
+
+:root{--bg:#f1eeec;--sup:#fff;--tx:#2a201d;--mut:#5b4e49;--ln:#d9d0cb;--tomate:#b03418;--fz:#82500a;--pr:#1a6a38;--ru:#23588a;--aluminio:#dde2e4;--foco:#b03418;
+ font-family:"Trebuchet MS","Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--tx);font-size:1.125rem;line-height:1.35}
+.topo{display:flex;align-items:center;gap:20px;padding:10px 28px;background:var(--sup);border-bottom:2px solid var(--tx)}
+.marca{display:inline-flex;align-items:center;min-height:44px;font-size:1.5rem;font-weight:700;letter-spacing:.01em;text-decoration:none;margin-right:8px}
+.busca{flex:1;max-width:460px}
+.busca input{width:100%;height:48px;border:2px solid var(--tx);border-radius:0;padding:0 14px;background:#fff}
+.botao{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 24px;background:var(--tomate);color:#fff;font-weight:700;text-decoration:none;margin-left:auto}
+main{padding:20px 28px 48px}
+.cab{display:flex;align-items:baseline;gap:28px;margin-bottom:18px;flex-wrap:wrap}
+.cab h1{font-size:1.75rem}
+.abas{display:flex;gap:4px}
+.abas a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;text-decoration:none;border-bottom:3px solid transparent}
+.abas a[aria-current=page]{border-bottom-color:var(--tomate);font-weight:700}
+.quadro{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;align-items:start}
+.folha{background:var(--sup);border-top:6px solid var(--tx)}
+.folha.sem{border-top-color:var(--tomate)}
+.folha h2{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px 2px;font-size:1.375rem}
+.folha h2 .q{font-size:1.375rem}
+.resumo{padding:0 16px 10px;color:var(--mut);font-size:1rem}
+.saiu{display:block;width:calc(100% - 32px);margin:0 16px 12px;height:48px;border:2px solid var(--pr);background:#fff;color:var(--pr);font-weight:700}
+.ped{display:grid;grid-template-columns:48px 1fr;gap:12px;padding:12px 16px 14px;border-top:1px solid var(--ln);background-image:none}
+.tampa{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--aluminio);border:3px solid #6f7b82;font:700 1.25rem "Segoe Print","Bradley Hand","Marker Felt",sans-serif;color:#111}
+.nome{font-weight:700;text-decoration:none}
+.meta{color:var(--mut);font-size:1rem}
+.est{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:1rem;margin-top:2px}
+.est b{display:inline-flex;align-items:center;gap:6px}
+.e-fazendo{color:var(--fz)}.e-pronto{color:var(--pr)}.e-rua{color:var(--ru)}
+.cobrar{font-weight:700}
+.quem{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.quem button,.acao{min-height:44px;border:2px solid var(--tx);background:#fff;font-weight:700}
+.acao{padding:0 16px;margin-top:10px}
+.ped-rua .acao{border-color:var(--ru);color:var(--ru)}
+.ped-fazendo .acao{border-color:var(--fz);color:var(--fz)}
+.chips{display:none}
+@media (max-width:839px){
+ .topo{flex-wrap:wrap;padding:10px 16px;gap:10px}.busca{order:3;flex-basis:100%;max-width:none}
+ main{padding:14px 16px 100px}
+ .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+ .chips a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:2px solid var(--tx);background:#fff;text-decoration:none}
+ .chips a[aria-current=page]{background:var(--tx);color:#fff;font-weight:700}
+ .botao{padding:0 16px}
+}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-fazendo" viewBox="0 0 24 24"><path d="M4 11h16v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M2.5 11h19"/><path d="M9 3.5c0 1.6 1.6 1.6 1.6 3.2M14 3.5c0 1.6 1.6 1.6 1.6 3.2"/></symbol>
+<symbol id="i-pronto" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></symbol>
+<symbol id="i-rua" viewBox="0 0 24 24"><path d="M3 12h15M12.5 5.5L19 12l-6.5 6.5"/></symbol>
+<symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
+<a class="pular" href="#pedidos">Pular para os pedidos</a>
+
+<header class="topo">
+ <a class="marca" href="#">Marmitaria</a>
+ <form class="busca" role="search"><label class="sr" for="q">Buscar pedido</label><input id="q" type="search" placeholder="Buscar nome ou número"></form>
+ <a class="botao" href="#anotar"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-mais"/></svg> Anotar pedido</a>
+</header>
+<main id="pedidos">
+ <div class="cab"><h1>Pedidos de hoje</h1>
+  <nav class="abas" aria-label="Ver pedidos"><a href="#" aria-current="page">Em andamento 15</a><a href="#">Entregues 23</a></nav></div>
+ <nav class="chips" aria-label="Filtrar por entregador"><a href="#" aria-current="page">Todos 15</a><a href="#" >Sem entregador 4</a><a href="#" >Cláudio 4</a><a href="#" >Wesley 4</a><a href="#" >Jair 3</a></nav>
+ <div class="quadro">
+  <section class="folha sem" aria-labelledby="h-sem"><h2 id="h-sem">Sem entregador <span class="q">4</span></h2><ul>
+   <li class="ped ped-pronto">
+    <span class="tampa">35</span>
+    <div><a class="nome" href="#p35">Dona Marlene Tavares</a>
+     <p class="meta">Centro · 1 P omelete</p>
+     <p class="est"><b class="e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</b><span class="cobrar">Cobrar R$ 18 · troco p/ 50</span></p>
+     <div class="quem" role="group" aria-label="Quem leva o pedido 35?"><button type="button">Cláudio</button><button type="button">Wesley</button><button type="button">Jair</button></div>
+    </div>
+   </li>
+   <li class="ped ped-fazendo">
+    <span class="tampa">36</span>
+    <div><a class="nome" href="#p36">Escritório Prado Contabilidade</a>
+     <p class="meta">Centro · 2 M frango, 2 M bife</p>
+     <p class="est"><b class="e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</b></p>
+     <div class="quem" role="group" aria-label="Quem leva o pedido 36?"><button type="button">Cláudio</button><button type="button">Wesley</button><button type="button">Jair</button></div>
+    </div>
+   </li>
+   <li class="ped ped-fazendo">
+    <span class="tampa">37</span>
+    <div><a class="nome" href="#p37">Tatiane Moura</a>
+     <p class="meta">Jardim Primavera · 1 M frango, 1 refri</p>
+     <p class="est"><b class="e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</b><span class="cobrar">Cobrar R$ 28 no cartão</span></p>
+     <div class="quem" role="group" aria-label="Quem leva o pedido 37?"><button type="button">Cláudio</button><button type="button">Wesley</button><button type="button">Jair</button></div>
+    </div>
+   </li>
+   <li class="ped ped-fazendo">
+    <span class="tampa">38</span>
+    <div><a class="nome" href="#p38">Maria Aparecida de Fátima Nogueira</a>
+     <p class="meta">Bairro Novo · 1 G bife</p>
+     <p class="est"><b class="e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</b><span class="cobrar">Cobrar R$ 26 · troco p/ 50</span></p>
+     <div class="quem" role="group" aria-label="Quem leva o pedido 38?"><button type="button">Cláudio</button><button type="button">Wesley</button><button type="button">Jair</button></div>
+    </div>
+   </li></ul></section>
+  <section class="folha" aria-labelledby="h-Cláudio"><h2 id="h-Cláudio">Cláudio <span class="q">4</span></h2>
+   <button class="saiu" type="button">Saiu com 1 pronto</button>
+   <ul>
+   <li class="ped ped-pronto">
+    <span class="tampa">31</span>
+    <div><a class="nome" href="#p31">Barbearia do Tonho</a>
+     <p class="meta">Vila Esperança · 2 G bife</p>
+     <p class="est"><b class="e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</b><span class="cobrar">Cobrar R$ 52</span></p>
+     
+    </div>
+   </li>
+   <li class="ped ped-fazendo">
+    <span class="tampa">34</span>
+    <div><a class="nome" href="#p34">Clínica Sorriso</a>
+     <p class="meta">Centro · 5 M frango</p>
+     <p class="est"><b class="e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</b></p>
+     <button class="acao" type="button">Ficou pronto</button>
+    </div>
+   </li>
+   <li class="ped ped-rua">
+    <span class="tampa">25</span>
+    <div><a class="nome" href="#p25">Padaria Pão Quente</a>
+     <p class="meta">Centro · 4 M frango</p>
+     <p class="est"><b class="e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</b></p>
+     <button class="acao" type="button">Entregou</button>
+    </div>
+   </li>
+   <li class="ped ped-rua">
+    <span class="tampa">28</span>
+    <div><a class="nome" href="#p28">Dona Cida Ferreira</a>
+     <p class="meta">Centro · 1 P omelete</p>
+     <p class="est"><b class="e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</b><span class="cobrar">Cobrar R$ 18 · troco p/ 20</span></p>
+     <button class="acao" type="button">Entregou</button>
+    </div>
+   </li></ul></section><section class="folha" aria-labelledby="h-Wesley"><h2 id="h-Wesley">Wesley <span class="q">4</span></h2>
+   <button class="saiu" type="button">Saiu com 1 pronto</button>
+   <ul>
+   <li class="ped ped-pronto">
+    <span class="tampa">33</span>
+    <div><a class="nome" href="#p33">Lucimara Alves</a>
+     <p class="meta">Jardim Primavera · 1 G frango</p>
+     <p class="est"><b class="e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</b></p>
+     
+    </div>
+   </li>
+   <li class="ped ped-fazendo">
+    <span class="tampa">32</span>
+    <div><a class="nome" href="#p32">Mercadinho Boa Compra</a>
+     <p class="meta">São José · 6 M frango</p>
+     <p class="est"><b class="e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</b><span class="cobrar">Cobrar R$ 132 no cartão</span></p>
+     <button class="acao" type="button">Ficou pronto</button>
+    </div>
+   </li>
+   <li class="ped ped-rua">
+    <span class="tampa">27</span>
+    <div><a class="nome" href="#p27">Oficina do Seu Zé</a>
+     <p class="meta">São José · 3 M frango</p>
+     <p class="est"><b class="e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</b></p>
+     <button class="acao" type="button">Entregou</button>
+    </div>
+   </li>
+   <li class="ped ped-rua">
+    <span class="tampa">30</span>
+    <div><a class="nome" href="#p30">Reinaldo Souza</a>
+     <p class="meta">Jardim Primavera · 2 M bife, 1 refri</p>
+     <p class="est"><b class="e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</b><span class="cobrar">Cobrar R$ 50 · troco p/ 100</span></p>
+     <button class="acao" type="button">Entregou</button>
+    </div>
+   </li></ul></section><section class="folha" aria-labelledby="h-Jair"><h2 id="h-Jair">Jair <span class="q">3</span></h2>
+   <button class="saiu" type="button">Saiu com 1 pronto</button>
+   <ul>
+   <li class="ped ped-pronto">
+    <span class="tampa">29</span>
+    <div><a class="nome" href="#p29">Dona Neuza Batista</a>
+     <p class="meta">Bairro Novo · 1 M omelete</p>
+     <p class="est"><b class="e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</b></p>
+     
+    </div>
+   </li>
+   <li class="ped ped-rua">
+    <span class="tampa">24</span>
+    <div><a class="nome" href="#p24">Auto Peças Carvalho</a>
+     <p class="meta">Bairro Novo · 3 M frango</p>
+     <p class="est"><b class="e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</b></p>
+     <button class="acao" type="button">Entregou</button>
+    </div>
+   </li>
+   <li class="ped ped-rua">
+    <span class="tampa">26</span>
+    <div><a class="nome" href="#p26">Seu Antônio Pedreiro</a>
+     <p class="meta">Bairro Novo · 2 G bife</p>
+     <p class="est"><b class="e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</b><span class="cobrar">Cobrar R$ 52</span></p>
+     <button class="acao" type="button">Entregou</button>
+    </div>
+   </li></ul></section>
+ </div>
+</main>
+</body>
+</html>

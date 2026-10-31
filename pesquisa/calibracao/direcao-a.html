@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoje · Casa Ferreira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Direção A, familiar: o dia como lista de conversas */
+  :root { --fundo: #f4f7f3; --superficie: #fff; --tinta: #14211c; --apoio: #52625a; --linha: #dbe4dc; --acao: #0e5f4b; --acao-suave: #dcefe6; --agora: #b4431f; --campo: #7f9188; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--fundo); color: var(--tinta); font-family: 'Hanken Grotesk', sans-serif; line-height: 1.45; }
+  body { margin: 0; font-size: 1rem; padding-bottom: 5rem; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  h1, h2, p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--acao); outline-offset: 2px; }
+  svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .pular { position: absolute; left: -999px; top: .5rem; background: #fff; padding: .75rem 1rem; z-index: 9; }
+  .pular:focus { left: .5rem; }
+
+  .topo { display: flex; align-items: center; gap: 2.5rem; padding: .75rem 2rem; background: var(--superficie); border-bottom: 1px solid var(--linha); position: sticky; top: 0; z-index: 3; }
+  .marca { font-size: 1.375rem; font-weight: 800; letter-spacing: -.02em; }
+  .marca b { color: var(--acao); font-weight: 800; }
+  .conta { margin-left: auto; color: var(--apoio); font-weight: 500; }
+  .abas { display: flex; gap: .25rem; }
+  .abas a { display: flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding: 0 .875rem; border-radius: 999px; font-weight: 600; color: var(--apoio); }
+  .abas a[aria-current] { background: var(--acao-suave); color: var(--acao); }
+  @media (hover: hover) { .abas a:not([aria-current]):hover { background: var(--fundo); color: var(--tinta); } }
+
+  main { max-width: 90rem; margin: 0 auto; padding: 1.75rem 2rem; display: grid; grid-template-columns: minmax(0, 1fr) 26rem; gap: 1.5rem; align-items: start; }
+  .cabeca { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  h1 { font-size: 2.125rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+  .cabeca p { color: var(--apoio); margin-top: .25rem; }
+  .primario { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 3rem; padding: 0 1.25rem; border-radius: .75rem; background: var(--acao); color: #fff; font-weight: 700; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+  .chips a { display: flex; align-items: center; gap: .375rem; min-height: 2.75rem; padding: 0 1rem; border-radius: 999px; background: var(--superficie); border: 1px solid var(--linha); font-weight: 600; }
+  .chips a[aria-current] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+  .chips span { opacity: .75; font-weight: 500; }
+
+  .lista { background: var(--superficie); border: 1px solid var(--linha); border-radius: 1.25rem; padding: .5rem; }
+  .linha { display: grid; grid-template-columns: 3.5rem 2.75rem minmax(0, 1fr) auto; gap: .875rem; align-items: center; min-height: 4rem; padding: .625rem .75rem; border-radius: .875rem; }
+  @media (hover: hover) { .linha:hover { background: var(--fundo); } }
+  .linha[aria-current] { background: var(--acao-suave); box-shadow: inset 3px 0 0 var(--acao); }
+  .linha[aria-current] .ini, .linha[aria-current] .sit { background: #fff; }
+  .hora { font-size: 1.0625rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ini { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; font-size: .9375rem; font-weight: 700; }
+  .t1 { background: #fbe4d6; color: #7c3612; } .t2 { background: #dcefe6; color: #17553f; } .t3 { background: #e3e7f7; color: #33407f; } .t4 { background: #f6e4ec; color: #7f2c55; }
+  .nome { display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sub { display: block; font-size: .9375rem; color: var(--apoio); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .feito .hora, .feito .nome { color: var(--apoio); }
+  .sit { display: inline-flex; align-items: center; gap: .375rem; min-height: 1.875rem; padding: 0 .75rem; border-radius: 999px; font-size: .875rem; font-weight: 600; white-space: nowrap; }
+  .sit svg { width: 1rem; height: 1rem; stroke-width: 2.2; }
+  .cadeira { background: var(--tinta); color: #fff; }
+  .ok { background: var(--acao-suave); color: #0c4c3c; }
+  .falta { border: 1.5px dashed #8a5a00; color: #6b4600; background: #fff; }
+  .fim { background: #edf0ed; color: #47544d; }
+  .agora { display: flex; align-items: center; gap: .5rem; margin: .25rem .75rem; color: var(--agora); font-size: .875rem; font-weight: 700; }
+  .agora::after { content: ""; flex: 1; height: 2px; background: var(--agora); }
+
+  .detalhe { position: sticky; top: 5.25rem; background: var(--superficie); border: 1px solid var(--linha); border-radius: 1.5rem; padding: 1.5rem; display: grid; gap: 1.25rem; }
+  .quem { display: flex; align-items: center; gap: 1rem; }
+  .quem .ini { width: 4rem; height: 4rem; font-size: 1.25rem; }
+  .quem h2 { font-size: 1.375rem; font-weight: 800; line-height: 1.15; }
+  .quem p { color: var(--apoio); }
+  dl { margin: 0; display: grid; gap: .875rem; background: var(--fundo); border-radius: 1rem; padding: 1rem 1.125rem; }
+  dt { font-size: .875rem; color: var(--apoio); font-weight: 600; }
+  dd { margin: 0; font-weight: 500; }
+  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .sec { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.75rem; padding: 0 .75rem; border-radius: .75rem; border: 1.5px solid var(--campo); font-weight: 600; background: #fff; }
+  .largo { width: 100%; min-height: 3.25rem; }
+
+  @media (max-width: 1099px) { main { grid-template-columns: minmax(0, 1fr); } .detalhe { position: static; order: -1; } }
+  @media (max-width: 839px) {
+    main { padding: 1rem; }
+    .topo { padding: .5rem 1rem; }
+    .abas { position: fixed; left: 0; right: 0; bottom: 0; z-index: 4; justify-content: space-around; background: var(--superficie); border-top: 1px solid var(--linha); padding: .25rem .5rem; }
+    .abas a { flex-direction: column; gap: 0; flex: 1; border-radius: .75rem; min-height: 3.5rem; justify-content: center; font-size: .8125rem; padding: 0; }
+    .linha { grid-template-columns: 3rem 2.75rem minmax(0, 1fr); }
+    .linha .sit { grid-column: 3; justify-self: start; }
+    dl { display: none; }
+  }
+  @media (max-height: 480px) { .topo, .abas, .detalhe { position: static; } .abas { flex-wrap: wrap; } body { padding-bottom: 0; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-gente" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.4-4.7-3.6-5.6"/></symbol>
+  <symbol id="i-caixa" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 15h2"/></symbol>
+  <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-tesoura" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8 8l12 10M8 16 20 6"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-okok" viewBox="0 0 24 24"><path d="m2 12 5 5 9-10M13 16l1 1 8-10"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-fala" viewBox="0 0 24 24"><path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/></symbol>
+  <symbol id="i-fone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1C10.700 20 4 13.300 4 5a1 1 0 0 1 1-1z"/></symbol>
+</defs></svg>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<header class="topo">
+  <a class="marca" href="#">Casa <b>Ferreira</b></a>
+  <nav class="abas" aria-label="Principal">
+    <a href="#" aria-current="page"><svg aria-hidden="true"><use href="#i-sol"/></svg>Hoje</a>
+    <a href="#"><svg aria-hidden="true"><use href="#i-cal"/></svg>Agenda</a>
+    <a href="#"><svg aria-hidden="true"><use href="#i-gente"/></svg>Clientes</a>
+    <a href="#"><svg aria-hidden="true"><use href="#i-caixa"/></svg>Caixa</a>
+  </nav>
+  <span class="conta">Ana Ferreira</span>
+</header>
+<main id="conteudo">
+  <div>
+    <div class="cabeca">
+      <div><h1>Boa tarde, Ana</h1><p>Quinta, 30 de outubro · 8 horários</p></div>
+      <a class="primario" href="#"><svg aria-hidden="true"><use href="#i-mais"/></svg>Marcar horário</a>
+    </div>
+    <nav class="chips" aria-label="Filtrar por barbeiro">
+      <a href="#" aria-current="true">Todos <span>8</span></a><a href="#">Ruan <span>3</span></a><a href="#">Nico <span>3</span></a><a href="#">Jair <span>2</span></a>
+    </nav>
+    <ul class="lista">
+      <li><a class="linha feito" href="#"><span class="hora">13:30</span><span class="ini t1" aria-hidden="true">TV</span><span><span class="nome">Teo Vasconcelos</span><span class="sub">Corte e barba · Ruan</span></span><span class="sit fim"><svg aria-hidden="true"><use href="#i-okok"/></svg>Terminou</span></a></li>
+      <li><a class="linha" href="#"><span class="hora">14:00</span><span class="ini t3" aria-hidden="true">DQ</span><span><span class="nome">Davi Quintela</span><span class="sub">Corte · Nico</span></span><span class="sit cadeira"><svg aria-hidden="true"><use href="#i-tesoura"/></svg>Na cadeira</span></a></li>
+      <li><a class="linha" href="#"><span class="hora">14:10</span><span class="ini t4" aria-hidden="true">BS</span><span><span class="nome">Breno Sá</span><span class="sub">Barba · Jair</span></span><span class="sit cadeira"><svg aria-hidden="true"><use href="#i-tesoura"/></svg>Na cadeira</span></a></li>
+      <li class="agora" aria-hidden="true">Agora, 14:20</li>
+      <li><a class="linha" href="#" aria-current="true"><span class="hora">14:30</span><span class="ini t2" aria-hidden="true">CM</span><span><span class="nome">Caetano Moura</span><span class="sub">Corte e barba · Ruan</span></span><span class="sit ok"><svg aria-hidden="true"><use href="#i-ok"/></svg>Confirmado</span></a></li>
+      <li><a class="linha" href="#"><span class="hora">14:40</span><span class="ini t1" aria-hidden="true">IB</span><span><span class="nome">Igor Bastos</span><span class="sub">Corte · Nico</span></span><span class="sit ok"><svg aria-hidden="true"><use href="#i-ok"/></svg>Confirmado</span></a></li>
+      <li><a class="linha" href="#"><span class="hora">15:00</span><span class="ini t3" aria-hidden="true">MA</span><span><span class="nome">Murilo Antunes</span><span class="sub">Corte · Jair</span></span><span class="sit falta"><svg aria-hidden="true"><use href="#i-relogio"/></svg>A confirmar</span></a></li>
+      <li><a class="linha" href="#"><span class="hora">15:20</span><span class="ini t4" aria-hidden="true">HL</span><span><span class="nome">Heitor Lacerda</span><span class="sub">Pezinho · Ruan</span></span><span class="sit falta"><svg aria-hidden="true"><use href="#i-relogio"/></svg>A confirmar</span></a></li>
+    </ul>
+  </div>
+  <aside class="detalhe" aria-label="Próximo cliente">
+    <div class="quem"><span class="ini t2" aria-hidden="true">CM</span><div><h2>Caetano Moura</h2><p>Próximo, em 10 minutos</p></div></div>
+    <div class="duas"><a class="sec" href="#"><svg aria-hidden="true"><use href="#i-fala"/></svg>WhatsApp</a><a class="sec" href="#"><svg aria-hidden="true"><use href="#i-fone"/></svg>Ligar</a></div>
+    <dl><div><dt>Horário</dt><dd>14:30 às 15:10, com Ruan</dd></div><div><dt>Serviço</dt><dd>Corte e barba · R$ 75,00</dd></div><div><dt>O de sempre</dt><dd>Máquina 2 nas laterais, barba baixa</dd></div></dl>
+    <a class="sec largo" href="#"><svg aria-hidden="true"><use href="#i-tesoura"/></svg>Sentou na cadeira</a>
+  </aside>
+</main>
+</body>
+</html>

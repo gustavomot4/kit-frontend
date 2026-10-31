@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marmitaria · Direção C, Balcão</title>
+<style>
+*{box-sizing:border-box}
+html{font-size:100%}
+body{margin:0}
+h1,h2,h3,p,ul,ol{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.ico{width:1.2em;height:1.2em;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pular{position:absolute;left:8px;top:-80px;z-index:20;padding:12px 18px;background:#000;color:#fff;font-weight:700}
+.pular:focus{top:8px}
+:focus-visible{outline:3px solid var(--foco);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:480px){.fixo{position:static!important}}
+
+:root{--bg:#f6f4ee;--sup:#fff;--tx:#2b1b0e;--mut:#5a4a3c;--ln:#d8cfc2;--amarelo:#f3c13a;--tomate:#a8321a;--fz:#7d4b00;--pr:#17613a;--ru:#1f5683;--foco:#1c1c1c;
+ font-family:Verdana,Tahoma,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--tx);font-size:1.0625rem;line-height:1.4}
+.faixa{display:flex;align-items:center;gap:20px;padding:12px 28px;background:var(--amarelo)}
+.marca{display:inline-flex;align-items:center;min-height:44px;font:900 1.625rem "Arial Black",Verdana,sans-serif;text-decoration:none;letter-spacing:-.01em;margin-right:8px}
+.busca{flex:1;max-width:420px}
+.busca input{width:100%;height:48px;border:3px solid var(--tx);padding:0 14px;background:#fff;border-radius:4px}
+.botao{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 24px;background:var(--tx);color:#fff;font-weight:700;text-decoration:none;margin-left:auto;border-radius:4px}
+:focus-visible{outline-color:var(--foco)}
+.faixa :focus-visible{outline-color:#000}
+.botao:focus-visible{outline-color:#fff;box-shadow:0 0 0 5px #000}
+main{padding:22px 28px 48px}
+h1{font:900 1.75rem "Arial Black",Verdana,sans-serif;margin-bottom:18px}
+.palco{display:grid;grid-template-columns:5fr 7fr;gap:28px;align-items:start}
+.proximo{background:var(--amarelo);padding:22px 24px 24px;border-radius:4px}
+.proximo h2{font-size:1.25rem;margin-bottom:10px}
+.numg{font:900 4.5rem/1 "Arial Black",Verdana,sans-serif}
+.nomeg{font-size:2rem;font-weight:700;line-height:1.1;margin:6px 0 8px}
+.gigantes{display:grid;gap:10px;margin:18px 0 12px}
+.gigantes button{height:64px;border:3px solid var(--tx);background:#fff;color:var(--tx);font-size:1.5rem;font-weight:700;border-radius:4px}
+.fila{font-size:1rem}
+.fila li{padding:4px 0}
+.sacolas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.sacola{background:var(--sup);border-radius:4px;padding:14px 14px 8px}
+.sacola h3{font-size:1.375rem;font-weight:900;font-family:"Arial Black",Verdana,sans-serif}
+.sacola .res{color:var(--mut);font-size:.9375rem;margin-bottom:8px}
+.sacola li{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--ln);align-items:center}
+.n{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:3px solid var(--tx);font:900 1rem "Arial Black",Verdana,sans-serif}
+.l1{font-weight:700;font-size:.9375rem;line-height:1.25}
+.l2{display:flex;align-items:center;gap:6px;font-size:.9375rem;font-weight:700}
+.e-fazendo{color:var(--fz)}.e-pronto{color:var(--pr)}.e-rua{color:var(--ru)}
+.cobrar{font-weight:700}
+@media (max-width:899px){
+ .faixa{flex-wrap:wrap;padding:10px 16px;gap:10px}.busca{order:3;flex-basis:100%;max-width:none}
+ main{padding:16px 16px 40px}.palco{grid-template-columns:1fr}
+ .numg{font-size:3.5rem}.nomeg{font-size:1.5rem}.botao{padding:0 16px}
+}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-fazendo" viewBox="0 0 24 24"><path d="M4 11h16v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M2.5 11h19"/><path d="M9 3.5c0 1.6 1.6 1.6 1.6 3.2M14 3.5c0 1.6 1.6 1.6 1.6 3.2"/></symbol>
+<symbol id="i-pronto" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></symbol>
+<symbol id="i-rua" viewBox="0 0 24 24"><path d="M3 12h15M12.5 5.5L19 12l-6.5 6.5"/></symbol>
+<symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
+<a class="pular" href="#pedidos">Pular para os pedidos</a>
+
+<header class="faixa">
+ <a class="marca" href="#">Marmitaria</a>
+ <form class="busca" role="search"><label class="sr" for="q">Buscar pedido</label><input id="q" type="search" placeholder="Buscar nome ou número"></form>
+ <a class="botao" href="#anotar"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-mais"/></svg> Anotar pedido</a>
+</header>
+<main id="pedidos">
+ <h1>Pedidos de hoje</h1>
+ <div class="palco">
+  <section class="proximo" aria-labelledby="h-prox">
+   <h2 id="h-prox">Quem leva este?</h2>
+   <p class="numg">35</p>
+   <p class="nomeg">Dona Marlene Tavares</p>
+   <p>Centro · 1 P omelete</p>
+   <p class="cobrar">Cobrar R$ 18 · troco p/ 50</p>
+   <div class="gigantes" role="group" aria-label="Quem leva o pedido 35?"><button type="button">Cláudio</button><button type="button">Wesley</button><button type="button">Jair</button></div>
+   <p class="fila">Esperando depois deste:</p>
+   <ul class="fila"><li><b>36</b> Escritório Prado Contabilidade</li><li><b>37</b> Tatiane Moura</li><li><b>38</b> Maria Aparecida de Fátima Nogueira</li></ul>
+  </section>
+  <section aria-labelledby="h-sac"><h2 id="h-sac" class="sr">Nas sacolas</h2>
+   <div class="sacolas"><article class="sacola" aria-labelledby="s-Cláudio"><h3 id="s-Cláudio">Cláudio</h3><p class="res">4 pedidos</p><ul>
+      <li><span class="n">25</span><div><p class="l1">Padaria Pão Quente</p><p class="l2 e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</p></div></li>
+      <li><span class="n">28</span><div><p class="l1">Dona Cida Ferreira</p><p class="l2 e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</p></div></li>
+      <li><span class="n">31</span><div><p class="l1">Barbearia do Tonho</p><p class="l2 e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</p></div></li>
+      <li><span class="n">34</span><div><p class="l1">Clínica Sorriso</p><p class="l2 e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</p></div></li></ul></article><article class="sacola" aria-labelledby="s-Wesley"><h3 id="s-Wesley">Wesley</h3><p class="res">4 pedidos</p><ul>
+      <li><span class="n">27</span><div><p class="l1">Oficina do Seu Zé</p><p class="l2 e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</p></div></li>
+      <li><span class="n">30</span><div><p class="l1">Reinaldo Souza</p><p class="l2 e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</p></div></li>
+      <li><span class="n">32</span><div><p class="l1">Mercadinho Boa Compra</p><p class="l2 e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</p></div></li>
+      <li><span class="n">33</span><div><p class="l1">Lucimara Alves</p><p class="l2 e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</p></div></li></ul></article><article class="sacola" aria-labelledby="s-Jair"><h3 id="s-Jair">Jair</h3><p class="res">3 pedidos</p><ul>
+      <li><span class="n">24</span><div><p class="l1">Auto Peças Carvalho</p><p class="l2 e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</p></div></li>
+      <li><span class="n">26</span><div><p class="l1">Seu Antônio Pedreiro</p><p class="l2 e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</p></div></li>
+      <li><span class="n">29</span><div><p class="l1">Dona Neuza Batista</p><p class="l2 e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</p></div></li></ul></article></div>
+  </section>
+ </div>
+</main>
+</body>
+</html>

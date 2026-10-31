@@ -1,0 +1,4 @@
+# Fim de linha LF no repositório e na cópia local: o comando do kit precisa rodar também em Linux e Mac
+* text=auto eol=lf
+*.png binary
+*.jpg binary

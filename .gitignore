@@ -1,0 +1,22 @@
+# sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editores
+.vscode/
+.idea/
+*.swp
+
+# configuração local de assistentes de código
+.claude/settings.local.json
+
+# temporários
+*.tmp
+*.bak
+~$*
+
+# dependências e saídas do verificador
+node_modules/
+design/verificacao/
+pesquisa/calibracao/capturas/*/resultado.json

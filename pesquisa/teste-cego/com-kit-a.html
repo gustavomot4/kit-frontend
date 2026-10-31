@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marmitaria · Direção A, Conversas</title>
+<style>
+*{box-sizing:border-box}
+html{font-size:100%}
+body{margin:0}
+h1,h2,h3,p,ul,ol{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.ico{width:1.2em;height:1.2em;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pular{position:absolute;left:8px;top:-80px;z-index:20;padding:12px 18px;background:#000;color:#fff;font-weight:700}
+.pular:focus{top:8px}
+:focus-visible{outline:3px solid var(--foco);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-height:480px){.fixo{position:static!important}}
+
+:root{--bg:#f1f5f2;--sup:#fff;--tx:#14261d;--mut:#4a5e53;--ln:#d3dfd7;--marca:#1b6b49;--tinta:#12332a;--sel:#e1efe6;--fz:#85530a;--pr:#1b6b49;--ru:#24598a;--alerta:#a1380c;--foco:#0f3f8f;
+ font-family:Corbel,Candara,"Segoe UI",Roboto,sans-serif}
+body{background:var(--bg);color:var(--tx);font-size:1.125rem;line-height:1.4}
+.topo{display:flex;align-items:center;gap:16px;padding:10px 24px;background:var(--sup);border-bottom:1px solid var(--ln)}
+.marca{display:inline-flex;align-items:center;min-height:44px;font-size:1.5rem;font-weight:700;color:var(--marca);text-decoration:none;margin-right:8px}
+.busca{flex:1;max-width:520px}
+.busca input{width:100%;height:48px;border:1px solid #6c7f74;border-radius:24px;padding:0 20px;background:#fff}
+.botao{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 22px;border:0;border-radius:24px;background:var(--tinta);color:#fff;font-weight:700;text-decoration:none;margin-left:auto}
+.palco{display:grid;grid-template-columns:minmax(420px,5fr) 7fr;gap:0;min-height:calc(100vh - 69px)}
+.lista{background:var(--sup);border-right:1px solid var(--ln);padding:20px 0 40px}
+.lista h1{font-size:1.625rem;padding:0 24px 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 16px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:1px solid #6c7f74;border-radius:22px;text-decoration:none;background:#fff}
+.chip[aria-current=page]{background:var(--sel);border:2px solid var(--tinta);color:var(--tinta);font-weight:700}
+.linha{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:start;padding:14px 24px;border-top:1px solid var(--ln);text-decoration:none;min-height:84px}
+.linha.sel{background:var(--sel)}
+.num{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#e8eeea;border:1px solid #9db0a5;font-weight:700;font-size:1.125rem}
+.corpo{display:grid;gap:2px;min-width:0}
+.nome{font-weight:700}
+.sub{color:var(--mut);font-size:1rem}
+.est{display:inline-flex;align-items:center;gap:6px;font-size:1rem;font-weight:700}
+.e-fazendo{color:var(--fz)}.e-pronto{color:var(--pr)}.e-rua{color:var(--ru)}
+.lado{display:grid;justify-items:end;gap:2px;font-size:1rem;color:var(--mut);text-align:right}
+.quem.vazio{color:var(--alerta);font-weight:700}
+.detalhe{padding:32px 40px;max-width:760px;width:100%;margin:0 auto}
+.det-num{color:var(--mut)}
+.detalhe h2{font-size:2rem;line-height:1.15;margin:4px 0 6px}
+.itens{margin:20px 0 6px;font-size:1.5rem;font-weight:700}
+.passos{display:flex;gap:10px;margin:24px 0;flex-wrap:wrap}
+.passos li{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--ln);border-radius:20px;color:var(--mut)}
+.passos li.agora{border-color:var(--fz);color:var(--fz);font-weight:700;background:#fdf3de}
+.grande{height:56px;padding:0 28px;border:2px solid var(--tinta);border-radius:28px;background:var(--sel);color:var(--tinta);font-weight:700;font-size:1.25rem}
+.detalhe h3{font-size:1.25rem;margin:32px 0 10px}
+.qb{display:flex;gap:12px;flex-wrap:wrap}
+.qb button{min-width:140px;height:56px;border:2px solid var(--tinta);border-radius:28px;background:#fff;font-weight:700;font-size:1.125rem}
+@media (max-width:899px){
+ .palco{display:block}.detalhe{display:none}.lista{border-right:0}
+ .topo{flex-wrap:wrap;padding:10px 16px}.busca{order:3;flex-basis:100%;max-width:none}
+ .linha{padding:12px 16px}.lista h1,.chips{padding-left:16px;padding-right:16px}
+ .botao{padding:0 18px}
+}</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-fazendo" viewBox="0 0 24 24"><path d="M4 11h16v5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M2.5 11h19"/><path d="M9 3.5c0 1.6 1.6 1.6 1.6 3.2M14 3.5c0 1.6 1.6 1.6 1.6 3.2"/></symbol>
+<symbol id="i-pronto" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></symbol>
+<symbol id="i-rua" viewBox="0 0 24 24"><path d="M3 12h15M12.5 5.5L19 12l-6.5 6.5"/></symbol>
+<symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</defs></svg>
+<a class="pular" href="#pedidos">Pular para os pedidos</a>
+
+<header class="topo">
+ <a class="marca" href="#">Marmitaria</a>
+ <form class="busca" role="search"><label class="sr" for="q">Buscar pedido</label><input id="q" type="search" placeholder="Buscar nome ou número"></form>
+ <a class="botao" href="#anotar"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-mais"/></svg> Anotar pedido</a>
+</header>
+<main id="pedidos" class="palco">
+ <section class="lista" aria-labelledby="t">
+  <h1 id="t">Pedidos de hoje</h1>
+  <nav class="chips" aria-label="Filtrar por entregador"><a class="chip" href="#" aria-current="page">Todos 15</a><a class="chip" href="#" >Sem entregador 4</a><a class="chip" href="#" >Cláudio 4</a><a class="chip" href="#" >Wesley 4</a><a class="chip" href="#" >Jair 3</a></nav>
+  <ul>
+   <li><a class="linha" href="#p38">
+    <span class="num">38</span>
+    <span class="corpo"><span class="nome">Maria Aparecida de Fátima Nogueira</span><span class="sub">Bairro Novo · 1 G bife</span><span class="est e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</span></span>
+    <span class="lado"><span>12:01</span><span class="quem vazio">Sem entregador</span></span>
+   </a></li>
+   <li><a class="linha" href="#p37">
+    <span class="num">37</span>
+    <span class="corpo"><span class="nome">Tatiane Moura</span><span class="sub">Jardim Primavera · 1 M frango, 1 refri</span><span class="est e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</span></span>
+    <span class="lado"><span>11:58</span><span class="quem vazio">Sem entregador</span></span>
+   </a></li>
+   <li><a class="linha sel" href="#p36">
+    <span class="num">36</span>
+    <span class="corpo"><span class="nome">Escritório Prado Contabilidade</span><span class="sub">Centro · 2 M frango, 2 M bife</span><span class="est e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</span></span>
+    <span class="lado"><span>11:55</span><span class="quem vazio">Sem entregador</span></span>
+   </a></li>
+   <li><a class="linha" href="#p35">
+    <span class="num">35</span>
+    <span class="corpo"><span class="nome">Dona Marlene Tavares</span><span class="sub">Centro · 1 P omelete</span><span class="est e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</span></span>
+    <span class="lado"><span>11:52</span><span class="quem vazio">Sem entregador</span></span>
+   </a></li>
+   <li><a class="linha" href="#p34">
+    <span class="num">34</span>
+    <span class="corpo"><span class="nome">Clínica Sorriso</span><span class="sub">Centro · 5 M frango</span><span class="est e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</span></span>
+    <span class="lado"><span>11:50</span><span class="quem">Cláudio</span></span>
+   </a></li>
+   <li><a class="linha" href="#p33">
+    <span class="num">33</span>
+    <span class="corpo"><span class="nome">Lucimara Alves</span><span class="sub">Jardim Primavera · 1 G frango</span><span class="est e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</span></span>
+    <span class="lado"><span>11:47</span><span class="quem">Wesley</span></span>
+   </a></li>
+   <li><a class="linha" href="#p32">
+    <span class="num">32</span>
+    <span class="corpo"><span class="nome">Mercadinho Boa Compra</span><span class="sub">São José · 6 M frango</span><span class="est e-fazendo"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</span></span>
+    <span class="lado"><span>11:44</span><span class="quem">Wesley</span></span>
+   </a></li>
+   <li><a class="linha" href="#p31">
+    <span class="num">31</span>
+    <span class="corpo"><span class="nome">Barbearia do Tonho</span><span class="sub">Vila Esperança · 2 G bife</span><span class="est e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</span></span>
+    <span class="lado"><span>11:41</span><span class="quem">Cláudio</span></span>
+   </a></li>
+   <li><a class="linha" href="#p30">
+    <span class="num">30</span>
+    <span class="corpo"><span class="nome">Reinaldo Souza</span><span class="sub">Jardim Primavera · 2 M bife, 1 refri</span><span class="est e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</span></span>
+    <span class="lado"><span>11:38</span><span class="quem">Wesley</span></span>
+   </a></li>
+   <li><a class="linha" href="#p29">
+    <span class="num">29</span>
+    <span class="corpo"><span class="nome">Dona Neuza Batista</span><span class="sub">Bairro Novo · 1 M omelete</span><span class="est e-pronto"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</span></span>
+    <span class="lado"><span>11:34</span><span class="quem">Jair</span></span>
+   </a></li>
+   <li><a class="linha" href="#p28">
+    <span class="num">28</span>
+    <span class="corpo"><span class="nome">Dona Cida Ferreira</span><span class="sub">Centro · 1 P omelete</span><span class="est e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</span></span>
+    <span class="lado"><span>11:31</span><span class="quem">Cláudio</span></span>
+   </a></li>
+   <li><a class="linha" href="#p27">
+    <span class="num">27</span>
+    <span class="corpo"><span class="nome">Oficina do Seu Zé</span><span class="sub">São José · 3 M frango</span><span class="est e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</span></span>
+    <span class="lado"><span>11:26</span><span class="quem">Wesley</span></span>
+   </a></li>
+   <li><a class="linha" href="#p26">
+    <span class="num">26</span>
+    <span class="corpo"><span class="nome">Seu Antônio Pedreiro</span><span class="sub">Bairro Novo · 2 G bife</span><span class="est e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</span></span>
+    <span class="lado"><span>11:21</span><span class="quem">Jair</span></span>
+   </a></li>
+   <li><a class="linha" href="#p25">
+    <span class="num">25</span>
+    <span class="corpo"><span class="nome">Padaria Pão Quente</span><span class="sub">Centro · 4 M frango</span><span class="est e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</span></span>
+    <span class="lado"><span>11:16</span><span class="quem">Cláudio</span></span>
+   </a></li>
+   <li><a class="linha" href="#p24">
+    <span class="num">24</span>
+    <span class="corpo"><span class="nome">Auto Peças Carvalho</span><span class="sub">Bairro Novo · 3 M frango</span><span class="est e-rua"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</span></span>
+    <span class="lado"><span>11:12</span><span class="quem">Jair</span></span>
+   </a></li>
+  </ul>
+ </section>
+ <aside class="detalhe" aria-label="Pedido 36">
+  <p class="det-num">Pedido 36 · 11:55</p>
+  <h2>Escritório Prado Contabilidade</h2>
+  <p>Av. Brasil, 450, sala 2 · Centro</p>
+  <ul class="itens"><li>2 M frango</li><li>2 M bife</li></ul>
+  <p>Pix pago</p>
+  <ol class="passos"><li class="agora"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-fazendo"/></svg> Fazendo</li><li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-pronto"/></svg> Pronto</li><li><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-rua"/></svg> Na rua</li></ol>
+  <button class="grande" type="button">Ficou pronto</button>
+  <h3>Quem leva?</h3>
+  <div class="qb"><button type="button">Cláudio</button><button type="button">Wesley</button><button type="button">Jair</button></div>
+ </aside>
+</main>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catraca — ordens de serviço para oficinas de bicicleta</title>
+<!-- Mockup 1 (vitrine) construído seguindo DESIGNSYSTEM.md. Marca fictícia. -->
+<!-- Fonte: exatamente o <link> da linha 195 do documento -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600&display=swap" rel="stylesheet">
+<style>
+/* ===== Tokens: cópia literal da seção 12 (linhas 760–829) ===== */
+:root {
+  color-scheme: light;
+  --paper:    #FAF9F7;
+  --surface:  #FFFFFF;
+  --sunken:   #F4F2EC;
+  --fill:     rgba(118, 114, 106, 0.12);
+  --fill-2:   rgba(120, 116, 108, 0.18);
+  --line:     #E8E4DC;
+  --line-2:   #CBC6BC;
+  --ink:      #1C1B19;
+  --ink-2:    #6B6862;
+  --ink-3:    #8A867E;
+  --accent:        #8E2C26;
+  --accent-hover:  #9C332C;
+  --accent-active: #7A2520;
+  --accent-tint:   #F1E6E5;
+  --on-accent:     #FFFFFF;
+  --t-display: 3.5rem;
+  --t1: 1.75rem;
+  --t2: 1.3125rem;
+  --t3: 1.0625rem;
+  --t4: 0.875rem;
+  --t5: 0.75rem;
+  --lh-titulo: calc(1em + 4px);
+  --lh-corpo:  calc(1em + 8px);
+  --lh-denso:  calc(1em + 6px);
+  --lh-botao:  calc(1em + 3px);
+  --tr-56: -0.005em;
+  --tr-48: -0.003em;
+  --tr-40:  0em;
+  --tr-17: -0.011em;
+  --tr-14: -0.008em;
+  --tr-12: -0.005em;
+  --r-pill: 980px;
+  --r-28:   28px;
+  --r-18:   18px;
+  --r-12:   12px;
+  --r-8:     8px;
+  --r-6:     6px;
+  --shell:  1024px;
+  --prosa:   692px;
+  --gutter:   22px;
+  --secao-pt: 96px;
+  --secao-pb: 104px;
+  --ease: cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+@media (max-width: 1068px) { :root { --t-display: 3rem;   --secao-pt: 80px; --secao-pb: 80px; } }
+@media (max-width: 734px)  { :root { --t-display: 2.5rem; --secao-pt: 72px; --secao-pb: 78px; } }
+
+/* ===== Base ===== */
+*, *::before, *::after { box-sizing: border-box; }           /* omitido no doc; sem isso 1024 − 44 ≠ 980 */
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;                 /* stack da linha 874 */
+  font-optical-sizing: auto;                                 /* linha 199 */
+  font-weight: 400;
+  font-size: var(--t3);
+  line-height: var(--lh-corpo);
+  letter-spacing: var(--tr-17);
+  color: var(--ink);
+  background: var(--paper);
+}
+h1, h2, h3, p, figure, ul, dl, dd { margin: 0; padding: 0; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+
+/* Tipos: 4 tamanhos nesta tela — 56 · 28 · 17 · 14 (linha 140) */
+.t-display { font-size: var(--t-display); line-height: var(--lh-titulo); letter-spacing: var(--tr-56); font-weight: 600; }
+.t1        { font-size: var(--t1); line-height: var(--lh-titulo); letter-spacing: 0; }
+.t3        { font-size: var(--t3); line-height: var(--lh-corpo);  letter-spacing: var(--tr-17); }
+.t4        { font-size: var(--t4); line-height: var(--lh-denso);  letter-spacing: var(--tr-14); }
+.w6 { font-weight: 600; }
+.sec { color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Layout: linha 353 */
+.shell { max-width: var(--shell); padding: 0 var(--gutter); margin: 0 auto; }
+.secao { padding-top: var(--secao-pt); padding-bottom: var(--secao-pb); }
+.capitulo-cinza { background: var(--sunken); }               /* full-bleed, sem raio (linha 440) */
+.abertura-centro { text-align: center; }                     /* só abertura de capítulo dona da faixa (linha 428) */
+.bloco { margin-top: 40px; }                                 /* "bloco de conteúdo" 40px (linha 401) */
+
+/* Grade: linha 415 */
+.grid { display: grid; column-gap: 40px; row-gap: 82px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1068px) { .grid { column-gap: 24px; } }
+@media (max-width: 734px)  { .grid { column-gap: 0; grid-template-columns: 1fr; } .shell { width: 87.5%; max-width: none; padding: 0; } }
+
+/* Foco e movimento: linhas 513–514 e 676 */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* Barra translúcida: linhas 624–627 (há herói rolando por baixo) */
+.bar {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--paper);
+  background: rgba(250, 249, 247, 0.8);
+  -webkit-backdrop-filter: saturate(1.8) blur(20px);
+  backdrop-filter: saturate(1.8) blur(20px);
+}
+.bar-in { height: 48px; display: flex; align-items: center; justify-content: space-between; }
+.marca { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; min-height: 28px; }
+.marca svg { display: block; }
+.bar nav ul { display: flex; gap: 32px; }
+.bar nav a { display: inline-flex; align-items: center; min-height: 28px; }   /* alvo de mouse 28px (linha 486) */
+.bar nav a:hover { color: var(--ink-2); }
+
+/* Botões: linhas 535–549 */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  border: 0; cursor: pointer; font-family: inherit; white-space: nowrap;
+  line-height: var(--lh-botao);
+  transition: background-color 150ms var(--ease);
+}
+.btn::after { content: ''; position: absolute; inset: -6px; }            /* alvo, não caixa (linha 494) */
+.btn-primario { padding: 12px 22px; font-size: var(--t3); letter-spacing: var(--tr-17); font-weight: 600;
+  border-radius: var(--r-pill); background: var(--accent); color: var(--on-accent); }
+.btn-primario:hover  { background: var(--accent-hover); }
+.btn-primario:active { background: var(--accent-active); }
+.btn-secundario { padding: 9px 16px; font-size: var(--t4); letter-spacing: var(--tr-14); font-weight: 400;
+  border-radius: var(--r-pill); background: var(--ink); color: var(--surface); }
+.btn-secundario.fill { background: var(--fill); color: var(--ink); }
+
+/* Herói */
+.heroi h1 { max-width: 900px; }
+.heroi .apoio { margin-top: 12px; }
+.acoes { margin-top: 32px; display: flex; align-items: center; gap: 20px; }
+
+/* Mídia grande: raio 28 (linha 459). Placeholder de foto = tom chapado; sem gradiente (linha 746) */
+.midia { border-radius: var(--r-28); background: var(--sunken); overflow: hidden; position: relative; }
+.midia-heroi { height: 480px; }
+.janela { position: absolute; left: 64px; right: 64px; top: 56px; height: 520px;
+  background: var(--surface); border-radius: var(--r-18) var(--r-18) 0 0; padding: 28px 24px 0; }
+.janela .prox { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.janela .prox h3 { margin-top: 2px; }
+.lista { margin-top: 24px; }
+.lista li { display: grid; grid-template-columns: 78px 176px 1fr 168px 56px; align-items: center; height: 44px; column-gap: 0;
+  font-size: var(--t4); line-height: var(--lh-denso); letter-spacing: var(--tr-14);
+  border-top: 1px solid var(--line); }                                      /* separador = --line; borda simples para não criar sombra extra */
+.lista li > :last-child { text-align: right; }
+/* Resolvido: --ink-3, peso 400, opacidade 50% (linha 335) — segue o doc; contraste medido 1,77:1 */
+.resolvido { color: color-mix(in srgb, var(--ink-3) 50%, transparent); }
+
+/* Blocos de recurso: sem cartão (linha 607) — mídia + texto soltos no espaço */
+.recurso .midia { height: 280px; display: flex; align-items: center; justify-content: center; }
+.recurso h3 { margin-top: 24px; font-size: var(--t3); line-height: var(--lh-corpo); letter-spacing: var(--tr-17); font-weight: 600; }
+.recurso p  { margin-top: 4px; max-width: 440px; }
+
+/* Fragmentos de produto dentro das mídias (ilustração, tons chapados) */
+.frag { background: var(--surface); border-radius: var(--r-18); width: 372px; font-size: var(--t4); line-height: var(--lh-denso); letter-spacing: var(--tr-14); }
+.frag.msg { width: 336px; padding: 18px 20px 20px; border-radius: var(--r-18) var(--r-18) var(--r-18) var(--r-6); }
+.frag.msg .preco { margin-top: 10px; font-size: var(--t1); line-height: var(--lh-titulo); letter-spacing: 0; font-weight: 600; }
+.frag.msg .acoes { margin-top: 16px; gap: 8px; }
+.frag li { display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 16px; position: relative; }
+.frag li + li::before { content: ''; position: absolute; top: 0; right: 0; left: 16px; height: 1px; background: var(--line); }
+.frag li.com-avatar + li.com-avatar::before { left: 56px; }                 /* separador recuado até depois do avatar (linha 572) */
+.frag li .fim { margin-left: auto; }
+.avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--fill-2); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; flex: none; }
+.frag.recibo { width: 336px; padding: 20px; }
+.frag.recibo .valor { margin-top: 2px; font-size: var(--t1); line-height: var(--lh-titulo); letter-spacing: 0; font-weight: 600; }
+.frag.recibo .rodape { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* Preços */
+.plano .preco { margin-top: 8px; font-weight: 600; }
+.plano p.t3 { margin-top: 8px; }
+.plano .btn { margin-top: 24px; }
+
+/* Perguntas */
+.pergunta dt { font-weight: 600; }
+.pergunta dd { margin-top: 8px; }
+
+/* Rodapé */
+.rodape-in { display: flex; justify-content: space-between; align-items: center; padding: 24px 0 40px; border-top: 1px solid var(--line); }
+.rodape-in ul { display: flex; gap: 32px; }
+.rodape-in a { display: inline-flex; align-items: center; min-height: 28px; }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="shell bar-in">
+    <a class="marca t3" href="#" aria-label="Catraca, página inicial">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <circle cx="10" cy="10" r="7.25" fill="none" stroke="#1C1B19" stroke-width="2.5"/>
+        <circle cx="10" cy="10" r="2.25" fill="#1C1B19"/>
+      </svg>
+      Catraca
+    </a>
+    <nav aria-label="Principal">
+      <ul class="t4">
+        <li><a href="#recursos">Recursos</a></li>
+        <li><a href="#precos">Preços</a></li>
+        <li><a href="#perguntas">Perguntas</a></li>
+        <li><a href="#">Entrar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Capítulo 1 · herói (papel). Alinhado à esquerda (linha 423). -->
+  <section class="secao heroi" aria-labelledby="titulo">
+    <div class="shell">
+      <h1 id="titulo" class="t-display">A oficina inteira numa tela.</h1>
+      <p class="apoio t1">Ordens de serviço, agenda e peças para oficinas de bicicleta.</p>
+      <div class="acoes">
+        <a class="btn btn-primario" href="#">Testar 30 dias grátis</a>
+        <p class="t4 sec">Sem cartão de crédito. Cancele quando quiser.</p>
+      </div>
+
+      <figure class="midia midia-heroi bloco" role="img" aria-label="Tela Hoje do Catraca: a próxima retirada do dia e a lista das demais ordens de serviço.">
+        <div class="janela" aria-hidden="true">
+          <div class="prox">
+            <div>
+              <p class="t4 sec">Próxima retirada</p>
+              <h3 class="t1 w6">Rafael Monteiro retira a Caloi Elite às 15h30</h3>
+              <p class="t4" style="margin-top:6px">Revisão completa pronta desde 11h20. Falta receber <span class="num">R$ 380,00</span>.</p>
+            </div>
+            <span class="btn btn-secundario fill">Registrar retirada</span>
+          </div>
+          <ul class="lista">
+            <li><span class="num sec">2483</span><span>Bianca Tavares</span><span>Trek Marlin 5, troca de relação</span><span>Na bancada</span><span class="num">16h00</span></li>
+            <li><span class="num sec">2479</span><span>Jonas Albuquerque</span><span>Sense Impact, sangria de freios</span><span class="w6">Aprovar orçamento</span><span class="num">16h30</span></li>
+            <li><span class="num sec">2485</span><span>Otávio Reis</span><span>Caloi Explorer, centragem de rodas</span><span>Na bancada</span><span class="num">17h00</span></li>
+            <li><span class="num sec">2480</span><span>Vinícius Prado</span><span>Cannondale Trail 7, revisão completa</span><span>Pronta</span><span class="num">17h30</span></li>
+            <li><span class="num sec">2478</span><span>Camila Rocha</span><span>Oggi 7.2, suspensão dianteira</span><span>Aguardando peça</span><span class="num">seg.</span></li>
+            <li class="resolvido"><span class="num">2472</span><span>Eduardo Brandão</span><span>Monark Barra, lavagem e lubrificação</span><span>Entregue</span><span class="num">9h40</span></li>
+            <li class="resolvido"><span class="num">2474</span><span>Aline Moraes</span><span>Houston Atlantis, regulagem de marchas</span><span>Entregue</span><span class="num">11h05</span></li>
+          </ul>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Capítulo 2 · recursos (papel). Grade 2 colunas, gap 40 / 82. Sem cartão. -->
+  <section class="secao" id="recursos" aria-labelledby="t-recursos">
+    <div class="shell">
+      <h2 id="t-recursos" class="t1 w6">Do orçamento à retirada, sem caderno.</h2>
+      <div class="grid grid-2 bloco">
+
+        <article class="recurso">
+          <figure class="midia" role="img" aria-label="Mensagem de orçamento enviada ao cliente com os botões Aprovar e Falar com a oficina.">
+            <div class="frag msg" aria-hidden="true">
+              <p class="sec">Oficina Pedal Sul</p>
+              <p class="w6" style="margin-top:6px">Orçamento da sua Sense Impact</p>
+              <p>Sangria dos dois freios e pastilhas novas.</p>
+              <p class="preco num">R$ 640,00</p>
+              <div class="acoes">
+                <span class="btn btn-secundario">Aprovar</span>
+                <span class="btn btn-secundario fill">Falar com a oficina</span>
+              </div>
+            </div>
+          </figure>
+          <h3>O cliente aprova pelo WhatsApp</h3>
+          <p>Você envia o orçamento com fotos e ele aprova com um toque. A aprovação fica registrada na ordem.</p>
+        </article>
+
+        <article class="recurso">
+          <figure class="midia" role="img" aria-label="Fila de serviços por mecânico: Diego, Karina e Tomás, cada um com a próxima bicicleta e o horário.">
+            <ul class="frag" aria-hidden="true">
+              <li class="com-avatar"><span class="avatar">D</span><span><span class="w6">Diego</span> · Trek Marlin 5</span><span class="fim num">16h00</span></li>
+              <li class="com-avatar"><span class="avatar">K</span><span><span class="w6">Karina</span> · Caloi Explorer</span><span class="fim num">17h00</span></li>
+              <li class="com-avatar"><span class="avatar">T</span><span><span class="w6">Tomás</span> · Groove Hype 50</span><span class="fim num">17h30</span></li>
+            </ul>
+          </figure>
+          <h3>Cada bancada vê a sua fila</h3>
+          <p>O mecânico abre o celular e encontra só o que é dele, na ordem em que precisa sair.</p>
+        </article>
+
+        <article class="recurso">
+          <figure class="midia" role="img" aria-label="Estoque de peças com quantidades livres e reservadas; a pastilha Shimano B01S está sem unidades livres.">
+            <ul class="frag" aria-hidden="true">
+              <li><span>Corrente KMC 11v</span><span class="fim num">4 livres</span></li>
+              <li><span class="w6">Pastilha Shimano B01S</span><span class="fim num w6">0 livres, comprar hoje</span></li>
+              <li><span>Câmara 29 × 2.10 presta</span><span class="fim num">1 livre</span></li>
+            </ul>
+          </figure>
+          <h3>Peça reservada sai do estoque</h3>
+          <p>Ao abrir a ordem, a peça deixa de contar como livre. Você sabe o que comprar antes de faltar.</p>
+        </article>
+
+        <article class="recurso">
+          <figure class="midia" role="img" aria-label="Recibo da ordem 2481: 380 reais pagos por Pix às 15h34 e enviados ao cliente.">
+            <div class="frag recibo" aria-hidden="true">
+              <p class="sec">Recibo da ordem <span class="num">2481</span></p>
+              <p class="valor num">R$ 380,00</p>
+              <p style="margin-top:6px">Pago por Pix às <span class="num">15h34</span></p>
+              <p class="rodape sec">Enviado para Rafael Monteiro</p>
+            </div>
+          </figure>
+          <h3>Retirada com recibo na hora</h3>
+          <p>Receba por Pix ou cartão e envie o recibo. A ordem fecha sozinha e o caixa do dia já está certo.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Capítulo 3 · preços (cinza, full-bleed). Abertura centralizada: dona sozinha da faixa. -->
+  <section class="secao capitulo-cinza" id="precos" aria-labelledby="t-precos">
+    <div class="shell">
+      <div class="abertura-centro">
+        <h2 id="t-precos" class="t1 w6">Um preço por oficina, não por mecânico.</h2>
+        <p class="t3" style="margin-top:8px">Os dois planos têm todos os recursos e mecânicos ilimitados.</p>
+      </div>
+      <div class="grid grid-2 bloco">
+        <div class="plano">
+          <h3 class="t3 w6">Mensal</h3>
+          <p class="preco t1 num">R$ 119 por mês</p>
+          <p class="t3">Sem fidelidade. Cancele quando quiser.</p>
+          <a class="btn btn-secundario" href="#">Assinar mensal</a>
+        </div>
+        <div class="plano">
+          <h3 class="t3 w6">Anual</h3>
+          <p class="preco t1 num">R$ 99 por mês</p>
+          <p class="t3"><span class="num">R$ 1.188</span> por ano, <span class="num">R$ 240</span> a menos que no mensal.</p>
+          <a class="btn btn-secundario" href="#">Assinar anual</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capítulo 4 · perguntas (papel) -->
+  <section class="secao" id="perguntas" aria-labelledby="t-perguntas">
+    <div class="shell">
+      <h2 id="t-perguntas" class="t1 w6">Antes de assinar</h2>
+      <dl class="grid grid-3 bloco">
+        <div class="pergunta">
+          <dt>Posso importar ordens antigas?</dt>
+          <dd>Sim. Você envia a planilha e a importação fica pronta em até dois dias úteis.</dd>
+        </div>
+        <div class="pergunta">
+          <dt>Funciona sem internet?</dt>
+          <dd>Funciona. As ordens abertas ficam no aparelho e sincronizam quando a conexão volta.</dd>
+        </div>
+        <div class="pergunta">
+          <dt>E se eu cancelar?</dt>
+          <dd>Você exporta clientes, ordens e estoque em planilha. Nada fica preso.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="rodape-in t4 sec">
+      <p>Catraca Tecnologia Ltda. · Florianópolis, SC</p>
+      <ul>
+        <li><a href="#">Termos de uso</a></li>
+        <li><a href="#">Privacidade</a></li>
+        <li><a href="#">Suporte</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

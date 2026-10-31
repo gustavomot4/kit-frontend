@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curso de Inglês — Voga Idiomas</title>
+<!--
+  MOCKUP 2 — PÁGINA DE CURSO (/cursos/ingles)
+  Construído seguindo fiskuiuxguide.md (tokens do §1, receitas do §3, template do §5.3, L355-362).
+  Escola fictícia. "FIEL AO GUIA" = erro do guia mantido de propósito. "DECISÃO" = o guia não diz o que fazer.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1. TOKENS — cópia literal do §1 (L26-95)
+   ============================================================ */
+:root {
+  --brand:            #d71920;
+  --brand-dark:       #aa1318;
+  --brand-light:      #ed3237;
+  --brand-deep:       #5a0f14;
+  --brand-hero:       #e00c18;
+  --brand-tint:       #fff0f0;
+
+  --heading:          #04000b;
+  --paragraph:        #666666;
+  --dark:             #0e0f11;
+  --white:            #ffffff;
+  --bg-gray:          #f2f3ef;
+  --border:           #dee2e6;
+
+  --font: "Montserrat", system-ui, -apple-system, sans-serif;
+
+  --fs-hero:      clamp(1.75rem, 4vw, 60px);
+  --fs-hero-sub:  clamp(1rem, 2vw, 25px);
+  --fs-section:   clamp(1.75rem, 3.5vw, 50px);
+  --fs-card:      27px;
+  --fs-item:      20px;
+  --fs-body:      17px;
+  --fs-body-lg:   20px;
+  --fs-caption:   14px;
+
+  --lh-tight:     1.15;
+  --lh-heading:   1.2;
+  --lh-body:      1.6;
+
+  --space-1: .25rem;  --space-2: .5rem;   --space-3: 1rem;
+  --space-4: 1.5rem;  --space-5: 2.5rem;  --space-6: 3.5rem;
+
+  --section-py:      100px 0 120px;
+  --section-py-sm:   60px 0;
+  --heading-mb:      60px;
+
+  --container:       1320px;
+  --container-pad:   35px;
+  --header-h:        143px;
+  --header-h-mobile: 64px;
+
+  --r-sm:   6px;
+  --r-md:   8px;
+  --r-lg:   20px;
+  --r-xl:   32px;
+  --r-full: 999px;
+
+  --shadow-card:  0 2px 12px 0 #e7e7e7;
+  --shadow-hover: 0 20px 40px -12px rgba(0,0,0,.12), 0 8px 20px -8px rgba(200,16,46,.14);
+  --shadow-brand: 0 10px 30px 0 rgba(215,25,32,.4);
+
+  --t-fast: .2s ease;
+  --t-base: .25s ease;
+  --t-slow: .35s ease-in-out;
+}
+@media (max-width: 767px) {
+  :root { --section-py: 60px 0; --container-pad: 20px; --heading-mb: 40px; }
+}
+
+/* ============================================================
+   2. BASE — o guia não traz reset; DECISÕES mínimas
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }           /* DECISÃO: o guia não define box-sizing */
+body {
+  margin: 0; font-family: var(--font); font-size: var(--fs-body);
+  line-height: 1.7;                                            /* DECISÃO: tabela L140 diz 1.7; token --lh-body diz 1.6 */
+  font-weight: 400; color: var(--paragraph); background: var(--white); letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+svg { display: block; }
+h1, h2, h3, h4 { color: var(--heading); line-height: var(--lh-heading); }
+/* FIEL AO GUIA: nenhuma receita define font-family em <button>/<input>/<select>;
+   sem reset, esses controles ficam na fonte padrão do navegador. */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ============================================================
+   3. RECEITAS — cópia literal do §3 e §4
+   ============================================================ */
+/* 3.1 Botões (L158-188) */
+.btn-primary {
+  background: var(--brand); color: #fff; border: none;
+  padding: 10px 20px; border-radius: var(--r-sm);
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-outline {
+  background: #fff; color: var(--brand-dark);
+  border: .8px solid var(--brand-dark);
+  padding: 10px 20px; border-radius: var(--r-sm);
+  font-size: 14px; font-weight: 700;
+}
+.btn-outline:hover { background: var(--brand-dark); color: #fff; }
+.btn-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: 15px 40px; border-radius: 32px;
+  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  border: 2px solid #fff; white-space: nowrap;
+  transition: background-color .25s, color .25s, border-color .25s;
+}
+.btn-pill--on-brand         { background: #fff; color: var(--brand); }
+.btn-pill--on-brand:hover   { background: transparent; color: #fff; }
+.btn-pill--ghost            { background: rgba(255,255,255,.15); color: #fff; border-color: rgba(255,255,255,.55); }
+.btn-pill--ghost:hover      { background: rgba(255,255,255,.28); }
+/* DECISÃO: L357 pede "sólido" no hero, mas o §3.1 não tem pílula sólida na cor da marca */
+.btn-pill--brand            { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+/* 3.3 Card (L227-236) */
+.card {
+  background:#fff; border-radius: var(--r-lg); overflow:hidden;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--t-base), transform var(--t-base);
+}
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+.card__meta  { font-size:14px; color:var(--paragraph); }
+.card__tag   { font-size:14px; font-weight:700; color:var(--brand); text-transform:uppercase; }
+.card__title { font-size:20px; font-weight:600; color:var(--heading); line-height:1.3; }
+.card__link  { font-size:14px; font-weight:700; color:var(--brand-dark); }
+
+/* 3.4 Faixa de CTA (L245-252) */
+.cta-band {
+  max-width: var(--container); margin: -40px auto 0;
+  background: var(--brand-hero); color:#fff;
+  border-radius: var(--r-xl); padding: 20px 35px;
+  display:flex; gap: var(--space-4); align-items:center; justify-content:space-between;
+}
+.cta-band h2 { font-size:40px; font-weight:700; text-transform:uppercase; line-height:1.2; color:#fff; }
+@media (max-width:767px){ .cta-band { flex-direction:column; align-items:stretch; text-align:left; } }
+
+/* 3.6 Inputs (L269-279) */
+.input, .select {
+  height: 44px;
+  padding: 8px 12px;
+  border: .8px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 16px;
+  background: #fff; color: #212529;
+}
+.input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(215,25,32,.15); }
+.label  { font-size:16px; margin-bottom:8px; display:block; }
+.label .req { color: var(--brand); }
+
+/* 4. Layout (L298-303) */
+.container { max-width: 1320px; margin-inline:auto; padding-inline: 35px; }
+.section   { padding: 100px 0 120px; }
+.section--tint  { background: var(--brand-tint); }
+.section--gray  { background: var(--bg-gray); }
+.section--tight { padding: 48px 0; }
+@media (max-width:767px){ .section { padding: 60px 0; } }
+
+/* Tipografia do §2 (tabela L132-142) */
+.section-title { font-size: var(--fs-section); font-weight: 700; color: var(--brand-deep); line-height: var(--lh-heading); margin-bottom: var(--heading-mb); }
+.eyebrow {
+  display: inline-block; font-size: 14px; font-weight: 700; color: var(--heading); line-height: 1.4;
+  text-transform: uppercase; border: 1px solid #ccc; padding: 8px 30px; border-radius: 30px;
+  margin-bottom: var(--space-3);                               /* DECISÃO: posição/uso do eyebrow não é definido */
+}
+h4, .h4 { font-size: var(--fs-item); font-weight: 600; margin-bottom: 15px; }
+
+/* ============================================================
+   4. HEADER (§5.1) — medidas internas são DECISÕES
+   ============================================================ */
+.site-header { height: var(--header-h); background: var(--white); border-bottom: 1px solid var(--border); }
+.header-top { height: 65px; border-bottom: 1px solid var(--border); }
+.header-top .container, .header-nav .container { height: 100%; display: flex; align-items: center; }
+.header-top .container { gap: var(--space-5); }
+.header-nav { height: 77px; }
+.logo { display: flex; align-items: center; gap: 10px; flex: none; }
+.logo__text { display: flex; flex-direction: column; line-height: 1; }
+.logo__text b { font-size: 30px; font-weight: 800; color: var(--brand); }
+.logo__text small { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--heading); margin-top: 2px; }
+.site-search { position: relative; flex: 1; max-width: 560px; }
+.site-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--paragraph); }
+.site-search .input { width: 100%; padding-left: 48px; background: var(--brand-tint); }
+.header-top__actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-4); }
+.unit-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--brand-dark); }
+.access { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.main-nav ul { display: flex; align-items: center; gap: 28px; }
+.main-nav a { display: inline-flex; align-items: center; gap: 4px; font-weight: 500; color: var(--heading); }
+.main-nav a[aria-current="page"] { color: var(--brand); font-weight: 700; }
+.header-cta { margin-left: auto; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.header-cta__test { font-size: 12px; font-weight: 600; color: var(--brand-dark); text-decoration: underline; line-height: 1.5; }
+
+/* ============================================================
+   5. HERO INTERNO (§5.3 item 1)
+   ============================================================ */
+/* DECISÃO: "fundo temático do idioma (bandeira estilizada)" — usei as cores da bandeira,
+   o que contradiz a regra 1 (L12, "nada de paleta multicolorida"). */
+.course-hero { position: relative; overflow: hidden; background: #012169; color: #fff; }
+.course-hero__flag { position: absolute; top: 0; right: 0; width: 68%; height: 100%; }
+.course-hero .container { position: relative; z-index: 1; padding-block: 100px 120px; }
+.course-hero__content { max-width: 700px; }
+.hero__title { font-size: var(--fs-hero); font-weight: 700; line-height: var(--lh-tight); color: #fff; margin-bottom: 1rem; }
+.hero__sub { font-size: var(--fs-hero-sub); font-weight: 600; line-height: 1.3; margin-bottom: var(--space-3); }
+.hero__lead { font-size: var(--fs-body-lg); font-weight: 500; line-height: 1.6; max-width: 640px; margin-bottom: var(--space-5); }
+.cta-pair { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+/* ============================================================
+   6. SEÇÕES
+   ============================================================ */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: start; }
+.section-cta { display: flex; gap: var(--space-3); margin-top: var(--space-5); }
+.h3 { font-size: var(--fs-card); font-weight: 600; margin-bottom: var(--space-3); }
+
+/* badge de idade: tokens dizem --brand-light p/ badges (L31), --r-md p/ badges (L76), --fs-caption p/ badge (L54).
+   FIEL AO GUIA: branco sobre --brand-light = 4,11:1 (reprova AA para 14px). Cor do texto é DECISÃO. */
+.badge { display: inline-block; background: var(--brand-light); color: #fff; font-size: var(--fs-caption); font-weight: 700; line-height: 1.4; padding: var(--space-1) 12px; border-radius: var(--r-md); margin-bottom: var(--space-3); }
+
+.age-card { display: flex; flex-direction: column; }
+.age-card .ph { width: 100%; height: auto; }
+.age-card__body { padding: var(--space-4); display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
+.age-card__body p { margin-bottom: var(--space-4); }
+.age-card__body .card__link { margin-top: auto; }
+
+.mode-card { padding: var(--space-4); display: flex; flex-direction: column; align-items: flex-start; }
+.mode-card .h3 { min-height: calc(var(--fs-card) * 1.2 * 2); }
+.mode-card p { margin-bottom: var(--space-4); }
+.mode-card .card__link { margin-top: auto; }
+.icon-circle { width: 56px; height: 56px; border-radius: var(--r-full); background: var(--brand-tint); color: var(--brand); display: grid; place-items: center; margin-bottom: var(--space-4); flex: none; }
+
+.method p + p { margin-top: var(--space-3); }
+.method-blocks { display: grid; gap: 32px; }
+.method-block { padding: 32px; display: grid; grid-template-columns: 56px 1fr; gap: var(--space-4); }
+.method-block .icon-circle { margin-bottom: 0; }
+
+/* acordeão: o guia cita (L361) mas não traz receita — tudo aqui é DECISÃO */
+.accordion { display: grid; gap: var(--space-3); }
+.accordion__item { background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-card); overflow: hidden; }
+.accordion__head { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: var(--space-4) 32px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: var(--fs-item); font-weight: 600; line-height: var(--lh-heading); color: var(--heading); text-transform: uppercase; text-align: left; }
+.accordion__head svg { color: var(--brand); transition: transform var(--t-base); }
+.accordion__head[aria-expanded="true"] svg { transform: rotate(180deg); }
+.accordion__panel { padding: 0 32px 32px; }
+.levels { display: grid; }
+.levels > div { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: var(--space-4); padding: var(--space-3) 0; border-top: 1px solid var(--border); }
+.levels dt { font-weight: 600; color: var(--heading); }
+
+/* faixa final: a receita .cta-band tem margin-top:-40px ("invade o hero") — aqui ela invade a seção anterior */
+.final-cta { padding-bottom: 48px; }
+.cta-band { position: relative; z-index: 3; }                  /* DECISÃO */
+
+/* ============================================================
+   7. FOOTER (§5.6), COOKIE BAR, CHAT, LIBRAS (§7, §8)
+   ============================================================ */
+.site-footer { background: var(--brand-dark); color: #fff; padding: var(--space-6) 0 var(--space-4); }
+.site-footer h4 { color: #fff; }
+.footer__top { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: var(--space-5); padding-bottom: var(--space-6); }
+.footer__brand p { margin-top: var(--space-3); max-width: 300px; }
+.footer__top ul { display: grid; gap: var(--space-2); }
+.logo--white .logo__text b, .logo--white .logo__text small { color: #fff; }
+.footer__bottom { border-top: 1px solid rgba(255,255,255,.25); padding-top: var(--space-4); display: flex; gap: var(--space-5); font-size: 14px; }
+.footer__bottom a { text-decoration: underline; }
+
+body { padding-bottom: 76px; }                                 /* reserva a altura da cookie bar para não cobrir o copyright no print */
+.cookie-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--dark); color: #fff; height: 76px; }
+.cookie-bar .container { height: 100%; display: flex; align-items: center; gap: var(--space-4); font-size: 14px; }
+.cookie-bar p { flex: 1; line-height: 1.4; }
+.cookie-bar p a { text-decoration: underline; }
+.cookie-bar .btn-outline, .cookie-bar .btn-primary { cursor: pointer; }
+.chat-bubble { position: fixed; right: 24px; bottom: 100px; z-index: 21; width: 56px; height: 56px; border-radius: var(--r-full); background: var(--brand); color: #fff; display: grid; place-items: center; box-shadow: var(--shadow-brand); border: none; }
+.libras { position: fixed; right: 28px; bottom: 172px; z-index: 21; width: 48px; height: 48px; border-radius: var(--r-md); background: #1c4f9c; color: #fff; display: grid; place-items: center; border: none; }
+</style>
+</head>
+<body>
+
+<!-- ======================= HEADER (§5.1) ======================= -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <a class="logo" href="#" aria-label="Voga Idiomas — página inicial">
+        <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 3h28a6 6 0 0 1 6 6v17a6 6 0 0 1-6 6H19l-9 7v-7H6a6 6 0 0 1-6-6V9a6 6 0 0 1 6-6z" fill="#d71920"/><path d="M10.5 11l7.3 14h4.4l7.3-14h-4.8L20 20.4 15.3 11z" fill="#fff"/></svg>
+        <span class="logo__text"><b>voga</b><small>idiomas</small></span>
+      </a>
+      <form class="site-search" role="search" action="#">
+        <label class="sr-only" for="q">Pesquisar no site</label>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input class="input" id="q" type="search" placeholder="Pesquisar no site">
+      </form>
+      <div class="header-top__actions">
+        <a class="unit-link" href="#">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Encontre uma unidade
+        </a>
+        <button class="btn-outline access" type="button" aria-haspopup="true" aria-expanded="false">Acesso
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="header-nav">
+    <div class="container">
+      <nav class="main-nav" aria-label="Principal">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Sobre Nós <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+          <li><a href="#" aria-current="page">Cursos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">E-book</a></li>
+          <li><a href="#">Faça Parte <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+          <li><a href="#">Seja um Franqueado</a></li>
+          <li><a href="#">Fale Conosco</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <a class="btn-primary" href="#">Pré-matrícula</a>
+        <a class="header-cta__test" href="#">Teste de classificação</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ======================= 1. HERO INTERNO ======================= -->
+<section class="course-hero" aria-labelledby="course-title">
+  <svg class="course-hero__flag" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="fade" x1="0" x2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/>
+        <stop offset=".42" stop-color="#fff" stop-opacity=".06"/><stop offset=".55" stop-color="#fff" stop-opacity=".3"/>
+        <stop offset=".72" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="1"/>
+      </linearGradient>
+      <mask id="fm"><rect width="1200" height="600" fill="url(#fade)"/></mask>
+    </defs>
+    <g mask="url(#fm)">
+      <g transform="rotate(-7 600 300) scale(1.3) translate(-140 -70)">
+        <rect x="-200" y="-200" width="1600" height="1000" fill="#012169"/>
+        <path d="M0 0l1200 600M1200 0L0 600" stroke="#fff" stroke-width="120"/>
+        <path d="M0 0l1200 600M1200 0L0 600" stroke="#c8102e" stroke-width="42"/>
+        <path d="M600 -100v800M-100 300h1400" stroke="#fff" stroke-width="200"/>
+        <path d="M600 -100v800M-100 300h1400" stroke="#c8102e" stroke-width="120"/>
+      </g>
+    </g>
+  </svg>
+  <div class="container">
+    <div class="course-hero__content">
+      <h1 class="hero__title" id="course-title">Curso de Inglês</h1>
+      <p class="hero__sub">Do primeiro <span lang="en">hello</span> à fluência, no seu ritmo.</p>
+      <p class="hero__lead">Turmas para crianças, adolescentes e adultos, presenciais ou on-line, com um método que coloca você para falar desde a primeira aula.</p>
+      <div class="cta-pair">
+        <a class="btn-pill btn-pill--ghost" href="#">Fazer Teste de classificação
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn-pill btn-pill--brand" href="#">Fazer Pré-matrícula</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2. PARA TODAS AS FASES DA VIDA ======================= -->
+<section class="section" aria-labelledby="fases-title">
+  <div class="container">
+    <span class="eyebrow">Para todas as idades</span>
+    <h2 class="section-title" id="fases-title">Inglês para todas as fases da vida</h2>
+    <div class="grid-3">
+
+      <article class="card age-card">
+        <svg class="ph" viewBox="0 0 400 240" aria-hidden="true">
+          <defs><linearGradient id="a1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9954f"/><stop offset="1" stop-color="#ecc98c"/></linearGradient></defs>
+          <rect width="400" height="240" fill="url(#a1)"/><circle cx="330" cy="50" r="120" fill="#fff" opacity=".18"/>
+          <g transform="translate(130 150) scale(.66)"><path d="M-90 190c0-60 36-100 90-100s90 40 90 100z" fill="#f4f1ec"/><rect x="-14" y="52" width="28" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-6" r="68" fill="#3a2a1f"/><circle cx="0" cy="10" r="58" fill="#e3b08d"/></g>
+          <g transform="translate(262 156) scale(.62)"><path d="M-90 190c0-60 36-100 90-100s90 40 90 100z" fill="#d71920"/><rect x="-14" y="52" width="28" height="44" rx="12" fill="#9c6242"/><circle cx="0" cy="-6" r="66" fill="#1c1412"/><circle cx="-58" cy="-30" r="20" fill="#1c1412"/><circle cx="58" cy="-30" r="20" fill="#1c1412"/><circle cx="0" cy="10" r="58" fill="#b97a57"/></g>
+          <path d="M40 30h70a12 12 0 0 1 12 12v22a12 12 0 0 1-12 12H80L66 90V76H40a12 12 0 0 1-12-12V42a12 12 0 0 1 12-12z" fill="#fff"/>
+          <text x="75" y="61" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="19" font-weight="700" fill="#04000b">A B C</text>
+        </svg>
+        <div class="age-card__body">
+          <span class="badge">4 a 10 anos</span>
+          <h3 class="h3" lang="en">Voga Kids</h3>
+          <p>Músicas, histórias e jogos para a criança ouvir e falar inglês com naturalidade, em turmas de até dez alunos.</p>
+          <a class="card__link" href="#" aria-label="Voga Kids. Saiba Mais">Saiba Mais</a>
+        </div>
+      </article>
+
+      <article class="card age-card">
+        <svg class="ph" viewBox="0 0 400 240" aria-hidden="true">
+          <defs><linearGradient id="a2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34404d"/><stop offset="1" stop-color="#7b8c9a"/></linearGradient></defs>
+          <rect width="400" height="240" fill="url(#a2)"/><circle cx="70" cy="50" r="120" fill="#fff" opacity=".08"/>
+          <g transform="translate(150 140) scale(.68)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f0c66a"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-10" r="64" fill="#8a5a35"/><circle cx="0" cy="8" r="52" fill="#ecc3a3"/></g>
+          <g transform="translate(290 148) scale(.68)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f4f1ec"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#9c6242"/><circle cx="0" cy="-8" r="60" fill="#1c1412"/><circle cx="0" cy="8" r="52" fill="#b97a57"/></g>
+        </svg>
+        <div class="age-card__body">
+          <span class="badge">A partir de 11 anos</span>
+          <h3 class="h3" lang="en">Voga Teens</h3>
+          <p>Projetos, séries e debates sobre o que o adolescente vive, já com preparação para os exames internacionais.</p>
+          <a class="card__link" href="#" aria-label="Voga Teens. Saiba Mais">Saiba Mais</a>
+        </div>
+      </article>
+
+      <article class="card age-card">
+        <svg class="ph" viewBox="0 0 400 240" aria-hidden="true">
+          <defs><linearGradient id="a3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a3f33"/><stop offset="1" stop-color="#b48a6a"/></linearGradient></defs>
+          <rect width="400" height="240" fill="url(#a3)"/><circle cx="330" cy="60" r="120" fill="#fff" opacity=".08"/>
+          <g transform="translate(200 138) scale(.7)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#1f2937"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-8" r="62" fill="#2b1e1a"/><circle cx="0" cy="8" r="52" fill="#e3b08d"/></g>
+          <rect x="262" y="150" width="96" height="62" rx="6" fill="#11141a"/><rect x="268" y="156" width="84" height="46" rx="2" fill="#5d6778"/><rect x="246" y="212" width="128" height="8" rx="4" fill="#11141a"/>
+        </svg>
+        <div class="age-card__body">
+          <span class="badge">Acima de 15 anos</span>
+          <h3 class="h3" lang="en">Voga Adults</h3>
+          <p>Conversação desde a primeira aula e trilhas específicas para trabalho, viagem ou estudo no exterior.</p>
+          <a class="card__link" href="#" aria-label="Voga Adults. Saiba Mais">Saiba Mais</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 3. MODALIDADES DE AULA (4 cards) ======================= -->
+<section class="section section--tint" aria-labelledby="mod-title">
+  <div class="container">
+    <span class="eyebrow">Modalidades de aula</span>
+    <h2 class="section-title" id="mod-title">Escolha como você quer estudar</h2>
+    <div class="grid-4">
+      <article class="card mode-card">
+        <span class="icon-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.2c2.9.3 5 2.3 5 5.3"/></svg></span>
+        <h3 class="h3">Grupos Regulares</h3>
+        <p>Turmas de 6 a 12 alunos do mesmo nível, duas vezes por semana.</p>
+        <a class="card__link" href="#" aria-label="Grupos Regulares. Saiba Mais">Saiba Mais</a>
+      </article>
+      <article class="card mode-card">
+        <span class="icon-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>
+        <h3 class="h3">Ensino Personalizado</h3>
+        <p>Aulas individuais ou em dupla, com horário e conteúdo sob medida.</p>
+        <a class="card__link" href="#" aria-label="Ensino Personalizado. Saiba Mais">Saiba Mais</a>
+      </article>
+      <article class="card mode-card">
+        <span class="icon-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg></span>
+        <h3 class="h3">Aulas Presenciais</h3>
+        <p>Na unidade mais próxima, com salas equipadas e conversação em grupo.</p>
+        <a class="card__link" href="#" aria-label="Aulas Presenciais. Saiba Mais">Saiba Mais</a>
+      </article>
+      <article class="card mode-card">
+        <span class="icon-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+        <h3 class="h3">Aulas On-line</h3>
+        <p>Ao vivo, com professor e turma, no mesmo método e material.</p>
+        <a class="card__link" href="#" aria-label="Aulas On-line. Saiba Mais">Saiba Mais</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 4. METODOLOGIA ======================= -->
+<section class="section" aria-labelledby="met-title">
+  <div class="container">
+    <span class="eyebrow">Metodologia</span>
+    <h2 class="section-title" id="met-title">Você fala desde a primeira aula</h2>
+    <div class="split">
+      <div class="method">
+        <p>No método Voga, cada aula começa por uma situação real: pedir um café, apresentar um projeto, combinar uma viagem. Você ouve, repete, improvisa e só depois sistematiza a gramática que acabou de usar.</p>
+        <p>Entre uma aula e outra, o aplicativo propõe dez minutos diários de prática com correção de pronúncia, e o professor acompanha sua evolução por um painel individual.</p>
+        <div class="section-cta"><a class="btn-outline" href="#">Conheça!</a></div>
+      </div>
+      <div class="method-blocks">
+        <article class="card method-block">
+          <span class="icon-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.5-4.5-2-8-2v14c3.5 0 6 .5 8 2 2-1.5 4.5-2 8-2V4c-3.5 0-6 .5-8 2zM12 6v14"/></svg></span>
+          <div><h4>Método próprio</h4><p>Material autoral revisado a cada dois anos e alinhado ao Quadro Europeu Comum de Referência.</p></div>
+        </article>
+        <article class="card method-block">
+          <span class="icon-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>
+          <div><h4>Recursos tecnológicos</h4><p>Aplicativo com reconhecimento de fala, plataforma de aulas ao vivo e biblioteca digital.</p></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 5. SÉRIES / NÍVEIS (acordeões) ======================= -->
+<section class="section section--gray" aria-labelledby="niveis-title">
+  <div class="container">
+    <span class="eyebrow">Séries e níveis</span>
+    <h2 class="section-title" id="niveis-title">Do primeiro contato à fluência</h2>
+    <div class="accordion">
+      <div class="accordion__item">
+        <h3><button class="accordion__head" type="button" aria-expanded="true" aria-controls="p-kids" lang="en">Kids
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></h3>
+        <div class="accordion__panel" id="p-kids">
+          <dl class="levels">
+            <div><dt lang="en">Kids Starter</dt><dd>4 e 5 anos</dd><dd>2 semestres</dd></div>
+            <div><dt lang="en">Kids 1 e 2</dt><dd>6 a 8 anos</dd><dd>4 semestres</dd></div>
+            <div><dt lang="en">Kids 3 e 4</dt><dd>9 e 10 anos</dd><dd>4 semestres</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="accordion__item">
+        <h3><button class="accordion__head" type="button" aria-expanded="false" aria-controls="p-teens" lang="en">Teens
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></h3>
+      </div>
+      <div class="accordion__item">
+        <h3><button class="accordion__head" type="button" aria-expanded="false" aria-controls="p-adults" lang="en">Young Adults &amp; Adults
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></h3>
+      </div>
+    </div>
+    <div class="section-cta"><a class="btn-primary" href="#">Fazer Pré-matrícula</a></div>
+  </div>
+</section>
+
+<!-- ======================= 6. FAIXA FINAL ======================= -->
+<div class="final-cta">
+  <section class="cta-band" aria-labelledby="final-title">
+    <h2 id="final-title">Descubra seu nível de inglês!</h2>
+    <a class="btn-pill btn-pill--on-brand" href="#">Fazer Teste</a>
+  </section>
+</div>
+
+</main>
+
+<!-- ======================= FOOTER (§5.6) ======================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo logo--white" href="#" aria-label="Voga Idiomas — página inicial">
+          <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 3h28a6 6 0 0 1 6 6v17a6 6 0 0 1-6 6H19l-9 7v-7H6a6 6 0 0 1-6-6V9a6 6 0 0 1 6-6z" fill="#fff"/><path d="M10.5 11l7.3 14h4.4l7.3-14h-4.8L20 20.4 15.3 11z" fill="#aa1318"/></svg>
+          <span class="logo__text"><b>voga</b><small>idiomas</small></span>
+        </a>
+        <p>Inglês, espanhol, francês, alemão, italiano e português para estrangeiros desde 1994.</p>
+      </div>
+      <nav aria-label="Sobre nós">
+        <h4>Sobre nós</h4>
+        <ul><li><a href="#">Nossa história</a></li><li><a href="#">Método Voga</a></li><li><a href="#">Unidades</a></li><li><a href="#">Blog</a></li></ul>
+      </nav>
+      <nav aria-label="Cursos">
+        <h4>Cursos</h4>
+        <ul><li><a href="#">Inglês</a></li><li><a href="#">Espanhol</a></li><li><a href="#">Francês</a></li><li><a href="#">Alemão</a></li></ul>
+      </nav>
+      <nav aria-label="Faça parte">
+        <h4>Faça parte</h4>
+        <ul><li><a href="#">Pré-matrícula</a></li><li><a href="#">Teste de classificação</a></li><li><a href="#">Trabalhe Conosco</a></li><li><a href="#">Seja um franqueado</a></li></ul>
+      </nav>
+      <nav aria-label="Acesso">
+        <h4>Acesso</h4>
+        <ul><li><a href="#">Portal do Aluno</a></li><li><a href="#">Plataforma on-line</a></li><li><a href="#">Portal do Professor</a></li><li><a href="#">Painel do franqueado</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Voga Idiomas. Todos os direitos reservados.</span>
+      <a href="#">Termo de Privacidade</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================= WIDGETS FIXOS (§7 L412, §8 itens 8 e 9) ======================= -->
+<button class="libras" type="button" aria-label="Acessibilidade em Libras">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1V4.5a1.5 1.5 0 0 1 3 0V12m0-.5V6.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.5 14a1.5 1.5 0 0 1 2.5-1.6L8 15"/></svg>
+</button>
+<button class="chat-bubble" type="button" aria-label="Abrir chat">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+</button>
+<div class="cookie-bar" role="region" aria-label="Aviso de cookies">
+  <div class="container">
+    <p>Usamos cookies para melhorar sua navegação e medir o desempenho do site. Saiba mais na <a href="#">Política de Privacidade</a>.</p>
+    <button class="btn-outline" type="button">Recusar</button>
+    <button class="btn-primary" type="button">ACEITAR</button>
+  </div>
+</div>
+
+</body>
+</html>

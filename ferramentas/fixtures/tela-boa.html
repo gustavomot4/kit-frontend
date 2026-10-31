@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agenda · Navalha</title>
+<style>
+  :root { --papel: #f7f3ea; --tinta: #1d1a16; --apoio: #5c554b; --acao: #7a2e12; --linha: #d9d0bf; --campo: #857a68; }
+  @font-face { font-family: "Navalha Texto"; src: local("Georgia"), local("Times New Roman"); font-display: swap; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--papel); color: var(--tinta); font-family: "Navalha Texto", Georgia, serif; line-height: 1.5; }
+  body { margin: 0; font-size: 1.0625rem; }
+  a { color: var(--acao); text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--acao); outline-offset: 2px; }
+  .pular { position: absolute; left: -999px; top: 8px; background: #fff; padding: .75rem 1rem; }
+  .pular:focus { left: 8px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--linha); background: var(--papel); }
+  header strong { font-size: 1.375rem; }
+  nav ul { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin: 0; padding: 0; list-style: none; }
+  nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .5rem; }
+  main { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+  .cabeca { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; }
+  h1 { margin: 0; font-size: 2.25rem; line-height: 1.1; }
+  .primario { display: inline-flex; align-items: center; min-height: 48px; padding: 0 1.25rem; background: var(--acao); color: #fff; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+  caption { text-align: left; color: var(--apoio); padding-bottom: .5rem; }
+  th, td { text-align: left; padding: .75rem .5rem; border-bottom: 1px solid var(--linha); }
+  th { font-weight: 700; }
+  td a { display: inline-flex; align-items: center; min-height: 44px; }
+  label { display: block; font-weight: 700; margin: 1.5rem 0 .25rem; }
+  input { font: inherit; min-height: 48px; width: min(100%, 24rem); padding: 0 .75rem; border: 1px solid var(--campo); background: #fff; color: var(--tinta); }
+  @media (max-width: 600px) {
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    table, tbody, tr, td { display: block; }
+    tr { padding: .5rem 0; border-bottom: 1px solid var(--linha); }
+    td { border: 0; padding: .125rem 0; }
+    td::before { content: attr(data-rotulo) ": "; color: var(--apoio); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<header>
+  <strong>Navalha</strong>
+  <nav aria-label="Principal"><ul><li><a href="#" aria-current="page">Agenda</a></li><li><a href="#">Clientes</a></li><li><a href="#">Caixa</a></li></ul></nav>
+</header>
+<main id="conteudo">
+  <div class="cabeca"><h1>Hoje, quinta</h1><button class="primario" type="button">Marcar horário</button></div>
+  <table>
+    <caption>Próximos horários</caption>
+    <thead><tr><th scope="col">Hora</th><th scope="col">Cliente</th><th scope="col">Serviço</th><th scope="col">Barbeiro</th></tr></thead>
+    <tbody>
+      <tr><td data-rotulo="Hora">14:00</td><td data-rotulo="Cliente"><a href="#">Teo Vasconcelos</a></td><td data-rotulo="Serviço">Corte e barba</td><td data-rotulo="Barbeiro">Ruan</td></tr>
+      <tr><td data-rotulo="Hora">14:40</td><td data-rotulo="Cliente"><a href="#">Davi Quintela</a></td><td data-rotulo="Serviço">Corte</td><td data-rotulo="Barbeiro">Nico</td></tr>
+    </tbody>
+  </table>
+  <form><label for="busca">Buscar cliente</label><input id="busca" type="search" autocomplete="off"></form>
+</main>
+</body>
+</html>

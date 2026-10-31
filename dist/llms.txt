@@ -1,0 +1,27 @@
+# Kit de frontend
+
+> Identidade própria, padrões de mercado e acessibilidade verificada para agentes que criam frontend.
+
+## Comece aqui
+- [SKILL.md](../skill/kit-frontend/SKILL.md): processo e portões
+- [Prompt único](prompt-unico.md): tudo em um arquivo, para LLM sem acesso a arquivos
+
+## Referências
+- [acessibilidade.md](../skill/kit-frontend/references/acessibilidade.md)
+- [anti-generico.md](../skill/kit-frontend/references/anti-generico.md)
+- [bibliotecas.md](../skill/kit-frontend/references/bibliotecas.md)
+- [correcoes-coletadas.md](../skill/kit-frontend/references/correcoes-coletadas.md)
+- [criatividade.md](../skill/kit-frontend/references/criatividade.md)
+- [estilos.md](../skill/kit-frontend/references/estilos.md)
+- [gosto.md](../skill/kit-frontend/references/gosto.md)
+- [identidade.md](../skill/kit-frontend/references/identidade.md)
+- [padrao-agenda.md](../skill/kit-frontend/references/padrao-agenda.md)
+- [padrao-estados.md](../skill/kit-frontend/references/padrao-estados.md)
+- [padrao-formulario.md](../skill/kit-frontend/references/padrao-formulario.md)
+- [padrao-landing.md](../skill/kit-frontend/references/padrao-landing.md)
+- [padrao-lista-tabela.md](../skill/kit-frontend/references/padrao-lista-tabela.md)
+- [padrao-navegacao.md](../skill/kit-frontend/references/padrao-navegacao.md)
+- [padrao-painel.md](../skill/kit-frontend/references/padrao-painel.md)
+- [padrao-retorno.md](../skill/kit-frontend/references/padrao-retorno.md)
+- [padrao-selecao.md](../skill/kit-frontend/references/padrao-selecao.md)
+- [padrao-tema-escuro.md](../skill/kit-frontend/references/padrao-tema-escuro.md)

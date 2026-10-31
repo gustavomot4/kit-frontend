@@ -1,0 +1,31 @@
+# <Nome do produto>
+
+Tudo aqui afeta decisões de tela. O que não souber, marque como "não sei" e siga com a sugestão recomendada.
+
+## Quem usa
+- **Perfis:** <quem, e o que cada um vê>
+- **Familiaridade com tecnologia:** <o que essas pessoas já usam no dia a dia>
+- **Letramento, idade, necessidades de acessibilidade conhecidas:** <…>
+- **Aparelho e situação:** <celular na mão, computador o dia todo, sol, pressa, uma mão só>
+
+## O que precisam fazer
+- **Tarefa mais frequente:** <verbo e objeto; quantas vezes por dia>
+- **Meta de cliques para ela:** <número>
+- **Outras tarefas, em ordem:** <…>
+- **A decisão que a tela principal precisa ajudar a tomar:** <…>
+
+## Mundo do produto
+<Palavras, objetos, lugares e rituais do setor. É a matéria-prima da identidade.>
+
+## Referências
+- **Gosto de:** <produto e o que exatamente nele>
+- **Não quero parecer com:** <produto e por quê>
+- **Exigências de quem usa ou contrata:** <ex.: agenda em grade é obrigatória>
+
+## Marca
+<Logo, cores e fontes que já existem e o que pode mudar. "Não existe" também é resposta.>
+
+## Limites
+- **Stack e bibliotecas:** <…>
+- **Dados:** <API, demonstração local>
+- **Fora do escopo:** <…>

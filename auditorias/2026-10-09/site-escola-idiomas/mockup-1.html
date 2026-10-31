@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voga Idiomas — Inglês, espanhol e mais 4 idiomas perto de você</title>
+<!--
+  MOCKUP 1 — HOME
+  Construído seguindo fiskuiuxguide.md (tokens do §1, receitas do §3, template do §5.2).
+  Escola fictícia. Onde o guia tem erro apontado na auditoria, o erro foi mantido e está
+  marcado com "FIEL AO GUIA". Onde o guia não diz o que fazer, está marcado com "DECISÃO".
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1. TOKENS — cópia literal do §1 (L26-95)
+   ============================================================ */
+:root {
+  --brand:            #d71920;
+  --brand-dark:       #aa1318;
+  --brand-light:      #ed3237;
+  --brand-deep:       #5a0f14;
+  --brand-hero:       #e00c18;
+  --brand-tint:       #fff0f0;
+
+  --heading:          #04000b;
+  --paragraph:        #666666;
+  --dark:             #0e0f11;
+  --white:            #ffffff;
+  --bg-gray:          #f2f3ef;
+  --border:           #dee2e6;
+
+  --font: "Montserrat", system-ui, -apple-system, sans-serif;
+
+  --fs-hero:      clamp(1.75rem, 4vw, 60px);
+  --fs-hero-sub:  clamp(1rem, 2vw, 25px);
+  --fs-section:   clamp(1.75rem, 3.5vw, 50px);
+  --fs-card:      27px;
+  --fs-item:      20px;
+  --fs-body:      17px;
+  --fs-body-lg:   20px;
+  --fs-caption:   14px;
+
+  --lh-tight:     1.15;
+  --lh-heading:   1.2;
+  --lh-body:      1.6;
+
+  --space-1: .25rem;  --space-2: .5rem;   --space-3: 1rem;
+  --space-4: 1.5rem;  --space-5: 2.5rem;  --space-6: 3.5rem;
+
+  --section-py:      100px 0 120px;
+  --section-py-sm:   60px 0;
+  --heading-mb:      60px;
+
+  --container:       1320px;
+  --container-pad:   35px;
+  --header-h:        143px;
+  --header-h-mobile: 64px;
+
+  --r-sm:   6px;
+  --r-md:   8px;
+  --r-lg:   20px;
+  --r-xl:   32px;
+  --r-full: 999px;
+
+  --shadow-card:  0 2px 12px 0 #e7e7e7;
+  --shadow-hover: 0 20px 40px -12px rgba(0,0,0,.12), 0 8px 20px -8px rgba(200,16,46,.14);
+  --shadow-brand: 0 10px 30px 0 rgba(215,25,32,.4);
+
+  --t-fast: .2s ease;
+  --t-base: .25s ease;
+  --t-slow: .35s ease-in-out;
+}
+@media (max-width: 767px) {
+  :root { --section-py: 60px 0; --container-pad: 20px; --heading-mb: 40px; }
+}
+
+/* ============================================================
+   2. BASE — o guia não traz reset; DECISÕES mínimas
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }           /* DECISÃO: o guia não define box-sizing */
+body {
+  margin: 0; font-family: var(--font); font-size: var(--fs-body);
+  line-height: 1.7;                                            /* DECISÃO: tabela L140 diz 1.7; token --lh-body diz 1.6 */
+  font-weight: 400; color: var(--paragraph); background: var(--white); letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+svg { display: block; }
+h1, h2, h3, h4 { color: var(--heading); line-height: var(--lh-heading); }
+/* FIEL AO GUIA: nenhuma receita define font-family em <button>/<input>/<select>;
+   sem reset, esses controles ficam na fonte padrão do navegador. */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ============================================================
+   3. RECEITAS — cópia literal do §3 e §4
+   ============================================================ */
+/* 3.1 Botões (L158-188) */
+.btn-primary {
+  background: var(--brand); color: #fff; border: none;
+  padding: 10px 20px; border-radius: var(--r-sm);
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-outline {
+  background: #fff; color: var(--brand-dark);
+  border: .8px solid var(--brand-dark);
+  padding: 10px 20px; border-radius: var(--r-sm);
+  font-size: 14px; font-weight: 700;
+}
+.btn-outline:hover { background: var(--brand-dark); color: #fff; }
+.btn-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: 15px 40px; border-radius: 32px;
+  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  border: 2px solid #fff; white-space: nowrap;
+  transition: background-color .25s, color .25s, border-color .25s;
+}
+.btn-pill--on-brand         { background: #fff; color: var(--brand); }
+.btn-pill--on-brand:hover   { background: transparent; color: #fff; }
+.btn-pill--ghost            { background: rgba(255,255,255,.15); color: #fff; border-color: rgba(255,255,255,.55); }
+.btn-pill--ghost:hover      { background: rgba(255,255,255,.28); }
+/* DECISÃO: L191 pede "sólido da marca" no hero, mas o §3.1 não tem pílula sólida na cor da marca */
+.btn-pill--brand            { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+/* 3.2 Tile de curso (L207-220) */
+.course-tile {
+  position: relative; display: block; overflow: hidden;
+  aspect-ratio: 298 / 256;
+  transition: transform var(--t-slow);
+}
+.course-tile img, .course-tile .ph { width:100%; height:100%; object-fit:cover; transition: transform var(--t-slow); }
+.course-tile:hover img { transform: scale(1.06); }
+.course-tile::after {
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.15) 55%, transparent 100%);
+}
+.course-tile__body { position:absolute; inset:auto 0 0 0; padding:24px; z-index:1; color:#fff; }
+.course-tile__body h3 { font-size:27px; font-weight:600; color:#fff; margin-bottom:8px; }
+.course-tile__cta { font-size:14px; font-weight:700; letter-spacing:.04em; opacity:.9; }
+
+/* 3.3 Card (L227-236) */
+.card {
+  background:#fff; border-radius: var(--r-lg); overflow:hidden;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--t-base), transform var(--t-base);
+}
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+.card__meta  { font-size:14px; color:var(--paragraph); }
+.card__tag   { font-size:14px; font-weight:700; color:var(--brand); text-transform:uppercase; }
+.card__title { font-size:20px; font-weight:600; color:var(--heading); line-height:1.3; }
+.card__link  { font-size:14px; font-weight:700; color:var(--brand-dark); }
+
+/* 3.4 Faixa de CTA (L245-252) */
+.cta-band {
+  max-width: var(--container); margin: -40px auto 0;
+  background: var(--brand-hero); color:#fff;
+  border-radius: var(--r-xl); padding: 20px 35px;
+  display:flex; gap: var(--space-4); align-items:center; justify-content:space-between;
+}
+.cta-band h2 { font-size:40px; font-weight:700; text-transform:uppercase; line-height:1.2; color:#fff; }
+@media (max-width:767px){ .cta-band { flex-direction:column; align-items:stretch; text-align:left; } }
+
+/* 3.6 Inputs (L269-279) */
+.input, .select {
+  height: 44px;
+  padding: 8px 12px;
+  border: .8px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 16px;
+  background: #fff; color: #212529;
+}
+.input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(215,25,32,.15); }
+.label  { font-size:16px; margin-bottom:8px; display:block; }
+.label .req { color: var(--brand); }
+
+/* 4. Layout (L298-303) */
+.container { max-width: 1320px; margin-inline:auto; padding-inline: 35px; }
+.section   { padding: 100px 0 120px; }
+.section--tint  { background: var(--brand-tint); }
+.section--gray  { background: var(--bg-gray); }
+.section--tight { padding: 48px 0; }
+@media (max-width:767px){ .section { padding: 60px 0; } }
+
+/* Tipografia do §2 (tabela L132-142) */
+.section-title { font-size: var(--fs-section); font-weight: 700; color: var(--brand-deep); line-height: var(--lh-heading); margin-bottom: var(--heading-mb); }
+.eyebrow {
+  display: inline-block; font-size: 14px; font-weight: 700; color: var(--heading); line-height: 1.4;
+  text-transform: uppercase; border: 1px solid #ccc; padding: 8px 30px; border-radius: 30px;
+  margin-bottom: var(--space-3);                               /* DECISÃO: posição/uso do eyebrow não é definido */
+}
+h4, .h4 { font-size: var(--fs-item); font-weight: 600; margin-bottom: 15px; }
+
+/* ============================================================
+   4. HEADER (§5.1) — medidas internas são DECISÕES
+   ============================================================ */
+.site-header { height: var(--header-h); background: var(--white); border-bottom: 1px solid var(--border); }
+.header-top { height: 65px; border-bottom: 1px solid var(--border); }
+.header-top .container, .header-nav .container { height: 100%; display: flex; align-items: center; }
+.header-top .container { gap: var(--space-5); }
+.header-nav { height: 77px; }
+.logo { display: flex; align-items: center; gap: 10px; flex: none; }
+.logo__text { display: flex; flex-direction: column; line-height: 1; }
+.logo__text b { font-size: 30px; font-weight: 800; color: var(--brand); }
+.logo__text small { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--heading); margin-top: 2px; }
+.site-search { position: relative; flex: 1; max-width: 560px; }
+.site-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--paragraph); }
+.site-search .input { width: 100%; padding-left: 48px; background: var(--brand-tint); }
+.header-top__actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-4); }
+.unit-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--brand-dark); }
+.access { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.main-nav ul { display: flex; align-items: center; gap: 28px; }
+.main-nav a { display: inline-flex; align-items: center; gap: 4px; font-weight: 500; color: var(--heading); }
+.main-nav a[aria-current="page"] { color: var(--brand); font-weight: 700; }
+.header-cta { margin-left: auto; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.header-cta__test { font-size: 12px; font-weight: 600; color: var(--brand-dark); text-decoration: underline; line-height: 1.5; }
+
+/* ============================================================
+   5. HERO CARROSSEL (§5.2 item 1 + §6) — quadro estático do coverflow
+   ============================================================ */
+.hero { position: relative; padding-top: var(--space-4); overflow: hidden; background: var(--white); }
+.hero__track { position: relative; height: 560px; }
+.hero__slide { position: absolute; top: 0; width: 1120px; height: 560px; border-radius: var(--r-lg); overflow: hidden; color: #fff; }
+.hero__slide > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero__slide--active { left: 50%; transform: translateX(-50%); z-index: 2; }
+.hero__slide--prev { right: calc(50% + 560px - 40px); transform-origin: right center; transform: perspective(1600px) rotateY(12deg) scale(.86); filter: blur(4px); z-index: 1; }
+.hero__slide--next { left: calc(50% + 560px - 40px); transform-origin: left center; transform: perspective(1600px) rotateY(-12deg) scale(.86); filter: blur(4px); z-index: 1; }
+.hero__content { position: relative; z-index: 1; max-width: 740px; padding: 64px 0 0 72px; }
+.hero__title { font-size: var(--fs-hero); font-weight: 700; line-height: var(--lh-tight); color: #fff; margin-bottom: 1rem; }
+.hero__sub { font-size: var(--fs-hero-sub); font-weight: 600; line-height: 1.3; margin-bottom: var(--space-3); }
+.hero__lead { font-size: var(--fs-body-lg); font-weight: 500; line-height: 1.6; max-width: 600px; margin-bottom: var(--space-5); }
+.cta-pair { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.hero__bullets { position: absolute; left: 0; right: 0; bottom: 60px; z-index: 2; display: flex; justify-content: center; gap: 8px; }
+.hero__bullets span { width: 10px; height: 10px; border-radius: var(--r-full); background: rgba(255,255,255,.5); }
+.hero__bullets span[aria-current] { width: 28px; background: #fff; }
+
+/* Faixa de CTA: a receita não posiciona; sem isto ela fica ATRÁS dos slides transformados */
+.cta-band { position: relative; z-index: 3; }                  /* DECISÃO */
+.cta-band h2 { flex: 1; }
+.lead-form { flex: none; width: 400px; }
+.lead-form__field { position: relative; }
+.lead-form__field .input { width: 100%; border-radius: 32px; padding-left: 20px; padding-right: 52px; }
+.lead-form__next { position: absolute; right: 4px; top: 4px; width: 36px; height: 36px; border-radius: var(--r-full); border: none; background: var(--brand-dark); color: #fff; display: grid; place-items: center; cursor: pointer; }
+.lead-form__count { display: block; text-align: right; font-size: 14px; line-height: 1.4; margin-top: var(--space-1); }
+
+/* ============================================================
+   6. SEÇÕES
+   ============================================================ */
+/* Cursos (L310): "carrossel/grade horizontal de tiles ~300×256, gap: 0". Quadro estático do carrossel:
+   tiles de 298px (a razão 298/256 da receita dá 256px de altura), o 5º aparece cortado. */
+.course-grid { display: flex; gap: 0; overflow: hidden; }
+.course-grid .course-tile { flex: 0 0 298px; }
+.course-tile .ph { position: absolute; inset: 0; }
+
+.unit-strip { border-top: 1px solid var(--border); }
+.unit-strip .container { display: flex; align-items: center; gap: var(--space-6); }
+.unit-strip h2 { font-size: var(--fs-card); font-weight: 700; margin-bottom: var(--space-2); }
+.unit-strip__text { flex: 1; }
+.unit-search { flex: none; width: 640px; display: flex; gap: var(--space-2); position: relative; }
+.unit-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--paragraph); }
+.unit-search .input { flex: 1; padding-left: 48px; background: var(--brand-tint); }
+.unit-search .btn-primary { cursor: pointer; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: center; }
+.media { border-radius: var(--r-lg); overflow: hidden; }
+.media svg { width: 100%; height: auto; }
+.item-list { margin: var(--space-5) 0; display: grid; gap: var(--space-4); }
+.item-list h4 { margin-bottom: var(--space-1); }
+.icon-item { display: grid; grid-template-columns: 56px 1fr; gap: var(--space-4); align-items: start; }
+.icon-item__icon { width: 56px; height: 56px; border-radius: var(--r-full); background: var(--brand-tint); color: var(--brand); display: grid; place-items: center; }
+.section-cta { display: flex; gap: var(--space-3); margin-top: var(--space-5); }
+
+.counters { display: grid; grid-template-columns: repeat(4, 1fr); margin-bottom: var(--space-6); }
+.counters > div { padding-left: var(--space-4); border-left: 1px solid var(--border); }
+.counters > div:first-child { padding-left: 0; border-left: none; }
+.counter__num { font-size: var(--fs-section); font-weight: 700; color: var(--brand); line-height: var(--lh-heading); }
+
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.testimonial { padding: 32px; display: flex; flex-direction: column; gap: var(--space-4); }
+.testimonial__quote-mark { color: var(--brand); transform: rotate(180deg); }
+.testimonial__person { display: flex; align-items: center; gap: var(--space-3); margin-top: auto; }
+.testimonial__person h4 { margin-bottom: 0; }
+.avatar { width: 56px; height: 56px; border-radius: var(--r-full); background: var(--brand-tint); color: var(--brand-dark); font-weight: 700; display: grid; place-items: center; flex: none; }
+
+.post .ph { width: 100%; height: auto; }
+.post__body { padding: var(--space-4); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); }
+.post__body .card__title { margin: var(--space-1) 0 var(--space-3); }
+
+/* ============================================================
+   7. FOOTER (§5.6), COOKIE BAR, CHAT, LIBRAS (§7, §8)
+   ============================================================ */
+.site-footer { background: var(--brand-dark); color: #fff; padding: var(--space-6) 0 var(--space-4); }
+.site-footer h4 { color: #fff; }
+.footer__top { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: var(--space-5); padding-bottom: var(--space-6); }
+.footer__brand p { margin-top: var(--space-3); max-width: 300px; }
+.footer__top ul { display: grid; gap: var(--space-2); }
+.logo--white .logo__text b, .logo--white .logo__text small { color: #fff; }
+.footer__bottom { border-top: 1px solid rgba(255,255,255,.25); padding-top: var(--space-4); display: flex; gap: var(--space-5); font-size: 14px; }
+.footer__bottom a { text-decoration: underline; }
+
+body { padding-bottom: 76px; }                                 /* reserva a altura da cookie bar para não cobrir o copyright no print */
+.cookie-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--dark); color: #fff; height: 76px; }
+.cookie-bar .container { height: 100%; display: flex; align-items: center; gap: var(--space-4); font-size: 14px; }
+.cookie-bar p { flex: 1; line-height: 1.4; }
+.cookie-bar p a { text-decoration: underline; }
+.cookie-bar .btn-outline, .cookie-bar .btn-primary { cursor: pointer; }
+.chat-bubble { position: fixed; right: 24px; bottom: 100px; z-index: 21; width: 56px; height: 56px; border-radius: var(--r-full); background: var(--brand); color: #fff; display: grid; place-items: center; box-shadow: var(--shadow-brand); border: none; }
+.libras { position: fixed; right: 28px; bottom: 172px; z-index: 21; width: 48px; height: 48px; border-radius: var(--r-md); background: #1c4f9c; color: #fff; display: grid; place-items: center; border: none; }
+</style>
+</head>
+<body>
+
+<!-- ======================= HEADER (§5.1) ======================= -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="container">
+      <a class="logo" href="#" aria-label="Voga Idiomas — página inicial">
+        <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 3h28a6 6 0 0 1 6 6v17a6 6 0 0 1-6 6H19l-9 7v-7H6a6 6 0 0 1-6-6V9a6 6 0 0 1 6-6z" fill="#d71920"/><path d="M10.5 11l7.3 14h4.4l7.3-14h-4.8L20 20.4 15.3 11z" fill="#fff"/></svg>
+        <span class="logo__text"><b>voga</b><small>idiomas</small></span>
+      </a>
+      <form class="site-search" role="search" action="#">
+        <label class="sr-only" for="q">Pesquisar no site</label>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input class="input" id="q" type="search" placeholder="Pesquisar no site">
+      </form>
+      <div class="header-top__actions">
+        <!-- DECISÃO: a regra 5 (L16) e o §8.6 (L431) exigem a busca de unidade "no topo da navegação",
+             mas o diagrama do header (L322-329) não tem esse item. -->
+        <a class="unit-link" href="#unidades">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Encontre uma unidade
+        </a>
+        <button class="btn-outline access" type="button" aria-haspopup="true" aria-expanded="false">Acesso
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="header-nav">
+    <div class="container">
+      <nav class="main-nav" aria-label="Principal">
+        <ul>
+          <li><a href="#" aria-current="page">Home</a></li>
+          <li><a href="#">Sobre Nós <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+          <li><a href="#">Cursos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">E-book</a></li>
+          <li><a href="#">Faça Parte <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+          <li><a href="#">Seja um Franqueado</a></li>
+          <li><a href="#">Fale Conosco</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <a class="btn-primary" href="#">Pré-matrícula</a>
+        <a class="header-cta__test" href="#">Teste de classificação</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ======================= 1. HERO CARROSSEL ======================= -->
+<section class="hero" aria-roledescription="carrossel" aria-label="Destaques">
+  <div class="hero__track">
+
+    <!-- slide anterior (lateral, desfocado) -->
+    <div class="hero__slide hero__slide--prev" aria-hidden="true">
+      <svg viewBox="0 0 1120 560" preserveAspectRatio="xMidYMid slice">
+        <defs><linearGradient id="hp" x1="0" x2="1"><stop offset="0" stop-color="#1e2a33"/><stop offset="1" stop-color="#5f7480"/></linearGradient></defs>
+        <rect width="1120" height="560" fill="url(#hp)"/>
+        <circle cx="900" cy="150" r="260" fill="#fff" opacity=".07"/>
+        <g transform="translate(960 330) scale(1.3)">
+          <path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f1ede6"/>
+          <rect x="-16" y="46" width="32" height="44" rx="12" fill="#c98f6b"/>
+          <circle cx="0" cy="-8" r="62" fill="#2a1d18"/><circle cx="0" cy="8" r="52" fill="#dba27d"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- slide ativo -->
+    <div class="hero__slide hero__slide--active" role="group" aria-roledescription="slide" aria-label="1 de 4">
+      <svg viewBox="0 0 1120 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="h1" x1="0" x2="1" y1="0" y2=".25"><stop offset="0" stop-color="#171516"/><stop offset=".5" stop-color="#2b2223"/><stop offset="1" stop-color="#6a4638"/></linearGradient>
+        </defs>
+        <rect width="1120" height="560" fill="url(#h1)"/>
+        <circle cx="960" cy="140" r="270" fill="#ffb27a" opacity=".10"/>
+        <circle cx="1090" cy="470" r="190" fill="#ff8a5c" opacity=".10"/>
+        <circle cx="720" cy="560" r="150" fill="#fff" opacity=".04"/>
+        <!-- aluna -->
+        <g transform="translate(858 352) scale(1.22)">
+          <path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f4f1ec"/>
+          <rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/>
+          <circle cx="0" cy="-10" r="64" fill="#2b1e1a"/><circle cx="0" cy="-76" r="22" fill="#2b1e1a"/>
+          <circle cx="0" cy="8" r="52" fill="#e3b08d"/>
+        </g>
+        <!-- aluno -->
+        <g transform="translate(1040 372) scale(1.1)">
+          <path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#ed3237"/>
+          <rect x="-16" y="46" width="32" height="44" rx="12" fill="#a56a48"/>
+          <circle cx="0" cy="-8" r="60" fill="#1c1412"/>
+          <circle cx="0" cy="8" r="52" fill="#b97a57"/>
+        </g>
+        <!-- balões -->
+        <path d="M772 92h148a22 22 0 0 1 22 22v40a22 22 0 0 1-22 22h-56l-26 26v-26h-66a22 22 0 0 1-22-22v-40a22 22 0 0 1 22-22z" fill="#fff"/>
+        <text x="846" y="146" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="32" font-weight="700" fill="#04000b">Hello!</text>
+        <path d="M968 176h110a20 20 0 0 1 20 20v34a20 20 0 0 1-20 20h-18v22l-24-22h-68a20 20 0 0 1-20-20v-34a20 20 0 0 1 20-20z" fill="#d71920"/>
+        <text x="1023" y="223" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="26" font-weight="700" fill="#fff">¡Hola!</text>
+        <rect x="948" y="48" width="150" height="56" rx="18" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+        <text x="1023" y="85" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="22" font-weight="600" fill="#fff" fill-opacity=".9">Bonjour!</text>
+      </svg>
+      <div class="hero__content">
+        <h1 class="hero__title">Matrículas abertas para 2027</h1>
+        <p class="hero__sub">Comece o ano falando um novo idioma.</p>
+        <p class="hero__lead">Faça sua pré-matrícula até 30 de novembro e garanta o material didático do primeiro semestre sem custo.</p>
+        <!-- par de CTA do hero (L191): baixo compromisso à esquerda, conversão à direita -->
+        <div class="cta-pair">
+          <a class="btn-pill btn-pill--ghost" href="#">Fazer Teste de classificação
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn-pill btn-pill--brand" href="#">Fazer Pré-matrícula</a>
+        </div>
+      </div>
+      <div class="hero__bullets" role="group" aria-label="Escolher slide">
+        <span aria-current="true"></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- próximo slide (lateral, desfocado) -->
+    <div class="hero__slide hero__slide--next" aria-hidden="true">
+      <svg viewBox="0 0 1120 560" preserveAspectRatio="xMidYMid slice">
+        <defs><linearGradient id="hn" x1="0" x2="1"><stop offset="0" stop-color="#3a2a22"/><stop offset="1" stop-color="#a8754f"/></linearGradient></defs>
+        <rect width="1120" height="560" fill="url(#hn)"/>
+        <circle cx="160" cy="420" r="240" fill="#fff" opacity=".06"/>
+      </svg>
+      <div class="hero__content">
+        <p class="hero__title">Intercâmbio em Dublin</p>
+        <p class="hero__sub">4 semanas de imersão.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================= 2. FAIXA DE CTA DE LEAD (§3.4 + §3.5) ======================= -->
+<section class="cta-band" aria-labelledby="lead-title">
+  <h2 id="lead-title">Receba as novidades da Voga!</h2>
+  <form class="lead-form" action="#">
+    <!-- FIEL AO GUIA: asterisco em var(--brand) (L279) dentro da faixa var(--brand-hero) (L247) = 1,05:1 -->
+    <label class="label" for="lead-email"><span class="req" aria-hidden="true">*</span> E-mail</label>
+    <div class="lead-form__field">
+      <input class="input" id="lead-email" type="email" autocomplete="email" required placeholder="nome@exemplo.com">
+      <button class="lead-form__next" type="button" aria-label="Próximo campo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+    <span class="lead-form__count">1 de 5</span>
+  </form>
+</section>
+
+<!-- ======================= 4. CURSOS ======================= -->
+<section class="section" aria-labelledby="cursos-title">
+  <div class="container">
+    <span class="eyebrow">Cursos</span>
+    <h2 class="section-title" id="cursos-title">Seis idiomas, um jeito de aprender</h2>
+    <div class="course-grid">
+
+      <a class="course-tile" href="#" aria-label="Conheça Inglês">
+        <svg class="ph" viewBox="0 0 298 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="t1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34404d"/><stop offset="1" stop-color="#7b8c9a"/></linearGradient></defs>
+          <rect width="298" height="256" fill="url(#t1)"/><circle cx="250" cy="40" r="110" fill="#fff" opacity=".08"/>
+          <g transform="translate(196 122) scale(.72)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f4f1ec"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-8" r="62" fill="#3a2a1f"/><circle cx="0" cy="8" r="52" fill="#e3b08d"/></g>
+          <path d="M30 28h92a14 14 0 0 1 14 14v26a14 14 0 0 1-14 14H74L58 98V82H30a14 14 0 0 1-14-14V42a14 14 0 0 1 14-14z" fill="#fff"/>
+          <text x="76" y="63" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="21" font-weight="700" fill="#04000b">Hello!</text>
+        </svg>
+        <div class="course-tile__body"><h3>Inglês</h3><span class="course-tile__cta">CONHEÇA</span></div>
+      </a>
+
+      <a class="course-tile" href="#" aria-label="Conheça Espanhol">
+        <svg class="ph" viewBox="0 0 298 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="t2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a4630"/><stop offset="1" stop-color="#c58a5c"/></linearGradient></defs>
+          <rect width="298" height="256" fill="url(#t2)"/><circle cx="40" cy="60" r="120" fill="#fff" opacity=".07"/>
+          <g transform="translate(110 126) scale(.72)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f0c66a"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#9c6242"/><circle cx="0" cy="-8" r="60" fill="#1c1412"/><circle cx="0" cy="8" r="52" fill="#b97a57"/></g>
+          <path d="M176 30h92a14 14 0 0 1 14 14v26a14 14 0 0 1-14 14h-28v16l-16-16h-48a14 14 0 0 1-14-14V44a14 14 0 0 1 14-14z" fill="#fff"/>
+          <text x="222" y="65" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="21" font-weight="700" fill="#04000b">¡Hola!</text>
+        </svg>
+        <div class="course-tile__body"><h3>Espanhol</h3><span class="course-tile__cta">CONHEÇA</span></div>
+      </a>
+
+      <!-- foto clara de propósito: mostra o limite do overlay da receita (L216) sobre imagem clara -->
+      <a class="course-tile" href="#" aria-label="Conheça Francês">
+        <svg class="ph" viewBox="0 0 298 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="t3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4ede2"/><stop offset="1" stop-color="#e3d6c4"/></linearGradient></defs>
+          <rect width="298" height="256" fill="url(#t3)"/><circle cx="250" cy="50" r="100" fill="#fff" opacity=".5"/>
+          <g transform="translate(200 124) scale(.72)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#2c3e5c"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-10" r="64" fill="#8a5a35"/><circle cx="0" cy="8" r="52" fill="#ecc3a3"/></g>
+          <path d="M28 28h112a14 14 0 0 1 14 14v26a14 14 0 0 1-14 14H74L58 98V82H28a14 14 0 0 1-14-14V42a14 14 0 0 1 14-14z" fill="#2c3e5c"/>
+          <text x="84" y="63" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="21" font-weight="700" fill="#fff">Bonjour!</text>
+        </svg>
+        <div class="course-tile__body"><h3>Francês</h3><span class="course-tile__cta">CONHEÇA</span></div>
+      </a>
+
+      <a class="course-tile" href="#" aria-label="Conheça Alemão">
+        <svg class="ph" viewBox="0 0 298 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="t4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27322e"/><stop offset="1" stop-color="#63776d"/></linearGradient></defs>
+          <rect width="298" height="256" fill="url(#t4)"/><circle cx="50" cy="40" r="110" fill="#fff" opacity=".07"/>
+          <g transform="translate(108 124) scale(.72)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#d9dedb"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-8" r="60" fill="#c9a36a"/><circle cx="0" cy="8" r="52" fill="#efc9ab"/></g>
+          <path d="M184 30h84a14 14 0 0 1 14 14v26a14 14 0 0 1-14 14h-28v16l-16-16h-40a14 14 0 0 1-14-14V44a14 14 0 0 1 14-14z" fill="#fff"/>
+          <text x="226" y="65" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="21" font-weight="700" fill="#04000b">Hallo!</text>
+        </svg>
+        <div class="course-tile__body"><h3>Alemão</h3><span class="course-tile__cta">CONHEÇA</span></div>
+      </a>
+
+      <a class="course-tile" href="#" aria-label="Conheça Italiano">
+        <svg class="ph" viewBox="0 0 298 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs><linearGradient id="t5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a3540"/><stop offset="1" stop-color="#9a7a86"/></linearGradient></defs>
+          <rect width="298" height="256" fill="url(#t5)"/><circle cx="240" cy="50" r="110" fill="#fff" opacity=".07"/>
+          <g transform="translate(200 124) scale(.72)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f4f1ec"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-8" r="62" fill="#2b1e1a"/><circle cx="0" cy="8" r="52" fill="#e3b08d"/></g>
+          <path d="M22 28h78a14 14 0 0 1 14 14v26a14 14 0 0 1-14 14H66L50 98V82H22A14 14 0 0 1 8 68V42a14 14 0 0 1 14-14z" fill="#fff"/>
+          <text x="61" y="63" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="21" font-weight="700" fill="#04000b">Ciao!</text>
+        </svg>
+        <div class="course-tile__body"><h3>Italiano</h3><span class="course-tile__cta">CONHEÇA</span></div>
+      </a>
+
+      <a class="course-tile" href="#" aria-label="Conheça Português para Estrangeiros">
+        <svg class="ph" viewBox="0 0 298 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="298" height="256" fill="#5b5148"/>
+        </svg>
+        <div class="course-tile__body"><h3>Português para Estrangeiros</h3><span class="course-tile__cta">CONHEÇA</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================= BUSCA DE UNIDADE =======================
+     DECISÃO: a regra 5 (L16) diz que a busca de unidade é "função de primeira classe",
+     mas o template da home (§5.2, L339-351) não reserva seção para ela. Usei .section--tight
+     (L302), que o guia define sem dizer onde aplicar. -->
+<section class="section--tight unit-strip" id="unidades" aria-labelledby="unit-title">
+  <div class="container">
+    <div class="unit-strip__text">
+      <h2 id="unit-title">Encontre uma unidade perto de você</h2>
+      <p>São 140 unidades em 19 estados, com aulas presenciais e on-line.</p>
+    </div>
+    <form class="unit-search" role="search" action="#">
+      <label class="sr-only" for="unit-q">Buscar unidade</label>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input class="input" id="unit-q" type="search" placeholder="Busque por CEP, Estado, Cidade ou Nome da Unidade.">
+      <button class="btn-primary" type="submit">Buscar unidade</button>
+    </form>
+  </div>
+</section>
+
+<!-- ======================= 6. VIAGENS E INTERCÂMBIOS (fundo tint) ======================= -->
+<section class="section section--tint" aria-labelledby="viagens-title">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">Intercâmbio</span>
+      <h2 class="section-title" id="viagens-title">Viagens e intercâmbios</h2>
+      <p>Leve o idioma para fora da sala. A Voga organiza embarques em grupo, com professor acompanhante, e programas individuais em escolas parceiras de sete países.</p>
+      <ul class="item-list">
+        <li><h4>Dublin, Irlanda</h4><p>Quatro semanas de inglês intensivo com hospedagem em casa de família.</p></li>
+        <li><h4>Salamanca, Espanha</h4><p>Curso de férias em julho para alunos a partir de 14 anos.</p></li>
+        <li><h4>Vancouver, Canadá</h4><p>Programa de estudo e trabalho de seis meses para maiores de 18.</p></li>
+      </ul>
+      <div class="section-cta"><a class="btn-outline" href="#">Conheça!</a></div>
+    </div>
+    <div class="media">
+      <svg viewBox="0 0 600 560" aria-hidden="true">
+        <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f4257"/><stop offset=".55" stop-color="#a9735f"/><stop offset="1" stop-color="#f0b684"/></linearGradient></defs>
+        <rect width="600" height="560" fill="url(#sky)"/>
+        <circle cx="410" cy="372" r="86" fill="#ffe1ad"/>
+        <path d="M0 420l60-40 50 26 70-70 60 52 46-30 64 44 70-80 80 66 100-58v230H0z" fill="#3b3140" opacity=".75"/>
+        <path d="M0 468h70v-70h44v40h36v-96h56v70h30v-34h48v60h40v-110h50v80h36v-50h60v70h40v-40h50v80h40v92H0z" fill="#241c28"/>
+        <path d="M70 250c120-110 280-150 430-120" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" opacity=".8"/>
+        <path d="M498 118l44 6-10 10-28 2-26 30-10-2 12-30-22 2-10 10-6-2 6-14-6-14 6-2 10 10 22 2-12-30 10-2z" fill="#fff" transform="rotate(8 505 140)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 7. POR QUE NÓS (contador + prêmios/selos) ======================= -->
+<section class="section" aria-labelledby="porque-title">
+  <div class="container">
+    <span class="eyebrow">Por que a Voga</span>
+    <h2 class="section-title" id="porque-title">Três décadas formando quem fala</h2>
+    <dl class="counters">
+      <div><dd class="counter__num">32+</dd><dt>anos de ensino</dt></div>
+      <div><dd class="counter__num">140</dd><dt>unidades em 19 estados</dt></div>
+      <div><dd class="counter__num">250 mil</dd><dt>alunos formados</dt></div>
+      <div><dd class="counter__num">94%</dd><dt>dos alunos renovam a matrícula</dt></div>
+    </dl>
+    <div class="split">
+      <div class="media">
+        <svg viewBox="0 0 600 440" aria-hidden="true">
+          <defs><linearGradient id="cls" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e5dd"/><stop offset="1" stop-color="#c9c1b4"/></linearGradient></defs>
+          <rect width="600" height="440" fill="url(#cls)"/>
+          <rect x="60" y="50" width="300" height="150" rx="10" fill="#2f3a36"/>
+          <text x="92" y="112" font-family="Montserrat, sans-serif" font-size="30" font-weight="700" fill="#fff">Well done!</text>
+          <path d="M92 138h150M92 160h96" stroke="#fff" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
+          <g transform="translate(150 330) scale(.9)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#f4f1ec"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-8" r="62" fill="#3a2a1f"/><circle cx="0" cy="8" r="52" fill="#e3b08d"/></g>
+          <g transform="translate(330 345) scale(.9)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#d71920"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#9c6242"/><circle cx="0" cy="-8" r="60" fill="#1c1412"/><circle cx="0" cy="8" r="52" fill="#b97a57"/></g>
+          <g transform="translate(500 320) scale(.95)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#2c3e5c"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-10" r="64" fill="#8a5a35"/><circle cx="0" cy="8" r="52" fill="#ecc3a3"/></g>
+        </svg>
+      </div>
+      <ul class="item-list" style="margin:0">
+        <li class="icon-item">
+          <span class="icon-item__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5 7 22l5-3 5 3-1.5-7.5"/></svg></span>
+          <div><h4>Rede mais recomendada do interior paulista</h4><p>Primeiro lugar na pesquisa regional de satisfação de alunos por seis anos seguidos.</p></div>
+        </li>
+        <li class="icon-item">
+          <span class="icon-item__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></span>
+          <div><h4>Centro preparatório para exames internacionais</h4><p>Turmas específicas para as principais certificações de inglês e espanhol.</p></div>
+        </li>
+        <li class="icon-item">
+          <span class="icon-item__icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.2c2.9.3 5 2.3 5 5.3"/></svg></span>
+          <div><h4>Professores em formação contínua</h4><p>Cada docente cumpre 120 horas de capacitação por ano no método Voga.</p></div>
+        </li>
+      </ul>
+    </div>
+    <div class="section-cta"><a class="btn-outline" href="#">Saiba Mais</a></div>
+  </div>
+</section>
+
+<!-- ======================= 9. DEPOIMENTOS (fundo cinza, carrossel) ======================= -->
+<section class="section section--gray" aria-labelledby="depo-title">
+  <div class="container">
+    <span class="eyebrow">Depoimentos</span>
+    <h2 class="section-title" id="depo-title">Quem estuda na Voga recomenda</h2>
+    <div class="grid-3">
+      <article class="card testimonial">
+        <svg class="testimonial__quote-mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 6h5v5c0 3.5-1.8 5.8-5 7v-2.4c1.3-.7 2-1.9 2-3.6H5zM14 6h5v5c0 3.5-1.8 5.8-5 7v-2.4c1.3-.7 2-1.9 2-3.6h-2z"/></svg>
+        <blockquote><p>Em um ano e meio saí do básico e passei na entrevista em inglês da empresa onde trabalho hoje. As aulas de conversação fizeram toda a diferença.</p></blockquote>
+        <div class="testimonial__person">
+          <span class="avatar" aria-hidden="true">MC</span>
+          <div><h4>Mariana Coutinho</h4><span class="card__meta">Inglês · Unidade Campinas Centro</span></div>
+        </div>
+      </article>
+      <article class="card testimonial">
+        <svg class="testimonial__quote-mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 6h5v5c0 3.5-1.8 5.8-5 7v-2.4c1.3-.7 2-1.9 2-3.6H5zM14 6h5v5c0 3.5-1.8 5.8-5 7v-2.4c1.3-.7 2-1.9 2-3.6h-2z"/></svg>
+        <blockquote><p>O Theo começou com seis anos e hoje canta, brinca e pede para assistir desenho em inglês. Ele adora as professoras e eu acompanho tudo pelo aplicativo.</p></blockquote>
+        <div class="testimonial__person">
+          <span class="avatar" aria-hidden="true">LP</span>
+          <div><h4>Lúcia Prado</h4><span class="card__meta">Mãe do Theo, 8 anos · Sorocaba</span></div>
+        </div>
+      </article>
+      <article class="card testimonial">
+        <svg class="testimonial__quote-mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 6h5v5c0 3.5-1.8 5.8-5 7v-2.4c1.3-.7 2-1.9 2-3.6H5zM14 6h5v5c0 3.5-1.8 5.8-5 7v-2.4c1.3-.7 2-1.9 2-3.6h-2z"/></svg>
+        <blockquote><p>Fiz espanhol on-line por causa do horário do plantão e não perdi nada em relação ao presencial. Em março embarco para a residência em Salamanca.</p></blockquote>
+        <div class="testimonial__person">
+          <span class="avatar" aria-hidden="true">RA</span>
+          <div><h4>Rafael Antunes</h4><span class="card__meta">Espanhol · Aulas on-line</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="section-cta">
+      <a class="btn-outline" href="#">Fazer Teste de classificação</a>
+      <a class="btn-primary" href="#">Fazer Pré-matrícula</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 10. BLOG (3 posts + "SAIBA MAIS") ======================= -->
+<section class="section" aria-labelledby="blog-title">
+  <div class="container">
+    <span class="eyebrow">Blog</span>
+    <h2 class="section-title" id="blog-title">Dicas para aprender mais rápido</h2>
+    <div class="grid-3">
+      <!-- ordem do card (L238): imagem → data → categoria → título → "Continuar lendo". Formato de data como no exemplo da L233. -->
+      <article class="card post">
+        <svg class="ph" viewBox="0 0 400 240" aria-hidden="true">
+          <defs><linearGradient id="b1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2f3a"/><stop offset="1" stop-color="#5d6778"/></linearGradient></defs>
+          <rect width="400" height="240" fill="url(#b1)"/>
+          <rect x="96" y="52" width="208" height="124" rx="10" fill="#11141a"/><rect x="106" y="62" width="188" height="104" rx="4" fill="#3d4656"/>
+          <path d="M186 96v36l32-18z" fill="#fff"/><path d="M168 192h64" stroke="#11141a" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+        <div class="post__body">
+          <time class="card__meta" datetime="2026-10-02">2 Outubro, 2026</time>
+          <span class="card__tag">Dicas</span>
+          <h3 class="card__title">7 séries para treinar o listening sem depender da legenda</h3>
+          <a class="card__link" href="#" aria-label="7 séries para treinar o listening sem depender da legenda. Continuar lendo">Continuar lendo</a>
+        </div>
+      </article>
+      <article class="card post">
+        <svg class="ph" viewBox="0 0 400 240" aria-hidden="true">
+          <defs><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d6a86"/><stop offset="1" stop-color="#b9d3dd"/></linearGradient></defs>
+          <rect width="400" height="240" fill="url(#b2)"/>
+          <path d="M0 190h60v-50h30v30h40v-80h36v60h44v-40h30v60h50v-96h40v70h70v46H0z" fill="#22394a"/>
+          <rect y="188" width="400" height="52" fill="#16293a"/>
+          <circle cx="320" cy="58" r="26" fill="#fff" opacity=".8"/>
+        </svg>
+        <div class="post__body">
+          <time class="card__meta" datetime="2026-09-24">24 Setembro, 2026</time>
+          <span class="card__tag">Intercâmbio</span>
+          <h3 class="card__title">Quanto custa estudar inglês em Dublin em 2027</h3>
+          <a class="card__link" href="#" aria-label="Quanto custa estudar inglês em Dublin em 2027. Continuar lendo">Continuar lendo</a>
+        </div>
+      </article>
+      <article class="card post">
+        <svg class="ph" viewBox="0 0 400 240" aria-hidden="true">
+          <defs><linearGradient id="b3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b4a3a"/><stop offset="1" stop-color="#c79d7a"/></linearGradient></defs>
+          <rect width="400" height="240" fill="url(#b3)"/>
+          <g transform="translate(140 150) scale(.62)"><path d="M-100 190c0-66 40-112 100-112s100 46 100 112z" fill="#1f2937"/><rect x="-16" y="46" width="32" height="44" rx="12" fill="#cf9872"/><circle cx="0" cy="-8" r="62" fill="#2b1e1a"/><circle cx="0" cy="8" r="52" fill="#e3b08d"/></g>
+          <path d="M226 60h112a14 14 0 0 1 14 14v40a14 14 0 0 1-14 14h-70l-18 18v-18h-24a14 14 0 0 1-14-14V74a14 14 0 0 1 14-14z" fill="#fff"/>
+          <path d="M236 86h92M236 104h60" stroke="#6b4a3a" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <div class="post__body">
+          <time class="card__meta" datetime="2026-09-11">11 Setembro, 2026</time>
+          <span class="card__tag">Carreira</span>
+          <h3 class="card__title">Como se preparar para uma entrevista de emprego em inglês</h3>
+          <a class="card__link" href="#" aria-label="Como se preparar para uma entrevista de emprego em inglês. Continuar lendo">Continuar lendo</a>
+        </div>
+      </article>
+    </div>
+    <div class="section-cta"><a class="btn-outline" href="#">SAIBA MAIS</a></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================= 11. FOOTER (§5.6) ======================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo logo--white" href="#" aria-label="Voga Idiomas — página inicial">
+          <svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 3h28a6 6 0 0 1 6 6v17a6 6 0 0 1-6 6H19l-9 7v-7H6a6 6 0 0 1-6-6V9a6 6 0 0 1 6-6z" fill="#fff"/><path d="M10.5 11l7.3 14h4.4l7.3-14h-4.8L20 20.4 15.3 11z" fill="#aa1318"/></svg>
+          <span class="logo__text"><b>voga</b><small>idiomas</small></span>
+        </a>
+        <p>Inglês, espanhol, francês, alemão, italiano e português para estrangeiros desde 1994.</p>
+      </div>
+      <nav aria-label="Sobre nós">
+        <h4>Sobre nós</h4>
+        <ul><li><a href="#">Nossa história</a></li><li><a href="#">Método Voga</a></li><li><a href="#">Unidades</a></li><li><a href="#">Blog</a></li></ul>
+      </nav>
+      <nav aria-label="Cursos">
+        <h4>Cursos</h4>
+        <ul><li><a href="#">Inglês</a></li><li><a href="#">Espanhol</a></li><li><a href="#">Francês</a></li><li><a href="#">Alemão</a></li></ul>
+      </nav>
+      <nav aria-label="Faça parte">
+        <h4>Faça parte</h4>
+        <ul><li><a href="#">Pré-matrícula</a></li><li><a href="#">Teste de classificação</a></li><li><a href="#">Trabalhe Conosco</a></li><li><a href="#">Seja um franqueado</a></li></ul>
+      </nav>
+      <nav aria-label="Acesso">
+        <h4>Acesso</h4>
+        <ul><li><a href="#">Portal do Aluno</a></li><li><a href="#">Plataforma on-line</a></li><li><a href="#">Portal do Professor</a></li><li><a href="#">Painel do franqueado</a></li></ul>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Voga Idiomas. Todos os direitos reservados.</span>
+      <a href="#">Termo de Privacidade</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================= WIDGETS FIXOS (§7 L412, §8 itens 8 e 9) ======================= -->
+<button class="libras" type="button" aria-label="Acessibilidade em Libras">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1V4.5a1.5 1.5 0 0 1 3 0V12m0-.5V6.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.5 14a1.5 1.5 0 0 1 2.5-1.6L8 15"/></svg>
+</button>
+<button class="chat-bubble" type="button" aria-label="Abrir chat">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+</button>
+<div class="cookie-bar" role="region" aria-label="Aviso de cookies">
+  <div class="container">
+    <p>Usamos cookies para melhorar sua navegação e medir o desempenho do site. Saiba mais na <a href="#">Política de Privacidade</a>.</p>
+    <button class="btn-outline" type="button">Recusar</button>
+    <button class="btn-primary" type="button">ACEITAR</button>
+  </div>
+</div>
+
+</body>
+</html>

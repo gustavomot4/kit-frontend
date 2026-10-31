@@ -1,0 +1,16 @@
+{
+  "name": "kit-frontend",
+  "version": "3.0.0",
+  "description": "Artefatos para qualquer agente criar frontend com identidade própria, padrões de mercado e acessibilidade verificada.",
+  "private": true,
+  "repository": { "type": "git", "url": "git+https://github.com/gustavomot4/kit-frontend.git" },
+  "type": "module",
+  "bin": { "kit-frontend": "bin/kit.mjs" },
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "empacotar": "node bin/kit.mjs empacotar",
+    "validar": "node ferramentas/validar.mjs",
+    "testar": "node ferramentas/testar.mjs"
+  },
+  "files": ["bin", "skill", "dist", "README.md"]
+}
