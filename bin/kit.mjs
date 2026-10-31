@@ -163,7 +163,7 @@ const AJUDA = `kit-frontend ${versao}
       --agentes claude,cursor,copilot,gemini,windsurf,cline | todos
       --global                instala para todos os projetos desta máquina
   atualizar [pasta]           igual a instalar; nunca toca em DESIGN.md, PRODUTO.md nem design/correcoes.md
-  verificar <url|arquivo>     audita telas em 4 tamanhos; sai com 1 se houver falha
+  verificar <url|arquivo>     audita telas em 4 tamanhos e para outros públicos; --publicos a,b; sai com 1 se houver falha
   contraste <a> <b>           razão entre duas cores; ou contraste DESIGN.md
   marca [pasta]               confere se MARCA.md e design/marca/ estão completos
   paleta <cor>                gera paleta completa com contraste calculado; --tema escuro, --evitar, --css

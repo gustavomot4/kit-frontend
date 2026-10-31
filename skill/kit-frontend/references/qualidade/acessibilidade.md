@@ -1,12 +1,14 @@
 # Acessibilidade: o piso
 
-Piso: **WCAG 2.2 nível AA**, que a **ABNT NBR 17225:2025** (Acessibilidade em conteúdo e aplicações web) acompanha no Brasil. A Lei Brasileira de Inclusão (13.146/2015) trata de acessibilidade em sites; o que ela exige de cada caso é questão jurídica, não técnica.
+Piso: **WCAG 2.2 nível AA**, que a **ABNT NBR 17225:2025** (Acessibilidade em conteúdo e aplicações web) acompanha no Brasil. O art. 63 da Lei Brasileira de Inclusão (13.146/2015) obriga a acessibilidade em sites de empresas com sede ou representação no país e de órgãos de governo, e pede símbolo de acessibilidade em destaque; o que isso exige de cada caso é questão jurídica, não técnica.
 
 Este piso prevalece sobre tudo no kit, inclusive `references/gosto/perfil.md`, `DESIGN.md` e estilos. Se um pedido bater nele, avise e proponha o caminho que atende aos dois.
 
 **Não declare "acessível" nem "em conformidade".** Diga o que foi verificado e como. Ferramenta automática encontra só parte dos problemas: o resto pede teclado, leitor de tela e pessoas.
 
 ## Para quem, e o que muda para cada um
+
+Resumo abaixo. Quando se sabe quem usa, liste em `publicos:` no `PRODUTO.md` e siga `references/qualidade/publicos.md`.
 
 | Quem | O que precisa | Regra |
 | --- | --- | --- |
@@ -15,7 +17,7 @@ Este piso prevalece sobre tudo no kit, inclusive `references/gosto/perfil.md`, `
 | Daltonismo | Sinal além da cor | Texto, forma ou ícone em todo estado |
 | Mobilidade reduzida, tremor | Alvo grande e teclado | 44 × 44 no toque, tudo pelo teclado, sem exigir arrasto |
 | Baixo letramento, pouca familiaridade | Clareza | Frases curtas, uma decisão por tela, ícone sempre com texto, padrões conhecidos |
-| Pessoa surda | Equivalente visual | Legenda em vídeo, nada só em áudio, Libras em site público (VLibras recomendado, não substitui o resto) |
+| Pessoa surda | Equivalente visual e língua própria | Legenda em vídeo, nada só em áudio, português simples, Libras em site público (`references/padroes/midia-e-libras.md`) |
 | Sensível a movimento | Controle | `prefers-reduced-motion`, nada piscando, pausa em todo carrossel |
 | Situação temporária | Contraste e tamanho | Sol na tela, uma mão só, conexão ruim |
 
@@ -25,6 +27,9 @@ Este piso prevalece sobre tudo no kit, inclusive `references/gosto/perfil.md`, `
 | --- | --- | --- |
 | Contraste de texto | 4,5:1; texto de 24px ou mais, ou 18,66px em negrito, 3:1 | 1.4.3 |
 | Contraste de interface | 3:1 para borda de campo, ícone que informa, foco e gráfico | 1.4.11 |
+| Cor | Nada informa só pela cor | 1.4.1 |
+| Mídia | Legenda em vídeo com fala; pausa em todo movimento que dura mais de 5s | 1.2.2, 2.2.2 |
+| Nome de controle | `aria-label` contém o texto visível | 2.5.3 |
 | Alvo | Mínimo de 24 × 24px. Padrão do kit: 44 × 44px no toque | 2.5.8 |
 | Fonte | Em `rem`. Corpo de pelo menos 16px em tela de uso geral; nada abaixo de 12px | 1.4.4 |
 | Largura | Sem rolagem horizontal em 320px de largura (1280px com zoom de 400%) | 1.4.10 |
@@ -67,12 +72,16 @@ Rode `scripts/verificar.mjs` em cada tela. Depois faça à mão e relate cada it
 1. **Só teclado:** percorra a tela com Tab, Shift+Tab, Enter, Espaço, Esc e setas. O foco aparece sempre? Abre e fecha diálogo devolvendo o foco?
 2. **Zoom:** 200% e 400%. Nada some, nada rola para o lado, barra fixa não cobre.
 3. **Letra grande:** aumente a fonte padrão do navegador para 200%. O texto precisa crescer.
-4. **Leitor de tela:** NVDA no Windows, VoiceOver no Mac ou iPhone, TalkBack no Android. Percorra por títulos, preencha um formulário com erro, abra um diálogo. Se não puder rodar, escreva "leitor de tela não verificado".
-5. **Sem cor:** veja a tela em tons de cinza. Toda situação continua distinguível?
-6. **Alto contraste:** modo de alto contraste do Windows (`forced-colors`). Borda feita com `box-shadow` some.
+4. **Leitor de tela:** comece lendo `leitor-de-tela.txt`. Depois, NVDA no Windows, VoiceOver no Mac ou iPhone, TalkBack no Android. Percorra por títulos, preencha um formulário com erro, abra um diálogo. Se não puder rodar, escreva "leitor de tela não verificado".
+5. **Sem cor:** abra `prancha.html`. Toda situação continua distinguível sem verde, sem vermelho, sem azul e em cinza?
+6. **Alto contraste:** veja `alto-contraste.png`. O verificador acusa campo sem contorno; o resto é com o olho. Borda feita com `box-shadow` some.
 7. **Movimento reduzido:** ative no sistema. Nada se move sozinho.
 8. **Linguagem:** leia em voz alta. Alguém sem familiaridade entende na primeira leitura?
 
 ## Linguagem simples
 
-Frase curta, voz ativa e palavra do dia a dia. Botão com verbo e objeto ("Marcar horário"). Evite sigla sem explicação. Nunca mostre código de erro. Diga o que aconteceu e o que fazer. Para público com letramento variado, use ícone e texto juntos, e teste com alguém do público.
+Frase curta, voz ativa e palavra do dia a dia. Botão com verbo e objeto ("Marcar horário"), e a ação mantém o nome em todo o fluxo: "Publicar" gera o aviso "Publicado". Evite sigla sem explicação. Nunca mostre código de erro. Diga o que aconteceu e o que fazer. Para público com letramento variado, use ícone e texto juntos, e teste com alguém do público.
+
+Roteiro para reescrever, a partir do art. 5º da Lei 15.263/2025 (que vale para o poder público, mas serve a todos): ordem direta, uma ideia por parágrafo, palavra comum no lugar de jargão, sigla só depois do nome completo, listas e tabelas quando couber, o principal primeiro, voz ativa, sem oração intercalada, e teste da mensagem com o público.
+
+O verificador acusa parágrafo difícil por um índice adaptado ao português (`a11y-leitura-dificil`). Abaixo de 10 é texto jurídico; com `pouca-leitura`, o limite sobe para 50. Em 13 textos de teste, os fáceis deram de 66 a 89 e os jurídicos, de −86 a −4. É alerta, nunca aprovação: texto curto e confuso passa. O índice não vale para botão nem rótulo.

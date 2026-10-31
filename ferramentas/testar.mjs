@@ -14,6 +14,8 @@ const kit = (...a) => spawnSync(process.execPath, [join(raiz, 'bin', 'kit.mjs'),
 const temp = () => mkdtempSync(join(tmpdir(), 'kit-teste-'));
 const RUIM = join(raiz, 'ferramentas', 'fixtures', 'tela-ruim.html');
 const BOA = join(raiz, 'ferramentas', 'fixtures', 'tela-boa.html');
+const SONDA_A11Y = join(raiz, 'ferramentas', 'fixtures', 'sonda-acessibilidade.html');
+const SONDA_IA = join(raiz, 'ferramentas', 'fixtures', 'sonda-cara-de-ia.html');
 
 test('instala num projeto vazio com skill, pontes e correções', () => {
   const p = temp();
@@ -89,6 +91,58 @@ test('o verificador reprova a tela ruim e aprova a boa', () => {
   assert.deepEqual(boa.achados.map(a => a.id), [], 'a tela boa não tem achado');
   assert.ok(existsSync(join(boa.capturas, 'desktop.png')) && existsSync(join(boa.capturas, 'zoom.png')));
   rmSync(s, { recursive: true, force: true });
+});
+
+const lerRelatorio = r => JSON.parse(r.stdout.slice(0, r.stdout.lastIndexOf('\n\nNão coberto')));
+
+test('a sonda de acessibilidade aponta os defeitos plantados', () => {
+  const s = temp();
+  const [sonda] = lerRelatorio(kit('verificar', SONDA_A11Y, '--publicos', 'pouca-leitura,surdos-libras', '--saida', s, '--json'));
+  const ids = sonda.achados.map(a => a.id);
+  const controles = ['a11y-nome', 'a11y-contraste', 'a11y-foco-invisivel', 'a11y-alvo', 'a11y-titulos'];
+  const plantados = ['a11y-so-cor', 'a11y-clique-sem-semantica', 'a11y-nome-visivel', 'a11y-icone-sem-texto', 'a11y-tabindex-positivo', 'a11y-alto-contraste', 'a11y-erro-sem-ligacao', 'a11y-leitura-dificil', 'a11y-link-vago', 'a11y-alt-ruim', 'a11y-letra-200', 'a11y-espacamento', 'a11y-justificado', 'a11y-caixa-alta', 'a11y-italico-longo', 'a11y-linha-longa', 'a11y-entrelinha', 'a11y-video-legenda', 'a11y-video-sem-controle', 'a11y-libras'];
+  for (const id of [...controles, ...plantados]) assert.ok(ids.includes(id), `faltou ${id}`);
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('a sonda de clichês aponta os looks novos', () => {
+  const s = temp();
+  const [sonda] = lerRelatorio(kit('verificar', SONDA_IA, '--saida', s, '--json'));
+  const ids = sonda.achados.map(a => a.id);
+  for (const id of ['ia-creme-terracota', 'ia-palavra-destaque', 'ia-mono-enfeite', 'ia-numeracao', 'ia-sombra-dura', 'ia-vidro', 'ia-metrica-heroi', 'ia-jornal', 'ia-pulso', 'ia-pontos-medios', 'ia-seta', 'ia-frase-de-efeito', 'ia-texto-cliche']) assert.ok(ids.includes(id), `faltou ${id}`);
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('a verificação guarda a prancha, o que o leitor de tela recebe e o alto contraste', () => {
+  const s = temp();
+  const [boa] = lerRelatorio(kit('verificar', BOA, '--saida', s, '--json'));
+  for (const f of ['prancha.html', 'alto-contraste.png', 'visao-deuteranopia.png', 'visao-protanopia.png', 'visao-tritanopia.png', 'visao-achromatopsia.png', 'visao-blurredVision.png', 'leitor-de-tela.txt']) assert.ok(existsSync(join(boa.capturas, f)), f);
+  const leitor = readFileSync(join(boa.capturas, 'leitor-de-tela.txt'), 'utf8');
+  assert.match(leitor, /heading: Hoje, quinta/); assert.match(leitor, /button: Marcar horário/);
+  assert.match(readFileSync(join(boa.capturas, 'prancha.html'), 'utf8'), /visao-deuteranopia\.png/);
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('botão dentro de parágrafo é medido; link no meio da frase, não', () => {
+  const p = temp();
+  writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>:focus-visible{outline:3px solid #000}.b{height:18px;width:18px;padding:0}</style></head><body><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1><p>Veja <a href="#r">o regulamento completo</a> antes.</p><p><button class="b" aria-label="Fechar aviso">x</button></p></main></body></html>');
+  const [t] = lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--json'));
+  const alvo = t.achados.find(a => a.id === 'a11y-alvo');
+  assert.ok(alvo, 'botão de 18px dentro de <p> reprova');
+  assert.deepEqual(alvo.exemplos.map(x => x.split(' ')[0]), ['Fechar']);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('o público do PRODUTO.md muda o rigor', () => {
+  const p = temp();
+  writeFileSync(join(p, 'PRODUTO.md'), '# Produto\n\n- **publicos:** [pouca-leitura, idosos]\n- **superficie:** publica\n');
+  const tela = '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>:focus-visible{outline:3px solid #000}button{min-width:44px;min-height:44px}</style></head><body><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1><button aria-label="Excluir"><svg width="20" height="20" aria-hidden="true"><rect width="20" height="20"/></svg></button></main></body></html>';
+  writeFileSync(join(p, 't.html'), tela);
+  const ids = extra => lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--json', ...extra))[0].achados.map(a => a.id);
+  assert.ok(!ids(['--produto', join(p, 'nao-existe.md')]).includes('a11y-icone-sem-texto'), 'sem público, ícone sozinho passa');
+  const comProduto = ids(['--produto', join(p, 'PRODUTO.md')]);
+  assert.ok(comProduto.includes('a11y-icone-sem-texto')); assert.ok(comProduto.includes('a11y-libras'), 'superfície pública cobra Libras');
+  rmSync(p, { recursive: true, force: true });
 });
 
 test('anel de foco sem contraste contra o fundo é falha', () => {

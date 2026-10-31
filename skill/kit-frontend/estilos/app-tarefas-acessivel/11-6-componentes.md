@@ -2,7 +2,7 @@
 
 ### 6.1 Barra superior e menu
 
-**Barra superior:** monograma e nome nas telas de entrada; retorno textual nas telas internas, acompanhado da marca no desktop quando houver espaço. À direita ficam “Ouvir” e avisos pertinentes. Em tela interna móvel, o aviso pode sair do topo para preservar o espaço de “Voltar” e “Ouvir”.
+**Barra superior:** nome ou logotipo nas telas de entrada; retorno textual nas telas internas, acompanhado da marca no desktop quando houver espaço. À direita ficam “Ouvir” e avisos pertinentes. Em tela interna móvel, o aviso pode sair do topo para preservar o espaço de “Voltar” e “Ouvir”.
 
 **Menu móvel:** quatro links com desenho acima do rótulo. O escolhido recebe pílula atrás do desenho e cor de texto de seleção. **Menu desktop:** os mesmos quatro links, horizontais, dentro do topo. O escolhido recebe fundo no item inteiro.
 

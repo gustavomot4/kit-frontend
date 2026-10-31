@@ -37,7 +37,7 @@ O retrabalho nasce de cinco causas, e cada etapa abaixo ataca uma: visual decidi
 
 ### 1. Entender
 
-Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do código e dos documentos. Pergunte no máximo 5 coisas, cada uma com a sua recomendação, e só o que muda decisão de tela.
+Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do código e dos documentos. Pergunte no máximo 5 coisas, cada uma com a sua recomendação, e só o que muda decisão de tela. Preencha `publicos:` e siga `references/qualidade/publicos.md`: quem vai usar muda as decisões e o rigor da verificação.
 
 ### 2. Marca: portão
 
@@ -83,6 +83,7 @@ No máximo 3 telas por entrega. Antes de cada tela, leia o padrão correspondent
 | Agenda, calendário | `references/padroes/agenda.md` |
 | Carregando, vazio, erro | `references/padroes/estados.md` |
 | Aviso, confirmação, desfazer | `references/padroes/retorno.md` |
+| Vídeo, áudio, Libras | `references/padroes/midia-e-libras.md` |
 | Landing, site, tela de marca | `references/padroes/landing.md` e `references/marca/criatividade.md` |
 | Escolher biblioteca, ícone, animação, 3D, gerar mídia | `references/recursos/bibliotecas.md` |
 | Tema escuro | `references/padroes/tema-escuro.md` |
@@ -98,11 +99,11 @@ Em cada tela alterada, com ela no ar ou como arquivo:
 node <pasta da skill>/scripts/verificar.mjs http://localhost:5173/agenda
 ```
 
-Ele testa quatro tamanhos, faz uma passada de Tab, cobre acessibilidade, gosto e cara de IA, salva capturas em `design/verificacao/` e sai com código 1 se houver falha.
+Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento e alto contraste, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
 
 - **Falha** se corrige antes de entregar.
 - **Aviso** se corrige, ou você explica o motivo no relatório. Decisão aprovada entra no `DESIGN.md`.
-- Olhe as capturas. O script mede; o olho vê o que está feio.
+- Olhe as capturas e a prancha. O script mede; o olho vê o que está feio e o que só a cor separa.
 - Faça o teste dos 5 segundos: o que a tela informa e qual é a ação.
 - Faça o roteiro manual de `references/qualidade/acessibilidade.md`.
 
@@ -172,6 +173,7 @@ As regras marcadas com `[script]` são checadas por `scripts/verificar.mjs`. As 
 | G20 | **Responsivo de verdade.** Formulário longo é o que mais quebra: teste cada um em 375 e 320. `[script]` | "a tela de agendar consulta tem muitos erros de responsividade" (28/10) |
 | G21 | **Tema escuro só com estudo.** Nunca inverta cores. Siga `references/padroes/tema-escuro.md` e mostre ideias antes de aplicar. | "esse modo escuro está muito feio"; "faça um estudo com outros do mercado" (09/10) |
 | G22 | **Emoção quando o produto pede.** Em jogo e entretenimento, animação, som e imagem são o produto. Só de bater o olho a pessoa sabe o que é. | "sinto que falta emoção" (20/08) |
+| G23 | **Para todos, de verdade.** Libras, pouca leitura, daltonismo e baixa visão são requisito de produto, e não podem custar a identidade. Liste quem usa em `publicos:` e siga `references/qualidade/publicos.md`. `[script]` | "com acessibilidades (libras, leitura, daltonismos, pessoas com pouca leitura, pessoas com pouca visibilidade etc...) para todos, bonito, intuitivo" (30/10) |
 
 ## Como ele decide
 
@@ -247,7 +249,7 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Paleta inteira de valores padrão do Tailwind ou do shadcn, sem nenhuma decisão. `[script: ia-paleta-padrao]`
 - Gradiente de roxo para azul. Gradiente em texto. `[script: ia-gradiente-roxo, ia-texto-gradiente]`
 - Quase preto com um acento neon.
-- Creme com serifa e terracota: virou o novo padrão de quem foge do índigo.
+- Creme com serifa e terracota: virou o novo padrão de quem foge do índigo. `[script: ia-creme-terracota]`
 - Cinza puro nos neutros, sem nenhum tom da marca.
 - Texto cinza claro para parecer elegante. Passa do contraste antes de parecer elegante.
 
@@ -256,7 +258,8 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Inter, Roboto, Poppins ou Montserrat em tudo, sem decisão. `[script: ia-fonte-padrao]`
 - Hierarquia só por tamanho, sem peso nem cor.
 - Um rótulo pequeno, em caixa alta e espaçado, acima de cada título. `[script: ia-sobrancelha]`
-- Uma palavra do título em cor ou gradiente diferente.
+- Uma palavra do título em itálico, cor ou gradiente diferente. `[script: ia-palavra-destaque]`
+- Monoespaçada em rótulo, para parecer técnico. Fica para código e dado. `[script: ia-mono-enfeite]`
 
 ## Composição
 
@@ -268,6 +271,12 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Cartão com borda colorida só à esquerda. `[script: ia-borda-esquerda]`
 - Seções alternando branco e cinza sem relação com o conteúdo.
 - Pílula colorida para tudo que é etiqueta.
+- Numeração 01 / 02 / 03 em conteúdo que não é sequência. `[script: ia-numeracao]`
+- Número enorme, rótulo pequeno e acento, em série. `[script: ia-metrica-heroi]`
+- Jornal: fios finos, colunas densas e raio zero, sem o assunto pedir. `[script: ia-jornal]`
+- Sombra dura deslocada, fora de um mundo neobrutalista. `[script: ia-sombra-dura]`
+- Vidro e desfoque como decoração. `[script: ia-vidro]`
+- Linha de metadados com pontos médios: "Edição 12 · Outono · São Paulo". `[script: ia-pontos-medios]`
 
 ## Marca e ícones
 
@@ -275,17 +284,19 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Ícone de faíscas para "inteligente", raio para "rápido", escudo para "seguro". `[script: ia-faisca]`
 - Emoji no lugar de ícone. `[script: ia-emoji]`
 - Um ícone do mesmo pacote padrão em cada item, mesmo quando o texto já diz tudo.
+- Seta no fim do botão: "Começar agora →". `[script: ia-seta]`
 
 ## Movimento
 
 - A mesma animação de entrada em todas as seções.
 - Cartão que sobe e ganha sombra em todo hover.
-- Brilho e pulsação sem significado.
+- Brilho e pulsação sem significado. `[script: ia-pulso]`
 
 ## Texto
 
 - Frases vazias: "Transforme seu negócio", "Solução completa", "Sem complicação", "Bem-vindo de volta", "Sua jornada". `[script: ia-texto-cliche]`
 - Tríades de adjetivos: "Simples. Rápido. Seguro."
+- Frase de efeito em negativa: "Não é só tecnologia, é tempo devolvido". `[script: ia-frase-de-efeito]`
 - Números de vaidade inventados: "+10 mil clientes", "99,9%".
 - Depoimentos falsos e logos de empresas que não são clientes.
 - Subtítulo que repete o título com outras palavras.
@@ -790,6 +801,62 @@ Tabela alta com a paginação fora da tela; ação revelada só no hover; rolage
 
 ---
 
+<!-- references/padroes/midia-e-libras.md -->
+
+# Mídia e Libras
+
+Libras é uma língua, com gramática própria, e não substitui o português escrito (Lei 10.436/2002). Para muitos surdos, o texto é segunda língua, então a legenda nem sempre basta (W3C, critério 1.2.6). Uma coisa não dispensa a outra.
+
+## Três níveis
+
+| Nível | Onde vale | O que entregar |
+| --- | --- | --- |
+| 1. Base | Todo site público | VLibras, mais português simples em toda a tela |
+| 2. Conteúdo que decide | Saúde, dinheiro, direitos, consentimento, primeiro uso | Vídeo com intérprete humano ao lado do texto, com legenda |
+| 3. Vídeo do produto | Tutorial, institucional, campanha | Legenda, transcrição e janela de Libras |
+
+O nível 3 é AAA na WCAG (1.2.6): decisão do produto, não piso. Quem deve validar a escolha são pessoas surdas.
+
+## VLibras
+
+Gratuito, do governo federal, com tradução automática do português por avatar. Serve para texto corrido. Não use como única forma de explicar uma decisão importante.
+
+```html
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js" defer></script>
+```
+
+Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Chrome. Para trocar o lado ou o avatar, a documentação oficial cita `new window.VLibras.Widget({ position: 'L', avatar: 'guga' })`; essa forma não foi testada.
+
+- **Carregue sem esperar interação.** Quem precisa de Libras precisa ver o botão ao chegar. Use `defer` ou tempo ocioso, nunca "depois do primeiro clique".
+- **Janela baixa.** Com altura até 480px, confira se o botão não cobre conteúdo nem foco.
+- **Depende de terceiros.** O script baixa arquivos de `vlibras.gov.br` e de `cdn.jsdelivr.net`, e o serviço pode sair do ar. Cite na política de privacidade. O restante da tela não pode depender dele.
+- **Não basta.** Não é atestado de acessibilidade. Há também opção comercial (Hand Talk), que não foi avaliada.
+
+## Vídeo e áudio
+
+| Regra | Como | Critério |
+| --- | --- | --- |
+| Legenda em todo vídeo com fala | `<track kind="captions" srclang="pt-BR">`, com quem fala e os sons que importam | 1.2.2 |
+| Sem autoplay com som | Vídeo começa pela pessoa. Fundo decorativo é mudo, sem informação | 1.4.2 |
+| Pausa em todo movimento | Controles nativos, ou botão "Pausar" visível; movimento reduzido para o vídeo decorativo | 2.2.2 |
+| Áudio tem transcrição | Link visível logo abaixo do player, em texto da página | 1.2.1 |
+| O que só se vê é descrito | Narre o que aparece, ou ofereça audiodescrição | 1.2.3, 1.2.5 |
+| Janela de Libras | Gravada no vídeo, ou segundo vídeo ao lado, sem cobrir legenda nem ação | 1.2.6 |
+| Tamanho reservado | `width` e `height` no `<video>`, para a tela não pular | Desempenho |
+
+Aviso sonoro nunca é o único sinal: repita em texto e, no celular, com vibração quando houver.
+
+## Na lei
+
+O art. 63 da Lei 13.146/2015 obriga a acessibilidade em sites de empresas com sede ou representação comercial no país e de órgãos de governo, e pede símbolo de acessibilidade em destaque. O que isso exige de cada caso é questão jurídica.
+
+`scripts/verificar.mjs` acusa vídeo sem legenda (`a11y-video-legenda`), vídeo sem pausa (`a11y-video-sem-controle`), áudio sem transcrição (`a11y-audio-transcricao`) e superfície pública sem Libras (`a11y-libras`). Ele não julga a qualidade da tradução.
+
+**De onde veio:** Lei 10.436/2002, Lei 13.146/2015, W3C (1.2.6) e documentação do VLibras, lidos na fonte. Os demais critérios de mídia vêm de conhecimento geral da WCAG 2.2. Registro em `docs/pesquisa/benchmark.md`, no repositório do kit.
+
+
+---
+
 <!-- references/padroes/navegacao.md -->
 
 # Navegação e casca
@@ -995,13 +1062,15 @@ Exemplo completo de três temas em `estilos/app-tarefas-acessivel/`, com a ressa
 
 # Acessibilidade: o piso
 
-Piso: **WCAG 2.2 nível AA**, que a **ABNT NBR 17225:2025** (Acessibilidade em conteúdo e aplicações web) acompanha no Brasil. A Lei Brasileira de Inclusão (13.146/2015) trata de acessibilidade em sites; o que ela exige de cada caso é questão jurídica, não técnica.
+Piso: **WCAG 2.2 nível AA**, que a **ABNT NBR 17225:2025** (Acessibilidade em conteúdo e aplicações web) acompanha no Brasil. O art. 63 da Lei Brasileira de Inclusão (13.146/2015) obriga a acessibilidade em sites de empresas com sede ou representação no país e de órgãos de governo, e pede símbolo de acessibilidade em destaque; o que isso exige de cada caso é questão jurídica, não técnica.
 
 Este piso prevalece sobre tudo no kit, inclusive `references/gosto/perfil.md`, `DESIGN.md` e estilos. Se um pedido bater nele, avise e proponha o caminho que atende aos dois.
 
 **Não declare "acessível" nem "em conformidade".** Diga o que foi verificado e como. Ferramenta automática encontra só parte dos problemas: o resto pede teclado, leitor de tela e pessoas.
 
 ## Para quem, e o que muda para cada um
+
+Resumo abaixo. Quando se sabe quem usa, liste em `publicos:` no `PRODUTO.md` e siga `references/qualidade/publicos.md`.
 
 | Quem | O que precisa | Regra |
 | --- | --- | --- |
@@ -1010,7 +1079,7 @@ Este piso prevalece sobre tudo no kit, inclusive `references/gosto/perfil.md`, `
 | Daltonismo | Sinal além da cor | Texto, forma ou ícone em todo estado |
 | Mobilidade reduzida, tremor | Alvo grande e teclado | 44 × 44 no toque, tudo pelo teclado, sem exigir arrasto |
 | Baixo letramento, pouca familiaridade | Clareza | Frases curtas, uma decisão por tela, ícone sempre com texto, padrões conhecidos |
-| Pessoa surda | Equivalente visual | Legenda em vídeo, nada só em áudio, Libras em site público (VLibras recomendado, não substitui o resto) |
+| Pessoa surda | Equivalente visual e língua própria | Legenda em vídeo, nada só em áudio, português simples, Libras em site público (`references/padroes/midia-e-libras.md`) |
 | Sensível a movimento | Controle | `prefers-reduced-motion`, nada piscando, pausa em todo carrossel |
 | Situação temporária | Contraste e tamanho | Sol na tela, uma mão só, conexão ruim |
 
@@ -1020,6 +1089,9 @@ Este piso prevalece sobre tudo no kit, inclusive `references/gosto/perfil.md`, `
 | --- | --- | --- |
 | Contraste de texto | 4,5:1; texto de 24px ou mais, ou 18,66px em negrito, 3:1 | 1.4.3 |
 | Contraste de interface | 3:1 para borda de campo, ícone que informa, foco e gráfico | 1.4.11 |
+| Cor | Nada informa só pela cor | 1.4.1 |
+| Mídia | Legenda em vídeo com fala; pausa em todo movimento que dura mais de 5s | 1.2.2, 2.2.2 |
+| Nome de controle | `aria-label` contém o texto visível | 2.5.3 |
 | Alvo | Mínimo de 24 × 24px. Padrão do kit: 44 × 44px no toque | 2.5.8 |
 | Fonte | Em `rem`. Corpo de pelo menos 16px em tela de uso geral; nada abaixo de 12px | 1.4.4 |
 | Largura | Sem rolagem horizontal em 320px de largura (1280px com zoom de 400%) | 1.4.10 |
@@ -1062,15 +1134,70 @@ Rode `scripts/verificar.mjs` em cada tela. Depois faça à mão e relate cada it
 1. **Só teclado:** percorra a tela com Tab, Shift+Tab, Enter, Espaço, Esc e setas. O foco aparece sempre? Abre e fecha diálogo devolvendo o foco?
 2. **Zoom:** 200% e 400%. Nada some, nada rola para o lado, barra fixa não cobre.
 3. **Letra grande:** aumente a fonte padrão do navegador para 200%. O texto precisa crescer.
-4. **Leitor de tela:** NVDA no Windows, VoiceOver no Mac ou iPhone, TalkBack no Android. Percorra por títulos, preencha um formulário com erro, abra um diálogo. Se não puder rodar, escreva "leitor de tela não verificado".
-5. **Sem cor:** veja a tela em tons de cinza. Toda situação continua distinguível?
-6. **Alto contraste:** modo de alto contraste do Windows (`forced-colors`). Borda feita com `box-shadow` some.
+4. **Leitor de tela:** comece lendo `leitor-de-tela.txt`. Depois, NVDA no Windows, VoiceOver no Mac ou iPhone, TalkBack no Android. Percorra por títulos, preencha um formulário com erro, abra um diálogo. Se não puder rodar, escreva "leitor de tela não verificado".
+5. **Sem cor:** abra `prancha.html`. Toda situação continua distinguível sem verde, sem vermelho, sem azul e em cinza?
+6. **Alto contraste:** veja `alto-contraste.png`. O verificador acusa campo sem contorno; o resto é com o olho. Borda feita com `box-shadow` some.
 7. **Movimento reduzido:** ative no sistema. Nada se move sozinho.
 8. **Linguagem:** leia em voz alta. Alguém sem familiaridade entende na primeira leitura?
 
 ## Linguagem simples
 
-Frase curta, voz ativa e palavra do dia a dia. Botão com verbo e objeto ("Marcar horário"). Evite sigla sem explicação. Nunca mostre código de erro. Diga o que aconteceu e o que fazer. Para público com letramento variado, use ícone e texto juntos, e teste com alguém do público.
+Frase curta, voz ativa e palavra do dia a dia. Botão com verbo e objeto ("Marcar horário"), e a ação mantém o nome em todo o fluxo: "Publicar" gera o aviso "Publicado". Evite sigla sem explicação. Nunca mostre código de erro. Diga o que aconteceu e o que fazer. Para público com letramento variado, use ícone e texto juntos, e teste com alguém do público.
+
+Roteiro para reescrever, a partir do art. 5º da Lei 15.263/2025 (que vale para o poder público, mas serve a todos): ordem direta, uma ideia por parágrafo, palavra comum no lugar de jargão, sigla só depois do nome completo, listas e tabelas quando couber, o principal primeiro, voz ativa, sem oração intercalada, e teste da mensagem com o público.
+
+O verificador acusa parágrafo difícil por um índice adaptado ao português (`a11y-leitura-dificil`). Abaixo de 10 é texto jurídico; com `pouca-leitura`, o limite sobe para 50. Em 13 textos de teste, os fáceis deram de 66 a 89 e os jurídicos, de −86 a −4. É alerta, nunca aprovação: texto curto e confuso passa. O índice não vale para botão nem rótulo.
+
+
+---
+
+<!-- references/qualidade/publicos.md -->
+
+# Públicos: o que muda para cada um
+
+O piso de `references/qualidade/acessibilidade.md` vale sempre. Esta ficha diz o que muda quando se sabe quem vai usar. No Brasil, 14,4 milhões de pessoas têm deficiência (45,4% delas com 60 anos ou mais) e 29% de quem tem de 15 a 64 anos é analfabeto funcional. "Para todos" não é um nicho.
+
+## Como ativar
+
+No `PRODUTO.md`, liste quem usa e onde a tela fica. Sem pesquisa, marque como hipótese: errar por excesso custa pouco.
+
+```
+publicos: [surdos-libras, pouca-leitura, idosos]
+superficie: publica
+```
+
+`verificar.mjs` lê esses campos, ou `--publicos a,b` na linha de comando. Um público listado muda o rigor de algumas checagens e, principalmente, as decisões de tela abaixo.
+
+## Por público
+
+| Valor | Na tela | Verificador | À mão |
+| --- | --- | --- | --- |
+| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras`, `a11y-video-legenda` | Tarefa com uma pessoa surda |
+| `pouca-leitura` | Coluna única e menu linear. O principal no alto. Ícone sempre com texto. Nada se mexendo perto do texto. Busca que aceita erro de digitação | `a11y-icone-sem-texto` vira falha; `a11y-leitura-dificil` aperta o limite | Leia em voz alta. Tarefa com alguém do público |
+| `idosos` | Alvo de 44px também com mouse. Ícone com texto. Sem gesto escondido nem tempo limite. Letra que cresce sem quebrar | `a11y-icone-sem-texto`, `a11y-letra-200`, `a11y-espacamento` | Letra do aparelho no máximo, num celular simples |
+| `baixa-visao` | Contraste acima do mínimo no que decide a tarefa. Nada que dependa só de passar o mouse. Temas e tamanho de letra, quando o uso for diário | `a11y-letra-200`, `a11y-espacamento`, `a11y-alto-contraste`; visão embaçada na prancha | Zoom de 400% e alto contraste do sistema |
+| `pessoas-cegas` | Títulos em ordem, regiões com nome, mudanças anunciadas. Tabela de verdade em vez de grade de `div` | `a11y-nome`, `a11y-titulos`; leia `leitor-de-tela.txt` | NVDA, VoiceOver ou TalkBack numa tarefa inteira |
+| `daltonismo` | Situação com texto ou forma além da cor. Gráfico com rótulo direto no dado e forma por série. Evite separar só por vermelho e verde | `a11y-so-cor`; olhe `prancha.html` | Compare na prancha as situações lado a lado (G13) |
+| `dislexia` | Até 80 caracteres por linha, texto sem justificar, entrelinha de 1,5, sem bloco em itálico ou caixa alta. Não prometa "fonte para dislexia" | `a11y-linha-longa`, `a11y-justificado`, `a11y-entrelinha`, `a11y-italico-longo`, `a11y-caixa-alta` | Leitura com alguém do público |
+| `cognitivo` | Sempre dá para voltar e desfazer. Nada depende de memorizar nem de tempo. Um passo por vez. Linguagem literal. Ajuda humana fácil de achar | `a11y-icone-sem-texto`, `a11y-leitura-dificil` | Percorra a tarefa sem instrução prévia |
+| `mobilidade` | Alvo grande, tudo pelo teclado, alternativa a arrasto | `a11y-alvo`, `a11y-teclado`, `a11y-clique-sem-semantica` | Tarefa inteira só com teclado |
+
+Fonte para dislexia: o estudo de Wery e Diliberto, com 12 alunos, não achou ganho da OpenDyslexic sobre Arial ou Times. As regras de layout vêm do critério 1.4.8 da WCAG, de nível AAA: aqui são decisão do kit, não exigência de conformidade.
+
+## O que o verificador entrega para isto
+
+- **`prancha.html`:** a tela sem verde, sem vermelho, sem azul, sem cor, embaçada e em alto contraste. Procure duas situações que passaram a parecer iguais. Mostre a prancha ao dono junto das capturas.
+- **`leitor-de-tela.txt`:** o que a árvore de acessibilidade entrega, na ordem. Se a tela não faz sentido lida assim, não faz sentido num leitor de tela.
+- **Limite honesto:** simulação encontra problema, não prova ausência. Gráfico e situação que só a cor separa continuam dependendo do olho.
+
+## Preferências dentro do produto
+
+Em aplicativo de uso diário, ofereça temas e tamanho de letra como em `estilos/app-tarefas-acessivel`. Respeite antes o que o sistema já pede: `prefers-reduced-motion`, `prefers-contrast`, `forced-colors`, tamanho de fonte do navegador. A preferência fica salva na conta ou no aparelho.
+
+## O que não fazer
+
+- **Widget milagroso.** Barra de acessibilidade, avatar ou "correção automática" não torna um site acessível. A FTC obrigou a accessiBe a pagar US$ 1 milhão por prometer conformidade automática sem provas.
+- **Declarar sem testar.** Público listado não é público atendido. No relatório, diga o que foi testado com pessoas. Se foi nada, escreva isso.
 
 
 ---
@@ -1331,6 +1458,8 @@ Tudo aqui afeta decisões de tela. O que não souber, marque como "não sei" e s
 - **Perfis:** <quem, e o que cada um vê>
 - **Familiaridade com tecnologia:** <o que essas pessoas já usam no dia a dia>
 - **Letramento, idade, necessidades de acessibilidade conhecidas:** <…>
+- **publicos:** [] <!-- Liste os que valem, mesmo como hipótese: surdos-libras, pouca-leitura, idosos, baixa-visao, pessoas-cegas, daltonismo, dislexia, cognitivo, mobilidade. Ver references/qualidade/publicos.md -->
+- **superficie:** <publica ou interna>
 - **Aparelho e situação:** <celular na mão, computador o dia todo, sol, pressa, uma mão só>
 
 ## O que precisam fazer

@@ -32,6 +32,7 @@ As regras marcadas com `[script]` são checadas por `scripts/verificar.mjs`. As 
 | G20 | **Responsivo de verdade.** Formulário longo é o que mais quebra: teste cada um em 375 e 320. `[script]` | "a tela de agendar consulta tem muitos erros de responsividade" (28/10) |
 | G21 | **Tema escuro só com estudo.** Nunca inverta cores. Siga `references/padroes/tema-escuro.md` e mostre ideias antes de aplicar. | "esse modo escuro está muito feio"; "faça um estudo com outros do mercado" (09/10) |
 | G22 | **Emoção quando o produto pede.** Em jogo e entretenimento, animação, som e imagem são o produto. Só de bater o olho a pessoa sabe o que é. | "sinto que falta emoção" (20/08) |
+| G23 | **Para todos, de verdade.** Libras, pouca leitura, daltonismo e baixa visão são requisito de produto, e não podem custar a identidade. Liste quem usa em `publicos:` e siga `references/qualidade/publicos.md`. `[script]` | "com acessibilidades (libras, leitura, daltonismos, pessoas com pouca leitura, pessoas com pouca visibilidade etc...) para todos, bonito, intuitivo" (30/10) |
 
 ## Como ele decide
 

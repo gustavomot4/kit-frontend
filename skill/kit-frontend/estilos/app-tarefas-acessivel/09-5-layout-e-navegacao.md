@@ -21,7 +21,6 @@ Use altura mínima de viewport dinâmico. O conteúdo pode rolar verticalmente. 
 | --- | --- |
 | Janela abaixo do breakpoint de desktop | Marca compacta; navegação inferior em quatro itens; filtros acima da lista |
 | Janela a partir de 1100 px | Mesmos destinos no topo, com texto e ícone lado a lado |
-| Janela a partir de 440 px | O nome pode acompanhar o monograma da marca |
 | Contêiner estreito | Grades e controles refluem segundo as consultas em `rem` do CSS |
 | Grade de categorias com espaço suficiente | Quatro atalhos na mesma linha; antes disso, duas colunas; no limite estreito, uma |
 | Catálogo no contêiner amplo | Filtros em coluna lateral e lista contínua à direita |
@@ -30,6 +29,10 @@ Use altura mínima de viewport dinâmico. O conteúdo pode rolar verticalmente. 
 | Notificações no contêiner amplo | Texto à esquerda e ações à direita |
 
 As consultas de contêiner respondem à largura útil e ao tamanho da letra. A navegação usa um breakpoint da janela. Preserve essa distinção; não substitua todas as consultas por uma única largura de celular.
+
+**Altura até 480px:** com zoom de 400%, a janela fica em 320 × 256. Barra superior, abas e rodapé de ação deixam de ser fixos e rolam junto (receita em 5.4).
+
+**Link de pular:** toda tela começa por `<a class="ui-skip" href="#conteudo">Pular para o conteúdo</a>`, e o `<main>` tem `id="conteudo"`.
 
 ### 5.3 Dois conjuntos de quatro itens
 

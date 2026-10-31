@@ -40,7 +40,7 @@ O retrabalho nasce de cinco causas, e cada etapa abaixo ataca uma: visual decidi
 
 ### 1. Entender
 
-Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do código e dos documentos. Pergunte no máximo 5 coisas, cada uma com a sua recomendação, e só o que muda decisão de tela.
+Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do código e dos documentos. Pergunte no máximo 5 coisas, cada uma com a sua recomendação, e só o que muda decisão de tela. Preencha `publicos:` e siga `references/qualidade/publicos.md`: quem vai usar muda as decisões e o rigor da verificação.
 
 ### 2. Marca: portão
 
@@ -86,6 +86,7 @@ No máximo 3 telas por entrega. Antes de cada tela, leia o padrão correspondent
 | Agenda, calendário | `references/padroes/agenda.md` |
 | Carregando, vazio, erro | `references/padroes/estados.md` |
 | Aviso, confirmação, desfazer | `references/padroes/retorno.md` |
+| Vídeo, áudio, Libras | `references/padroes/midia-e-libras.md` |
 | Landing, site, tela de marca | `references/padroes/landing.md` e `references/marca/criatividade.md` |
 | Escolher biblioteca, ícone, animação, 3D, gerar mídia | `references/recursos/bibliotecas.md` |
 | Tema escuro | `references/padroes/tema-escuro.md` |
@@ -101,11 +102,11 @@ Em cada tela alterada, com ela no ar ou como arquivo:
 node <pasta da skill>/scripts/verificar.mjs http://localhost:5173/agenda
 ```
 
-Ele testa quatro tamanhos, faz uma passada de Tab, cobre acessibilidade, gosto e cara de IA, salva capturas em `design/verificacao/` e sai com código 1 se houver falha.
+Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento e alto contraste, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
 
 - **Falha** se corrige antes de entregar.
 - **Aviso** se corrige, ou você explica o motivo no relatório. Decisão aprovada entra no `DESIGN.md`.
-- Olhe as capturas. O script mede; o olho vê o que está feio.
+- Olhe as capturas e a prancha. O script mede; o olho vê o que está feio e o que só a cor separa.
 - Faça o teste dos 5 segundos: o que a tela informa e qual é a ação.
 - Faça o roteiro manual de `references/qualidade/acessibilidade.md`.
 

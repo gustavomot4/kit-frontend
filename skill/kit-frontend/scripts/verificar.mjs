@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Abre cada tela no Chrome ou Edge instalado, em quatro tamanhos, e roda tela.js mais uma passada de Tab.
-// Uso: node verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--json]
+// Também mede letra em 200%, espaçamento 1.4.12 e alto contraste, e guarda a prancha com visão simulada e o que o leitor de tela recebe.
+// Uso: node verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--produto PRODUTO.md] [--publicos a,b] [--json]
 // Saída: 0 sem falha; 1 com falha; 2 não conseguiu rodar. Sem dependências: Node 22+.
 import { spawn, spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs';
@@ -13,8 +14,10 @@ const args = process.argv.slice(2);
 const valor = nome => { const i = args.indexOf(nome); if (i < 0) return null; const v = args[i + 1]; args.splice(i, 2); return v; };
 const saida = resolve(valor('--saida') || 'design/verificacao');
 const arquivoDesign = valor('--design') || 'DESIGN.md';
+const arquivoProduto = valor('--produto') || 'PRODUTO.md';
+const publicosPedidos = valor('--publicos');
 const comoJson = args.includes('--json'); if (comoJson) args.splice(args.indexOf('--json'), 1);
-if (!args.length) { console.error('Uso: verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--json]'); process.exit(2); }
+if (!args.length) { console.error('Uso: verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--produto PRODUTO.md] [--publicos a,b] [--json]'); process.exit(2); }
 
 function acharNavegador() {
   const candidatos = [process.env.CHROME_PATH,
@@ -36,6 +39,11 @@ if (!exe) { console.error('Não achei Chrome, Edge nem Chromium. Defina CHROME_P
 // fontes declaradas no DESIGN.md foram decisão, não padrão de gerador
 const fontesAprovadas = existsSync(arquivoDesign) ? [...readFileSync(arquivoDesign, 'utf8').matchAll(/fontFamily:\s*["']?([^"'\n,]+)/g)].map(m => m[1].trim()) : [];
 const tela = readFileSync(join(aqui, 'tela.js'), 'utf8');
+// para quem é a tela: muda o rigor de algumas checagens (references/qualidade/publicos.md)
+const produto = existsSync(arquivoProduto) ? readFileSync(arquivoProduto, 'utf8') : '';
+const campoProduto = nome => new RegExp(`^[\\s*-]*${nome}\\**:\\**\\s*\\[?([^\\]\\n]*)`, 'm').exec(produto)?.[1] || '';
+const publicos = (publicosPedidos ?? campoProduto('publicos')).split(',').map(p => p.trim()).filter(p => /^[a-z-]+$/.test(p));
+const superficie = campoProduto('superficie').trim();
 
 const perfil = mkdtempSync(join(tmpdir(), 'kit-frontend-'));
 const porta = 9400 + Math.floor(Math.random() * 500);
@@ -85,7 +93,8 @@ const lerFoco = `(() => {
   const lin = v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; };
   const lum = c => .2126 * lin(c[0]) + .7152 * lin(c[1]) + .0722 * lin(c[2]);
   const est = getComputedStyle(e); let anel = null;
-  if (est.outlineStyle !== 'none' && parseFloat(est.outlineWidth) >= 1 && est.boxShadow === 'none') {
+  // campo invisível (opacidade 0) não pinta o próprio anel: quem desenha é o rótulo em volta
+  if (est.outlineStyle !== 'none' && parseFloat(est.outlineWidth) >= 1 && est.boxShadow === 'none' && +est.opacity > 0) {
     const a = cor(est.outlineColor); let f = [255, 255, 255, 1], medivel = a[3] === 1;
     for (let n = parseFloat(est.outlineOffset) < 0 ? e : e.parentElement; n; n = n.parentElement) { const st = getComputedStyle(n); if (st.backgroundImage !== 'none') { medivel = false; break; } const c = cor(st.backgroundColor); if (c[3] === 1) { f = c; break; } }
     if (medivel) { const [x, y] = [lum(a), lum(f)].sort((p, q) => q - p); anel = (x + .05) / (y + .05); }
@@ -114,17 +123,74 @@ async function passarTab(paradas = 14) {
   return { lista, movimento };
 }
 
+// O que a pessoa muda no navegador. Compara com a tela normal, para não acusar um corte que já era proposital.
+const CORTES = `[...document.querySelectorAll('body *')].filter(e => { const s = getComputedStyle(e), r = e.getBoundingClientRect(); if (!/(hidden|clip)/.test(s.overflowX + s.overflowY) || s.textOverflow === 'ellipsis' || s.visibility === 'hidden' || r.width <= 2 || r.height <= 2 || e.closest('[aria-hidden="true"]') || !(e.textContent || '').trim()) return false; return e.scrollHeight > e.clientHeight + 2 || e.scrollWidth > e.clientWidth + 2; }).map(e => (e.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 30))`;
+const LATERAL = `document.documentElement.scrollWidth > document.documentElement.clientWidth + 1`;
+const SEM_CONTORNO = `[...document.querySelectorAll('input:not([type=hidden],[type=checkbox],[type=radio],[type=range],[type=color],[type=file]),select,textarea')].filter(e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e); if (r.width <= 2 || r.height <= 2 || s.visibility === 'hidden') return false; const tem = n => n && ['Top', 'Bottom', 'Left', 'Right'].some(l => parseFloat(getComputedStyle(n)['border' + l + 'Width']) > 0 && getComputedStyle(n)['border' + l + 'Style'] !== 'none'); return !tem(e) && !tem(e.parentElement); }).map(e => e.getAttribute('aria-label') || e.labels?.[0]?.textContent?.trim() || e.name || e.id || e.tagName)`;
+async function passarPreferencias(pasta, somar, onde) {
+  await avaliar(`document.activeElement?.blur(); window.scrollTo(0, 0); 1`);
+  const antes = await avaliar(CORTES), lateralAntes = await avaliar(LATERAL);
+  const novos = l => [...new Set(l)].filter(t => !antes.includes(t));
+  await avaliar(`document.documentElement.style.fontSize = '200%'; 1`); await dorme(120);
+  const letra = novos(await avaliar(CORTES)), lateral = await avaliar(LATERAL);
+  await avaliar(`document.documentElement.style.fontSize = ''; 1`);
+  if (letra.length) somar({ id: 'a11y-letra-200', nivel: 'falha', msg: `${letra.length} texto(s) cortados com a letra do navegador em 200%: use min-height no lugar de height (WCAG 1.4.4).`, exemplos: letra.slice(0, 5) }, onde);
+  else if (lateral && !lateralAntes) somar({ id: 'a11y-letra-200', nivel: 'aviso', msg: 'Com a letra do navegador em 200%, a tela passa a rolar para o lado.', exemplos: [] }, onde);
+  await avaliar(`document.head.appendChild(Object.assign(document.createElement('style'), { id: '__kitEsp', textContent: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' })) && 1`); await dorme(120);
+  const espaco = novos(await avaliar(CORTES));
+  await avaliar(`document.getElementById('__kitEsp')?.remove(); 1`);
+  if (espaco.length) somar({ id: 'a11y-espacamento', nivel: 'falha', msg: `${espaco.length} texto(s) cortados quando a pessoa aumenta o espaçamento (WCAG 1.4.12).`, exemplos: espaco.slice(0, 5) }, onde);
+  await cdp('Emulation.setEmulatedMedia', { features: [{ name: 'forced-colors', value: 'active' }] }); await dorme(120);
+  const semContorno = await avaliar(SEM_CONTORNO);
+  const contraste = await cdp('Page.captureScreenshot', { format: 'png' }); writeFileSync(join(pasta, 'alto-contraste.png'), Buffer.from(contraste.result.data, 'base64'));
+  await cdp('Emulation.setEmulatedMedia', { features: [] });
+  if (semContorno.length) somar({ id: 'a11y-alto-contraste', nivel: 'falha', msg: `${semContorno.length} campo(s) somem em alto contraste: o contorno vem só de box-shadow ou do fundo. Declare uma borda, mesmo transparente.`, exemplos: semContorno.slice(0, 5) }, onde);
+}
+
+// A mesma tela como outras pessoas veem. É simulação: mostra o problema, não prova que ele não existe.
+const VISOES = [['deuteranopia', 'Sem verde (deuteranopia)'], ['protanopia', 'Sem vermelho (protanopia)'], ['tritanopia', 'Sem azul (tritanopia)'], ['achromatopsia', 'Sem cor nenhuma'], ['blurredVision', 'Visão embaçada']];
+async function montarPrancha(pasta, tela) {
+  for (const [tipo] of VISOES) {
+    await cdp('Emulation.setEmulatedVisionDeficiency', { type: tipo }); await dorme(60);
+    const c = await cdp('Page.captureScreenshot', { format: 'png' });
+    if (c.result?.data) writeFileSync(join(pasta, `visao-${tipo}.png`), Buffer.from(c.result.data, 'base64'));
+  }
+  await cdp('Emulation.setEmulatedVisionDeficiency', { type: 'none' });
+  const figuras = [['desktop.png', 'Como foi feita'], ...VISOES.map(([t, n]) => [`visao-${t}.png`, n]), ['alto-contraste.png', 'Alto contraste do sistema']];
+  writeFileSync(join(pasta, 'prancha.html'), `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prancha: ${tela}</title><style>body{margin:0;padding:1.5rem;font:1rem/1.5 system-ui,sans-serif;background:#fff;color:#1a1a1a}h1{font-size:1.5rem;margin:0}ul{list-style:none;margin:1rem 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,28rem),1fr));gap:1.5rem}img{width:100%;height:auto;border:1px solid #767676}</style></head><body><main><h1>Prancha de ${tela}</h1><p>Simulação no Chrome. Procure duas situações que passaram a parecer iguais. Não substitui teste com pessoas.</p><ul>${figuras.map(([a, n]) => `<li><figure style="margin:0"><figcaption>${n}</figcaption><img src="${a}" alt="${n}"></figure></li>`).join('')}</ul></main></body></html>`);
+}
+
+// O que o leitor de tela recebe, em ordem. Acusa controle sem nome e fica guardado para ler.
+const PAPEIS = new Set(['banner', 'navigation', 'main', 'contentinfo', 'complementary', 'search', 'region', 'form', 'heading', 'link', 'button', 'textbox', 'searchbox', 'combobox', 'listbox', 'checkbox', 'radio', 'switch', 'slider', 'spinbutton', 'tab', 'menuitem', 'image', 'img', 'table', 'dialog', 'alert', 'status']);
+const COM_NOME = new Set(['link', 'button', 'textbox', 'searchbox', 'combobox', 'listbox', 'checkbox', 'radio', 'switch', 'slider', 'spinbutton', 'tab', 'menuitem']);
+async function lerArvore(pasta, somar, onde) {
+  await cdp('Accessibility.enable');
+  const nos = (await cdp('Accessibility.getFullAXTree')).result?.nodes || [];
+  await cdp('Accessibility.disable');
+  const porId = new Map(nos.map(n => [n.nodeId, n])), linhas = [], semNome = [];
+  const visitar = (n, nivel) => {
+    if (!n) return;
+    const papel = n.role?.value, nome = (n.name?.value || '').trim().replace(/\s+/g, ' '), mostra = !n.ignored && PAPEIS.has(papel);
+    if (mostra) linhas.push(`${'  '.repeat(nivel)}${papel}: ${nome || '(sem nome)'}`);
+    if (!n.ignored && COM_NOME.has(papel) && !nome) semNome.push(papel);
+    (n.childIds || []).forEach(id => visitar(porId.get(id), nivel + (mostra ? 1 : 0)));
+  };
+  visitar(nos.find(n => !n.parentId), 0);
+  writeFileSync(join(pasta, 'leitor-de-tela.txt'), linhas.join('\n') + '\n');
+  if (semNome.length) somar({ id: 'a11y-nome', nivel: 'falha', msg: `${semNome.length} controle(s) sem nome na árvore de acessibilidade.`, exemplos: semNome.slice(0, 5) }, onde);
+}
+
 const relatorios = [];
 for (const entrada of args) {
   const url = /^(https?|file):/.test(entrada) ? entrada : pathToFileURL(resolve(entrada)).href;
-  const nomeBase = (/^https?:/.test(entrada) ? new URL(entrada).pathname.replace(/\W+/g, '-').replace(/^-|-$/g, '') || 'inicio' : basename(entrada, '.html')).toLowerCase();
+  const nomeBase = (/^https?:/.test(entrada) ? new URL(entrada).pathname.replace(/\W+/g, '-').replace(/^-|-$/g, '') || 'inicio' : basename(entrada.split('?')[0], '.html')).toLowerCase();
   const pasta = join(saida, nomeBase); mkdirSync(pasta, { recursive: true });
   const achados = new Map(); const medidas = {}; erros.length = 0;
   const somar = (a, onde) => { const k = a.id; if (!achados.has(k)) achados.set(k, { ...a, tamanhos: [onde] }); else { const v = achados.get(k); v.tamanhos.push(onde); if (a.nivel === 'falha') { v.nivel = 'falha'; v.msg = a.msg; v.exemplos = a.exemplos; } } };
   try {
     for (const t of TAMANHOS) {
       await abrir(url, t);
-      await avaliar(`window.__kitOpcoes = ${JSON.stringify({ papel: t.papel, fontesAprovadas })}`);
+      await avaliar(`window.__kitOpcoes = ${JSON.stringify({ papel: t.papel, fontesAprovadas, publicos, superficie })}`);
       const r = await avaliar(tela);
       r.achados.forEach(a => somar(a, r.tamanho));
       medidas[t.papel] = r.medidas;
@@ -140,12 +206,15 @@ for (const entrada of args) {
         if (lista.length && !/pular|ir para|skip/i.test(lista[0].nome)) somar({ id: 'a11y-pular', nivel: 'aviso', msg: `A primeira parada de Tab é "${lista[0].nome}", não o link de pular para o conteúdo.`, exemplos: [] }, r.tamanho);
         if (!lista.length) somar({ id: 'a11y-teclado', nivel: 'falha', msg: 'Nenhum controle recebeu foco pelo Tab.', exemplos: [] }, r.tamanho);
         if (movimento) somar({ id: 'a11y-movimento', nivel: 'falha', msg: `${movimento} animação(ões) em loop continuam com movimento reduzido ativado.`, exemplos: [] }, r.tamanho);
+        await passarPreferencias(pasta, somar, r.tamanho);
+        await montarPrancha(pasta, nomeBase);
+        await lerArvore(pasta, somar, r.tamanho);
       }
     }
     if (erros.length) somar({ id: 'erro-javascript', nivel: 'falha', msg: `${erros.length} erro(s) de JavaScript ao abrir a tela.`, exemplos: [...new Set(erros)].slice(0, 3) }, 'todos');
   } catch (e) { somar({ id: 'nao-abriu', nivel: 'falha', msg: `Não consegui auditar: ${e.message.split('\n')[0]}`, exemplos: [] }, '-'); }
   const lista = [...achados.values()].sort((a, b) => (a.nivel === b.nivel ? 0 : a.nivel === 'falha' ? -1 : 1) || a.id.localeCompare(b.id));
-  const rel = { tela: entrada, capturas: pasta, falhas: lista.filter(a => a.nivel === 'falha').length, avisos: lista.filter(a => a.nivel === 'aviso').length, achados: lista, medidas };
+  const rel = { tela: entrada, capturas: pasta, publicos, falhas: lista.filter(a => a.nivel === 'falha').length, avisos: lista.filter(a => a.nivel === 'aviso').length, achados: lista, medidas };
   writeFileSync(join(pasta, 'resultado.json'), JSON.stringify(rel, null, 1));
   relatorios.push(rel);
 }
@@ -157,5 +226,5 @@ else for (const r of relatorios) {
   for (const a of r.achados) { console.log(`  ${a.nivel === 'falha' ? 'FALHA' : 'aviso'}  ${a.id}: ${a.msg} [${a.tamanhos.join(', ')}]`); a.exemplos.forEach(x => console.log(`         - ${x}`)); }
   const d = r.medidas.desktop; if (d) console.log(`  medidas: fontes ${d.fontes.join(', ')}; tamanhos ${d.tamanhosDeFonte.join(' ')}; ${d.palavrasNaDobra} palavras na dobra`);
 }
-console.log(`\nNão coberto por este script: leitor de tela real, teste com pessoas, estados que dependem de interação, texto sobre imagem. Faça o roteiro de references/qualidade/acessibilidade.md.`);
+console.log(`\nNão coberto por este script: leitor de tela real, teste com pessoas, estados que dependem de interação, texto sobre imagem e o que só a cor separa. Olhe prancha.html e leitor-de-tela.txt, e faça o roteiro de references/qualidade/acessibilidade.md.`);
 await encerrar(relatorios.some(r => r.falhas) ? 1 : 0);

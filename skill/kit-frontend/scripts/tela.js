@@ -4,6 +4,7 @@
 ((opcoes = window.__kitOpcoes || {}) => {
   const papel = opcoes.papel || 'desktop';
   const aprovadas = (opcoes.fontesAprovadas || []).map(f => f.toLowerCase());
+  const publicos = opcoes.publicos || [];   // do PRODUTO.md; ver references/qualidade/publicos.md
   const achados = [];
   const achar = (id, nivel, msg, exemplos = []) => achados.push({ id, nivel, msg, exemplos: [...new Set(exemplos)].slice(0, 5) });
   const cs = (e, p) => getComputedStyle(e, p);
@@ -112,12 +113,76 @@
     if (px > 3 && px > rem) achar('a11y-fonte-px', 'aviso', `Fontes em px (${px}) mais que em rem (${rem}): o tamanho de letra do navegador é ignorado.`);
     const miudos = textos.filter(e => num(cs(e).fontSize) < 12 && !oculto(e) && !e.closest('header a,a[aria-label]'));
     if (miudos.length) achar('a11y-fonte-pequena', 'aviso', `${miudos.length} texto(s) abaixo de 12px.`, miudos.map(e => `${cs(e).fontSize} "${curto(e.textContent, 18)}"`));
+
+    // controles e nomes que o teclado e o controle por voz não alcançam
+    const simples = t => (t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+    const controle = 'a[href],button,input,select,textarea,summary,label,[role=button],[role=link],[role=tab],[role=radio],[role=checkbox],[role=switch],[role=menuitem],[tabindex]';
+    const clicaveis = todos.filter(e => !e.closest(controle) && !e.closest('[aria-hidden="true"]') && !e.querySelector(controle) && (e.hasAttribute('onclick') || (cs(e).cursor === 'pointer' && (!e.parentElement || cs(e.parentElement).cursor !== 'pointer'))));
+    if (clicaveis.length) achar('a11y-clique-sem-semantica', clicaveis.some(e => e.hasAttribute('onclick')) ? 'falha' : 'aviso', `${clicaveis.length} elemento(s) que parecem clicáveis e não são botão nem link: o teclado não chega neles (WCAG 2.1.1).`, clicaveis.map(e => `${e.tagName.toLowerCase()}: ${curto(e.textContent, 24)}`));
+    // em cartão com muito texto, basta o nome trazer a maior parte das palavras visíveis
+    const palavrasDe = t => simples(t).split(' ').filter(Boolean);
+    const divergentes = interativos.filter(e => { if (!e.hasAttribute('aria-label') || simples(e.innerText).length < 2) return false; const vistas = palavrasDe(e.innerText), nome = palavrasDe(e.getAttribute('aria-label')); return vistas.filter(p => nome.includes(p)).length / vistas.length < .6; });
+    if (divergentes.length) achar('a11y-nome-visivel', 'falha', `${divergentes.length} controle(s) com aria-label sem o texto visível: quem usa controle por voz fala o que vê (WCAG 2.5.3).`, divergentes.map(e => `"${curto(e.innerText, 20)}" x "${curto(e.getAttribute('aria-label'), 24)}"`));
+    const tabPositivo = [...document.querySelectorAll('[tabindex]')].filter(e => +e.getAttribute('tabindex') > 0);
+    if (tabPositivo.length) achar('a11y-tabindex-positivo', 'aviso', `${tabPositivo.length} elemento(s) com tabindex positivo: a ordem do Tab deixa de seguir a tela (WCAG 2.4.3).`, tabPositivo.map(e => curto(nomeDe(e), 24)));
+    const pontos = todos.filter(e => { const r = e.getBoundingClientRect(), c = cor(cs(e).backgroundColor); return !e.children.length && !(e.textContent || '').trim() && !e.matches('input,img,svg,video,canvas') && !e.getAttribute('aria-label') && !e.title && r.width >= 6 && r.width <= 24 && Math.abs(r.width - r.height) < 2 && c.a > .5 && satura(c) > .25; });
+    const coresDePonto = new Set(pontos.map(e => hex(cor(cs(e).backgroundColor))));
+    if (coresDePonto.size >= 2) achar('a11y-so-cor', 'aviso', `${pontos.length} marcador(es) de ${coresDePonto.size} cores, sem texto nem forma: confira se a situação não depende só da cor (WCAG 1.4.1).`, [...coresDePonto]);
+    if (['pouca-leitura', 'idosos', 'cognitivo'].some(p => publicos.includes(p))) {
+      const soIcone = interativos.filter(e => !simples(e.innerText) && e.querySelector('svg,img'));
+      if (soIcone.length) achar('a11y-icone-sem-texto', 'falha', `${soIcone.length} controle(s) só com ícone: para este público, ícone anda com texto.`, soIcone.map(e => curto(nomeDe(e), 24)));
+    }
+
+    // imagem, link e erro que não dizem nada fora de contexto
+    const altRuim = [...document.images].filter(vis).filter(i => /\.(jpe?g|png|gif|webp|avif|svg)$/i.test(i.alt.trim()) || /^(img|imagem|image|foto|figura|picture|dsc|captura|screenshot)[\s_-]*\d*$/i.test(i.alt.trim()));
+    if (altRuim.length) achar('a11y-alt-ruim', 'falha', `${altRuim.length} imagem(ns) com alt que não descreve nada (WCAG 1.1.1).`, altRuim.map(i => i.alt));
+    const vagos = [...document.querySelectorAll('a[href]')].filter(vis).filter(a => !a.getAttribute('aria-label') && !a.getAttribute('aria-labelledby') && /^(clique aqui|clique|aqui|saiba mais|leia mais|ver mais|veja mais|mais|acesse|acesse aqui|link|click here|here|read more|learn more)$/.test(simples(a.innerText)));
+    if (vagos.length) achar('a11y-link-vago', 'aviso', `${vagos.length} link(s) que não dizem para onde vão: quem navega por lista de links não entende (WCAG 2.4.4).`, vagos.map(a => a.innerText.trim()));
+    const ligado = (c, m) => `${c.getAttribute('aria-describedby') || ''} ${c.getAttribute('aria-errormessage') || ''}`.split(/\s+/).some(i => i && document.getElementById(i)?.contains(m));
+    const campoPerto = m => { for (const n of [m.previousElementSibling, m.parentElement, m.nextElementSibling]) { if (!n) continue; const c = n.matches('input,select,textarea') ? n : n.querySelector('input,select,textarea'); if (c) return c; } return null; };
+    const errosSoltos = textos.filter(e => !e.matches('label,legend,button,a,h1,h2,h3,h4,h5,h6,option,th') && !e.closest('label') && (comTexto.get(e) || '').trim().length <= 90 && /(inv[aá]lid|obrigat[oó]ri|incorret|n[aã]o pode ficar|preencha)/i.test(comTexto.get(e))).filter(m => { const c = campoPerto(m); return c && !ligado(c, m); });
+    if (errosSoltos.length) achar('a11y-erro-sem-ligacao', 'aviso', `${errosSoltos.length} mensagem(ns) de campo sem aria-describedby: o leitor de tela não anuncia junto do campo (WCAG 1.3.1, 3.3.1).`, errosSoltos.map(e => curto(e.textContent, 28)));
+
+    // mídia
+    const videos = [...document.querySelectorAll('video')].filter(vis);
+    const semLegenda = videos.filter(v => !v.querySelector('track[kind=captions],track[kind=subtitles]') && !(v.hasAttribute('muted') && !v.hasAttribute('controls')));
+    if (semLegenda.length) achar('a11y-video-legenda', 'falha', `${semLegenda.length} vídeo(s) sem <track> de legenda (WCAG 1.2.2). Veja references/padroes/midia-e-libras.md.`);
+    const semPausa = videos.filter(v => v.hasAttribute('autoplay') && !v.hasAttribute('controls') && ![...(v.parentElement?.querySelectorAll('button') || [])].some(b => /paus|parar|stop/i.test(nomeDe(b))));
+    if (semPausa.length) achar('a11y-video-sem-controle', 'falha', `${semPausa.length} vídeo(s) que tocam sozinhos sem como pausar (WCAG 2.2.2).`);
+    if ([...document.querySelectorAll('audio')].filter(vis).length && !/transcri/i.test(document.body.innerText)) achar('a11y-audio-transcricao', 'aviso', 'Áudio sem transcrição à vista (WCAG 1.2.1).');
+    if (publicos.includes('surdos-libras') || opcoes.superficie === 'publica') {
+      if (!document.querySelector('[vw],script[src*="vlibras" i],script[src*="handtalk" i]')) achar('a11y-libras', 'aviso', 'Superfície pública sem recurso de Libras ao chegar. Veja references/padroes/midia-e-libras.md.');
+    }
+
+    // blocos de texto: dislexia, baixa visão, cognição (WCAG 1.4.8)
+    const blocos = textos.filter(e => e.matches('p,li,blockquote,dd,div,td,figcaption')).map(e => { const s = cs(e), fonte = num(s.fontSize), lh = num(s.lineHeight) || fonte * 1.2, t = (e.innerText || '').trim(), linhas = Math.max(1, Math.round(e.getBoundingClientRect().height / lh)); return { e, s, t, fonte, lh, linhas, por: t.length / linhas }; });
+    const lista = b => curto(b.t, 28);
+    const justificados = blocos.filter(b => b.t.length >= 120 && b.s.textAlign === 'justify');
+    if (justificados.length) achar('a11y-justificado', 'aviso', `${justificados.length} bloco(s) justificados: os espaços irregulares atrapalham a leitura.`, justificados.map(lista));
+    const emCaixaAlta = blocos.filter(b => b.t.length >= 60 && (b.s.textTransform === 'uppercase' || b.t === b.t.toUpperCase() && /\p{L}/u.test(b.t)));
+    if (emCaixaAlta.length) achar('a11y-caixa-alta', 'aviso', `${emCaixaAlta.length} bloco(s) longos em caixa alta: tiram a forma das palavras.`, emCaixaAlta.map(lista));
+    const italicos = blocos.filter(b => b.t.length >= 120 && b.s.fontStyle === 'italic');
+    if (italicos.length) achar('a11y-italico-longo', 'aviso', `${italicos.length} bloco(s) longos em itálico.`, italicos.map(lista));
+    const largas = blocos.filter(b => b.linhas >= 2 && b.por > 88);
+    if (largas.length) achar('a11y-linha-longa', 'aviso', `${largas.length} bloco(s) com mais de 80 caracteres por linha: quem lê perde a linha seguinte.`, largas.map(b => `${Math.round(b.por)} por linha: ${lista(b)}`));
+    const apertadas = blocos.filter(b => b.linhas >= 2 && b.fonte < 24 && b.lh / b.fonte < 1.3);
+    if (apertadas.length) achar('a11y-entrelinha', 'aviso', `${apertadas.length} bloco(s) com entrelinha abaixo de 1,3.`, apertadas.map(b => `${(b.lh / b.fonte).toFixed(2)}: ${lista(b)}`));
+
+    // legibilidade em português: índice de Flesch adaptado (Martins et al., 1996). É alerta, não aprovação.
+    // Limites calibrados em docs/testes/2026-10-31-fase-1: textos fáceis deram de 66 a 89; jurídicos, de -86 a -4.
+    if ((document.documentElement.lang || '').toLowerCase().startsWith('pt')) {
+      const silabas = p => { const w = p.toLowerCase().replace(/qu(?=[aeioáéíóâêô])/g, 'q').replace(/g[uü](?=[eiéí])/g, 'g'); return Math.max(1, (w.match(/[aeiouáéíóúâêôãõàü]+/g) || []).reduce((n, g) => n + (g.length === 1 || /^(ai|au|ei|eu|oi|ou|iu|ui|ãe|ão|õe|ãi|éi|éu|ói|ái|áu)$/.test(g) ? 1 : Math.ceil(g.length / 2) + (g.length === 2 ? 1 : 0)), 0)); };
+      const baixa = publicos.includes('pouca-leitura') || publicos.includes('cognitivo');
+      const dificeis = blocos.filter(b => b.t.split(/\s+/).length >= 20 && b.t !== b.t.toUpperCase()).map(b => { const pal = b.t.split(/\s+/), frases = Math.max(1, (b.t.match(/[.!?]+(\s|$)/g) || []).length), sil = pal.reduce((n, w) => n + silabas(w), 0); return { t: b.t, porFrase: pal.length / frases, indice: 248.835 - 1.015 * (pal.length / frases) - 84.6 * (sil / pal.length) }; }).filter(b => b.indice < (baixa ? 50 : 10) || (baixa && b.porFrase > 25));
+      if (dificeis.length) achar('a11y-leitura-dificil', 'aviso', `${dificeis.length} parágrafo(s) difíceis de ler: frases longas e palavras compridas. Leia em voz alta e reescreva.`, dificeis.map(b => `índice ${Math.round(b.indice)}: ${curto(b.t, 28)}`));
+    }
   }
 
   // alvos
   if (papel === 'desktop' || papel === 'celular' || papel === 'tablet') {
     const medir = e => { const r = e.getBoundingClientRect(), a = cs(e, '::after'), aw = a.position === 'absolute' ? num(a.width) : 0, ah = a.position === 'absolute' ? num(a.height) : 0; return { w: Math.max(r.width, aw), h: Math.max(r.height, ah), t: curto(nomeDe(e), 22) || e.tagName }; };
-    const alvos = interativos.filter(e => !(e.tagName === 'A' && cs(e).display === 'inline') && !e.closest('p,li p') && !oculto(e) && e.getBoundingClientRect().width > 2).map(medir);
+    // só link no meio da frase é exceção (WCAG 2.5.8); botão e campo dentro de parágrafo são medidos
+    const alvos = interativos.filter(e => !(e.tagName === 'A' && (cs(e).display === 'inline' || e.closest('p,li p'))) && !oculto(e) && e.getBoundingClientRect().width > 2).map(medir);
     const menores = alvos.filter(a => a.w < 24 || a.h < 24);
     if (menores.length) achar('a11y-alvo', 'falha', `${menores.length} alvo(s) abaixo de 24×24px (WCAG 2.5.8).`, menores.map(a => `${a.t} ${Math.round(a.w)}×${Math.round(a.h)}`));
     if (papel === 'celular') {
@@ -215,6 +280,37 @@
     if (bordaEsq.length >= 3) achar('ia-borda-esquerda', 'aviso', `${bordaEsq.length} cartões com borda colorida à esquerda.`);
     const cliches = (document.body.innerText || '').match(/\b(transforme (seu|sua|a)|revolucion\w+|potencialize|sem complica[cç][aã]o|bem-vindo de volta|bem-vinda de volta|lorem ipsum|simples\. r[aá]pido|solu[cç][aã]o completa|pr[oó]ximo n[ií]vel|sua jornada|em um s[oó] lugar|seamless|supercharge|unleash|all-in-one|elevate your)\b/gi);
     if (cliches) achar('ia-texto-cliche', 'aviso', 'Frases de gerador no texto da tela.', cliches.map(c => c.toLowerCase()));
+
+    // os looks de quem fugiu do índigo; ver references/marca/anti-generico.md
+    const luz = c => { const m = Math.max(c.r, c.g, c.b) / 255, n = Math.min(c.r, c.g, c.b) / 255, l = (m + n) / 2; return { l, s: m === n ? 0 : (m - n) / (1 - Math.abs(2 * l - 1)) }; };
+    const serifada = f => /(^|,\s*)"?serif/i.test(f) || /georgia|times|garamond|playfair|fraunces|cormorant|lora|newsreader|crimson|instrument serif|dm serif/i.test(f.split(',')[0]);
+    const fundoDaPagina = [document.body, raiz].map(n => cor(cs(n).backgroundColor)).find(c => c.a > .9);
+    const creme = fundoDaPagina && matiz(fundoDaPagina) >= 30 && matiz(fundoDaPagina) <= 60 && luz(fundoDaPagina).l >= .88 && luz(fundoDaPagina).l < .985 && luz(fundoDaPagina).s >= .15;
+    const terracota = [...cores].some(h => { const c = cor(h), { l, s } = luz(c); return matiz(c) >= 8 && matiz(c) <= 28 && s >= .35 && s <= .85 && l >= .35 && l <= .7; });
+    const titulo1 = document.querySelector('h1');
+    if (creme && terracota && titulo1 && serifada(cs(titulo1).fontFamily)) achar('ia-creme-terracota', 'aviso', 'Fundo creme, título com serifa e acento terracota: virou o padrão de quem foge do índigo.');
+    const destaques = [...document.querySelectorAll('h1,h2')].filter(vis).filter(h => (h.textContent || '').trim().split(/\s+/).length >= 3 && [...h.children].some(f => f.matches('em,i,span,mark,strong,b') && (f.textContent || '').trim().split(/\s+/).length <= 2 && (cs(f).color !== cs(h).color || (cs(f).fontStyle === 'italic' && cs(h).fontStyle !== 'italic'))));
+    if (destaques.length) achar('ia-palavra-destaque', 'aviso', 'Uma palavra do título em itálico ou em outra cor.', destaques.map(h => curto(h.textContent, 28)));
+    const enfeitesMono = textos.filter(e => /mono|consolas|courier|menlo|monaco|fira code|cascadia/i.test(cs(e).fontFamily.split(',')[0]) && !e.closest('code,pre,kbd,samp,table,time,data') && !/^[\d\s.,:%/-]+$/.test((comTexto.get(e) || '').trim()));
+    if (enfeitesMono.length >= 2) achar('ia-mono-enfeite', 'aviso', `${enfeitesMono.length} texto(s) em monoespaçada fora de código ou dado: enfeite de "técnico".`, enfeitesMono.map(e => curto(e.textContent, 24)));
+    const numeracao = textos.filter(e => /^0\d[.)]?$/.test((comTexto.get(e) || '').trim()));
+    if (numeracao.length >= 3) achar('ia-numeracao', 'aviso', `Numeração ${numeracao.slice(0, 3).map(e => e.textContent.trim()).join(', ')}: só vale quando o conteúdo é mesmo uma sequência.`);
+    const durasSombras = todos.filter(e => [...cs(e).boxShadow.matchAll(/\)\s+(-?[\d.]+)px\s+(-?[\d.]+)px\s+0px/g)].some(m => Math.abs(+m[1]) >= 2 && Math.abs(+m[2]) >= 2));
+    if (durasSombras.length) achar('ia-sombra-dura', 'aviso', `${durasSombras.length} elemento(s) com sombra dura deslocada, sem desfoque.`, durasSombras.map(e => curto(e.textContent, 20)));
+    const vidros = todos.filter(e => /blur/.test(cs(e).backdropFilter || cs(e).webkitBackdropFilter || '') && !/fixed|sticky/.test(cs(e).position) && !e.closest('dialog,[role=dialog]'));
+    if (vidros.length) achar('ia-vidro', 'aviso', `${vidros.length} painel(éis) de vidro e desfoque como decoração.`);
+    const metricas = todos.filter(p => /grid|flex/.test(cs(p).display)).filter(p => { const f = [...p.children].filter(vis); return f.length >= 3 && f.every(c => { const n = c.firstElementChild; return n && /\d/.test(n.textContent || '') && num(cs(n).fontSize) >= 40 && (c.textContent || '').trim().length <= 40; }); });
+    if (metricas.length) achar('ia-metrica-heroi', 'aviso', 'Número enorme com rótulo pequeno, em série: o modelo pronto de "resultados". Número precisa ter fonte real.');
+    const jornal = serifada(cs(document.body).fontFamily) && todos.some(p => /grid|flex/.test(cs(p).display) && num(cs(p).borderTopLeftRadius) === 0 && num(cs(p).borderTopWidth) >= 1 && num(cs(p).borderTopWidth) <= 1.5 && num(cs(p).borderBottomWidth) >= 1 && [...p.children].filter(c => num(cs(c).borderLeftWidth) >= 1 && num(cs(c).borderLeftWidth) <= 1.5).length >= 3);
+    if (jornal) achar('ia-jornal', 'aviso', 'Serifa, fios finos e colunas de jornal, sem nada do assunto pedindo isso.');
+    const pulsos = (document.getAnimations ? document.getAnimations() : []).filter(a => { const t = a.effect?.getTiming?.(), alvo = a.effect?.target; if (!alvo || !t || t.iterations !== Infinity) return false; const r = alvo.getBoundingClientRect(); return r.width > 0 && r.width <= 16 && r.height <= 16 && !(alvo.textContent || '').trim() && !alvo.closest('[role=progressbar],[aria-busy=true]'); });
+    if (pulsos.length) achar('ia-pulso', 'aviso', `${pulsos.length} ponto(s) pulsando sem parar: se não indica um estado real, é enfeite.`);
+    const pontosMedios = textos.filter(e => ((comTexto.get(e) || '').match(/\s[·•]\s/g) || []).length >= 2);
+    if (pontosMedios.length) achar('ia-pontos-medios', 'aviso', 'Linha de metadados separada por pontos médios.', pontosMedios.map(e => curto(e.textContent, 28)));
+    const setas = interativos.filter(e => /(\s|^)(→|->|⟶|↗)\s*$/.test(e.innerText || ''));
+    if (setas.length) achar('ia-seta', 'aviso', `${setas.length} botão(ões) ou link(s) com seta no fim do texto.`, setas.map(e => curto(e.innerText, 24)));
+    const efeito = (document.body.innerText || '').match(/\b(n[aã]o [eé] (s[oó]|apenas) [^.!?\n]{1,60}[,:;—-]\s*[eé]?|mais (do )?que (um|uma) [^.!?\n]{1,40}[:,]|n[aã]o (s[oó]|apenas) [^.!?\n]{1,60}, mas|not just [^.!?\n]{1,60})/gi);
+    if (efeito) achar('ia-frase-de-efeito', 'aviso', 'Frase de efeito em negativa: "não é só X, é Y".', efeito.map(c => curto(c, 32)));
   }
 
   const raios = {}; todos.forEach(e => { const v = cs(e).borderTopLeftRadius; if (v !== '0px') raios[v] = (raios[v] || 0) + 1; });

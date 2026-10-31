@@ -99,9 +99,6 @@ svg { flex: none; }
 .ui-topbar__start { display: flex; align-items: center; gap: var(--ui-sp-2); min-width: 0; margin-right: auto; }
 .ui-topbar__end { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--ui-sp-2); min-width: 0; margin-left: auto; }
 .ui-brand { display: flex; align-items: center; gap: 9px; min-height: var(--ui-tap); color: var(--ui-text); font-size: var(--ui-fs-body-lg); font-weight: 700; line-height: var(--ui-lh-tight); }
-.ui-brand__mark { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: var(--ui-r-small); background: var(--ui-action); color: var(--ui-on-action); font-size: var(--ui-fs-small); font-weight: 700; }
-.ui-brand__name { display: none; }
-@media (min-width: 440px) { .ui-brand__name { display: inline; } }
 
 .ui-topbtn { position: relative; display: inline-flex; align-items: center; gap: 6px; flex: none; min-height: var(--ui-tap); padding: 0 14px; border: 2px solid transparent; border-radius: var(--ui-r-control); background: var(--ui-surface-2); color: var(--ui-text); font-size: var(--ui-fs-small); font-weight: 700; line-height: var(--ui-lh-tight); text-decoration: none; box-shadow: inset 0 0 0 var(--ui-edge) var(--ui-line); }
 .ui-topbtn--listen { border-radius: var(--ui-r-pill); border-color: var(--ui-action-line); background: var(--ui-action-soft); color: var(--ui-action-text); box-shadow: none; }
@@ -520,5 +517,15 @@ textarea.ui-input { min-height: 132px; resize: vertical; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ui-btn:active { transform: none; }
+}
+/* Pular para o conteúdo: aparece ao receber foco */
+.ui-skip { position: absolute; left: -999px; top: 8px; z-index: 80; display: inline-flex; align-items: center; min-height: var(--ui-tap); padding: 0 var(--ui-sp-4); background: var(--ui-surface); color: var(--ui-action-text); font-weight: 700; }
+.ui-skip:focus { left: 8px; }
+/* Ícones Phosphor Duotone dentro de texto e de abas */
+.ui-tab__pill svg { width: 24px; height: 24px; }
+.ui-chip svg, .ui-topbtn svg, .ui-option__check svg { width: 1.125em; height: 1.125em; vertical-align: -.15em; }
+/* Altura até 480px (zoom de 400%): tudo o que é fixo rola junto */
+@media (max-height: 480px) {
+  .ui-topbar, .ui-footer, .ui-tabbar { position: static; }
 }
 ```

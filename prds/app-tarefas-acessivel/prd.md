@@ -1,14 +1,14 @@
 ---
 titulo: Aplicativo acessível orientado a tarefas
 slug: app-tarefas-acessivel
-versao: 1.0.0
+versao: 2.0.0
 status: rascunho
 superficie: app
 dominio: geral
 estende: nenhum
 idioma: pt-BR
 acessibilidade: WCAG 2.2 AA
-atualizado: 2026-10-10
+atualizado: 2026-10-31
 ---
 
 # Aplicativo acessível orientado a tarefas
@@ -35,7 +35,7 @@ O documento se inspira na organização dos PRDs de design system base, site de 
 
 | Informação de destino | Preencher |
 | --- | --- |
-| Nome e sigla do produto | Nome e monograma próprios |
+| Nome e sigla do produto | Nome ou logotipo próprios, sem iniciais em quadrado |
 | Público e tarefa mais frequente | Quem usa e o que tenta concluir |
 | Quatro destinos principais | Início, catálogo principal, acompanhamento, conta; adaptar os rótulos |
 | Categorias do início | Até quatro famílias de tarefas, com nomes e ícones próprios |
@@ -89,51 +89,51 @@ O tema claro é o padrão do CSS. A aplicação pode selecionar o tema inicial p
   color-scheme: light;
 
   /* superfícies */
-  --ui-bg: #f4f5f8;
+  --ui-bg: #f3f6f8;
   --ui-bar: #ffffff;
   --ui-surface: #ffffff;
-  --ui-surface-2: #f0f1f6;
-  --ui-line: #dfe2ec;
-  --ui-card-border: #dfe2ec;
-  --ui-field-border: #7f8798;
+  --ui-surface-2: #edf2f5;
+  --ui-line: #dae4eb;
+  --ui-card-border: #dae4eb;
+  --ui-field-border: #7d8991;
   --ui-overlay: rgba(15, 19, 32, 0.5);
 
   /* texto */
-  --ui-text: #111827;
-  --ui-text-2: #374151;
+  --ui-text: #111a20;
+  --ui-text-2: #384249;
 
   /* ação */
-  --ui-action: #4338ca;
+  --ui-action: #025e88;
   --ui-on-action: #ffffff;
-  --ui-action-text: #312e81;
-  --ui-action-soft: #eef0ff;
-  --ui-action-line: #c9cdfb;
-  --ui-selected: #eef0ff;
-  --ui-on-selected: #312e81;
-  --ui-tab-active: #eef0ff;
-  --ui-on-tab-active: #4338ca;
-  --ui-highlight: #4338ca;
+  --ui-action-text: #014261;
+  --ui-action-soft: #e7f3fc;
+  --ui-action-line: #b1d7f1;
+  --ui-selected: #e7f3fc;
+  --ui-on-selected: #014261;
+  --ui-tab-active: #e7f3fc;
+  --ui-on-tab-active: #025e88;
+  --ui-highlight: #025e88;
   --ui-on-highlight: #ffffff;
-  --ui-focus: #4338ca;
-  --ui-disabled: #e5e7eb;
-  --ui-on-disabled: #4b5563;
+  --ui-focus: #025e88;
+  --ui-disabled: #e4e8ea;
+  --ui-on-disabled: #4b565d;
   --ui-disabled-line: transparent;
 
   /* situação */
   --ui-ok: #0a554f;
   --ui-ok-soft: #d9f5ee;
   --ui-warn: #7c3a03;
-  --ui-warn-soft: #fef3c7;
+  --ui-warn-soft: #f9f5c8;
   --ui-danger: #8f1616;
-  --ui-danger-soft: #fee2e2;
-  --ui-neutral: #374151;
-  --ui-neutral-soft: #e5e7eb;
-  --ui-count: #b91c1c;
+  --ui-danger-soft: #fee2df;
+  --ui-neutral: #384249;
+  --ui-neutral-soft: #e4e8ea;
+  --ui-count: #b42b01;
   --ui-on-count: #ffffff;
 
   /* liga e desliga */
-  --ui-toggle-off: #7f8798;
-  --ui-toggle-on: #0f766e;
+  --ui-toggle-off: #7d8991;
+  --ui-toggle-on: #077674;
   --ui-toggle-knob: #ffffff;
   --ui-toggle-knob-on: #ffffff;
 
@@ -145,23 +145,23 @@ O tema claro é o padrão do CSS. A aplicação pode selecionar o tema inicial p
   --ui-on-contact: #06281c;
 
   /* blocos de desenho dos cards */
-  --ui-tone-1: #eef0ff;
-  --ui-on-tone-1: #4338ca;
+  --ui-tone-1: #e7f3fc;
+  --ui-on-tone-1: #025e88;
   --ui-tone-2: #fff1cf;
   --ui-on-tone-2: #8a4b00;
   --ui-tone-3: #d9f5ee;
-  --ui-on-tone-3: #0f766e;
+  --ui-on-tone-3: #077674;
   --ui-tone-4: #ffe1ea;
-  --ui-on-tone-4: #9d174d;
-  --ui-tone-neutral: #eceef3;
-  --ui-on-tone-neutral: #374151;
+  --ui-on-tone-4: #9f1640;
+  --ui-tone-neutral: #eaeff2;
+  --ui-on-tone-neutral: #384249;
 
   /* desenhos Duotone sobre a superfície, sem caixa pastel */
-  --ui-icon-1: #4338ca;
+  --ui-icon-1: #025e88;
   --ui-icon-2: #8a4b00;
-  --ui-icon-3: #0f766e;
-  --ui-icon-4: #9d174d;
-  --ui-icon-neutral: #374151;
+  --ui-icon-3: #077674;
+  --ui-icon-4: #9f1640;
+  --ui-icon-neutral: #384249;
 
   /* contorno extra de selos e avisos: só o alto contraste usa */
   --ui-edge: 0px;
@@ -394,9 +394,9 @@ Não use altura fixa para truncar títulos ou rótulos. Deixe o texto quebrar, i
 | Papel | Claro | Escuro | Alto contraste |
 | --- | --- | --- | --- |
 | Página e superfícies | Fundo cinza frio e cartões brancos | Fundo quase preto e superfícies em três níveis | Preto com contorno branco |
-| Ação | Índigo | Azul claro | Amarelo sobre preto |
-| Destaque preenchido | Índigo | Magenta | Branco com texto preto |
-| Categoria 1 | Índigo | Azul | Branco |
+| Ação | Azul-tinta | Azul claro | Amarelo sobre preto |
+| Destaque preenchido | Azul-tinta | Magenta | Branco com texto preto |
+| Categoria 1 | Azul-tinta | Azul | Branco |
 | Categoria 2 | Ocre | Amarelo | Branco |
 | Categoria 3 | Verde petróleo | Verde | Branco |
 | Categoria 4 | Vinho | Rosa | Branco |
@@ -431,7 +431,6 @@ Use altura mínima de viewport dinâmico. O conteúdo pode rolar verticalmente. 
 | --- | --- |
 | Janela abaixo do breakpoint de desktop | Marca compacta; navegação inferior em quatro itens; filtros acima da lista |
 | Janela a partir de 1100 px | Mesmos destinos no topo, com texto e ícone lado a lado |
-| Janela a partir de 440 px | O nome pode acompanhar o monograma da marca |
 | Contêiner estreito | Grades e controles refluem segundo as consultas em `rem` do CSS |
 | Grade de categorias com espaço suficiente | Quatro atalhos na mesma linha; antes disso, duas colunas; no limite estreito, uma |
 | Catálogo no contêiner amplo | Filtros em coluna lateral e lista contínua à direita |
@@ -440,6 +439,10 @@ Use altura mínima de viewport dinâmico. O conteúdo pode rolar verticalmente. 
 | Notificações no contêiner amplo | Texto à esquerda e ações à direita |
 
 As consultas de contêiner respondem à largura útil e ao tamanho da letra. A navegação usa um breakpoint da janela. Preserve essa distinção; não substitua todas as consultas por uma única largura de celular.
+
+**Altura até 480px:** com zoom de 400%, a janela fica em 320 × 256. Barra superior, abas e rodapé de ação deixam de ser fixos e rolam junto (receita em 5.4).
+
+**Link de pular:** toda tela começa por `<a class="ui-skip" href="#conteudo">Pular para o conteúdo</a>`, e o `<main>` tem `id="conteudo"`.
 
 ### 5.3 Dois conjuntos de quatro itens
 
@@ -548,9 +551,6 @@ svg { flex: none; }
 .ui-topbar__start { display: flex; align-items: center; gap: var(--ui-sp-2); min-width: 0; margin-right: auto; }
 .ui-topbar__end { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--ui-sp-2); min-width: 0; margin-left: auto; }
 .ui-brand { display: flex; align-items: center; gap: 9px; min-height: var(--ui-tap); color: var(--ui-text); font-size: var(--ui-fs-body-lg); font-weight: 700; line-height: var(--ui-lh-tight); }
-.ui-brand__mark { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: var(--ui-r-small); background: var(--ui-action); color: var(--ui-on-action); font-size: var(--ui-fs-small); font-weight: 700; }
-.ui-brand__name { display: none; }
-@media (min-width: 440px) { .ui-brand__name { display: inline; } }
 
 .ui-topbtn { position: relative; display: inline-flex; align-items: center; gap: 6px; flex: none; min-height: var(--ui-tap); padding: 0 14px; border: 2px solid transparent; border-radius: var(--ui-r-control); background: var(--ui-surface-2); color: var(--ui-text); font-size: var(--ui-fs-small); font-weight: 700; line-height: var(--ui-lh-tight); text-decoration: none; box-shadow: inset 0 0 0 var(--ui-edge) var(--ui-line); }
 .ui-topbtn--listen { border-radius: var(--ui-r-pill); border-color: var(--ui-action-line); background: var(--ui-action-soft); color: var(--ui-action-text); box-shadow: none; }
@@ -970,13 +970,23 @@ textarea.ui-input { min-height: 132px; resize: vertical; }
 @media (prefers-reduced-motion: reduce) {
   .ui-btn:active { transform: none; }
 }
+/* Pular para o conteúdo: aparece ao receber foco */
+.ui-skip { position: absolute; left: -999px; top: 8px; z-index: 80; display: inline-flex; align-items: center; min-height: var(--ui-tap); padding: 0 var(--ui-sp-4); background: var(--ui-surface); color: var(--ui-action-text); font-weight: 700; }
+.ui-skip:focus { left: 8px; }
+/* Ícones Phosphor Duotone dentro de texto e de abas */
+.ui-tab__pill svg { width: 24px; height: 24px; }
+.ui-chip svg, .ui-topbtn svg, .ui-option__check svg { width: 1.125em; height: 1.125em; vertical-align: -.15em; }
+/* Altura até 480px (zoom de 400%): tudo o que é fixo rola junto */
+@media (max-height: 480px) {
+  .ui-topbar, .ui-footer, .ui-tabbar { position: static; }
+}
 ```
 
 ## 6. Componentes
 
 ### 6.1 Barra superior e menu
 
-**Barra superior:** monograma e nome nas telas de entrada; retorno textual nas telas internas, acompanhado da marca no desktop quando houver espaço. À direita ficam “Ouvir” e avisos pertinentes. Em tela interna móvel, o aviso pode sair do topo para preservar o espaço de “Voltar” e “Ouvir”.
+**Barra superior:** nome ou logotipo nas telas de entrada; retorno textual nas telas internas, acompanhado da marca no desktop quando houver espaço. À direita ficam “Ouvir” e avisos pertinentes. Em tela interna móvel, o aviso pode sair do topo para preservar o espaço de “Voltar” e “Ouvir”.
 
 **Menu móvel:** quatro links com desenho acima do rótulo. O escolhido recebe pílula atrás do desenho e cor de texto de seleção. **Menu desktop:** os mesmos quatro links, horizontais, dentro do topo. O escolhido recebe fundo no item inteiro.
 
@@ -1198,61 +1208,61 @@ O limite adotado é 4,5:1 para os pares de texto e 3:1 para ícone informativo, 
 
 | Uso e fundo | Texto ou traço | Fundo | Razão | Critério | Resultado |
 | --- | --- | --- | --- | --- | --- |
-| Texto principal sobre `--ui-bg` | `#111827` | `#f4f5f8` | 16,27:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-bar` | `#111827` | `#ffffff` | 17,74:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-surface` | `#111827` | `#ffffff` | 17,74:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-surface-2` | `#111827` | `#f0f1f6` | 15,73:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-bg` | `#374151` | `#f4f5f8` | 9,45:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-bar` | `#374151` | `#ffffff` | 10,31:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-surface` | `#374151` | `#ffffff` | 10,31:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-surface-2` | `#374151` | `#f0f1f6` | 9,14:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-bg` | `#312e81` | `#f4f5f8` | 10,48:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-bar` | `#312e81` | `#ffffff` | 11,42:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-surface` | `#312e81` | `#ffffff` | 11,42:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-surface-2` | `#312e81` | `#f0f1f6` | 10,13:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-action-soft` | `#312e81` | `#eef0ff` | 10,09:1 | Texto 4,5 | Passa |
-| Botão primário sobre `--ui-action` | `#ffffff` | `#4338ca` | 7,90:1 | Texto 4,5 | Passa |
-| Destaque sobre `--ui-highlight` | `#ffffff` | `#4338ca` | 7,90:1 | Texto 4,5 | Passa |
-| Opção escolhida sobre `--ui-selected` | `#312e81` | `#eef0ff` | 10,09:1 | Texto 4,5 | Passa |
-| Menu escolhido sobre `--ui-tab-active` | `#4338ca` | `#eef0ff` | 6,98:1 | Texto 4,5 | Passa |
-| Desabilitado sobre `--ui-disabled` | `#4b5563` | `#e5e7eb` | 6,10:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-bg` | `#111a20` | `#f3f6f8` | 16,23:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-bar` | `#111a20` | `#ffffff` | 17,61:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-surface` | `#111a20` | `#ffffff` | 17,61:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-surface-2` | `#111a20` | `#edf2f5` | 15,62:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-bg` | `#384249` | `#f3f6f8` | 9,47:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-bar` | `#384249` | `#ffffff` | 10,28:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-surface` | `#384249` | `#ffffff` | 10,28:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-surface-2` | `#384249` | `#edf2f5` | 9,11:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-bg` | `#014261` | `#f3f6f8` | 9,91:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-bar` | `#014261` | `#ffffff` | 10,75:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-surface` | `#014261` | `#ffffff` | 10,75:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-surface-2` | `#014261` | `#edf2f5` | 9,53:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-action-soft` | `#014261` | `#e7f3fc` | 9,54:1 | Texto 4,5 | Passa |
+| Botão primário sobre `--ui-action` | `#ffffff` | `#025e88` | 7,10:1 | Texto 4,5 | Passa |
+| Destaque sobre `--ui-highlight` | `#ffffff` | `#025e88` | 7,10:1 | Texto 4,5 | Passa |
+| Opção escolhida sobre `--ui-selected` | `#014261` | `#e7f3fc` | 9,54:1 | Texto 4,5 | Passa |
+| Menu escolhido sobre `--ui-tab-active` | `#025e88` | `#e7f3fc` | 6,29:1 | Texto 4,5 | Passa |
+| Desabilitado sobre `--ui-disabled` | `#4b565d` | `#e4e8ea` | 6,11:1 | Texto 4,5 | Passa |
 | Sucesso sobre `--ui-ok-soft` | `#0a554f` | `#d9f5ee` | 7,52:1 | Texto 4,5 | Passa |
-| Aviso sobre `--ui-warn-soft` | `#7c3a03` | `#fef3c7` | 7,66:1 | Texto 4,5 | Passa |
-| Erro sobre `--ui-danger-soft` | `#8f1616` | `#fee2e2` | 7,49:1 | Texto 4,5 | Passa |
-| Neutro sobre `--ui-neutral-soft` | `#374151` | `#e5e7eb` | 8,33:1 | Texto 4,5 | Passa |
-| Contagem sobre `--ui-count` | `#ffffff` | `#b91c1c` | 6,47:1 | Texto 4,5 | Passa |
+| Aviso sobre `--ui-warn-soft` | `#7c3a03` | `#f9f5c8` | 7,68:1 | Texto 4,5 | Passa |
+| Erro sobre `--ui-danger-soft` | `#8f1616` | `#fee2df` | 7,48:1 | Texto 4,5 | Passa |
+| Neutro sobre `--ui-neutral-soft` | `#384249` | `#e4e8ea` | 8,33:1 | Texto 4,5 | Passa |
+| Contagem sobre `--ui-count` | `#ffffff` | `#b42b01` | 6,39:1 | Texto 4,5 | Passa |
 | Contato opcional sobre `--ui-contact` | `#06281c` | `#25d366` | 7,97:1 | Texto 4,5 | Passa |
-| Ícone 1 sobre `--ui-bg` | `#4338ca` | `#f4f5f8` | 7,25:1 | UI 3,0 | Passa |
-| Ícone 1 sobre `--ui-surface` | `#4338ca` | `#ffffff` | 7,90:1 | UI 3,0 | Passa |
-| Ícone 2 sobre `--ui-bg` | `#8a4b00` | `#f4f5f8` | 6,24:1 | UI 3,0 | Passa |
+| Ícone 1 sobre `--ui-bg` | `#025e88` | `#f3f6f8` | 6,54:1 | UI 3,0 | Passa |
+| Ícone 1 sobre `--ui-surface` | `#025e88` | `#ffffff` | 7,10:1 | UI 3,0 | Passa |
+| Ícone 2 sobre `--ui-bg` | `#8a4b00` | `#f3f6f8` | 6,27:1 | UI 3,0 | Passa |
 | Ícone 2 sobre `--ui-surface` | `#8a4b00` | `#ffffff` | 6,80:1 | UI 3,0 | Passa |
-| Ícone 3 sobre `--ui-bg` | `#0f766e` | `#f4f5f8` | 5,02:1 | UI 3,0 | Passa |
-| Ícone 3 sobre `--ui-surface` | `#0f766e` | `#ffffff` | 5,47:1 | UI 3,0 | Passa |
-| Ícone 4 sobre `--ui-bg` | `#9d174d` | `#f4f5f8` | 7,23:1 | UI 3,0 | Passa |
-| Ícone 4 sobre `--ui-surface` | `#9d174d` | `#ffffff` | 7,88:1 | UI 3,0 | Passa |
-| Ícone neutro sobre `--ui-bg` | `#374151` | `#f4f5f8` | 9,45:1 | UI 3,0 | Passa |
-| Ícone neutro sobre `--ui-surface` | `#374151` | `#ffffff` | 10,31:1 | UI 3,0 | Passa |
-| Borda de campo sobre `--ui-bg` | `#7f8798` | `#f4f5f8` | 3,31:1 | UI 3,0 | Passa |
-| Borda de campo sobre `--ui-surface` | `#7f8798` | `#ffffff` | 3,61:1 | UI 3,0 | Passa |
-| Borda de campo sobre `--ui-surface-2` | `#7f8798` | `#f0f1f6` | 3,20:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-bg` | `#4338ca` | `#f4f5f8` | 7,25:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-bar` | `#4338ca` | `#ffffff` | 7,90:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-surface` | `#4338ca` | `#ffffff` | 7,90:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-surface-2` | `#4338ca` | `#f0f1f6` | 7,01:1 | UI 3,0 | Passa |
-| Interruptor desligado sobre `--ui-toggle-off` | `#ffffff` | `#7f8798` | 3,61:1 | UI 3,0 | Passa |
-| Interruptor ligado sobre `--ui-toggle-on` | `#ffffff` | `#0f766e` | 5,47:1 | UI 3,0 | Passa |
-| Texto principal sobre `--ui-action-soft` | `#111827` | `#eef0ff` | 15,66:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-ok-soft` | `#111827` | `#d9f5ee` | 15,41:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-action-soft` | `#374151` | `#eef0ff` | 9,10:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-ok-soft` | `#374151` | `#d9f5ee` | 8,96:1 | Texto 4,5 | Passa |
-| Ação de erro sobre `--ui-bg` | `#8f1616` | `#f4f5f8` | 8,40:1 | Texto 4,5 | Passa |
+| Ícone 3 sobre `--ui-bg` | `#077674` | `#f3f6f8` | 5,02:1 | UI 3,0 | Passa |
+| Ícone 3 sobre `--ui-surface` | `#077674` | `#ffffff` | 5,45:1 | UI 3,0 | Passa |
+| Ícone 4 sobre `--ui-bg` | `#9f1640` | `#f3f6f8` | 7,27:1 | UI 3,0 | Passa |
+| Ícone 4 sobre `--ui-surface` | `#9f1640` | `#ffffff` | 7,89:1 | UI 3,0 | Passa |
+| Ícone neutro sobre `--ui-bg` | `#384249` | `#f3f6f8` | 9,47:1 | UI 3,0 | Passa |
+| Ícone neutro sobre `--ui-surface` | `#384249` | `#ffffff` | 10,28:1 | UI 3,0 | Passa |
+| Borda de campo sobre `--ui-bg` | `#7d8991` | `#f3f6f8` | 3,30:1 | UI 3,0 | Passa |
+| Borda de campo sobre `--ui-surface` | `#7d8991` | `#ffffff` | 3,58:1 | UI 3,0 | Passa |
+| Borda de campo sobre `--ui-surface-2` | `#7d8991` | `#edf2f5` | 3,18:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-bg` | `#025e88` | `#f3f6f8` | 6,54:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-bar` | `#025e88` | `#ffffff` | 7,10:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-surface` | `#025e88` | `#ffffff` | 7,10:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-surface-2` | `#025e88` | `#edf2f5` | 6,29:1 | UI 3,0 | Passa |
+| Interruptor desligado sobre `--ui-toggle-off` | `#ffffff` | `#7d8991` | 3,58:1 | UI 3,0 | Passa |
+| Interruptor ligado sobre `--ui-toggle-on` | `#ffffff` | `#077674` | 5,45:1 | UI 3,0 | Passa |
+| Texto principal sobre `--ui-action-soft` | `#111a20` | `#e7f3fc` | 15,62:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-ok-soft` | `#111a20` | `#d9f5ee` | 15,30:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-action-soft` | `#384249` | `#e7f3fc` | 9,11:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-ok-soft` | `#384249` | `#d9f5ee` | 8,93:1 | Texto 4,5 | Passa |
+| Ação de erro sobre `--ui-bg` | `#8f1616` | `#f3f6f8` | 8,43:1 | Texto 4,5 | Passa |
 | Ação de erro sobre `--ui-surface` | `#8f1616` | `#ffffff` | 9,15:1 | Texto 4,5 | Passa |
-| Ação de erro sobre `--ui-surface-2` | `#8f1616` | `#f0f1f6` | 8,11:1 | Texto 4,5 | Passa |
-| Foco em superfície semântica sobre `--ui-action-soft` | `#4338ca` | `#eef0ff` | 6,98:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-ok-soft` | `#4338ca` | `#d9f5ee` | 6,87:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-warn-soft` | `#4338ca` | `#fef3c7` | 7,10:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-danger-soft` | `#4338ca` | `#fee2e2` | 6,47:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-neutral-soft` | `#4338ca` | `#e5e7eb` | 6,38:1 | UI 3,0 | Passa |
+| Ação de erro sobre `--ui-surface-2` | `#8f1616` | `#edf2f5` | 8,12:1 | Texto 4,5 | Passa |
+| Foco em superfície semântica sobre `--ui-action-soft` | `#025e88` | `#e7f3fc` | 6,29:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-ok-soft` | `#025e88` | `#d9f5ee` | 6,17:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-warn-soft` | `#025e88` | `#f9f5c8` | 6,39:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-danger-soft` | `#025e88` | `#fee2df` | 5,80:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-neutral-soft` | `#025e88` | `#e4e8ea` | 5,75:1 | UI 3,0 | Passa |
 
 #### Escuro
 
@@ -1446,22 +1456,22 @@ O exemplo usa as classes e tokens deste documento. Insira os dois blocos CSS em 
 
 ```html
 <div class="ui-screen">
+  <a class="ui-skip" href="#conteudo">Pular para o conteúdo</a>
   <header class="ui-topbar">
     <div class="ui-topbar__start">
       <span class="ui-brand">
-        <span class="ui-brand__mark" aria-hidden="true">AP</span>
         <span class="ui-brand__name">Aplicativo</span>
       </span>
     </div>
     <nav class="ui-tabbar ui-tabbar--top" aria-label="Menu principal">
-      <a class="ui-tab" href="/inicio"><span class="ui-tab__pill" aria-hidden="true">⌂</span>Início</a>
-      <a class="ui-tab ui-tab--active" href="/explorar" aria-current="page"><span class="ui-tab__pill" aria-hidden="true">◇</span>Explorar</a>
-      <a class="ui-tab" href="/acompanhar"><span class="ui-tab__pill" aria-hidden="true">✓</span>Acompanhar</a>
-      <a class="ui-tab" href="/conta"><span class="ui-tab__pill" aria-hidden="true">○</span>Conta</a>
+      <a class="ui-tab" href="/inicio"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,120v96H152V152H104v64H40V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,216,120Z" opacity="0.2"/><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></svg></span>Início</a>
+      <a class="ui-tab ui-tab--active" href="/explorar" aria-current="page"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M128,32a96,96,0,1,0,96,96A96,96,0,0,0,128,32Zm16,112L80,176l32-64,64-32Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z"/></svg></span>Explorar</a>
+      <a class="ui-tab" href="/acompanhar"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,64V192H128V64Z" opacity="0.2"/><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg></span>Acompanhar</a>
+      <a class="ui-tab" href="/conta"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M224,128a95.76,95.76,0,0,1-31.8,71.37A72,72,0,0,0,128,160a40,40,0,1,0-40-40,40,40,0,0,0,40,40,72,72,0,0,0-64.2,39.37h0A96,96,0,1,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg></span>Conta</a>
     </nav>
     <div class="ui-topbar__end"><button class="ui-topbtn ui-topbtn--listen" type="button">Ouvir</button></div>
   </header>
-  <main class="ui-main ui-main--wide" aria-labelledby="catalog-title">
+  <main id="conteudo" class="ui-main ui-main--wide" aria-labelledby="catalog-title">
     <h1 class="ui-title" id="catalog-title">Explorar atividades</h1>
     <div class="ui-catalog">
       <div class="ui-search" role="search">
@@ -1472,7 +1482,7 @@ O exemplo usa as classes e tokens deste documento. Insira os dois blocos CSS em 
         <section class="ui-catalog__filters" aria-labelledby="filter-title">
           <h2 class="ui-section__title" id="filter-title">Filtrar atividades</h2>
           <div class="ui-chips" role="group" aria-label="Filtros">
-            <button class="ui-chip" type="button" aria-pressed="true">✓ Perto de mim</button>
+            <button class="ui-chip" type="button" aria-pressed="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Z" opacity="0.2"/><path d="M205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z"/></svg> Perto de mim</button>
             <button class="ui-chip" type="button" aria-pressed="false">Nesta semana</button>
           </div>
         </section>
@@ -1483,7 +1493,7 @@ O exemplo usa as classes e tokens deste documento. Insira os dois blocos CSS em 
               <article class="ui-card ui-card--pad">
                 <div class="ui-card__head">
                   <span class="ui-icon ui-icon--cat-2" aria-hidden="true">
-                    <svg viewBox="0 0 48 48" focusable="false"><path d="M8 14h32v24H8z" fill="currentColor" opacity=".2"/><path d="M8 14h32v24H8zM16 10v8M32 10v8M8 23h32" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                    <svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,48V88H40V48a8,8,0,0,1,8-8H208A8,8,0,0,1,216,48Z" opacity="0.2"/><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z"/></svg>
                   </span>
                   <div class="ui-card__headtext">
                     <h2 class="ui-card__title"><a class="ui-card__link" href="/atividades/oficina">Oficina de fotografia</a></h2>
@@ -1505,10 +1515,10 @@ O exemplo usa as classes e tokens deste documento. Insira os dois blocos CSS em 
     </div>
   </main>
   <nav class="ui-tabbar ui-tabbar--bottom" aria-label="Menu principal">
-    <a class="ui-tab" href="/inicio"><span class="ui-tab__pill" aria-hidden="true">⌂</span>Início</a>
-    <a class="ui-tab ui-tab--active" href="/explorar" aria-current="page"><span class="ui-tab__pill" aria-hidden="true">◇</span>Explorar</a>
-    <a class="ui-tab" href="/acompanhar"><span class="ui-tab__pill" aria-hidden="true">✓</span>Acompanhar</a>
-    <a class="ui-tab" href="/conta"><span class="ui-tab__pill" aria-hidden="true">○</span>Conta</a>
+    <a class="ui-tab" href="/inicio"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,120v96H152V152H104v64H40V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,216,120Z" opacity="0.2"/><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></svg></span>Início</a>
+    <a class="ui-tab ui-tab--active" href="/explorar" aria-current="page"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M128,32a96,96,0,1,0,96,96A96,96,0,0,0,128,32Zm16,112L80,176l32-64,64-32Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z"/></svg></span>Explorar</a>
+    <a class="ui-tab" href="/acompanhar"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,64V192H128V64Z" opacity="0.2"/><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg></span>Acompanhar</a>
+    <a class="ui-tab" href="/conta"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M224,128a95.76,95.76,0,0,1-31.8,71.37A72,72,0,0,0,128,160a40,40,0,1,0-40-40,40,40,0,0,0,40,40,72,72,0,0,0-64.2,39.37h0A96,96,0,1,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg></span>Conta</a>
   </nav>
 </div>
 ```
@@ -1517,23 +1527,23 @@ O exemplo usa as classes e tokens deste documento. Insira os dois blocos CSS em 
 
 ```html
 <div class="ui-screen">
+  <a class="ui-skip" href="#conteudo">Pular para o conteúdo</a>
   <header class="ui-topbar">
     <div class="ui-topbar__start">
       <span class="ui-brand ui-brand--desktop">
-        <span class="ui-brand__mark" aria-hidden="true">AP</span>
         <span class="ui-brand__name">Aplicativo</span>
       </span>
-      <a class="ui-topbtn" href="/explorar">← Voltar</a>
+      <a class="ui-topbtn" href="/explorar"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M112,56V200L40,128Z" opacity="0.2"/><path d="M216,120H120V56a8,8,0,0,0-13.66-5.66l-72,72a8,8,0,0,0,0,11.32l72,72A8,8,0,0,0,120,200V136h96a8,8,0,0,0,0-16ZM104,180.69,51.31,128,104,75.31Z"/></svg> Voltar</a>
     </div>
     <nav class="ui-tabbar ui-tabbar--top" aria-label="Menu principal">
-      <a class="ui-tab" href="/inicio"><span class="ui-tab__pill" aria-hidden="true">⌂</span>Início</a>
-      <a class="ui-tab ui-tab--active" href="/explorar" aria-current="true"><span class="ui-tab__pill" aria-hidden="true">◇</span>Explorar</a>
-      <a class="ui-tab" href="/acompanhar"><span class="ui-tab__pill" aria-hidden="true">✓</span>Acompanhar</a>
-      <a class="ui-tab" href="/conta"><span class="ui-tab__pill" aria-hidden="true">○</span>Conta</a>
+      <a class="ui-tab" href="/inicio"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,120v96H152V152H104v64H40V120a8,8,0,0,1,2.34-5.66l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,216,120Z" opacity="0.2"/><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></svg></span>Início</a>
+      <a class="ui-tab ui-tab--active" href="/explorar" aria-current="true"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M128,32a96,96,0,1,0,96,96A96,96,0,0,0,128,32Zm16,112L80,176l32-64,64-32Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z"/></svg></span>Explorar</a>
+      <a class="ui-tab" href="/acompanhar"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M216,64V192H128V64Z" opacity="0.2"/><path d="M224,128a8,8,0,0,1-8,8H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128ZM128,72h88a8,8,0,0,0,0-16H128a8,8,0,0,0,0,16Zm88,112H128a8,8,0,0,0,0,16h88a8,8,0,0,0,0-16ZM82.34,42.34,56,68.69,45.66,58.34A8,8,0,0,0,34.34,69.66l16,16a8,8,0,0,0,11.32,0l32-32A8,8,0,0,0,82.34,42.34Zm0,64L56,132.69,45.66,122.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Zm0,64L56,196.69,45.66,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32,0l32-32a8,8,0,0,0-11.32-11.32Z"/></svg></span>Acompanhar</a>
+      <a class="ui-tab" href="/conta"><span class="ui-tab__pill" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M224,128a95.76,95.76,0,0,1-31.8,71.37A72,72,0,0,0,128,160a40,40,0,1,0-40-40,40,40,0,0,0,40,40,72,72,0,0,0-64.2,39.37h0A96,96,0,1,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"/></svg></span>Conta</a>
     </nav>
     <div class="ui-topbar__end"><button class="ui-topbtn ui-topbtn--listen" type="button">Ouvir</button></div>
   </header>
-  <main class="ui-main ui-main--wide" aria-labelledby="step-title">
+  <main id="conteudo" class="ui-main ui-main--wide" aria-labelledby="step-title">
     <div class="ui-steps">
       <span class="ui-steps__bar ui-steps__bar--on" aria-hidden="true"></span>
       <span class="ui-steps__bar ui-steps__bar--on" aria-hidden="true"></span>
@@ -1548,12 +1558,12 @@ O exemplo usa as classes e tokens deste documento. Insira os dois blocos CSS em 
         <label class="ui-option">
           <input class="ui-option__input" type="radio" name="horario" value="manha" checked>
           <span class="ui-option__text">De manhã<span class="ui-option__sub">Antes do almoço</span></span>
-          <span class="ui-option__check" aria-hidden="true">✓</span>
+          <span class="ui-option__check" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Z" opacity="0.2"/><path d="M205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z"/></svg></span>
         </label>
         <label class="ui-option">
           <input class="ui-option__input" type="radio" name="horario" value="tarde">
           <span class="ui-option__text">De tarde</span>
-          <span class="ui-option__check" aria-hidden="true">✓</span>
+          <span class="ui-option__check" aria-hidden="true"><svg viewBox="0 0 256 256" fill="currentColor" focusable="false" aria-hidden="true"><path d="M232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Z" opacity="0.2"/><path d="M205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z"/></svg></span>
         </label>
       </div>
     </fieldset>

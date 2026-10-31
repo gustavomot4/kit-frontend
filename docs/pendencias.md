@@ -1,23 +1,27 @@
 # Pendências conhecidas
 
-Resultado de `scripts/verificar.mjs` nos 11 exemplos dos estilos, em 30/10/2026: 9 passam sem falha.
+Resultado de `scripts/verificar.mjs` nos 11 exemplos dos estilos, em 31/10/2026: 6 passam sem falha. O verificador ficou mais rigoroso nessa data, então parte das falhas abaixo já existia e passava despercebida. Veja o [relatório](testes/2026-10-31-fase-1/relatorio.md).
 
-| Exemplo | Falhas | Causa |
+| Exemplo | Falhas | Causa provável |
 | --- | --- | --- |
-| `app-tarefas-acessivel/catalogo`, `etapa` | Barras cobrem 55 e 59% em 320 × 256 | Sem regra de altura baixa |
+| `base-design-system/ferramenta` | `a11y-alto-contraste` | Campo de busca sem borda própria |
+| `base-design-system/landing` | `a11y-letra-200`, `a11y-espacamento` | Maquete do produto em caixa de altura fixa |
+| `sistema-clinica-conversa/agenda-semana` | `a11y-letra-200`, `a11y-espacamento`, `a11y-nome-visivel` | Consultas em células de altura proporcional ao tempo |
+| `sistema-gestao/agenda` | `a11y-letra-200` | Grade de calendário com altura fixa |
+| `site-escola-idiomas/home` | `a11y-letra-200`, `a11y-espacamento` | Cartões de curso com altura fixa |
 
 Avisos continuam nos outros exemplos, como fonte comum e texto na primeira dobra. Os estilos não são a identidade de um produto: o agente troca essas escolhas pelas do `DESIGN.md`.
 
 ## Correções a fazer
 
-1. `app-tarefas-acessivel`: trocar a paleta índigo e refazer as 165 linhas de contraste e os exemplos. Acrescentar a regra de altura baixa, o link de pular e os ícones que o próprio PRD exige.
-2. `skill/kit-frontend/references/recursos/estilos.md`: tirar as ressalvas que deixaram de valer. `base-design-system`, `sistema-gestao`, `sistema-clinica-conversa` e `site-escola-idiomas` já têm versão nova, mas a tabela "O que trocar antes de usar" ainda é a anterior. Ser conservadora ali não quebra nada; só faz o agente desviar de um problema que já não existe.
-3. Nova auditoria dos quatro PRDs que mudaram de versão maior. Os estáveis estão em 3.x, com auditoria da 1.0.0.
+1. Corrigir as cinco telas acima, trocando altura fixa por `min-height` onde der. Em agenda com altura proporcional ao tempo, decidir o que fazer com a letra grande.
+2. Nova auditoria dos PRDs que mudaram de versão maior. Os estáveis estão em 3.x e 4.x, com auditoria da 1.0.0, e `app-tarefas-acessivel` segue em rascunho na 2.0.0.
+3. Fases 2 e 3 do plano do benchmark: gancho, integração contínua, desvio contra o `DESIGN.md`, método de direções, roteiro de estados e teste cego com origem oculta.
 
 ## Decisões em aberto
 
 - **Licença:** o repositório ainda não tem. Sem ela, ninguém além do dono tem direito de uso.
-- **Teste real:** só houve uma rodada, sem tela final. `references/marca/criatividade.md`, `references/recursos/bibliotecas.md`, `references/recursos/fontes.md`, a etapa de marca e o caminho de quem não tem nada não foram testados com um agente novo nem com uma pessoa sem marca. Não se sabe se o brief reduz refação.
+- **Teste real:** só houve uma rodada, sem tela final. `references/marca/criatividade.md`, `references/recursos/bibliotecas.md`, `references/recursos/fontes.md`, a etapa de marca e o caminho de quem não tem nada não foram testados com um agente novo nem com uma pessoa sem marca. O mesmo vale para `references/qualidade/publicos.md` e `references/padroes/midia-e-libras.md`, que também não passaram por pessoas surdas, cegas, daltônicas ou com pouca leitura. Não se sabe se o brief reduz refação.
 - **Validador oficial do `DESIGN.md`:** os modelos seguem a especificação lida em 30/10/2026, mas `npx @google/design.md lint` não foi executado. O formato ainda é alpha e pode mudar.
 
 ## Antes de tornar o repositório público

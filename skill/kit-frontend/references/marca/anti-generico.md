@@ -12,7 +12,7 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Paleta inteira de valores padrão do Tailwind ou do shadcn, sem nenhuma decisão. `[script: ia-paleta-padrao]`
 - Gradiente de roxo para azul. Gradiente em texto. `[script: ia-gradiente-roxo, ia-texto-gradiente]`
 - Quase preto com um acento neon.
-- Creme com serifa e terracota: virou o novo padrão de quem foge do índigo.
+- Creme com serifa e terracota: virou o novo padrão de quem foge do índigo. `[script: ia-creme-terracota]`
 - Cinza puro nos neutros, sem nenhum tom da marca.
 - Texto cinza claro para parecer elegante. Passa do contraste antes de parecer elegante.
 
@@ -21,7 +21,8 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Inter, Roboto, Poppins ou Montserrat em tudo, sem decisão. `[script: ia-fonte-padrao]`
 - Hierarquia só por tamanho, sem peso nem cor.
 - Um rótulo pequeno, em caixa alta e espaçado, acima de cada título. `[script: ia-sobrancelha]`
-- Uma palavra do título em cor ou gradiente diferente.
+- Uma palavra do título em itálico, cor ou gradiente diferente. `[script: ia-palavra-destaque]`
+- Monoespaçada em rótulo, para parecer técnico. Fica para código e dado. `[script: ia-mono-enfeite]`
 
 ## Composição
 
@@ -33,6 +34,12 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Cartão com borda colorida só à esquerda. `[script: ia-borda-esquerda]`
 - Seções alternando branco e cinza sem relação com o conteúdo.
 - Pílula colorida para tudo que é etiqueta.
+- Numeração 01 / 02 / 03 em conteúdo que não é sequência. `[script: ia-numeracao]`
+- Número enorme, rótulo pequeno e acento, em série. `[script: ia-metrica-heroi]`
+- Jornal: fios finos, colunas densas e raio zero, sem o assunto pedir. `[script: ia-jornal]`
+- Sombra dura deslocada, fora de um mundo neobrutalista. `[script: ia-sombra-dura]`
+- Vidro e desfoque como decoração. `[script: ia-vidro]`
+- Linha de metadados com pontos médios: "Edição 12 · Outono · São Paulo". `[script: ia-pontos-medios]`
 
 ## Marca e ícones
 
@@ -40,17 +47,19 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Ícone de faíscas para "inteligente", raio para "rápido", escudo para "seguro". `[script: ia-faisca]`
 - Emoji no lugar de ícone. `[script: ia-emoji]`
 - Um ícone do mesmo pacote padrão em cada item, mesmo quando o texto já diz tudo.
+- Seta no fim do botão: "Começar agora →". `[script: ia-seta]`
 
 ## Movimento
 
 - A mesma animação de entrada em todas as seções.
 - Cartão que sobe e ganha sombra em todo hover.
-- Brilho e pulsação sem significado.
+- Brilho e pulsação sem significado. `[script: ia-pulso]`
 
 ## Texto
 
 - Frases vazias: "Transforme seu negócio", "Solução completa", "Sem complicação", "Bem-vindo de volta", "Sua jornada". `[script: ia-texto-cliche]`
 - Tríades de adjetivos: "Simples. Rápido. Seguro."
+- Frase de efeito em negativa: "Não é só tecnologia, é tempo devolvido". `[script: ia-frase-de-efeito]`
 - Números de vaidade inventados: "+10 mil clientes", "99,9%".
 - Depoimentos falsos e logos de empresas que não são clientes.
 - Subtítulo que repete o título com outras palavras.

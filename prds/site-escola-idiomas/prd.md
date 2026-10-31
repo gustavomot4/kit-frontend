@@ -1,14 +1,14 @@
 ---
 titulo: Site de escola de idiomas
 slug: site-escola-idiomas
-versao: 3.0.0
+versao: 4.0.0
 status: estavel
 superficie: site
 dominio: educacao
 estende: nenhum
 idioma: pt-BR
 acessibilidade: WCAG 2.2 AA
-atualizado: 2026-10-30
+atualizado: 2026-10-31
 ---
 
 # Site de escola de idiomas
@@ -789,7 +789,7 @@ Piso: WCAG 2.2 AA.
 **Copie:**
 - `aria-label` descritivo em todo link cujo único texto visível é genérico (`aria-label="{título do post}. Continuar lendo"`, `aria-label="Saiba mais: {assunto}"`) e em todo botão só de ícone (`aria-label="Próximo campo"`, "Abrir menu", "Abrir chat"). Quando o link já contém o nome do destino, como o tile de curso, não precisa.
 - `<nav aria-label="Cursos">`, `<nav aria-label="Sobre nós">` — nomeie cada bloco de navegação.
-- **Widget de Libras** (VLibras) na posição padrão do plugin, no meio da borda direita. Recomendado em site educacional brasileiro; não substitui a conformidade com a WCAG.
+- **Widget de Libras** (VLibras) na posição padrão do plugin, no meio da borda direita. Recomendado em site educacional brasileiro; não substitui a conformidade com a WCAG. Aparece ao chegar, sem depender de clique.
 - Alvos de 44px nos botões e campos; nenhum alvo com menos de 24px.
 
 **Semântica:**
@@ -892,7 +892,7 @@ Parte do que o autor identificou no site analisado, reduzida ao que o guia preci
 - **Tailwind** com o config do §1.2, ou CSS puro com as custom properties
 - **Montserrat** variável (`wght 400..700`), auto-hospedada via `@fontsource-variable/montserrat`, com `font-display: swap`. Só os pesos 400, 500, 600 e 700 são usados.
 - **Lucide** para os ícones
-- **VLibras** (`https://vlibras.gov.br/app/vlibras-plugin.js`) para acessibilidade em Libras, carregado depois da primeira interação com a página
+- **VLibras** (`https://vlibras.gov.br/app/vlibras-plugin.js`) para acessibilidade em Libras, carregado com `defer`, sem esperar interação: quem precisa de Libras precisa ver o botão ao chegar
 
 O site analisado usa também Framer Motion e Lenis; este guia dispensa os dois para não pôr três bibliotecas de animação na conta de desempenho.
 
@@ -931,7 +931,7 @@ O site analisado usa também Framer Motion e Lenis; este guia dispensa os dois p
 - [ ] Imagens em WebP com `srcset`, `width`, `height` e `alt` real (ou `alt=""` se decorativa); `loading="lazy"` abaixo da dobra e nunca na imagem do hero, que leva `fetchpriority="high"`
 - [ ] Em 320 × 256 (altura até 480px), header, barra das conversões, cookie bar, chat e Libras rolam junto com a página e nada fixo cobre a janela; todo link fora de parágrafo tem 44px de altura (§4).
 - [ ] Cookie bar não-bloqueante, com `Recusar` e `Aceitar` de mesmo peso; nenhuma tag de rastreamento dispara antes do aceite; eventos do item 10 do §8 só depois dele
-- [ ] Chat e VLibras só carregam depois da primeira interação; chat no canto inferior direito acima da cookie bar e da barra das conversões; Libras no meio da borda direita
+- [ ] Chat só carrega depois da primeira interação; VLibras carrega com `defer` e o botão aparece ao chegar; chat no canto inferior direito acima da cookie bar e da barra das conversões; Libras no meio da borda direita
 - [ ] Lighthouse ≥ 90 em Performance, Acessibilidade, SEO e Boas Práticas
 
 ---

@@ -11,6 +11,7 @@ Artefatos que qualquer agente de código usa para criar frontend com a sua cara,
 | "Está pronto" sem prova | [Verificador](skill/kit-frontend/scripts/verificar.mjs) que abre a tela no navegador e mede |
 | Correção numa tela, esquecida nas outras | Toda reprovação vira regra em `design/correcoes.md` e volta para o kit |
 | Cara de IA | [Lista do que denuncia](skill/kit-frontend/references/marca/anti-generico.md) e [método de identidade](skill/kit-frontend/references/marca/identidade.md) |
+| "Para todos" só no texto | [Fichas por público](skill/kit-frontend/references/qualidade/publicos.md) e [Libras e mídia](skill/kit-frontend/references/padroes/midia-e-libras.md), ativadas pelo `PRODUTO.md` e cobradas pelo verificador |
 | Reinventar o que já existe | [Padrões](skill/kit-frontend/references/) tirados do [benchmark](docs/pesquisa/benchmark.md) |
 | Tela correta, mas sem impacto | [Criatividade](skill/kit-frontend/references/marca/criatividade.md), medida [nos sites que você admira](docs/pesquisa/referencias-sites.md) |
 | Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/recursos/bibliotecas.md) |
@@ -100,7 +101,7 @@ node bin/kit.mjs coletar ../meu-projeto
 node bin/kit.mjs empacotar
 ```
 
-`verificar` testa 1440 × 900, 768 × 1024, 375 × 812 com toque e 320 × 256 (zoom de 400%), com passada de Tab e movimento reduzido. `coletar` traz as correções de um projeto para o kit, e é assim que ele aprende o seu gosto. `empacotar` gera os estilos por seção e o prompt único, e precisa rodar depois de mudar a skill ou um PRD.
+`verificar` testa 1440 × 900, 768 × 1024, 375 × 812 com toque e 320 × 256 (zoom de 400%), com passada de Tab e movimento reduzido. Também mede letra em 200%, espaçamento e alto contraste, e guarda `prancha.html` (a tela sem cada cor e embaçada) e `leitor-de-tela.txt`. Com `publicos:` no `PRODUTO.md`, ou `--publicos`, o rigor muda conforme quem usa. `coletar` traz as correções de um projeto para o kit, e é assim que ele aprende o seu gosto. `empacotar` gera os estilos por seção e o prompt único, e precisa rodar depois de mudar a skill ou um PRD.
 
 ## Estilos de partida
 
@@ -109,10 +110,10 @@ Receitas completas, extraídas de produtos reais. Dão estrutura e medidas; a id
 | PRD | Use para | Versão | Exemplos |
 | --- | --- | --- | --- |
 | [Design system base](prds/base-design-system/prd.md) | Produto sem PRD específico: landing, fluxo ou ferramenta, em linguagem sóbria, com neutros e um único acento | 3.0.0 | [landing](prds/base-design-system/exemplos/landing.png) · [ferramenta](prds/base-design-system/exemplos/ferramenta.png) |
-| [Site de escola de idiomas](prds/site-escola-idiomas/prd.md) | Site institucional de escola de idiomas ou curso livre, voltado a matrícula e captação de contatos | 3.0.0 | [home](prds/site-escola-idiomas/exemplos/home.png) · [página de curso](prds/site-escola-idiomas/exemplos/pagina-de-curso.png) |
+| [Site de escola de idiomas](prds/site-escola-idiomas/prd.md) | Site institucional de escola de idiomas ou curso livre, voltado a matrícula e captação de contatos | 4.0.0 | [home](prds/site-escola-idiomas/exemplos/home.png) · [página de curso](prds/site-escola-idiomas/exemplos/pagina-de-curso.png) |
 | [Sistema de gestão](prds/sistema-gestao/prd.md) | Sistema de trabalho com painel, agenda, cadastros, listas e relatórios. Traz também processo, arquitetura e validação | 3.0.0 | [painel](prds/sistema-gestao/exemplos/painel.png) · [agenda](prds/sistema-gestao/exemplos/agenda.png) |
 | [Sistema de clínica no estilo conversa](prds/sistema-clinica-conversa/prd.md) | Sistema de atendimento com agenda, usado pela recepção no computador e no celular | 2.0.0 (rascunho) | [hoje](prds/sistema-clinica-conversa/exemplos/hoje.png) · [agenda](prds/sistema-clinica-conversa/exemplos/agenda-semana.png) · [celular](prds/sistema-clinica-conversa/exemplos/hoje-celular.png) |
-| [Aplicativo acessível orientado a tarefas](prds/app-tarefas-acessivel/prd.md) | Aplicativos de atendimento, catálogos, comunidades e solicitações, com controles grandes, formulários por etapas e três temas | 1.0.0 (rascunho) | [catálogo](prds/app-tarefas-acessivel/exemplos/catalogo.png) · [etapa de formulário](prds/app-tarefas-acessivel/exemplos/etapa.png) |
+| [Aplicativo acessível orientado a tarefas](prds/app-tarefas-acessivel/prd.md) | Aplicativos de atendimento, catálogos, comunidades e solicitações, com controles grandes, formulários por etapas e três temas | 2.0.0 (rascunho) | [catálogo](prds/app-tarefas-acessivel/exemplos/catalogo.png) · [etapa de formulário](prds/app-tarefas-acessivel/exemplos/etapa.png) |
 
 Marcas, nomes e dados das telas de exemplo são fictícios. O que ainda falha está em [pendências](docs/pendencias.md).
 
@@ -169,4 +170,4 @@ node ferramentas/testar.mjs
 ## Auditorias
 
 - [Rodada de 2026-10-09](docs/auditorias/2026-10-09/relatorio.md): 168 achados nas versões 1.0.0 de três PRDs. As correções estão no `CHANGELOG.md` de cada um.
-- Sem auditoria, por isso em `rascunho`: `app-tarefas-acessivel` e `sistema-clinica-conversa`. Os três estáveis estão em 3.x e aguardam nova rodada.
+- Sem auditoria, por isso em `rascunho`: `app-tarefas-acessivel` e `sistema-clinica-conversa`. Os três estáveis estão em 3.x e 4.x e aguardam nova rodada.

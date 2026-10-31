@@ -8,7 +8,7 @@
 
 | Informação de destino | Preencher |
 | --- | --- |
-| Nome e sigla do produto | Nome e monograma próprios |
+| Nome e sigla do produto | Nome ou logotipo próprios, sem iniciais em quadrado |
 | Público e tarefa mais frequente | Quem usa e o que tenta concluir |
 | Quatro destinos principais | Início, catálogo principal, acompanhamento, conta; adaptar os rótulos |
 | Categorias do início | Até quatro famílias de tarefas, com nomes e ícones próprios |
