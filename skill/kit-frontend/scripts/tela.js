@@ -1,6 +1,6 @@
 // Audita a tela renderizada. Roda dentro da página, pelo verificar.mjs ou colado no console do navegador.
 // Devolve { achados: [{ id, nivel, msg, exemplos }], medidas }. nivel: falha | aviso.
-// a11y-* vem da WCAG 2.2 e da ABNT NBR 17225; g-* vem do perfil de gosto; ia-* vem de anti-generico.md.
+// a11y-* vem da WCAG 2.2 e da ABNT NBR 17225; g-* vem do perfil de gosto; ia-* vem de references/marca/anti-generico.md.
 ((opcoes = window.__kitOpcoes || {}) => {
   const papel = opcoes.papel || 'desktop';
   const aprovadas = (opcoes.fontesAprovadas || []).map(f => f.toLowerCase());

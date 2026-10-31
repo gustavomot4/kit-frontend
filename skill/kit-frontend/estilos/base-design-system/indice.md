@@ -1,6 +1,6 @@
 # Índice do estilo base-design-system
 
-Gerado de `prds/base-design-system/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/estilos.md`.
+Gerado de `prds/base-design-system/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/recursos/estilos.md`.
 
 | Seção | Arquivo | Tokens |
 | --- | --- | --- |
@@ -39,4 +39,4 @@ Gerado de `prds/base-design-system/prd.md` por `kit empacotar`. Não edite aqui.
 | 14. Prompt para agentes de IA | `32-14-prompt-para-agentes-de-ia.md` | 968 |
 | 15. Como adaptar para outra marca | `33-15-como-adaptar-para-outra-marca.md` | 431 |
 
-Exemplos em HTML: `exemplos/ferramenta.html`, `exemplos/landing.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/estilos.md`).
+Exemplos em HTML: `exemplos/ferramenta.html`, `exemplos/landing.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/recursos/estilos.md`).

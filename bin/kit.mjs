@@ -85,7 +85,7 @@ function instalar() {
   }
   // o que é do projeto nunca é sobrescrito
   const correcoes = join(destino, 'design', 'correcoes.md');
-  if (!existsSync(correcoes)) { escrever(correcoes, readFileSync(join(origem, 'assets', 'correcoes-modelo.md'), 'utf8')); console.log('  design/correcoes.md criado'); }
+  if (!existsSync(correcoes)) { escrever(correcoes, readFileSync(join(origem, 'assets', 'modelos', 'correcoes.md'), 'utf8')); console.log('  design/correcoes.md criado'); }
   const ignorar = join(destino, '.gitignore');
   if (existsSync(ignorar) && !readFileSync(ignorar, 'utf8').includes('design/verificacao')) { writeFileSync(ignorar, readFileSync(ignorar, 'utf8').replace(/\s*$/, '\n') + '\n# capturas do verificador\ndesign/verificacao/\n'); console.log('  .gitignore: design/verificacao/'); }
   console.log(`\nInstalado (versão ${versao}). Peça ao agente qualquer tarefa de frontend; ele começa por ${relativa}/SKILL.md.`);
@@ -102,7 +102,7 @@ function coletar() {
   if (!existsSync(arquivo)) { console.error(`Não achei ${arquivo}`); process.exit(2); }
   const nome = projeto.split(sep).pop();
   const novas = readFileSync(arquivo, 'utf8').split(/\r?\n/).filter(l => /^- \d{4}-\d{2}-\d{2} \|/.test(l));
-  const destino = join(origem, 'references', 'correcoes-coletadas.md');
+  const destino = join(origem, 'references', 'gosto', 'correcoes-coletadas.md');
   const atual = readFileSync(destino, 'utf8');
   const inedita = novas.filter(l => !atual.includes(l.slice(2)));
   if (inedita.length) writeFileSync(destino, atual.replace(/\s*$/, '\n') + inedita.map(l => `${l} | origem: ${nome}`).join('\n') + '\n');
@@ -115,7 +115,7 @@ function gerarEstilos() {
   rmSync(saida, { recursive: true, force: true });
   const tokens = t => Math.round(t.length / 3.4);
   const slug = t => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 44) || 'secao';
-  for (const s of readdirSync(join(raiz, 'prds'))) {
+  for (const s of readdirSync(join(raiz, 'prds'), { withFileTypes: true }).filter(i => i.isDirectory()).map(i => i.name)) {
     const texto = readFileSync(join(raiz, 'prds', s, 'prd.md'), 'utf8').replace(/\r\n/g, '\n');
     const corpo = texto.replace(/^---\n[\s\S]*?\n---\n/, '');
     const partes = []; let atual = { titulo: 'Abertura', linhas: [] }, cerca = false;
@@ -126,7 +126,7 @@ function gerarEstilos() {
     }
     partes.push(atual);
     const pasta = join(saida, s); mkdirSync(pasta, { recursive: true });
-    const indice = [`# Índice do estilo ${s}`, '', 'Gerado de `prds/' + s + '/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/estilos.md`.', '', '| Seção | Arquivo | Tokens |', '| --- | --- | --- |'];
+    const indice = [`# Índice do estilo ${s}`, '', 'Gerado de `prds/' + s + '/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/recursos/estilos.md`.', '', '| Seção | Arquivo | Tokens |', '| --- | --- | --- |'];
     partes.filter(p => p.linhas.join('').trim()).forEach((p, i) => {
       const nome = `${String(i).padStart(2, '0')}-${slug(p.titulo)}.md`, t = p.linhas.join('\n').trim() + '\n';
       writeFileSync(join(pasta, nome), t);
@@ -136,7 +136,7 @@ function gerarEstilos() {
     const htmls = readdirSync(ex).filter(n => n.endsWith('.html'));
     mkdirSync(join(pasta, 'exemplos'), { recursive: true });
     htmls.forEach(n => cpSync(join(ex, n), join(pasta, 'exemplos', n)));
-    indice.push('', `Exemplos em HTML: ${htmls.map(n => '`exemplos/' + n + '`').join(', ')}. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver \`references/estilos.md\`).`, '');
+    indice.push('', `Exemplos em HTML: ${htmls.map(n => '`exemplos/' + n + '`').join(', ')}. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver \`references/recursos/estilos.md\`).`, '');
     writeFileSync(join(pasta, 'indice.md'), indice.join('\n'));
   }
 }
@@ -147,11 +147,12 @@ function empacotar() {
   const dist = join(raiz, 'dist'); mkdirSync(dist, { recursive: true });
   const ler = n => readFileSync(join(origem, n), 'utf8').replace(/\r\n/g, '\n');
   const skill = ler('SKILL.md').replace(/^---\n[\s\S]*?\n---\n/, '');
-  const refs = readdirSync(join(origem, 'references')).filter(n => n.endsWith('.md') && n !== 'estilos.md' && n !== 'correcoes-coletadas.md').sort((a, b) => (a === 'gosto.md' ? -1 : b === 'gosto.md' ? 1 : a.localeCompare(b)));
-  const blocos = [`# Kit de frontend (versão ${versao}): prompt único`, '', 'Cole este arquivo numa conversa com qualquer LLM. Tudo o que o texto cita em `references/` está incluído abaixo. Sem acesso a arquivos ou terminal, a resposta entrega o HTML e os comandos e diz o que não pôde executar. Os estilos de partida e os scripts ficam no repositório.', '', skill, ...refs.map(n => `\n---\n\n<!-- references/${n} -->\n\n${ler('references/' + n)}`), `\n---\n\n<!-- assets/design-modelo.md -->\n\n\`\`\`markdown\n${ler('assets/design-modelo.md')}\`\`\`\n`, `\n<!-- assets/produto-modelo.md -->\n\n\`\`\`markdown\n${ler('assets/produto-modelo.md')}\`\`\`\n`];
+  const todasRefs = readdirSync(join(origem, 'references'), { recursive: true }).map(n => String(n).split(sep).join('/')).filter(n => n.endsWith('.md')).sort();
+  const refs = todasRefs.filter(n => n !== 'recursos/estilos.md' && n !== 'gosto/correcoes-coletadas.md').sort((a, b) => (a === 'gosto/perfil.md' ? -1 : b === 'gosto/perfil.md' ? 1 : a.localeCompare(b)));
+  const blocos = [`# Kit de frontend (versão ${versao}): prompt único`, '', 'Cole este arquivo numa conversa com qualquer LLM. Tudo o que o texto cita em `references/` está incluído abaixo. Sem acesso a arquivos ou terminal, a resposta entrega o HTML e os comandos e diz o que não pôde executar. Os estilos de partida e os scripts ficam no repositório.', '', skill, ...refs.map(n => `\n---\n\n<!-- references/${n} -->\n\n${ler('references/' + n)}`), `\n---\n\n<!-- assets/modelos/design.md -->\n\n\`\`\`markdown\n${ler('assets/modelos/design.md')}\`\`\`\n`, `\n<!-- assets/modelos/produto.md -->\n\n\`\`\`markdown\n${ler('assets/modelos/produto.md')}\`\`\`\n`, `\n<!-- assets/modelos/marca.md -->\n\n\`\`\`markdown\n${ler('assets/modelos/marca.md')}\`\`\`\n`];
   const unico = blocos.join('\n');
   writeFileSync(join(dist, 'prompt-unico.md'), unico);
-  const ll = [`# Kit de frontend`, '', '> Identidade própria, padrões de mercado e acessibilidade verificada para agentes que criam frontend.', '', '## Comece aqui', '- [SKILL.md](../skill/kit-frontend/SKILL.md): processo e portões', '- [Prompt único](prompt-unico.md): tudo em um arquivo, para LLM sem acesso a arquivos', '', '## Referências', ...readdirSync(join(origem, 'references')).filter(n => n.endsWith('.md')).map(n => `- [${n}](../skill/kit-frontend/references/${n})`), ''];
+  const ll = [`# Kit de frontend`, '', '> Identidade própria, padrões de mercado e acessibilidade verificada para agentes que criam frontend.', '', '## Comece aqui', '- [SKILL.md](../skill/kit-frontend/SKILL.md): processo e portões', '- [Prompt único](prompt-unico.md): tudo em um arquivo, para LLM sem acesso a arquivos', '', '## Referências', ...todasRefs.map(n => `- [${n}](../skill/kit-frontend/references/${n})`), ''];
   writeFileSync(join(dist, 'llms.txt'), ll.join('\n'));
   console.log(`estilos gerados em ${relative(raiz, join(origem, 'estilos'))}; dist/prompt-unico.md com cerca de ${Math.round(unico.length / 3.4 / 1000)} mil tokens`);
 }
@@ -164,6 +165,9 @@ const AJUDA = `kit-frontend ${versao}
   atualizar [pasta]           igual a instalar; nunca toca em DESIGN.md, PRODUTO.md nem design/correcoes.md
   verificar <url|arquivo>     audita telas em 4 tamanhos; sai com 1 se houver falha
   contraste <a> <b>           razão entre duas cores; ou contraste DESIGN.md
+  marca [pasta]               confere se MARCA.md e design/marca/ estão completos
+  paleta <cor>                gera paleta completa com contraste calculado; --tema escuro, --evitar, --css
+  referencia <url|arquivo>    mede fontes, escala, cores e raios de páginas de que a pessoa gosta
   coletar <pasta>             traz as correções de um projeto para o kit
   empacotar                   gera estilos/ por seção e dist/prompt-unico.md
 `;
@@ -171,6 +175,9 @@ switch (comando) {
   case 'instalar': case 'atualizar': instalar(); break;
   case 'verificar': delegar('verificar.mjs'); break;
   case 'contraste': delegar('contraste.mjs'); break;
+  case 'marca': delegar('conferir-marca.mjs'); break;
+  case 'paleta': delegar('paleta.mjs'); break;
+  case 'referencia': delegar('medir-referencia.mjs'); break;
   case 'coletar': coletar(); break;
   case 'empacotar': empacotar(); break;
   default: console.log(AJUDA);

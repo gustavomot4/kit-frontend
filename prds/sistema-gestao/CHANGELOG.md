@@ -2,7 +2,7 @@
 
 ## 3.0.0 — 2026-10-30
 
-Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.
+Correções de `docs/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.
 
 ### Corrigido
 
@@ -21,7 +21,7 @@ Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos
 ### Decisões para o autor revisar
 
 - A mudança é MAIOR (regra de uma tela já construída), mas a auditoria nova de cada MAIOR ainda não foi feita: segue pendente, junto com a dos outros dois estáveis.
-- A barra lateral escura com turquesa, as “três direções” que mudam só dois tokens e a identidade do painel seguem como estavam; `estilos.md` continua mandando trocá-las.
+- A barra lateral escura com turquesa, as “três direções” que mudam só dois tokens e a identidade do painel seguem como estavam; `references/recursos/estilos.md` continua mandando trocá-las.
 
 ## 2.0.1 — 2026-10-29
 
@@ -29,7 +29,7 @@ Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos
 - Escopo: "Não use para" e "Relação com outros PRDs" passam a citar o `sistema-clinica-conversa`, que vem do mesmo produto e cobre sistemas de atendimento com agenda na identidade "conversa". Nenhuma prescrição mudou.
 
 ## 2.0.0 — 2026-10-09
-Correções da [auditoria de 2026-10-09](../../auditorias/2026-10-09/sistema-gestao/auditoria.md).
+Correções da [auditoria de 2026-10-09](../../docs/auditorias/2026-10-09/sistema-gestao/auditoria.md).
 
 Dos 47 achados, 41 foram aplicados por inteiro, 2 em parte (A40, A44) e 4 não foram aplicados (A41, A42, A46, A47). Os contrastes foram recalculados com script (luminância relativa da WCAG) e conferem com os da auditoria; ao fim da revisão final, os 38 pares da tabela de contraste foram recalculados de novo, sem divergência.
 
@@ -225,4 +225,4 @@ Todos são de severidade baixa e não apontam erro objetivo; a correção propos
 - (A44, parte não aplicada) Versão de impressão para orçamento e recibo em A4 retrato: específico do domínio de clínica.
 
 ## 1.0.0
-Versão original, arquivada em [original.md](../../auditorias/2026-10-09/sistema-gestao/original.md).
+Versão original, arquivada em [original.md](../../docs/auditorias/2026-10-09/sistema-gestao/original.md).

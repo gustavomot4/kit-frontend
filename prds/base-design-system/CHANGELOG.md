@@ -2,7 +2,7 @@
 
 ## 3.0.0 — 2026-10-30
 
-Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.
+Correções de `docs/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.
 
 ### Corrigido
 
@@ -21,10 +21,10 @@ Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos
 ### Decisões para o autor revisar
 
 - A mudança é MAIOR (regra de uma tela já construída), mas a auditoria nova de cada MAIOR ainda não foi feita: segue pendente, junto com a dos outros dois estáveis.
-- O Inter sem decisão, o texto de 12 px e os controles de 32 px como padrão, e a frase “troque quatro tokens e muda de marca” seguem como estavam; `estilos.md` continua mandando trocá-los. O aviso de alvo abaixo de 44 px no toque na ferramenta (16 de 26 alvos: botões do segmented com 40 px, links de ordem com 26 px de altura) não foi mexido: não é falha e a tabela vira cartões no celular.
+- O Inter sem decisão, o texto de 12 px e os controles de 32 px como padrão, e a frase “troque quatro tokens e muda de marca” seguem como estavam; `references/recursos/estilos.md` continua mandando trocá-los. O aviso de alvo abaixo de 44 px no toque na ferramenta (16 de 26 alvos: botões do segmented com 40 px, links de ordem com 26 px de altura) não foi mexido: não é falha e a tabela vira cartões no celular.
 
 ## 2.0.0 — 2026-10-09
-Correções da [auditoria de 2026-10-09](../../auditorias/2026-10-09/base-design-system/auditoria.md).
+Correções da [auditoria de 2026-10-09](../../docs/auditorias/2026-10-09/base-design-system/auditoria.md).
 
 ### Corrigido
 - (padrão do repositório) Título `# Sistema de UI/UX — padrão portátil` → `# Design system base`. Parágrafo de abertura deixa de dizer "qualquer aplicação, em qualquer stack" e passa a dizer que as medições do apple.com são observações do autor, sem método registrado; os contrastes são calculados.
@@ -166,4 +166,4 @@ Correções da [auditoria de 2026-10-09](../../auditorias/2026-10-09/base-design
 - (F45) A contagem "164 blocos: 102 à esquerda, 61 centralizados" continua como contagem do autor, que o repositório não consegue reproduzir; a nota diz que as parcelas somam 163.
 
 ## 1.0.0
-Versão original, arquivada em [original.md](../../auditorias/2026-10-09/base-design-system/original.md).
+Versão original, arquivada em [original.md](../../docs/auditorias/2026-10-09/base-design-system/original.md).

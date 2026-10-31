@@ -1602,7 +1602,7 @@ Esta seção registra como o guia foi extraído. Ela pode permanecer como histó
 
 | Fonte | Uso no guia |
 | --- | --- |
-| `prd_frontend/modelos/prd.md` e `CONTRIBUTING.md` | Cabeçalho, escopo, uso, tokens, receitas, contraste e checklist |
+| `prd_frontend/prds/modelo-de-prd.md` e `CONTRIBUTING.md` | Cabeçalho, escopo, uso, tokens, receitas, contraste e checklist |
 | PRDs `base-design-system`, `site-escola-idiomas` e `sistema-gestao` | Referências de organização e de nível de especificação; sem herança visual |
 | `src/styles/tokens.css`, `base.css` e `ui.css` do frontend CNR | Valores e receitas da identidade atual |
 | `src/ui`, `src/shell`, `src/lib/theme.ts` e `src/lib/useMediaQuery.ts` | Composição, estados, navegação, preferência de tema e letra |

@@ -147,15 +147,35 @@ for (const slug of slugs) {
     if (campos.status && campos.status !== 'estavel' && !linhas[0].includes(campos.status)) erro('README.md', `a linha de ${slug} no catálogo não diz que o status é ${campos.status}`);
   }
 
-  // estável exige auditoria guardada em auditorias/<AAAA-MM-DD>/<slug>/auditoria.md
+  // estável exige auditoria guardada em docs/auditorias/<AAAA-MM-DD>/<slug>/auditoria.md
   if (campos.status === 'estavel') {
-    const pastaAud = join(raiz, 'auditorias');
+    const pastaAud = join(raiz, 'docs', 'auditorias');
     const auditado = existsSync(pastaAud) && readdirSync(pastaAud).some(d => existsSync(join(pastaAud, d, slug, 'auditoria.md')));
-    if (!auditado) erro(em, 'status estavel sem auditoria em auditorias/<AAAA-MM-DD>/' + slug + '/auditoria.md');
+    if (!auditado) erro(em, 'status estavel sem auditoria em docs/auditorias/<AAAA-MM-DD>/' + slug + '/auditoria.md');
   }
 }
 
-// 4. A skill: limites do padrão Agent Skills e referências que existem
+// 4. Nada solto: cada pasta só aceita na sua raiz o que está aqui
+const SOLTOS = [
+  ['.', ['README.md', 'AGENTS.md', 'package.json', 'LICENSE', 'LICENSE.md'], ['bin', 'dist', 'docs', 'ferramentas', 'prds', 'skill']],
+  ['prds', ['modelo-de-prd.md'], null],
+  ['docs', ['CONTRIBUTING.md', 'pendencias.md'], ['auditorias', 'pesquisa', 'testes']],
+  ['skill', [], ['kit-frontend']],
+  ['skill/kit-frontend', ['SKILL.md'], ['references', 'assets', 'scripts', 'estilos']],
+  ['skill/kit-frontend/references', [], ['gosto', 'marca', 'padroes', 'qualidade', 'recursos']],
+  ['skill/kit-frontend/assets', [], ['modelos', 'exemplos']],
+];
+for (const [lugar, arquivos, pastas] of SOLTOS) {
+  const dentro = join(raiz, lugar);
+  if (!existsSync(dentro)) { erro(lugar, 'pasta esperada não existe'); continue; }
+  for (const item of readdirSync(dentro, { withFileTypes: true })) {
+    if (item.name.startsWith('.')) continue;
+    const caminho = rel(join(dentro, item.name));
+    if (item.isDirectory() ? pastas && !pastas.includes(item.name) : !arquivos.includes(item.name)) erro(caminho, `fora do lugar: veja "Onde cada coisa fica" em docs/CONTRIBUTING.md`);
+  }
+}
+
+// 5. A skill: limites do padrão Agent Skills e referências que existem
 const pastaSkill = join(raiz, 'skill', 'kit-frontend');
 const skillMd = join(pastaSkill, 'SKILL.md');
 if (!existsSync(skillMd)) erro('skill/kit-frontend', 'falta SKILL.md');

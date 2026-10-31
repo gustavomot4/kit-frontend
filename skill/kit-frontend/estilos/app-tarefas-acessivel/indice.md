@@ -1,6 +1,6 @@
 # Índice do estilo app-tarefas-acessivel
 
-Gerado de `prds/app-tarefas-acessivel/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/estilos.md`.
+Gerado de `prds/app-tarefas-acessivel/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/recursos/estilos.md`.
 
 | Seção | Arquivo | Tokens |
 | --- | --- | --- |
@@ -31,6 +31,6 @@ Gerado de `prds/app-tarefas-acessivel/prd.md` por `kit empacotar`. Não edite aq
 | 11. Exemplo de composição sem framework | `24-11-exemplo-de-composicao-sem-framework.md` | 1290 |
 | 11.2 Uma etapa de formulário | `25-11-2-uma-etapa-de-formulario.md` | 789 |
 | 12. Prompt para recriar em outra aplicação | `26-12-prompt-para-recriar-em-outra-aplicacao.md` | 420 |
-| 13. Registro de origem e limite da inspeção | `27-13-registro-de-origem-e-limite-da-inspecao.md` | 999 |
+| 13. Registro de origem e limite da inspeção | `27-13-registro-de-origem-e-limite-da-inspecao.md` | 1001 |
 
-Exemplos em HTML: `exemplos/catalogo.html`, `exemplos/etapa.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/estilos.md`).
+Exemplos em HTML: `exemplos/catalogo.html`, `exemplos/etapa.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/recursos/estilos.md`).

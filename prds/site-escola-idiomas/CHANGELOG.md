@@ -2,7 +2,7 @@
 
 ## 3.0.0 — 2026-10-30
 
-Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.
+Correções de `docs/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.
 
 ### Corrigido
 
@@ -14,7 +14,7 @@ Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos
 - `exemplos/home.html` e `pagina-de-curso.html` ajustados às regras acima; `home.png` (1440 × 5983), `pagina-de-curso.png` (1440 × 4371) e `capa.png` refeitos. Os dois passam sem falha nos quatro tamanhos do verificador.
 
 ## 2.0.0 — 2026-10-09
-Correções da [auditoria de 2026-10-09](../../auditorias/2026-10-09/site-escola-idiomas/auditoria.md).
+Correções da [auditoria de 2026-10-09](../../docs/auditorias/2026-10-09/site-escola-idiomas/auditoria.md).
 
 Os 65 achados foram tratados; um deles (P06) só em parte (ver "Achados não aplicados"). A lista abaixo segue a ordem do documento.
 
@@ -147,4 +147,4 @@ Os 65 achados foram tratados; um deles (P06) só em parte (ver "Achados não apl
 - (P06, em parte) Fallback de fonte com `size-adjust`: o valor depende da métrica da fonte de reserva e não foi medido. O restante do P06 (imagem do hero com `fetchpriority="high"`, fonte variável auto-hospedada, VLibras e chat após a primeira interação, revelação em CSS) está aplicado.
 
 ## 1.0.0
-Versão original, arquivada em [original.md](../../auditorias/2026-10-09/site-escola-idiomas/original.md).
+Versão original, arquivada em [original.md](../../docs/auditorias/2026-10-09/site-escola-idiomas/original.md).

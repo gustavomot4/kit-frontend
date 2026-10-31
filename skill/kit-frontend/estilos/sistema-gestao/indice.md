@@ -1,6 +1,6 @@
 # Índice do estilo sistema-gestao
 
-Gerado de `prds/sistema-gestao/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/estilos.md`.
+Gerado de `prds/sistema-gestao/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/recursos/estilos.md`.
 
 | Seção | Arquivo | Tokens |
 | --- | --- | --- |
@@ -15,4 +15,4 @@ Gerado de `prds/sistema-gestao/prd.md` por `kit empacotar`. Não edite aqui. Abr
 | Checklist de aceite | `08-checklist-de-aceite.md` | 1289 |
 | 9. Formato da sua primeira resposta | `09-9-formato-da-sua-primeira-resposta.md` | 115 |
 
-Exemplos em HTML: `exemplos/agenda.html`, `exemplos/painel.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/estilos.md`).
+Exemplos em HTML: `exemplos/agenda.html`, `exemplos/painel.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/recursos/estilos.md`).

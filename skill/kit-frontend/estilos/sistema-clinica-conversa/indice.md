@@ -1,6 +1,6 @@
 # Índice do estilo sistema-clinica-conversa
 
-Gerado de `prds/sistema-clinica-conversa/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/estilos.md`.
+Gerado de `prds/sistema-clinica-conversa/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/recursos/estilos.md`.
 
 | Seção | Arquivo | Tokens |
 | --- | --- | --- |
@@ -35,4 +35,4 @@ Gerado de `prds/sistema-clinica-conversa/prd.md` por `kit empacotar`. Não edite
 | 9.2 Regras | `28-9-2-regras.md` | 1154 |
 | 10. Checklist de aceite | `29-10-checklist-de-aceite.md` | 1640 |
 
-Exemplos em HTML: `exemplos/agenda-semana.html`, `exemplos/hoje-celular.html`, `exemplos/hoje.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/estilos.md`).
+Exemplos em HTML: `exemplos/agenda-semana.html`, `exemplos/hoje-celular.html`, `exemplos/hoje.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/recursos/estilos.md`).

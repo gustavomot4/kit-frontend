@@ -19,4 +19,4 @@ desktop.ini
 # dependências e saídas do verificador
 node_modules/
 design/verificacao/
-pesquisa/calibracao/capturas/*/resultado.json
+docs/testes/*/capturas/*/resultado.json

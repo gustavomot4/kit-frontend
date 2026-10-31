@@ -2,7 +2,7 @@
 
 ## 2.0.0 — 2026-10-30
 
-Correções de `pesquisa/pendencias.md`, medidas com `scripts/verificar.mjs` nos três exemplos. Nenhuma cor mudou, então a tabela de contraste da seção 9 continua a mesma. O PRD segue em rascunho.
+Correções de `docs/pendencias.md`, medidas com `scripts/verificar.mjs` nos três exemplos. Nenhuma cor mudou, então a tabela de contraste da seção 9 continua a mesma. O PRD segue em rascunho.
 
 ### Corrigido
 
