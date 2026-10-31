@@ -44,7 +44,7 @@ Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do
 
 ### 2. Marca: portão
 
-Defina o que o produto quer dizer antes de desenhar. Siga `references/marca/criar-marca.md`: crie `MARCA.md` a partir de `assets/modelos/marca.md` (exemplo em `assets/exemplos/marca.md`), no tamanho certo para o projeto. Personas sem pesquisa ficam marcadas como hipótese, e todo item precisa dizer o que muda na tela. Confira com `scripts/conferir-marca.mjs`. Se a pessoa não tem fonte, cor, voz nem mensagem, siga "Quando a pessoa não tem nada": perguntas que qualquer um responde e opções para escolher, nunca "qual é a sua mensagem?".
+Defina o que o produto quer dizer antes de desenhar. Siga `references/marca/criar-marca.md`: crie `MARCA.md` a partir de `assets/modelos/marca.md` (exemplo em `assets/exemplos/marca.md`), no tamanho certo para o projeto. Personas sem pesquisa ficam marcadas como hipótese, e todo item precisa dizer o que muda na tela. Confira com `scripts/conferir-marca.mjs`. Se a marca já existe, peça o arquivo do logo e as cores originais antes de confirmar. Se a pessoa não tem fonte, cor, voz nem mensagem, siga "Quando a pessoa não tem nada": perguntas que qualquer um responde e opções para escolher, nunca "qual é a sua mensagem?".
 
 Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
 
@@ -52,9 +52,10 @@ Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
 
 Sem código de produção antes da escolha. Cada direção expressa o `MARCA.md`. Siga `references/marca/identidade.md` e `references/marca/criatividade.md`, e confira `references/marca/anti-generico.md`. Para imagem, vídeo, 3D e animação, veja `references/recursos/bibliotecas.md`; o que você não puder gerar vai para `design/midia.md` (modelo em `assets/modelos/midia.md`).
 
-- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em tipografia, composição e cor, não só na cor. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
-- Rode a verificação nas três e corrija as falhas.
-- Mostre as imagens em 1440 × 900 e 375 × 812, com nome, conceito em uma frase, elemento-assinatura e a sua recomendação. Texto mínimo: quem decide olha a imagem.
+- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em tipografia, composição e cor, não só na cor. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
+- Com marca existente, use o logo real e faça ao menos uma direção partir de como ela aparece hoje. Sem o arquivo, escreva o nome em texto: não desenhe um substituto.
+- Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as quase iguais. Rode a verificação nas três e corrija as falhas. Olhe a página inteira de cada uma, até o fim.
+- Mostre as imagens em 1440 × 900 e 375 × 812 e a página inteira, com nome, conceito em uma frase, elemento-assinatura e a sua recomendação. Texto mínimo: quem decide olha a imagem.
 
 **Pare e espere a escolha.** Misturas são bem-vindas. Se o dono rejeitar as três, pergunte o que incomodou, registre em `design/correcoes.md` e refaça.
 
@@ -102,11 +103,11 @@ Em cada tela alterada, com ela no ar ou como arquivo:
 node <pasta da skill>/scripts/verificar.mjs http://localhost:5173/agenda
 ```
 
-Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento e alto contraste, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
+Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento, alto contraste, fotos cortadas e peso, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, a página inteira (`desktop-inteira.jpg`, `celular-inteira.jpg`), `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
 
 - **Falha** se corrige antes de entregar.
 - **Aviso** se corrige, ou você explica o motivo no relatório. Decisão aprovada entra no `DESIGN.md`.
-- Olhe as capturas e a prancha. O script mede; o olho vê o que está feio e o que só a cor separa.
+- Olhe a página inteira e a prancha, não só a primeira dobra. O script mede; o olho vê o que está feio e o que só a cor separa. Num teste real, um catálogo quebrado passou com 0 falhas porque só a primeira dobra foi olhada.
 - Faça o teste dos 5 segundos: o que a tela informa e qual é a ação.
 - Faça o roteiro manual de `references/qualidade/acessibilidade.md`.
 

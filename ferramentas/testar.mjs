@@ -16,12 +16,13 @@ const RUIM = join(raiz, 'ferramentas', 'fixtures', 'tela-ruim.html');
 const BOA = join(raiz, 'ferramentas', 'fixtures', 'tela-boa.html');
 const SONDA_A11Y = join(raiz, 'ferramentas', 'fixtures', 'sonda-acessibilidade.html');
 const SONDA_IA = join(raiz, 'ferramentas', 'fixtures', 'sonda-cara-de-ia.html');
+const SONDA_FOTOS = join(raiz, 'ferramentas', 'fixtures', 'sonda-fotos.html');
 
 test('instala num projeto vazio com skill, pontes e correções', () => {
   const p = temp();
   const r = kit('instalar', p);
   assert.equal(r.status, 0, r.stderr);
-  for (const f of ['.agents/skills/kit-frontend/SKILL.md', '.agents/skills/kit-frontend/references/gosto/perfil.md', '.agents/skills/kit-frontend/scripts/verificar.mjs', '.agents/skills/kit-frontend/estilos/sistema-gestao/indice.md', '.claude/skills/kit-frontend/SKILL.md', 'AGENTS.md', 'CLAUDE.md', 'design/correcoes.md']) assert.ok(existsSync(join(p, f)), f);
+  for (const f of ['.agents/skills/kit-frontend/SKILL.md', '.agents/skills/kit-frontend/references/gosto/perfil.md', '.agents/skills/kit-frontend/scripts/verificar.mjs', '.agents/skills/kit-frontend/scripts/comparar-direcoes.mjs', '.agents/skills/kit-frontend/estilos/sistema-gestao/indice.md', '.claude/skills/kit-frontend/SKILL.md', 'AGENTS.md', 'CLAUDE.md', 'design/correcoes.md']) assert.ok(existsSync(join(p, f)), f);
   assert.match(readFileSync(join(p, '.claude/skills/kit-frontend/SKILL.md'), 'utf8'), /\.agents\/skills\/kit-frontend\/SKILL\.md/);
   assert.ok(!existsSync(join(p, '.cursor')), 'não cria pasta de agente não detectado');
   rmSync(p, { recursive: true, force: true });
@@ -99,6 +100,7 @@ test('a sonda de acessibilidade aponta os defeitos plantados', () => {
   const s = temp();
   const [sonda] = lerRelatorio(kit('verificar', SONDA_A11Y, '--publicos', 'pouca-leitura,surdos-libras', '--saida', s, '--json'));
   const ids = sonda.achados.map(a => a.id);
+  assert.equal(sonda.achados.find(a => a.id === 'a11y-libras').nivel, 'aviso', 'sem superfície pública, Libras segue como aviso');
   const controles = ['a11y-nome', 'a11y-contraste', 'a11y-foco-invisivel', 'a11y-alvo', 'a11y-titulos'];
   const plantados = ['a11y-so-cor', 'a11y-clique-sem-semantica', 'a11y-nome-visivel', 'a11y-icone-sem-texto', 'a11y-tabindex-positivo', 'a11y-alto-contraste', 'a11y-erro-sem-ligacao', 'a11y-leitura-dificil', 'a11y-link-vago', 'a11y-alt-ruim', 'a11y-letra-200', 'a11y-espacamento', 'a11y-justificado', 'a11y-caixa-alta', 'a11y-italico-longo', 'a11y-linha-longa', 'a11y-entrelinha', 'a11y-video-legenda', 'a11y-video-sem-controle', 'a11y-libras'];
   for (const id of [...controles, ...plantados]) assert.ok(ids.includes(id), `faltou ${id}`);
@@ -121,6 +123,101 @@ test('a verificação guarda a prancha, o que o leitor de tela recebe e o alto c
   assert.match(leitor, /heading: Hoje, quinta/); assert.match(leitor, /button: Marcar horário/);
   assert.match(readFileSync(join(boa.capturas, 'prancha.html'), 'utf8'), /visao-deuteranopia\.png/);
   rmSync(s, { recursive: true, force: true });
+});
+
+test('alvo que não abre não vira relatório de falhas', () => {
+  const s = temp();
+  const ajuda = kit('verificar', '--help');
+  assert.equal(ajuda.status, 0); assert.match(ajuda.stdout, /Uso: verificar/);
+  const nada = kit('verificar', join(s, 'nao-existe.html'), '--saida', s);
+  assert.equal(nada.status, 2); assert.match(nada.stderr, /Não achei/); assert.doesNotMatch(nada.stdout, /a11y-/);
+  const opcao = kit('verificar', BOA, '--algo', '--saida', s);
+  assert.equal(opcao.status, 2); assert.match(opcao.stderr, /Opção desconhecida: --algo/);
+  const fora = kit('verificar', 'http://127.0.0.1:59321/', '--saida', s, '--json');
+  assert.equal(fora.status, 2, 'servidor desligado não é tela com falha');
+  assert.deepEqual(lerRelatorio(fora)[0].achados.map(a => a.id), ['nao-abriu']);
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('a verificação guarda a página inteira, além da primeira dobra', () => {
+  const p = temp();
+  writeFileSync(join(p, 'longa.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c" style="height:3000px"><h1>Título</h1></main></body></html>');
+  const [t] = lerRelatorio(kit('verificar', join(p, 'longa.html'), '--saida', join(p, 's'), '--json'));
+  const alturaJpeg = b => { for (let i = 2; i < b.length;) { if (b[i + 1] >= 0xc0 && b[i + 1] <= 0xc2) return b.readUInt16BE(i + 5); i += 2 + b.readUInt16BE(i + 2); } return 0; };
+  for (const f of ['desktop-inteira.jpg', 'celular-inteira.jpg']) assert.ok(alturaJpeg(readFileSync(join(t.capturas, f))) >= 3000, f);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('foto em tira e foto esticada são apontadas; a foto boa, não', () => {
+  const s = temp();
+  const [sonda] = lerRelatorio(kit('verificar', SONDA_FOTOS, '--saida', s, '--json'));
+  const achado = id => sonda.achados.find(a => a.id === id);
+  assert.equal(achado('q-foto-cortada')?.nivel, 'falha'); assert.match(achado('q-foto-cortada').exemplos.join(), /Foto em tira/);
+  assert.equal(achado('q-foto-deformada')?.nivel, 'falha'); assert.match(achado('q-foto-deformada').exemplos.join(), /Foto esticada/);
+  assert.doesNotMatch(JSON.stringify(sonda.achados), /Foto boa/);
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('recorte forte em foto de tamanho normal é só aviso', () => {
+  const p = temp();
+  const foto = /src="(data:image\/png;base64,[^"]+)"/.exec(readFileSync(SONDA_FOTOS, 'utf8'))[1];
+  writeFileSync(join(p, 'faixa.html'), `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1><img src="${foto}" alt="Faixa" style="width:300px;height:110px;object-fit:cover"></main></body></html>`);
+  const [t] = lerRelatorio(kit('verificar', join(p, 'faixa.html'), '--saida', join(p, 's'), '--json'));
+  assert.equal(t.achados.find(a => a.id === 'q-foto-cortada')?.nivel, 'aviso');
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('página pesada: 2 MB avisa, 5 MB reprova', () => {
+  const p = temp();
+  const png = Buffer.from(/base64,([^"]+)"/.exec(readFileSync(SONDA_FOTOS, 'utf8'))[1], 'base64');
+  const tela = nome => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1><img src="${nome}.png" alt="Foto" width="200" height="250"></main></body></html>`;
+  for (const [nome, mb] of [['media', 3], ['grande', 6]]) { writeFileSync(join(p, `${nome}.png`), Buffer.concat([png, Buffer.alloc(mb * 1048576)])); writeFileSync(join(p, `${nome}.html`), tela(nome)); }
+  const [media, grande] = lerRelatorio(kit('verificar', join(p, 'media.html'), join(p, 'grande.html'), '--saida', join(p, 's'), '--json'));
+  assert.equal(media.achados.find(a => a.id === 'q-pagina-pesada')?.nivel, 'aviso');
+  assert.equal(grande.achados.find(a => a.id === 'q-pagina-pesada')?.nivel, 'falha');
+  assert.match(grande.achados.find(a => a.id === 'q-pagina-pesada').exemplos[0], /grande\.png/);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('letras apertadas: aviso por padrão, falha para quem tem dificuldade de leitura', () => {
+  const p = temp();
+  writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1 style="letter-spacing:-.07em">Seu look do dia</h1><h2 style="letter-spacing:-.035em">Escolha seu look</h2><h3 style="letter-spacing:-.01em">Peças da semana</h3></main></body></html>');
+  const roda = (...extra) => lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--json', ...extra))[0].achados.find(a => a.id === 'a11y-letra-apertada');
+  const padrao = roda();
+  assert.equal(padrao.nivel, 'aviso'); assert.match(padrao.exemplos.join(), /Seu look do dia/); assert.doesNotMatch(padrao.exemplos.join(), /Escolha/);
+  const rigor = roda('--publicos', 'dislexia');
+  assert.equal(rigor.nivel, 'falha'); assert.match(rigor.exemplos.join(), /Escolha/); assert.doesNotMatch(rigor.exemplos.join(), /Peças/);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('Libras é falha em site público para surdos, aviso sem esse público e some com o recurso', () => {
+  const p = temp();
+  const pagina = extra => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1>${extra}</main></body></html>`;
+  writeFileSync(join(p, 'sem.html'), pagina(''));
+  writeFileSync(join(p, 'com.html'), pagina('<div vw class="enabled"></div>'));
+  const roda = (publicos, arquivo) => { writeFileSync(join(p, 'PRODUTO.md'), `- **publicos:** [${publicos}]\n- **superficie:** publica\n`); return lerRelatorio(kit('verificar', join(p, arquivo), '--saida', join(p, 's'), '--produto', join(p, 'PRODUTO.md'), '--json'))[0].achados.find(a => a.id === 'a11y-libras'); };
+  assert.equal(roda('surdos-libras', 'sem.html')?.nivel, 'falha');
+  assert.equal(roda('idosos', 'sem.html')?.nivel, 'aviso');
+  assert.equal(roda('surdos-libras', 'com.html'), undefined);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('o comparador acusa direções quase iguais e aceita as diferentes', () => {
+  const iguais = kit('direcoes', join(raiz, 'ferramentas/fixtures/direcoes-iguais'));
+  assert.equal(iguais.status, 1, iguais.stdout); assert.match(iguais.stdout, /composição não muda/); assert.match(iguais.stdout, /3 de 3 par/);
+  const diferentes = kit('direcoes', join(raiz, 'docs/testes/2026-10-30-teste-cego/com-kit'));
+  assert.equal(diferentes.status, 0, diferentes.stdout);
+  const p = temp();
+  writeFileSync(join(p, 'comum.css'), 'body{margin:0}'.repeat(200));
+  writeFileSync(join(p, 'a.html'), '<!doctype html><html lang="pt-BR"><head><title>a</title><link rel="stylesheet" href="comum.css"></head><body><main><h1>A</h1><p>Texto.</p></main></body></html>');
+  writeFileSync(join(p, 'b.html'), '<!doctype html><html lang="pt-BR"><head><title>b</title><link rel="stylesheet" href="comum.css"></head><body><div style="margin-top:900px"><section><h2 style="font-family:Georgia">B</h2></section></div></body></html>');
+  writeFileSync(join(p, 'index.html'), '<!doctype html><title>comparativo</title>');
+  const comum = kit('direcoes', p);
+  assert.equal(comum.status, 1, comum.stdout); assert.match(comum.stdout, /CSS é comum/); assert.doesNotMatch(comum.stdout, /index/);
+  assert.equal(kit('direcoes', join(p, 'nao-existe')).status, 2);
+  assert.equal(kit('direcoes', join(p, 'a.html')).status, 2, 'uma direção só não compara');
+  assert.equal(kit('direcoes', '--help').status, 0);
+  rmSync(p, { recursive: true, force: true });
 });
 
 test('botão dentro de parágrafo é medido; link no meio da frase, não', () => {
@@ -178,6 +275,12 @@ test('conferir-marca aprova o exemplo e reprova o que falta', () => {
   writeFileSync(join(p, 'MARCA.md'), asset('exemplos/marca.md'));
   const so = marca();
   assert.equal(so.status, 0, so.stdout); assert.match(so.stdout, /Ainda não há design\/marca/);
+  assert.doesNotMatch(so.stdout, /arquivo do logo/, 'marca nova não precisa do arquivo');
+  const comIdentidade = campo => asset('exemplos/marca.md').replace('## Público e personas', `## Identidade existente\n\n- **Onde aparece hoje:** Instagram\n${campo}\n## Público e personas`);
+  writeFileSync(join(p, 'MARCA.md'), comIdentidade(''));
+  assert.match(marca().stdout, /arquivo do logo/);
+  writeFileSync(join(p, 'MARCA.md'), comIdentidade('- **Arquivo do logo:** pedido em 2026-10-31, não recebido\n'));
+  assert.doesNotMatch(marca().stdout, /arquivo do logo/);
   writeFileSync(join(p, 'MARCA.md'), asset('exemplos/marca.md').replace(/\*\*Base:\*\* hipótese, a partir[^\n]*\n/, ''));
   assert.match(marca().stdout, /sem base/);
   writeFileSync(join(p, 'MARCA.md'), asset('exemplos/marca.md').replace(/\| Uma mão só[\s\S]*?\n\| Computador velho[^\n]*\n\| Fala como[^\n]*\n/, ''));

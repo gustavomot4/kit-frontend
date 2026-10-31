@@ -22,6 +22,7 @@ Gratuito, do governo federal, com tradução automática do português por avata
 
 Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Chrome. Para trocar o lado ou o avatar, a documentação oficial cita `new window.VLibras.Widget({ position: 'L', avatar: 'guga' })`; essa forma não foi testada.
 
+- **Desde as três direções.** O botão ocupa a borda da tela e faz parte do que o dono está escolhendo. Não deixe para depois.
 - **Carregue sem esperar interação.** Quem precisa de Libras precisa ver o botão ao chegar. Use `defer` ou tempo ocioso, nunca "depois do primeiro clique".
 - **Janela baixa.** Com altura até 480px, confira se o botão não cobre conteúdo nem foco.
 - **Depende de terceiros.** O script baixa arquivos de `vlibras.gov.br` e de `cdn.jsdelivr.net`, e o serviço pode sair do ar. Cite na política de privacidade. O restante da tela não pode depender dele.
@@ -45,6 +46,6 @@ Aviso sonoro nunca é o único sinal: repita em texto e, no celular, com vibraç
 
 O art. 63 da Lei 13.146/2015 obriga a acessibilidade em sites de empresas com sede ou representação comercial no país e de órgãos de governo, e pede símbolo de acessibilidade em destaque. O que isso exige de cada caso é questão jurídica.
 
-`scripts/verificar.mjs` acusa vídeo sem legenda (`a11y-video-legenda`), vídeo sem pausa (`a11y-video-sem-controle`), áudio sem transcrição (`a11y-audio-transcricao`) e superfície pública sem Libras (`a11y-libras`). Ele não julga a qualidade da tradução.
+`scripts/verificar.mjs` acusa vídeo sem legenda (`a11y-video-legenda`), vídeo sem pausa (`a11y-video-sem-controle`), áudio sem transcrição (`a11y-audio-transcricao`) e superfície pública sem Libras (`a11y-libras`: aviso, e falha quando `publicos:` traz `surdos-libras`). Ele só vê se o recurso está na página: não julga a qualidade da tradução.
 
 **De onde veio:** Lei 10.436/2002, Lei 13.146/2015, W3C (1.2.6) e documentação do VLibras, lidos na fonte. Os demais critérios de mídia vêm de conhecimento geral da WCAG 2.2. Registro em `docs/pesquisa/benchmark.md`, no repositório do kit.

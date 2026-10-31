@@ -6,7 +6,7 @@ Artefatos que qualquer agente de código usa para criar frontend com a sua cara,
 | --- | --- |
 | Visual decidido sem saber o que a marca quer dizer | [Brief de marca](skill/kit-frontend/references/marca/criar-marca.md) com mensagem, personas, concorrentes e voz, antes de qualquer tela |
 | Pessoa sem fonte, cor, voz nem mensagem | [Caminho para quem não tem nada](skill/kit-frontend/references/marca/criar-marca.md#quando-a-pessoa-não-tem-nada): perguntas simples e opções para escolher, com [gerador de paleta](skill/kit-frontend/scripts/paleta.mjs) e [guia de fontes](skill/kit-frontend/references/recursos/fontes.md) |
-| Código antes de a direção visual ser aprovada | Três direções em imagem e tela-modelo: o agente para e espera |
+| Código antes de a direção visual ser aprovada | Três direções em imagem, [comparadas](skill/kit-frontend/scripts/comparar-direcoes.mjs) para não serem a mesma tela, e tela-modelo: o agente para e espera |
 | Gosto que precisa ser repetido a cada projeto | [Perfil de gosto](skill/kit-frontend/references/gosto/perfil.md) tirado das suas reprovações reais |
 | "Está pronto" sem prova | [Verificador](skill/kit-frontend/scripts/verificar.mjs) que abre a tela no navegador e mede |
 | Correção numa tela, esquecida nas outras | Toda reprovação vira regra em `design/correcoes.md` e volta para o kit |
@@ -54,7 +54,7 @@ Para atualizar, rode `git pull` no clone e `node ../kit-frontend/bin/kit.mjs atu
 | Windsurf, Cline | Regra em `.windsurf/rules/` e `.clinerules/` |
 | ChatGPT, Gemini, Claude na web, ou qualquer LLM sem arquivos | Cole [`dist/prompt-unico.md`](dist/prompt-unico.md) |
 
-Force outros agentes com `--agentes cursor,copilot` ou `--agentes todos`. Testei a instalação e os arquivos gerados; não abri cada um desses agentes para confirmar que lê as pontes.
+Force outros agentes com `--agentes cursor,copilot` ou `--agentes todos`. O Codex achou e seguiu a skill num [teste real](docs/testes/2026-10-31-outro-agente/relatorio.md). Nos outros, testei a instalação e os arquivos gerados, mas não abri cada agente para confirmar que lê as pontes.
 
 ## Usar
 
@@ -71,37 +71,43 @@ Peça o que pediria normalmente: "cria o painel de agendamentos". O agente acha 
 
 ## Comandos
 
-Rode dentro do clone do kit.
+Rode dentro do projeto, para as capturas ficarem na pasta dele.
 
 ```bash
-node bin/kit.mjs verificar http://localhost:5173/agenda
+node ../kit-frontend/bin/kit.mjs verificar http://localhost:5173/agenda
 ```
 
 ```bash
-node bin/kit.mjs contraste DESIGN.md
+node ../kit-frontend/bin/kit.mjs direcoes design/direcoes
 ```
 
 ```bash
-node bin/kit.mjs marca ../meu-projeto
+node ../kit-frontend/bin/kit.mjs contraste DESIGN.md
 ```
 
 ```bash
-node bin/kit.mjs paleta "#0e5f4b"
+node ../kit-frontend/bin/kit.mjs marca
 ```
 
 ```bash
-node bin/kit.mjs referencia https://site-de-que-voce-gosta.com.br
+node ../kit-frontend/bin/kit.mjs paleta "#0e5f4b"
 ```
 
 ```bash
-node bin/kit.mjs coletar ../meu-projeto
+node ../kit-frontend/bin/kit.mjs referencia https://site-de-que-voce-gosta.com.br
 ```
+
+```bash
+node ../kit-frontend/bin/kit.mjs coletar
+```
+
+Depois de mudar a skill ou um PRD, rode dentro do clone do kit:
 
 ```bash
 node bin/kit.mjs empacotar
 ```
 
-`verificar` testa 1440 × 900, 768 × 1024, 375 × 812 com toque e 320 × 256 (zoom de 400%), com passada de Tab e movimento reduzido. Também mede letra em 200%, espaçamento e alto contraste, e guarda `prancha.html` (a tela sem cada cor e embaçada) e `leitor-de-tela.txt`. Com `publicos:` no `PRODUTO.md`, ou `--publicos`, o rigor muda conforme quem usa. `coletar` traz as correções de um projeto para o kit, e é assim que ele aprende o seu gosto. `empacotar` gera os estilos por seção e o prompt único, e precisa rodar depois de mudar a skill ou um PRD.
+`verificar` testa 1440 × 900, 768 × 1024, 375 × 812 com toque e 320 × 256 (zoom de 400%), com passada de Tab e movimento reduzido. Também mede letra em 200%, espaçamento, alto contraste, fotos cortadas e peso, e guarda a página inteira (`desktop-inteira.jpg`, `celular-inteira.jpg`), `prancha.html` (a tela sem cada cor e embaçada) e `leitor-de-tela.txt`. Com `publicos:` no `PRODUTO.md`, ou `--publicos`, o rigor muda conforme quem usa. `direcoes` compara as propostas visuais e reprova as quase iguais. `coletar` traz as correções de um projeto para o kit, e é assim que ele aprende o seu gosto. `empacotar` gera os estilos por seção e o prompt único.
 
 ## Estilos de partida
 
@@ -136,7 +142,7 @@ Marcas, nomes e dados das telas de exemplo são fictícios. O que ainda falha es
 │   ├── assets/
 │   │   ├── modelos/          MARCA.md, DESIGN.md, PRODUTO.md, correções, mídia
 │   │   └── exemplos/         marca e design preenchidos
-│   ├── scripts/              verificador, contraste, paleta, referências, marca, logotipo
+│   ├── scripts/              verificador, comparador de direções, contraste, paleta, referências, marca, logotipo
 │   └── estilos/              PRDs por seção (gerado)
 ├── prds/                     fonte dos estilos, com exemplos e o modelo de PRD novo
 ├── dist/                     prompt único e llms.txt (gerado)

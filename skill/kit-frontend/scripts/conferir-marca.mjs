@@ -59,6 +59,9 @@ if (completo) {
   if (!/\*\*Espaço livre:\*\*\s*\S/.test(conc)) falha('Concorrentes sem o "Espaço livre".');
 }
 
+// Marca que já existe: sem o arquivo, a direção desenha um substituto, e o dono não reconhece a própria marca
+if (secao('Identidade existente') !== null && !/\*\*Arquivo do logo:\*\*\s*\S/.test(secao('Identidade existente'))) aviso('Marca existente sem dizer se o arquivo do logo foi recebido. Peça antes de mostrar as direções.');
+
 // O kit só existe depois da escolha da direção: sem a pasta, é aviso
 const pasta = join(raiz, 'design', 'marca');
 if (!existsSync(pasta)) aviso('Ainda não há design/marca/. O kit vem depois da escolha da direção.');

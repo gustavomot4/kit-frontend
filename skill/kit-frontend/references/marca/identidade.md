@@ -31,17 +31,21 @@ Uma pergunta que costuma render: **qual é a unidade real do trabalho?** Cadeira
 ## Método
 
 1. **Mundo do produto.** Liste 10 coisas concretas do setor: materiais, ferramentas, documentos, lugares, gírias, rituais. Numa barbearia: navalha, espelho, ficha de papel, cadeira, listras. Use as palavras de `PRODUTO.md` e o espaço livre de `MARCA.md`.
-2. **Três conceitos, em dimensões diferentes.** Não são três cores do mesmo layout: pelo menos tipografia, composição e cor precisam mudar.
+2. **Três conceitos, em dimensões diferentes.** Não são três cores do mesmo layout: pelo menos tipografia, composição e cor precisam mudar, da primeira dobra ao fim da página.
    - **A, familiar:** o mais próximo do que o público já usa. Risco baixo.
    - **B, própria:** a que mais parece com o produto e com mais nenhum.
-   - **C, inesperada:** um passo além do confortável, para abrir a conversa.
+   - **C, inesperada:** um passo além do confortável, para abrir a conversa. Se a saída óbvia do setor é o editorial de moda, ela não é inesperada.
+
+   Com marca existente, ao menos uma direção parte de como ela aparece hoje: o mesmo fundo, as mesmas cores, o nome na mesma forma. Claro por padrão (G05) não dispensa mostrar essa opção.
 
    Recomende pelo público, e diga por quê. Nem sempre a mais própria vence: o dono escolheu a B numa barbearia e a A numa marmitaria cuja dona não entende de tecnologia. A direção A também precisa de decisão própria: familiar não pode virar genérica.
 3. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale.
 4. **Revise contra `references/marca/anti-generico.md`.** Troque toda escolha que caiu num padrão e diga o que trocou.
 5. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia).
-6. **Capture em 1440 × 900 e 375 × 812.** Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior.
-7. **Mostre as imagens.** Para cada uma: nome, conceito em uma frase, o elemento-assinatura. Diga qual recomenda e por quê. Pare e espere.
+
+   Escreva cada direção num arquivo próprio, com o próprio CSS, em HTML estático: sem gerador, sem folha de estilo comum, sem sacola nem diálogo funcionando. Gerador comum produz a mesma página com outra pintura, e o tempo vai para o que ninguém está decidindo agora.
+6. **Compare e verifique.** Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as que saírem quase iguais. Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior. Abra `desktop-inteira.jpg` e `celular-inteira.jpg` e olhe até o fim da página.
+7. **Mostre as imagens.** Para cada uma: nome, conceito em uma frase, o elemento-assinatura, a primeira dobra em 1440 × 900 e 375 × 812, e a página inteira. Diga qual recomenda e por quê. Pare e espere.
 
 ## Depois da escolha
 

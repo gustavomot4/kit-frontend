@@ -64,6 +64,9 @@ Resumo abaixo. Quando se sabe quem usa, liste em `publicos:` no `PRODUTO.md` e s
 - **`aria-label` que não contém o texto visível.** Quem usa controle por voz fala o que vê (2.5.3).
 - **Mudança sem anúncio.** Resultado de busca e confirmação usam `role="status"`; erro urgente usa `role="alert"`.
 - **Rota de SPA sem foco.** A cada troca de tela, atualize `document.title` e mova o foco para o `h1`.
+- **Título com letras apertadas.** De −0,05em para baixo as palavras se colam (`a11y-letra-apertada`); com `dislexia` ou `pouca-leitura`, o limite é −0,03em e vira falha. É decisão do kit, a partir de um teste real, não critério da WCAG.
+- **Foto com `height` no HTML e sem `height:auto` no CSS.** O `aspect-ratio` é ignorado e a foto fica na altura original (`q-foto-cortada`). Na primeira dobra, ninguém vê.
+- **Página pesada.** Quem usa dados móveis paga por foto em PNG. O verificador avisa acima de 2 MB e reprova acima de 5 MB no celular (`q-pagina-pesada`). Os limites são decisão do kit.
 
 ## Roteiro de verificação
 
@@ -77,6 +80,7 @@ Rode `scripts/verificar.mjs` em cada tela. Depois faça à mão e relate cada it
 6. **Alto contraste:** veja `alto-contraste.png`. O verificador acusa campo sem contorno; o resto é com o olho. Borda feita com `box-shadow` some.
 7. **Movimento reduzido:** ative no sistema. Nada se move sozinho.
 8. **Linguagem:** leia em voz alta. Alguém sem familiaridade entende na primeira leitura?
+9. **Página inteira:** abra `desktop-inteira.jpg` e `celular-inteira.jpg` e olhe até o fim. Catálogo e rodapé não aparecem na primeira dobra.
 
 ## Linguagem simples
 

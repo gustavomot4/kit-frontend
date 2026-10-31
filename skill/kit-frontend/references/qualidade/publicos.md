@@ -17,13 +17,13 @@ superficie: publica
 
 | Valor | Na tela | Verificador | À mão |
 | --- | --- | --- | --- |
-| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras`, `a11y-video-legenda` | Tarefa com uma pessoa surda |
-| `pouca-leitura` | Coluna única e menu linear. O principal no alto. Ícone sempre com texto. Nada se mexendo perto do texto. Busca que aceita erro de digitação | `a11y-icone-sem-texto` vira falha; `a11y-leitura-dificil` aperta o limite | Leia em voz alta. Tarefa com alguém do público |
+| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras` vira falha em superfície pública; `a11y-video-legenda` | Tarefa com uma pessoa surda |
+| `pouca-leitura` | Coluna única e menu linear. O principal no alto. Ícone sempre com texto. Nada se mexendo perto do texto. Busca que aceita erro de digitação | `a11y-icone-sem-texto` e `a11y-letra-apertada` viram falha; `a11y-leitura-dificil` aperta o limite | Leia em voz alta. Tarefa com alguém do público |
 | `idosos` | Alvo de 44px também com mouse. Ícone com texto. Sem gesto escondido nem tempo limite. Letra que cresce sem quebrar | `a11y-icone-sem-texto`, `a11y-letra-200`, `a11y-espacamento` | Letra do aparelho no máximo, num celular simples |
 | `baixa-visao` | Contraste acima do mínimo no que decide a tarefa. Nada que dependa só de passar o mouse. Temas e tamanho de letra, quando o uso for diário | `a11y-letra-200`, `a11y-espacamento`, `a11y-alto-contraste`; visão embaçada na prancha | Zoom de 400% e alto contraste do sistema |
 | `pessoas-cegas` | Títulos em ordem, regiões com nome, mudanças anunciadas. Tabela de verdade em vez de grade de `div` | `a11y-nome`, `a11y-titulos`; leia `leitor-de-tela.txt` | NVDA, VoiceOver ou TalkBack numa tarefa inteira |
 | `daltonismo` | Situação com texto ou forma além da cor. Gráfico com rótulo direto no dado e forma por série. Evite separar só por vermelho e verde | `a11y-so-cor`; olhe `prancha.html` | Compare na prancha as situações lado a lado (G13) |
-| `dislexia` | Até 80 caracteres por linha, texto sem justificar, entrelinha de 1,5, sem bloco em itálico ou caixa alta. Não prometa "fonte para dislexia" | `a11y-linha-longa`, `a11y-justificado`, `a11y-entrelinha`, `a11y-italico-longo`, `a11y-caixa-alta` | Leitura com alguém do público |
+| `dislexia` | Até 80 caracteres por linha, texto sem justificar, entrelinha de 1,5, sem bloco em itálico ou caixa alta, sem letras apertadas. Não prometa "fonte para dislexia" | `a11y-linha-longa`, `a11y-justificado`, `a11y-entrelinha`, `a11y-italico-longo`, `a11y-caixa-alta`; `a11y-letra-apertada` vira falha | Leitura com alguém do público |
 | `cognitivo` | Sempre dá para voltar e desfazer. Nada depende de memorizar nem de tempo. Um passo por vez. Linguagem literal. Ajuda humana fácil de achar | `a11y-icone-sem-texto`, `a11y-leitura-dificil` | Percorra a tarefa sem instrução prévia |
 | `mobilidade` | Alvo grande, tudo pelo teclado, alternativa a arrasto | `a11y-alvo`, `a11y-teclado`, `a11y-clique-sem-semantica` | Tarefa inteira só com teclado |
 

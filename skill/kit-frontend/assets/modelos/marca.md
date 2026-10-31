@@ -10,6 +10,15 @@
 - **Por que existe:** <o problema real, nas palavras de quem sente>
 - **O que nunca seria:** <o que ele se recusa a ser>
 
+## Identidade existente
+
+<!-- Só quando a marca já existe. Em marca nova, apague a seção. -->
+
+- **Onde aparece hoje:** <site, Instagram, fachada, embalagem>
+- **Como a pessoa reconhece:** <fundo, cores, forma do nome e do símbolo>
+- **Arquivo do logo:** <caminho do arquivo recebido, ou "pedido em AAAA-MM-DD, não recebido">
+- **O que precisa ficar:** <o que nenhuma direção pode mudar>
+
 ## Público e personas
 
 ### <Nome fictício e papel>

@@ -1,6 +1,6 @@
 // Audita a tela renderizada. Roda dentro da página, pelo verificar.mjs ou colado no console do navegador.
 // Devolve { achados: [{ id, nivel, msg, exemplos }], medidas }. nivel: falha | aviso.
-// a11y-* vem da WCAG 2.2 e da ABNT NBR 17225; g-* vem do perfil de gosto; ia-* vem de references/marca/anti-generico.md.
+// a11y-* vem da WCAG 2.2 e da ABNT NBR 17225; g-* vem do perfil de gosto; ia-* vem de references/marca/anti-generico.md; q-* vem de falhas vistas em teste real (docs/testes/2026-10-31-outro-agente).
 ((opcoes = window.__kitOpcoes || {}) => {
   const papel = opcoes.papel || 'desktop';
   const aprovadas = (opcoes.fontesAprovadas || []).map(f => f.toLowerCase());
@@ -151,7 +151,7 @@
     if (semPausa.length) achar('a11y-video-sem-controle', 'falha', `${semPausa.length} vídeo(s) que tocam sozinhos sem como pausar (WCAG 2.2.2).`);
     if ([...document.querySelectorAll('audio')].filter(vis).length && !/transcri/i.test(document.body.innerText)) achar('a11y-audio-transcricao', 'aviso', 'Áudio sem transcrição à vista (WCAG 1.2.1).');
     if (publicos.includes('surdos-libras') || opcoes.superficie === 'publica') {
-      if (!document.querySelector('[vw],script[src*="vlibras" i],script[src*="handtalk" i]')) achar('a11y-libras', 'aviso', 'Superfície pública sem recurso de Libras ao chegar. Veja references/padroes/midia-e-libras.md.');
+      if (!document.querySelector('[vw],script[src*="vlibras" i],script[src*="handtalk" i]')) achar('a11y-libras', publicos.includes('surdos-libras') && opcoes.superficie === 'publica' ? 'falha' : 'aviso', 'Superfície pública sem recurso de Libras ao chegar. Veja references/padroes/midia-e-libras.md.');
     }
 
     // blocos de texto: dislexia, baixa visão, cognição (WCAG 1.4.8)
@@ -209,6 +209,22 @@
   const coberto = faixas.reduce((a, b) => a + b, 0), parte = coberto / innerHeight;
   if (innerHeight <= 480 && parte > .5) achar('a11y-camadas-fixas', 'falha', `Em ${innerWidth}×${innerHeight}, camadas fixas cobrem ${Math.round(parte * 100)}% da altura: quem usa zoom alto quase não vê conteúdo.`);
   else if (innerHeight <= 480 && parte > .35) achar('a11y-camadas-fixas', 'aviso', `Em ${innerWidth}×${innerHeight}, camadas fixas cobrem ${Math.round(parte * 100)}% da altura.`);
+
+  // --- fotos e letras: o que passou num teste real com 0 falhas ---------------------------------------
+  if (papel !== 'zoom') {
+    // height no HTML sem height:auto no CSS ignora o aspect-ratio e deixa a foto na altura original
+    const fotos = [...document.images].filter(vis).map(i => { const r = i.getBoundingClientRect(), naTela = r.width / r.height, natural = i.naturalWidth / i.naturalHeight; return { w: r.width, h: r.height, ajuste: cs(i).objectFit, resta: Math.min(naTela / natural, natural / naTela), nome: curto(i.alt, 24) || (i.currentSrc || i.src).split('/').pop().slice(0, 24), svg: /\.svg(\?|$)|^data:image\/svg/i.test(i.currentSrc || i.src), grande: i.naturalWidth >= 64 && i.naturalHeight >= 64 }; }).filter(f => !f.svg && f.grande && f.w >= 64 && f.h >= 64);
+    const caixa = f => `${f.nome}: ${Math.round(f.w)}×${Math.round(f.h)}`;
+    const esticadas = fotos.filter(f => f.ajuste === 'fill' && f.resta < .85);
+    if (esticadas.length) achar('q-foto-deformada', 'falha', `${esticadas.length} foto(s) esticadas: a caixa tem outra proporção. Use aspect-ratio com height:auto e object-fit.`, esticadas.map(caixa));
+    const cortadas = fotos.filter(f => f.ajuste === 'cover' && f.resta < .45);
+    if (cortadas.length) achar('q-foto-cortada', cortadas.some(f => f.resta < .25 || f.h > innerHeight * 1.2) ? 'falha' : 'aviso', `${cortadas.length} foto(s) com a maior parte cortada. Se a imagem tem height no HTML, falta height:auto no CSS.`, cortadas.map(f => `${caixa(f)}, aparece ${Math.round(f.resta * 100)}% da foto`));
+    // palavras coladas: limites do kit, a partir do mesmo teste
+    const rigor = publicos.includes('dislexia') || publicos.includes('pouca-leitura');
+    const espacoDe = e => num(cs(e).letterSpacing) / num(cs(e).fontSize);
+    const coladas = textos.filter(e => /\S\s+\S/.test((comTexto.get(e) || '').trim()) && espacoDe(e) <= (rigor ? -.03 : -.05));
+    if (coladas.length) achar('a11y-letra-apertada', rigor ? 'falha' : 'aviso', `${coladas.length} texto(s) com letras tão apertadas que as palavras se colam.`, coladas.map(e => `${espacoDe(e).toFixed(3)}em: ${curto(e.textContent, 24)}`));
+  }
 
   // --- gosto -----------------------------------------------------------------------------------------
   if (papel === 'desktop' || papel === 'celular') {

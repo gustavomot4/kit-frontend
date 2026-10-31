@@ -41,7 +41,7 @@ Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do
 
 ### 2. Marca: portão
 
-Defina o que o produto quer dizer antes de desenhar. Siga `references/marca/criar-marca.md`: crie `MARCA.md` a partir de `assets/modelos/marca.md` (exemplo em `assets/exemplos/marca.md`), no tamanho certo para o projeto. Personas sem pesquisa ficam marcadas como hipótese, e todo item precisa dizer o que muda na tela. Confira com `scripts/conferir-marca.mjs`. Se a pessoa não tem fonte, cor, voz nem mensagem, siga "Quando a pessoa não tem nada": perguntas que qualquer um responde e opções para escolher, nunca "qual é a sua mensagem?".
+Defina o que o produto quer dizer antes de desenhar. Siga `references/marca/criar-marca.md`: crie `MARCA.md` a partir de `assets/modelos/marca.md` (exemplo em `assets/exemplos/marca.md`), no tamanho certo para o projeto. Personas sem pesquisa ficam marcadas como hipótese, e todo item precisa dizer o que muda na tela. Confira com `scripts/conferir-marca.mjs`. Se a marca já existe, peça o arquivo do logo e as cores originais antes de confirmar. Se a pessoa não tem fonte, cor, voz nem mensagem, siga "Quando a pessoa não tem nada": perguntas que qualquer um responde e opções para escolher, nunca "qual é a sua mensagem?".
 
 Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
 
@@ -49,9 +49,10 @@ Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
 
 Sem código de produção antes da escolha. Cada direção expressa o `MARCA.md`. Siga `references/marca/identidade.md` e `references/marca/criatividade.md`, e confira `references/marca/anti-generico.md`. Para imagem, vídeo, 3D e animação, veja `references/recursos/bibliotecas.md`; o que você não puder gerar vai para `design/midia.md` (modelo em `assets/modelos/midia.md`).
 
-- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em tipografia, composição e cor, não só na cor. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
-- Rode a verificação nas três e corrija as falhas.
-- Mostre as imagens em 1440 × 900 e 375 × 812, com nome, conceito em uma frase, elemento-assinatura e a sua recomendação. Texto mínimo: quem decide olha a imagem.
+- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em tipografia, composição e cor, não só na cor. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
+- Com marca existente, use o logo real e faça ao menos uma direção partir de como ela aparece hoje. Sem o arquivo, escreva o nome em texto: não desenhe um substituto.
+- Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as quase iguais. Rode a verificação nas três e corrija as falhas. Olhe a página inteira de cada uma, até o fim.
+- Mostre as imagens em 1440 × 900 e 375 × 812 e a página inteira, com nome, conceito em uma frase, elemento-assinatura e a sua recomendação. Texto mínimo: quem decide olha a imagem.
 
 **Pare e espere a escolha.** Misturas são bem-vindas. Se o dono rejeitar as três, pergunte o que incomodou, registre em `design/correcoes.md` e refaça.
 
@@ -99,11 +100,11 @@ Em cada tela alterada, com ela no ar ou como arquivo:
 node <pasta da skill>/scripts/verificar.mjs http://localhost:5173/agenda
 ```
 
-Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento e alto contraste, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
+Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento, alto contraste, fotos cortadas e peso, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, a página inteira (`desktop-inteira.jpg`, `celular-inteira.jpg`), `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
 
 - **Falha** se corrige antes de entregar.
 - **Aviso** se corrige, ou você explica o motivo no relatório. Decisão aprovada entra no `DESIGN.md`.
-- Olhe as capturas e a prancha. O script mede; o olho vê o que está feio e o que só a cor separa.
+- Olhe a página inteira e a prancha, não só a primeira dobra. O script mede; o olho vê o que está feio e o que só a cor separa. Num teste real, um catálogo quebrado passou com 0 falhas porque só a primeira dobra foi olhada.
 - Faça o teste dos 5 segundos: o que a tela informa e qual é a ação.
 - Faça o roteiro manual de `references/qualidade/acessibilidade.md`.
 
@@ -260,6 +261,7 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Um rótulo pequeno, em caixa alta e espaçado, acima de cada título. `[script: ia-sobrancelha]`
 - Uma palavra do título em itálico, cor ou gradiente diferente. `[script: ia-palavra-destaque]`
 - Monoespaçada em rótulo, para parecer técnico. Fica para código e dado. `[script: ia-mono-enfeite]`
+- Título com letras tão apertadas que as palavras se colam: "Seulook, dodiaàfesta". `[script: a11y-letra-apertada]`
 
 ## Composição
 
@@ -318,7 +320,7 @@ Dados de exemplo fazem parte da identidade. "João Silva", "Empresa ABC" e valor
 
 Sem isto, a identidade nasce de decisões de tela e vira gosto do momento. Aqui se define o que o produto quer dizer, para quem e contra quem. As direções visuais (`references/marca/identidade.md`) são formas de expressar a marca, não o ponto de partida.
 
-Já existe marca? **Documente, não invente.** Preencha `MARCA.md` com o que existe e marque as lacunas.
+Já existe marca? **Documente, não invente.** Preencha `MARCA.md` com o que existe e marque as lacunas. **Peça o arquivo do logo e as cores originais antes de confirmar o brief**: quem decide precisa se reconhecer nas direções. Se o arquivo não vier, escreva o nome em texto, em letra parecida, e diga que é provisório. Não desenhe um substituto: num teste real, o símbolo redesenhado a partir de uma miniatura virou outra coisa (`docs/testes/2026-10-31-outro-agente`, no repositório do kit).
 
 ## Tamanho certo
 
@@ -568,17 +570,21 @@ Uma pergunta que costuma render: **qual é a unidade real do trabalho?** Cadeira
 ## Método
 
 1. **Mundo do produto.** Liste 10 coisas concretas do setor: materiais, ferramentas, documentos, lugares, gírias, rituais. Numa barbearia: navalha, espelho, ficha de papel, cadeira, listras. Use as palavras de `PRODUTO.md` e o espaço livre de `MARCA.md`.
-2. **Três conceitos, em dimensões diferentes.** Não são três cores do mesmo layout: pelo menos tipografia, composição e cor precisam mudar.
+2. **Três conceitos, em dimensões diferentes.** Não são três cores do mesmo layout: pelo menos tipografia, composição e cor precisam mudar, da primeira dobra ao fim da página.
    - **A, familiar:** o mais próximo do que o público já usa. Risco baixo.
    - **B, própria:** a que mais parece com o produto e com mais nenhum.
-   - **C, inesperada:** um passo além do confortável, para abrir a conversa.
+   - **C, inesperada:** um passo além do confortável, para abrir a conversa. Se a saída óbvia do setor é o editorial de moda, ela não é inesperada.
+
+   Com marca existente, ao menos uma direção parte de como ela aparece hoje: o mesmo fundo, as mesmas cores, o nome na mesma forma. Claro por padrão (G05) não dispensa mostrar essa opção.
 
    Recomende pelo público, e diga por quê. Nem sempre a mais própria vence: o dono escolheu a B numa barbearia e a A numa marmitaria cuja dona não entende de tecnologia. A direção A também precisa de decisão própria: familiar não pode virar genérica.
 3. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale.
 4. **Revise contra `references/marca/anti-generico.md`.** Troque toda escolha que caiu num padrão e diga o que trocou.
 5. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia).
-6. **Capture em 1440 × 900 e 375 × 812.** Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior.
-7. **Mostre as imagens.** Para cada uma: nome, conceito em uma frase, o elemento-assinatura. Diga qual recomenda e por quê. Pare e espere.
+
+   Escreva cada direção num arquivo próprio, com o próprio CSS, em HTML estático: sem gerador, sem folha de estilo comum, sem sacola nem diálogo funcionando. Gerador comum produz a mesma página com outra pintura, e o tempo vai para o que ninguém está decidindo agora.
+6. **Compare e verifique.** Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as que saírem quase iguais. Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior. Abra `desktop-inteira.jpg` e `celular-inteira.jpg` e olhe até o fim da página.
+7. **Mostre as imagens.** Para cada uma: nome, conceito em uma frase, o elemento-assinatura, a primeira dobra em 1440 × 900 e 375 × 812, e a página inteira. Diga qual recomenda e por quê. Pare e espere.
 
 ## Depois da escolha
 
@@ -827,6 +833,7 @@ Gratuito, do governo federal, com tradução automática do português por avata
 
 Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Chrome. Para trocar o lado ou o avatar, a documentação oficial cita `new window.VLibras.Widget({ position: 'L', avatar: 'guga' })`; essa forma não foi testada.
 
+- **Desde as três direções.** O botão ocupa a borda da tela e faz parte do que o dono está escolhendo. Não deixe para depois.
 - **Carregue sem esperar interação.** Quem precisa de Libras precisa ver o botão ao chegar. Use `defer` ou tempo ocioso, nunca "depois do primeiro clique".
 - **Janela baixa.** Com altura até 480px, confira se o botão não cobre conteúdo nem foco.
 - **Depende de terceiros.** O script baixa arquivos de `vlibras.gov.br` e de `cdn.jsdelivr.net`, e o serviço pode sair do ar. Cite na política de privacidade. O restante da tela não pode depender dele.
@@ -850,7 +857,7 @@ Aviso sonoro nunca é o único sinal: repita em texto e, no celular, com vibraç
 
 O art. 63 da Lei 13.146/2015 obriga a acessibilidade em sites de empresas com sede ou representação comercial no país e de órgãos de governo, e pede símbolo de acessibilidade em destaque. O que isso exige de cada caso é questão jurídica.
 
-`scripts/verificar.mjs` acusa vídeo sem legenda (`a11y-video-legenda`), vídeo sem pausa (`a11y-video-sem-controle`), áudio sem transcrição (`a11y-audio-transcricao`) e superfície pública sem Libras (`a11y-libras`). Ele não julga a qualidade da tradução.
+`scripts/verificar.mjs` acusa vídeo sem legenda (`a11y-video-legenda`), vídeo sem pausa (`a11y-video-sem-controle`), áudio sem transcrição (`a11y-audio-transcricao`) e superfície pública sem Libras (`a11y-libras`: aviso, e falha quando `publicos:` traz `surdos-libras`). Ele só vê se o recurso está na página: não julga a qualidade da tradução.
 
 **De onde veio:** Lei 10.436/2002, Lei 13.146/2015, W3C (1.2.6) e documentação do VLibras, lidos na fonte. Os demais critérios de mídia vêm de conhecimento geral da WCAG 2.2. Registro em `docs/pesquisa/benchmark.md`, no repositório do kit.
 
@@ -1126,6 +1133,9 @@ Resumo abaixo. Quando se sabe quem usa, liste em `publicos:` no `PRODUTO.md` e s
 - **`aria-label` que não contém o texto visível.** Quem usa controle por voz fala o que vê (2.5.3).
 - **Mudança sem anúncio.** Resultado de busca e confirmação usam `role="status"`; erro urgente usa `role="alert"`.
 - **Rota de SPA sem foco.** A cada troca de tela, atualize `document.title` e mova o foco para o `h1`.
+- **Título com letras apertadas.** De −0,05em para baixo as palavras se colam (`a11y-letra-apertada`); com `dislexia` ou `pouca-leitura`, o limite é −0,03em e vira falha. É decisão do kit, a partir de um teste real, não critério da WCAG.
+- **Foto com `height` no HTML e sem `height:auto` no CSS.** O `aspect-ratio` é ignorado e a foto fica na altura original (`q-foto-cortada`). Na primeira dobra, ninguém vê.
+- **Página pesada.** Quem usa dados móveis paga por foto em PNG. O verificador avisa acima de 2 MB e reprova acima de 5 MB no celular (`q-pagina-pesada`). Os limites são decisão do kit.
 
 ## Roteiro de verificação
 
@@ -1139,6 +1149,7 @@ Rode `scripts/verificar.mjs` em cada tela. Depois faça à mão e relate cada it
 6. **Alto contraste:** veja `alto-contraste.png`. O verificador acusa campo sem contorno; o resto é com o olho. Borda feita com `box-shadow` some.
 7. **Movimento reduzido:** ative no sistema. Nada se move sozinho.
 8. **Linguagem:** leia em voz alta. Alguém sem familiaridade entende na primeira leitura?
+9. **Página inteira:** abra `desktop-inteira.jpg` e `celular-inteira.jpg` e olhe até o fim. Catálogo e rodapé não aparecem na primeira dobra.
 
 ## Linguagem simples
 
@@ -1172,13 +1183,13 @@ superficie: publica
 
 | Valor | Na tela | Verificador | À mão |
 | --- | --- | --- | --- |
-| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras`, `a11y-video-legenda` | Tarefa com uma pessoa surda |
-| `pouca-leitura` | Coluna única e menu linear. O principal no alto. Ícone sempre com texto. Nada se mexendo perto do texto. Busca que aceita erro de digitação | `a11y-icone-sem-texto` vira falha; `a11y-leitura-dificil` aperta o limite | Leia em voz alta. Tarefa com alguém do público |
+| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras` vira falha em superfície pública; `a11y-video-legenda` | Tarefa com uma pessoa surda |
+| `pouca-leitura` | Coluna única e menu linear. O principal no alto. Ícone sempre com texto. Nada se mexendo perto do texto. Busca que aceita erro de digitação | `a11y-icone-sem-texto` e `a11y-letra-apertada` viram falha; `a11y-leitura-dificil` aperta o limite | Leia em voz alta. Tarefa com alguém do público |
 | `idosos` | Alvo de 44px também com mouse. Ícone com texto. Sem gesto escondido nem tempo limite. Letra que cresce sem quebrar | `a11y-icone-sem-texto`, `a11y-letra-200`, `a11y-espacamento` | Letra do aparelho no máximo, num celular simples |
 | `baixa-visao` | Contraste acima do mínimo no que decide a tarefa. Nada que dependa só de passar o mouse. Temas e tamanho de letra, quando o uso for diário | `a11y-letra-200`, `a11y-espacamento`, `a11y-alto-contraste`; visão embaçada na prancha | Zoom de 400% e alto contraste do sistema |
 | `pessoas-cegas` | Títulos em ordem, regiões com nome, mudanças anunciadas. Tabela de verdade em vez de grade de `div` | `a11y-nome`, `a11y-titulos`; leia `leitor-de-tela.txt` | NVDA, VoiceOver ou TalkBack numa tarefa inteira |
 | `daltonismo` | Situação com texto ou forma além da cor. Gráfico com rótulo direto no dado e forma por série. Evite separar só por vermelho e verde | `a11y-so-cor`; olhe `prancha.html` | Compare na prancha as situações lado a lado (G13) |
-| `dislexia` | Até 80 caracteres por linha, texto sem justificar, entrelinha de 1,5, sem bloco em itálico ou caixa alta. Não prometa "fonte para dislexia" | `a11y-linha-longa`, `a11y-justificado`, `a11y-entrelinha`, `a11y-italico-longo`, `a11y-caixa-alta` | Leitura com alguém do público |
+| `dislexia` | Até 80 caracteres por linha, texto sem justificar, entrelinha de 1,5, sem bloco em itálico ou caixa alta, sem letras apertadas. Não prometa "fonte para dislexia" | `a11y-linha-longa`, `a11y-justificado`, `a11y-entrelinha`, `a11y-italico-longo`, `a11y-caixa-alta`; `a11y-letra-apertada` vira falha | Leitura com alguém do público |
 | `cognitivo` | Sempre dá para voltar e desfazer. Nada depende de memorizar nem de tempo. Um passo por vez. Linguagem literal. Ajuda humana fácil de achar | `a11y-icone-sem-texto`, `a11y-leitura-dificil` | Percorra a tarefa sem instrução prévia |
 | `mobilidade` | Alvo grande, tudo pelo teclado, alternativa a arrasto | `a11y-alvo`, `a11y-teclado`, `a11y-clique-sem-semantica` | Tarefa inteira só com teclado |
 
@@ -1500,6 +1511,15 @@ Tudo aqui afeta decisões de tela. O que não souber, marque como "não sei" e s
 - **Promessa, em uma frase:** <o que só este produto promete>
 - **Por que existe:** <o problema real, nas palavras de quem sente>
 - **O que nunca seria:** <o que ele se recusa a ser>
+
+## Identidade existente
+
+<!-- Só quando a marca já existe. Em marca nova, apague a seção. -->
+
+- **Onde aparece hoje:** <site, Instagram, fachada, embalagem>
+- **Como a pessoa reconhece:** <fundo, cores, forma do nome e do símbolo>
+- **Arquivo do logo:** <caminho do arquivo recebido, ou "pedido em AAAA-MM-DD, não recebido">
+- **O que precisa ficar:** <o que nenhuma direção pode mudar>
 
 ## Público e personas
 

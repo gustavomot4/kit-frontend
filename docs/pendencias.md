@@ -17,11 +17,12 @@ Avisos continuam nos outros exemplos, como fonte comum e texto na primeira dobra
 1. Corrigir as cinco telas acima, trocando altura fixa por `min-height` onde der. Em agenda com altura proporcional ao tempo, decidir o que fazer com a letra grande.
 2. Nova auditoria dos PRDs que mudaram de versão maior. Os estáveis estão em 3.x e 4.x, com auditoria da 1.0.0, e `app-tarefas-acessivel` segue em rascunho na 2.0.0.
 3. Fases 2 e 3 do plano do benchmark: gancho, integração contínua, desvio contra o `DESIGN.md`, método de direções, roteiro de estados e teste cego com origem oculta.
+4. Do [teste no Codex](testes/2026-10-31-outro-agente/relatorio.md): medir links repetidos com o mesmo nome e controles repetidos por item, e repetir o teste com o kit corrigido, até a etapa 8.
 
 ## Decisões em aberto
 
 - **Licença:** o repositório ainda não tem. Sem ela, ninguém além do dono tem direito de uso.
-- **Teste real:** só houve uma rodada, sem tela final. `references/marca/criatividade.md`, `references/recursos/bibliotecas.md`, `references/recursos/fontes.md`, a etapa de marca e o caminho de quem não tem nada não foram testados com um agente novo nem com uma pessoa sem marca. O mesmo vale para `references/qualidade/publicos.md` e `references/padroes/midia-e-libras.md`, que também não passaram por pessoas surdas, cegas, daltônicas ou com pouca leitura. Não se sabe se o brief reduz refação.
+- **Teste real:** houve duas rodadas, nenhuma até a tela final: a segunda, no Codex, parou na escolha da direção. `references/marca/criatividade.md`, `references/recursos/bibliotecas.md`, `references/recursos/fontes.md`, a etapa de marca e o caminho de quem não tem nada não foram testados com um agente novo nem com uma pessoa sem marca. O mesmo vale para `references/qualidade/publicos.md` e `references/padroes/midia-e-libras.md`, que também não passaram por pessoas surdas, cegas, daltônicas ou com pouca leitura. Não se sabe se o brief reduz refação.
 - **Validador oficial do `DESIGN.md`:** os modelos seguem a especificação lida em 30/10/2026, mas `npx @google/design.md lint` não foi executado. O formato ainda é alpha e pode mudar.
 
 ## Antes de tornar o repositório público

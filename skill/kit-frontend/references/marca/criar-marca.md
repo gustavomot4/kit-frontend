@@ -2,7 +2,7 @@
 
 Sem isto, a identidade nasce de decisões de tela e vira gosto do momento. Aqui se define o que o produto quer dizer, para quem e contra quem. As direções visuais (`references/marca/identidade.md`) são formas de expressar a marca, não o ponto de partida.
 
-Já existe marca? **Documente, não invente.** Preencha `MARCA.md` com o que existe e marque as lacunas.
+Já existe marca? **Documente, não invente.** Preencha `MARCA.md` com o que existe e marque as lacunas. **Peça o arquivo do logo e as cores originais antes de confirmar o brief**: quem decide precisa se reconhecer nas direções. Se o arquivo não vier, escreva o nome em texto, em letra parecida, e diga que é provisório. Não desenhe um substituto: num teste real, o símbolo redesenhado a partir de uma miniatura virou outra coisa (`docs/testes/2026-10-31-outro-agente`, no repositório do kit).
 
 ## Tamanho certo
 

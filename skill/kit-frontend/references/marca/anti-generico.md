@@ -23,6 +23,7 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 - Um rótulo pequeno, em caixa alta e espaçado, acima de cada título. `[script: ia-sobrancelha]`
 - Uma palavra do título em itálico, cor ou gradiente diferente. `[script: ia-palavra-destaque]`
 - Monoespaçada em rótulo, para parecer técnico. Fica para código e dado. `[script: ia-mono-enfeite]`
+- Título com letras tão apertadas que as palavras se colam: "Seulook, dodiaàfesta". `[script: a11y-letra-apertada]`
 
 ## Composição
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Abre cada tela no Chrome ou Edge instalado, em quatro tamanhos, e roda tela.js mais uma passada de Tab.
-// Também mede letra em 200%, espaçamento 1.4.12 e alto contraste, e guarda a prancha com visão simulada e o que o leitor de tela recebe.
+// Também mede letra em 200%, espaçamento 1.4.12, alto contraste e peso, e guarda a página inteira, a prancha com visão simulada e o que o leitor de tela recebe.
 // Uso: node verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--produto PRODUTO.md] [--publicos a,b] [--json]
-// Saída: 0 sem falha; 1 com falha; 2 não conseguiu rodar. Sem dependências: Node 22+.
+// Saída: 0 sem falha; 1 com falha; 2 não conseguiu rodar ou nenhuma tela abriu. Sem dependências: Node 22+.
 import { spawn, spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname, resolve, basename } from 'node:path';
@@ -11,13 +11,20 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const aqui = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
+const USO = 'Uso: verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--produto PRODUTO.md] [--publicos a,b] [--json]';
+if (args.includes('--help') || args.includes('-h')) { console.log(USO); process.exit(0); }
 const valor = nome => { const i = args.indexOf(nome); if (i < 0) return null; const v = args[i + 1]; args.splice(i, 2); return v; };
 const saida = resolve(valor('--saida') || 'design/verificacao');
 const arquivoDesign = valor('--design') || 'DESIGN.md';
 const arquivoProduto = valor('--produto') || 'PRODUTO.md';
 const publicosPedidos = valor('--publicos');
 const comoJson = args.includes('--json'); if (comoJson) args.splice(args.indexOf('--json'), 1);
-if (!args.length) { console.error('Uso: verificar.mjs <url ou arquivo.html> [outros] [--saida pasta] [--design DESIGN.md] [--produto PRODUTO.md] [--publicos a,b] [--json]'); process.exit(2); }
+const estranha = args.find(a => a.startsWith('-'));
+if (estranha) { console.error(`Opção desconhecida: ${estranha}\n${USO}`); process.exit(2); }
+if (!args.length) { console.error(USO); process.exit(2); }
+// arquivo que não existe não é tela: sem isto, o script audita a página de erro do navegador e relata falhas falsas
+const faltando = args.filter(a => !/^https?:/.test(a) && !existsSync(/^file:/.test(a) ? fileURLToPath(a.split('?')[0]) : resolve(a.split('?')[0])));
+if (faltando.length) { console.error(`Não achei: ${faltando.join(', ')}. Nada foi verificado.`); process.exit(2); }
 
 function acharNavegador() {
   const candidatos = [process.env.CHROME_PATH,
@@ -60,10 +67,17 @@ let id = 0; const esperando = new Map();
 ws.addEventListener('message', ev => { const m = JSON.parse(ev.data); if (m.id && esperando.has(m.id)) { esperando.get(m.id)(m); esperando.delete(m.id); } });
 const cdp = (method, params = {}) => new Promise(res => { const n = ++id; esperando.set(n, res); ws.send(JSON.stringify({ id: n, method, params })); });
 const avaliar = async expr => { const r = await cdp('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true }); if (r.result?.exceptionDetails) throw new Error(r.result.exceptionDetails.exception?.description || 'erro na página'); return r.result?.result?.value; };
-await cdp('Page.enable'); await cdp('Runtime.enable');
+await cdp('Page.enable'); await cdp('Runtime.enable'); await cdp('Network.enable');
 
 const erros = [];
 ws.addEventListener('message', ev => { const m = JSON.parse(ev.data); if (m.method === 'Runtime.exceptionThrown') erros.push(m.params.exceptionDetails.exception?.description?.split('\n')[0] || m.params.exceptionDetails.text); });
+// o que a tela baixa e como o endereço respondeu
+const rede = new Map(); let statusDocumento = 0;
+ws.addEventListener('message', ev => {
+  const m = JSON.parse(ev.data);
+  if (m.method === 'Network.responseReceived') { rede.set(m.params.requestId, { url: m.params.response.url, bytes: 0 }); if (m.params.type === 'Document' && !statusDocumento) statusDocumento = m.params.response.status; }
+  if (m.method === 'Network.loadingFinished' && rede.has(m.params.requestId)) rede.get(m.params.requestId).bytes = m.params.encodedDataLength;
+});
 
 const TAMANHOS = [
   { papel: 'desktop', w: 1440, h: 900, toque: false, captura: true },
@@ -75,10 +89,32 @@ const TAMANHOS = [
 async function abrir(url, t) {
   await cdp('Emulation.setTouchEmulationEnabled', { enabled: t.toque, ...(t.toque ? { maxTouchPoints: 5 } : {}) });
   await cdp('Emulation.setDeviceMetricsOverride', { width: t.w, height: t.h, deviceScaleFactor: 1, mobile: t.toque });
-  await cdp('Page.navigate', { url });
+  await cdp('Network.setCacheDisabled', { cacheDisabled: t.papel === 'celular' });
+  rede.clear(); statusDocumento = 0;
+  const abriu = await cdp('Page.navigate', { url });
+  if (abriu.result?.errorText) throw new Error(abriu.result.errorText);
   for (let i = 0; i < 50; i++) { await dorme(100); if (await avaliar('document.readyState') === 'complete') break; }
+  if (statusDocumento >= 400) throw new Error(`o endereço respondeu ${statusDocumento}`);
+  // foto com loading="lazy" só carrega perto da tela: sem isto, a medida e a captura da página inteira saem sem ela
+  await avaliar(`Promise.race([Promise.all([...document.images].map(i => { i.loading = 'eager'; return i.complete ? 0 : new Promise(r => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); }); })), new Promise(r => setTimeout(r, 4000))]).then(() => 1)`);
   await avaliar('document.fonts ? document.fonts.ready.then(()=>1) : 1');
   await dorme(250);
+}
+
+// A primeira dobra não mostra o resto da página: num teste real, fotos de catálogo com 1402px de altura passaram porque ninguém viu essa parte
+async function capturarInteira(pasta, t) {
+  const altura = await avaliar('document.documentElement.scrollHeight');
+  const c = await cdp('Page.captureScreenshot', { format: 'jpeg', quality: 80, captureBeyondViewport: true, clip: { x: 0, y: 0, width: t.w, height: Math.min(altura, 12000), scale: 1 } });
+  if (c.result?.data) writeFileSync(join(pasta, `${t.papel}-inteira.jpg`), Buffer.from(c.result.data, 'base64'));
+}
+
+// Quem compra pelo celular paga pelos dados. Limites do kit: 2 MB avisa, 5 MB reprova.
+const MB = 1048576;
+function medirPeso(somar, onde) {
+  const arquivos = [...rede.values()].filter(a => a.bytes > 0).sort((a, b) => b.bytes - a.bytes);
+  const total = arquivos.reduce((n, a) => n + a.bytes, 0), texto = b => `${(b / MB).toFixed(1).replace('.', ',')} MB`;
+  if (total > 2 * MB) somar({ id: 'q-pagina-pesada', nivel: total > 5 * MB ? 'falha' : 'aviso', msg: `A tela baixa ${texto(total)} no celular. Converta as fotos para WebP ou AVIF, no tamanho em que aparecem.`, exemplos: arquivos.slice(0, 3).map(a => `${texto(a.bytes)} ${decodeURIComponent(a.url.split('?')[0].split('/').pop()).slice(0, 40)}`) }, onde);
+  return total;
 }
 
 // Passada de Tab: compara o estilo com foco e sem foco, no elemento e em volta dele
@@ -195,6 +231,8 @@ for (const entrada of args) {
       r.achados.forEach(a => somar(a, r.tamanho));
       medidas[t.papel] = r.medidas;
       if (t.captura) { const c = await cdp('Page.captureScreenshot', { format: 'png' }); writeFileSync(join(pasta, `${t.papel}.png`), Buffer.from(c.result.data, 'base64')); }
+      if (t.papel === 'desktop' || t.papel === 'celular') await capturarInteira(pasta, t);
+      if (t.papel === 'celular') r.medidas.bytes = medirPeso(somar, r.tamanho);
       if (t.papel === 'desktop') {
         const { lista, movimento } = await passarTab();
         const semSinal = lista.filter(f => !f.muda).map(f => f.nome);
@@ -214,7 +252,7 @@ for (const entrada of args) {
     if (erros.length) somar({ id: 'erro-javascript', nivel: 'falha', msg: `${erros.length} erro(s) de JavaScript ao abrir a tela.`, exemplos: [...new Set(erros)].slice(0, 3) }, 'todos');
   } catch (e) { somar({ id: 'nao-abriu', nivel: 'falha', msg: `Não consegui auditar: ${e.message.split('\n')[0]}`, exemplos: [] }, '-'); }
   const lista = [...achados.values()].sort((a, b) => (a.nivel === b.nivel ? 0 : a.nivel === 'falha' ? -1 : 1) || a.id.localeCompare(b.id));
-  const rel = { tela: entrada, capturas: pasta, publicos, falhas: lista.filter(a => a.nivel === 'falha').length, avisos: lista.filter(a => a.nivel === 'aviso').length, achados: lista, medidas };
+  const rel = { tela: entrada, capturas: pasta, publicos, abriu: !achados.has('nao-abriu'), falhas: lista.filter(a => a.nivel === 'falha').length, avisos: lista.filter(a => a.nivel === 'aviso').length, achados: lista, medidas };
   writeFileSync(join(pasta, 'resultado.json'), JSON.stringify(rel, null, 1));
   relatorios.push(rel);
 }
@@ -224,7 +262,7 @@ if (comoJson) console.log(JSON.stringify(relatorios, null, 1));
 else for (const r of relatorios) {
   console.log(`\n${r.tela}\n  ${r.falhas} falha(s), ${r.avisos} aviso(s). Capturas em ${r.capturas}`);
   for (const a of r.achados) { console.log(`  ${a.nivel === 'falha' ? 'FALHA' : 'aviso'}  ${a.id}: ${a.msg} [${a.tamanhos.join(', ')}]`); a.exemplos.forEach(x => console.log(`         - ${x}`)); }
-  const d = r.medidas.desktop; if (d) console.log(`  medidas: fontes ${d.fontes.join(', ')}; tamanhos ${d.tamanhosDeFonte.join(' ')}; ${d.palavrasNaDobra} palavras na dobra`);
+  const d = r.medidas.desktop, peso = r.medidas.celular?.bytes; if (d) console.log(`  medidas: fontes ${d.fontes.join(', ')}; tamanhos ${d.tamanhosDeFonte.join(' ')}; ${d.palavrasNaDobra} palavras na dobra${peso ? `; ${(peso / MB).toFixed(1).replace('.', ',')} MB no celular` : ''}`);
 }
-console.log(`\nNão coberto por este script: leitor de tela real, teste com pessoas, estados que dependem de interação, texto sobre imagem e o que só a cor separa. Olhe prancha.html e leitor-de-tela.txt, e faça o roteiro de references/qualidade/acessibilidade.md.`);
-await encerrar(relatorios.some(r => r.falhas) ? 1 : 0);
+console.log(`\nNão coberto por este script: leitor de tela real, teste com pessoas, estados que dependem de interação, texto sobre imagem e o que só a cor separa. Olhe a página até o fim em desktop-inteira.jpg e celular-inteira.jpg, depois prancha.html e leitor-de-tela.txt, e faça o roteiro de references/qualidade/acessibilidade.md.`);
+await encerrar(relatorios.every(r => !r.abriu) ? 2 : relatorios.some(r => r.falhas) ? 1 : 0);
