@@ -17,10 +17,16 @@ Princípio: **convenção na interação, identidade na expressão.** Como naveg
 
 ## Instalar
 
-Precisa de Node 22 ou mais novo e, enquanto o repositório for privado, de git autenticado com acesso a ele. Dentro do projeto:
+Precisa de Node 22 ou mais novo e de git com acesso ao repositório, que é privado. Clone o kit uma vez, ao lado dos seus projetos:
 
 ```bash
-npx github:gustavomot4/kit-frontend instalar
+git clone https://github.com/gustavomot4/kit-frontend.git
+```
+
+Depois, dentro de cada projeto:
+
+```bash
+node ../kit-frontend/bin/kit.mjs instalar
 ```
 
 Isso coloca a skill em `.agents/skills/kit-frontend/`, cria as pontes de cada agente detectado e `design/correcoes.md`. Nada do projeto é sobrescrito: blocos em arquivos existentes ficam entre marcadores, e `DESIGN.md`, `PRODUTO.md` e `design/correcoes.md` nunca são tocados.
@@ -28,10 +34,10 @@ Isso coloca a skill em `.agents/skills/kit-frontend/`, cria as pontes de cada ag
 Para valer em todos os projetos da máquina:
 
 ```bash
-npx github:gustavomot4/kit-frontend instalar --global
+node ../kit-frontend/bin/kit.mjs instalar --global
 ```
 
-Com o repositório clonado, os mesmos comandos funcionam com `node bin/kit.mjs`, que é o que os comandos abaixo usam. `coletar` precisa do clone, porque grava as correções no próprio kit.
+Para atualizar, rode `git pull` no clone e `node ../kit-frontend/bin/kit.mjs atualizar` no projeto. A instalação com `npx github:` não funciona no npm 12, que bloqueia pacotes vindos de git por padrão.
 
 ### Compatibilidade
 
@@ -60,6 +66,8 @@ Peça o que pediria normalmente: "cria o painel de agendamentos". O agente acha 
 7. **Aprende:** cada reprovação vira regra e é corrigida em todas as telas.
 
 ## Comandos
+
+Rode dentro do clone do kit.
 
 ```bash
 node bin/kit.mjs verificar http://localhost:5173/agenda
