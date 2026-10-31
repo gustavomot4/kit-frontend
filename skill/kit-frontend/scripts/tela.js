@@ -3,7 +3,9 @@
 // a11y-* vem da WCAG 2.2 e da ABNT NBR 17225; g-* vem do perfil de gosto; ia-* vem de references/marca/anti-generico.md; q-* vem de falhas vistas em teste real (docs/testes/2026-10-31-outro-agente).
 ((opcoes = window.__kitOpcoes || {}) => {
   const papel = opcoes.papel || 'desktop';
-  const aprovadas = (opcoes.fontesAprovadas || []).map(f => f.toLowerCase());
+  // linhas de "Do's and Don'ts" que explicam uma escolha; "inter" não pode casar com "interface"
+  const motivos = (opcoes.fontesComMotivo || []).map(l => l.toLowerCase());
+  const temMotivo = f => { const r = new RegExp('(^|[^\\p{L}\\p{N}])' + f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^\\p{L}\\p{N}])', 'u'); return motivos.some(l => r.test(l)); };
   const publicos = opcoes.publicos || [];   // do PRODUTO.md; ver references/qualidade/publicos.md
   const achados = [];
   const achar = (id, nivel, msg, exemplos = []) => achados.push({ id, nivel, msg, exemplos: [...new Set(exemplos)].slice(0, 5) });
@@ -60,7 +62,9 @@
   const familias = contagem(textos, e => cs(e).fontFamily.split(',')[0].replace(/["']/g, '').trim());
   const tamanhos = [...new Set(textos.map(e => num(cs(e).fontSize)))].sort((a, b) => a - b);
   const primeiraDobra = e => { const r = e.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0; };
-  const palavrasDobra = textos.filter(e => primeiraDobra(e) && !e.closest('nav,header,footer,[aria-hidden="true"]')).reduce((n, e) => n + (comTexto.get(e) || '').trim().split(/\s+/).length, 0);
+  // header com o h1 é herói, não cabeçalho: o texto dele conta
+  const foraDaConta = e => e.closest('nav,footer,[aria-hidden="true"]') || (e.closest('header') && !e.closest('header').querySelector('h1'));
+  const palavrasDobra = textos.filter(e => primeiraDobra(e) && !foraDaConta(e)).reduce((n, e) => n + (comTexto.get(e) || '').trim().split(/\s+/).length, 0);
 
   // --- acessibilidade -------------------------------------------------------------------------------
   const interativos = todos.filter(e => e.matches('a[href],button,input:not([type=hidden]),select,textarea,summary,[role=button],[role=link],[role=tab],[role=radio],[role=checkbox],[role=switch],[role=menuitem],[tabindex]:not([tabindex="-1"])'));
@@ -233,6 +237,25 @@
     if (doc && presas.length) achar('g-rolagem-presa', 'aviso', 'Área com rolagem própria dentro de página que também rola: a pessoa fica presa e o resto não aparece (G09).', presas.map(e => `${e.tagName.toLowerCase()}.${String(e.className).split(' ')[0]}`));
     const limite = papel === 'desktop' ? 180 : 110;
     if (palavrasDobra > limite) achar('g-muito-texto', 'aviso', `${palavrasDobra} palavras na primeira dobra (limite ${limite}): muito texto para bater o olho (G03).`);
+
+    // camada fixa estreita, como botão de Libras ou de conversa: o texto que passa por baixo perde letras. Faixa larga é com a11y-camadas-fixas.
+    const comSombra = (r, l = []) => { for (const e of r.querySelectorAll('*')) { l.push(e); if (e.shadowRoot) comSombra(e.shadowRoot, l); } return l; };
+    const camadas = comSombra(document.body).filter(e => { const s = cs(e), r = e.getBoundingClientRect(); return s.position === 'fixed' && s.visibility !== 'hidden' && +s.opacity > 0 && r.width > 2 && r.height > 2 && r.width < innerWidth * .6 && r.height < innerHeight * .6 && r.right > 0 && r.left < innerWidth && r.bottom > 0 && r.top < innerHeight && !e.closest('dialog,[role=dialog],[aria-hidden="true"]'); }).map(e => ({ e, r: e.getBoundingClientRect() }));
+    if (camadas.length) {
+      const fim = Math.max(0, raiz.scrollHeight - innerHeight), folga = 4, sob = new Map();
+      for (const e of textos) for (const n of e.childNodes) {
+        if (n.nodeType !== 3 || !n.textContent.trim() || camadas.some(c => c.e.contains(e))) continue;
+        const g = document.createRange(); g.selectNodeContents(n);
+        for (const t of g.getClientRects()) for (const { r } of camadas) {
+          const dx = Math.min(r.right, t.right) - Math.max(r.left, t.left), meio = (r.top + r.bottom) / 2 / innerHeight;
+          if (dx <= folga) continue;
+          // no meio da tela, conta qualquer ponto da rolagem; nas pontas, só onde rolar não tira o texto de baixo
+          const de = meio > 2 / 3 ? fim : 0, ate = meio < 1 / 3 ? 0 : fim;
+          if (t.top + scrollY - ate < r.bottom - folga && t.bottom + scrollY - de > r.top + folga) sob.set(curto(n.textContent, 24), Math.max(sob.get(curto(n.textContent, 24)) || 0, Math.round(dx)));
+        }
+      }
+      if (sob.size) achar('q-camada-sobre-texto', 'aviso', `${sob.size} texto(s) ficam sob uma camada fixa: quem lê perde letras. Reserve margem no texto ou mude a camada de lugar.`, [...sob].map(([t, px]) => `${px}px sobre "${t}"`));
+    }
   }
   if (papel === 'desktop') {
     const selects = [...document.querySelectorAll('select')].filter(s => s.options.length > 12);
@@ -266,9 +289,12 @@
     // --- cara de IA ----------------------------------------------------------------------------------
     const principal = (familias[0]?.[0] || '').toLowerCase();
     const padrao = ['inter', 'roboto', 'arial', 'helvetica', 'helvetica neue', 'system-ui', '-apple-system', 'segoe ui', 'open sans', 'poppins', 'sans-serif', 'montserrat', 'lato'];
-    if (padrao.includes(principal) && !aprovadas.includes(principal)) achar('ia-fonte-padrao', 'aviso', `Fonte principal "${familias[0][0]}" é escolha padrão de gerador. Se foi decisão, declare no DESIGN.md.`);
-    const servidas = new Set([...(document.fonts || [])].map(f => f.family.replace(/["']/g, '').toLowerCase()));
-    if (principal && !servidas.has(principal) && !['system-ui', '-apple-system', 'ui-sans-serif', 'ui-serif', 'sans-serif', 'serif', 'monospace'].includes(principal) && !aprovadas.includes(principal)) achar('g-fonte-nao-servida', 'aviso', `Fonte "${familias[0][0]}" vem do sistema, não do projeto: em outro aparelho, como um Android, a tela muda de letra. Sirva em WOFF2 ou declare a decisão no DESIGN.md.`);
+    if (padrao.includes(principal) && !temMotivo(principal)) achar('ia-fonte-padrao', 'aviso', `Fonte principal "${familias[0][0]}" é escolha padrão de gerador. Se foi decisão, escreva o motivo em "Do's and Don'ts" no DESIGN.md.`);
+    // @font-face só com local() é a fonte do sistema com outro nome; folha de outra origem não dá para ler
+    const soLocal = new Set(), comArquivo = new Set();
+    for (const f of document.styleSheets) { try { for (const r of f.cssRules) if (r.type === CSSRule.FONT_FACE_RULE) (/url\(/.test(r.style.getPropertyValue('src')) ? comArquivo : soLocal).add(r.style.getPropertyValue('font-family').replace(/["']/g, '').trim().toLowerCase()); } catch { /* outra origem */ } }
+    const servidas = new Set([...(document.fonts || [])].map(f => f.family.replace(/["']/g, '').toLowerCase()).filter(n => comArquivo.has(n) || !soLocal.has(n)));
+    if (principal && !servidas.has(principal) && !['system-ui', '-apple-system', 'ui-sans-serif', 'ui-serif', 'sans-serif', 'serif', 'monospace'].includes(principal) && !temMotivo(principal)) achar('g-fonte-nao-servida', 'aviso', `Fonte "${familias[0][0]}" vem do sistema, não do projeto: em outro aparelho, como um Android, a tela muda de letra. Sirva em WOFF2 ou escreva o motivo em "Do's and Don'ts" no DESIGN.md.`);
     const TW = { indigo: 'eef2ff e0e7ff c7d2fe a5b4fc 818cf8 6366f1 4f46e5 4338ca 3730a3 312e81', violeta: 'f5f3ff ede9fe ddd6fe c4b5fd a78bfa 8b5cf6 7c3aed 6d28d9 5b21b6 4c1d95', roxo: 'faf5ff f3e8ff e9d5ff d8b4fe c084fc a855f7 9333ea 7e22ce 6b21a8 581c87', azul: 'eff6ff dbeafe bfdbfe 93c5fd 60a5fa 3b82f6 2563eb 1d4ed8 1e40af 1e3a8a', cinza: 'f9fafb f3f4f6 e5e7eb d1d5db 9ca3af 6b7280 4b5563 374151 1f2937 111827', ardosia: 'f8fafc f1f5f9 e2e8f0 cbd5e1 94a3b8 64748b 475569 334155 1e293b 0f172a', zinco: 'fafafa f4f4f5 e4e4e7 d4d4d8 a1a1aa 71717a 52525b 3f3f46 27272a 18181b', vermelho: 'fef2f2 fee2e2 fecaca fca5a5 f87171 ef4444 dc2626 b91c1c 991b1b 7f1d1d', verde: 'f0fdf4 dcfce7 bbf7d0 86efac 4ade80 22c55e 16a34a 15803d 166534 14532d', esmeralda: 'ecfdf5 d1fae5 a7f3d0 6ee7b7 34d399 10b981 059669 047857 065f46 064e3b', ambar: 'fffbeb fef3c7 fde68a fcd34d fbbf24 f59e0b d97706 b45309 92400e 78350f' };
     const cores = new Set(); todos.forEach(e => { const s = cs(e); [s.color, s.backgroundColor].forEach(v => { const c = cor(v); if (c.a > .5) cores.add(hex(c)); }); });
     const achadas = {}; for (const [fam, lista] of Object.entries(TW)) { const h = lista.split(' ').filter(x => cores.has('#' + x)); if (h.length) achadas[fam] = h; }
@@ -302,7 +328,7 @@
     const serifada = f => /(^|,\s*)"?serif/i.test(f) || /georgia|times|garamond|playfair|fraunces|cormorant|lora|newsreader|crimson|instrument serif|dm serif/i.test(f.split(',')[0]);
     const fundoDaPagina = [document.body, raiz].map(n => cor(cs(n).backgroundColor)).find(c => c.a > .9);
     const creme = fundoDaPagina && matiz(fundoDaPagina) >= 30 && matiz(fundoDaPagina) <= 60 && luz(fundoDaPagina).l >= .88 && luz(fundoDaPagina).l < .985 && luz(fundoDaPagina).s >= .15;
-    const terracota = [...cores].some(h => { const c = cor(h), { l, s } = luz(c); return matiz(c) >= 8 && matiz(c) <= 28 && s >= .35 && s <= .85 && l >= .35 && l <= .7; });
+    const terracota = [...cores].some(h => { const c = cor(h), { l, s } = luz(c); return matiz(c) >= 8 && matiz(c) <= 28 && s >= .35 && s <= .85 && l >= .22 && l <= .7; });
     const titulo1 = document.querySelector('h1');
     if (creme && terracota && titulo1 && serifada(cs(titulo1).fontFamily)) achar('ia-creme-terracota', 'aviso', 'Fundo creme, título com serifa e acento terracota: virou o padrão de quem foge do índigo.');
     const destaques = [...document.querySelectorAll('h1,h2')].filter(vis).filter(h => (h.textContent || '').trim().split(/\s+/).length >= 3 && [...h.children].some(f => f.matches('em,i,span,mark,strong,b') && (f.textContent || '').trim().split(/\s+/).length <= 2 && (cs(f).color !== cs(h).color || (cs(f).fontStyle === 'italic' && cs(h).fontStyle !== 'italic'))));
@@ -310,7 +336,9 @@
     const enfeitesMono = textos.filter(e => /mono|consolas|courier|menlo|monaco|fira code|cascadia/i.test(cs(e).fontFamily.split(',')[0]) && !e.closest('code,pre,kbd,samp,table,time,data') && !/^[\d\s.,:%/-]+$/.test((comTexto.get(e) || '').trim()));
     if (enfeitesMono.length >= 2) achar('ia-mono-enfeite', 'aviso', `${enfeitesMono.length} texto(s) em monoespaçada fora de código ou dado: enfeite de "técnico".`, enfeitesMono.map(e => curto(e.textContent, 24)));
     const numeracao = textos.filter(e => /^0\d[.)]?$/.test((comTexto.get(e) || '').trim()));
-    if (numeracao.length >= 3) achar('ia-numeracao', 'aviso', `Numeração ${numeracao.slice(0, 3).map(e => e.textContent.trim()).join(', ')}: só vale quando o conteúdo é mesmo uma sequência.`);
+    // identificador fora de ordem (guinchos 01, 03, 02) não é numeração: só conta corrida crescente de três
+    const valores = numeracao.map(e => parseInt((comTexto.get(e) || '').trim(), 10));
+    if (valores.some((v, i) => valores[i + 1] === v + 1 && valores[i + 2] === v + 2)) achar('ia-numeracao', 'aviso',`Numeração ${numeracao.slice(0, 3).map(e => e.textContent.trim()).join(', ')}: só vale quando o conteúdo é mesmo uma sequência.`);
     const durasSombras = todos.filter(e => [...cs(e).boxShadow.matchAll(/\)\s+(-?[\d.]+)px\s+(-?[\d.]+)px\s+0px/g)].some(m => Math.abs(+m[1]) >= 2 && Math.abs(+m[2]) >= 2));
     if (durasSombras.length) achar('ia-sombra-dura', 'aviso', `${durasSombras.length} elemento(s) com sombra dura deslocada, sem desfoque.`, durasSombras.map(e => curto(e.textContent, 20)));
     const vidros = todos.filter(e => /blur/.test(cs(e).backdropFilter || cs(e).webkitBackdropFilter || '') && !/fixed|sticky/.test(cs(e).position) && !e.closest('dialog,[role=dialog]'));

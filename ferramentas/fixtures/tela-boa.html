@@ -6,9 +6,9 @@
 <title>Agenda · Navalha</title>
 <style>
   :root { --papel: #f7f3ea; --tinta: #1d1a16; --apoio: #5c554b; --acao: #7a2e12; --linha: #d9d0bf; --campo: #857a68; }
-  @font-face { font-family: "Navalha Texto"; src: local("Georgia"), local("Times New Roman"); font-display: swap; }
+  @font-face { font-family: "Navalha Texto"; src: url("fontes/public-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
   *, *::before, *::after { box-sizing: border-box; }
-  html { background: var(--papel); color: var(--tinta); font-family: "Navalha Texto", Georgia, serif; line-height: 1.5; }
+  html { background: var(--papel); color: var(--tinta); font-family: "Navalha Texto", system-ui, sans-serif; line-height: 1.5; }
   body { margin: 0; font-size: 1.0625rem; }
   a { color: var(--acao); text-underline-offset: 3px; }
   :focus-visible { outline: 3px solid var(--acao); outline-offset: 2px; }

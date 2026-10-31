@@ -605,9 +605,9 @@ Por baixo, o script trabalha em OKLCH, em que a claridade é perceptualmente uni
 
 Sem fonte definida, siga `references/recursos/fontes.md`: candidatas por personalidade, como testar e como servir.
 
-Sirva a fonte pelo próprio projeto em produção, em WOFF2, com `font-display: swap`. Em protótipo pode vir de CDN. Fontes de CDN mandam o IP do visitante a terceiros, o que pesa na LGPD. A pilha do sistema é uma decisão válida quando há motivo (velocidade, telas de baixo custo): escreva o motivo no `DESIGN.md`.
+Sirva a fonte pelo próprio projeto em produção, em WOFF2, com `font-display: swap`. Em protótipo pode vir de CDN. Fontes de CDN mandam o IP do visitante a terceiros, o que pesa na LGPD. A pilha do sistema é uma decisão válida quando há motivo (velocidade, telas de baixo custo): escreva o motivo em "Do's and Don'ts" no `DESIGN.md`.
 
-**Fonte instalada no seu computador não é identidade.** Corbel, Trebuchet, Verdana e Segoe vêm com o Windows e não existem no Android nem no iPhone: a captura fica bonita e, no celular da pessoa, a tela muda de letra. "Sem CDN" não quer dizer "sem fonte": um WOFF2 com subconjunto latino, servido pelo projeto, não depende de internet externa e funciona em navegador antigo.
+**Fonte instalada no seu computador não é identidade.** Corbel, Trebuchet, Verdana e Segoe vêm com o Windows e não existem no Android nem no iPhone: a captura fica bonita e, no celular da pessoa, a tela muda de letra. `@font-face` com `src: local()` também não conta. "Sem CDN" não quer dizer "sem fonte": um WOFF2 com subconjunto latino, servido pelo projeto, não depende de internet externa e funciona em navegador antigo.
 
 Se usar componentes prontos (shadcn/ui, Radix, React Aria), use o comportamento e a acessibilidade deles e troque a aparência inteira. O visual padrão deles é parte do que hoje se lê como "feito por IA".
 
@@ -836,6 +836,7 @@ Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Ch
 - **Desde as três direções.** O botão ocupa a borda da tela e faz parte do que o dono está escolhendo. Não deixe para depois.
 - **Carregue sem esperar interação.** Quem precisa de Libras precisa ver o botão ao chegar. Use `defer` ou tempo ocioso, nunca "depois do primeiro clique".
 - **Janela baixa.** Com altura até 480px, confira se o botão não cobre conteúdo nem foco.
+- **Celular.** O botão fica no meio da borda direita, e o texto passa por baixo ao rolar (`q-camada-sobre-texto`). Reserve margem à direita, ou diga no relatório por que não.
 - **Depende de terceiros.** O script baixa arquivos de `vlibras.gov.br` e de `cdn.jsdelivr.net`, e o serviço pode sair do ar. Cite na política de privacidade. O restante da tela não pode depender dele.
 - **Não basta.** Não é atestado de acessibilidade. Há também opção comercial (Hand Talk), que não foi avaliada.
 
@@ -1319,7 +1320,7 @@ Parta das três palavras de `MARCA.md`.
 | Manual, de caderno | Caveat, Kalam, Gloria Hallelujah. Só em detalhe, nunca em texto corrido | `-variable/caveat`, `/kalam`, `/gloria-hallelujah` |
 | Leitura em primeiro lugar | Atkinson Hyperlegible Next, Lexend. Boas para baixa visão e público amplo | `-variable/atkinson-hyperlegible-next`, `-variable/lexend` |
 
-Por inércia, evite: Inter, Roboto, Poppins, Montserrat, Open Sans e Lato, que o verificador aponta. Fraunces e Space Grotesk também viraram padrão. Se uma delas for a escolha certa, escreva o motivo no `DESIGN.md`.
+Por inércia, evite: Inter, Roboto, Poppins, Montserrat, Open Sans e Lato, que o verificador aponta. Fraunces e Space Grotesk também viraram padrão. Se uma delas for a escolha certa, escreva o motivo em "Do's and Don'ts" no `DESIGN.md`.
 
 ## Como escolher
 
@@ -1454,7 +1455,7 @@ components:
 
 ## Do's and Don'ts
 
-<Decisões que parecem exceção, com o motivo: "Usamos Inter porque…". O verificador aceita fontes declaradas aqui.>
+<Decisões que parecem exceção, com o motivo: "Usamos Inter porque…". O verificador só aceita a fonte citada aqui com o motivo na mesma linha.>
 ```
 
 

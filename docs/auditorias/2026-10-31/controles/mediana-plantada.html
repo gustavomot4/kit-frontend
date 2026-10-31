@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curral Velho: queijo Canastra</title>
+<style>
+  :root { --fundo: #fbfbf8; --tinta: #23261f; --apoio: #565a4f; --acao: #2f6b45; --linha: #dcded4; }
+  @font-face { font-family: "Marca Texto"; src: local("Segoe UI"), local("Arial"); font-display: swap; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--fundo); color: var(--tinta); font-family: "Marca Texto", Arial, sans-serif; line-height: 1.5; }
+  body { margin: 0; font-size: 1.0625rem; }
+  a { color: var(--acao); text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--acao); outline-offset: 2px; }
+  .pular { position: absolute; left: -999px; top: 8px; background: #fff; padding: .75rem 1rem; }
+  .pular:focus { left: 8px; }
+  header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 2rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--linha); }
+  header strong { font-size: 1.375rem; }
+  nav ul { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin: 0; padding: 0; list-style: none; }
+  nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .5rem; }
+  main { max-width: 1120px; margin: 0 auto; padding: 4rem 1.5rem; }
+  h1 { margin: 0; font-size: 3rem; line-height: 1.1; max-width: 20ch; }
+  h2 { margin: 3.5rem 0 1rem; font-size: 1.75rem; }
+  h3 { margin: 0 0 .5rem; font-size: 1.25rem; }
+  .sub { color: var(--apoio); max-width: 55ch; margin: 1rem 0 1.5rem; }
+  .botao { display: inline-flex; align-items: center; min-height: 48px; padding: 0 1.25rem; background: var(--acao); color: #fff; font-weight: 700; text-decoration: none; }
+  .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1.5rem; }
+  .cartao { padding: 1.5rem; border: 1px solid var(--linha); background: #fff; }
+  .cartao p { margin: 0; color: var(--apoio); }
+  .preco { font-weight: 700; color: var(--tinta); margin-top: .75rem !important; }
+  footer { border-top: 1px solid var(--linha); padding: 2rem 1.5rem; text-align: center; color: var(--apoio); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<header>
+  <strong>Curral Velho</strong>
+  <nav aria-label="Principal"><ul><li><a href="#queijos">Queijos</a></li><li><a href="#entrega">Entrega</a></li><li><a href="#contato">Contato</a></li></ul></nav>
+</header>
+<main id="conteudo">
+  <h1>Queijo Canastra direto de quem faz</h1>
+  <p class="sub">Três gerações em São Roque de Minas. Agora com entrega em São Paulo e Belo Horizonte.</p>
+  <a class="botao" href="https://wa.me/5537999990000">Pedir pelo WhatsApp</a>
+
+  <h2 id="queijos">Nossos queijos</h2>
+  <div class="grade">
+    <div class="cartao"><h3>21 dias</h3><p>Macio e suave, para o dia a dia.</p><p class="preco">R$ 98</p></div>
+    <div class="cartao"><h3>45 dias</h3><p>Mais firme, com sabor presente.</p><p class="preco">R$ 128</p></div>
+    <div class="cartao"><h3>90 dias</h3><p>Curado e intenso, para quem conhece.</p><p class="preco">R$ 165</p></div>
+  </div>
+
+  <h2 id="entrega">Como funciona a entrega</h2>
+  <div class="grade">
+    <div class="cartao"><h3>Pedido</h3><p>Você escolhe pelo WhatsApp e combina a quantidade.</p></div>
+    <div class="cartao"><h3>Envio</h3><p>Enviamos toda terça, por transportadora refrigerada.</p></div>
+    <div class="cartao"><h3>Chegada</h3><p>Entregamos em até 3 dias úteis.</p></div>
+  </div>
+
+  <h2 id="contato">Fale com a gente</h2>
+  <p>WhatsApp (37) 99999-0000. Queijaria registrada no IMA.</p>
+  <a class="botao" href="https://wa.me/5537999990000">Pedir pelo WhatsApp</a>
+</main>
+<footer>Curral Velho, São Roque de Minas, MG</footer>
+</body>
+</html>

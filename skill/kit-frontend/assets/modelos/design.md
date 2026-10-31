@@ -86,4 +86,4 @@ components:
 
 ## Do's and Don'ts
 
-<Decisões que parecem exceção, com o motivo: "Usamos Inter porque…". O verificador aceita fontes declaradas aqui.>
+<Decisões que parecem exceção, com o motivo: "Usamos Inter porque…". O verificador só aceita a fonte citada aqui com o motivo na mesma linha.>

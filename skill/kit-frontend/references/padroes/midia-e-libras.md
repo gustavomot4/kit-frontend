@@ -25,6 +25,7 @@ Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Ch
 - **Desde as três direções.** O botão ocupa a borda da tela e faz parte do que o dono está escolhendo. Não deixe para depois.
 - **Carregue sem esperar interação.** Quem precisa de Libras precisa ver o botão ao chegar. Use `defer` ou tempo ocioso, nunca "depois do primeiro clique".
 - **Janela baixa.** Com altura até 480px, confira se o botão não cobre conteúdo nem foco.
+- **Celular.** O botão fica no meio da borda direita, e o texto passa por baixo ao rolar (`q-camada-sobre-texto`). Reserve margem à direita, ou diga no relatório por que não.
 - **Depende de terceiros.** O script baixa arquivos de `vlibras.gov.br` e de `cdn.jsdelivr.net`, e o serviço pode sair do ar. Cite na política de privacidade. O restante da tela não pode depender dele.
 - **Não basta.** Não é atestado de acessibilidade. Há também opção comercial (Hand Talk), que não foi avaliada.
 

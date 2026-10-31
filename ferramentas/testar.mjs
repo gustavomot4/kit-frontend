@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, readFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { razao, lerCor, paresDoDesign } from '../skill/kit-frontend/scripts/contraste.mjs';
 
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -17,6 +17,7 @@ const BOA = join(raiz, 'ferramentas', 'fixtures', 'tela-boa.html');
 const SONDA_A11Y = join(raiz, 'ferramentas', 'fixtures', 'sonda-acessibilidade.html');
 const SONDA_IA = join(raiz, 'ferramentas', 'fixtures', 'sonda-cara-de-ia.html');
 const SONDA_FOTOS = join(raiz, 'ferramentas', 'fixtures', 'sonda-fotos.html');
+const SONDA_CAMADA = join(raiz, 'ferramentas', 'fixtures', 'sonda-camada-fixa.html');
 
 test('instala num projeto vazio com skill, pontes e correções', () => {
   const p = temp();
@@ -254,13 +255,79 @@ test('anel de foco sem contraste contra o fundo é falha', () => {
   rmSync(p, { recursive: true, force: true });
 });
 
-test('fonte declarada no DESIGN.md deixa de ser aviso', () => {
+test('fonte só deixa de ser aviso com o motivo em "Do\'s and Don\'ts"', () => {
   const p = temp();
-  writeFileSync(join(p, 'DESIGN.md'), '---\ntypography:\n  body:\n    fontFamily: Inter\n---\n');
   writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;font-family:Inter,sans-serif"><main style="padding:24px"><h1>Título</h1><p>Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura.</p><a href="#" style="display:inline-block;padding:14px">Abrir o relatório</a></main></body></html>');
-  const r = kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--design', join(p, 'DESIGN.md'), '--json');
-  const [t] = JSON.parse(r.stdout.slice(0, r.stdout.lastIndexOf('\n\nNão coberto')));
-  assert.ok(!t.achados.some(a => a.id === 'ia-fonte-padrao'));
+  const ids = conteudo => { writeFileSync(join(p, 'DESIGN.md'), conteudo); return lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--design', join(p, 'DESIGN.md'), '--json'))[0].achados.map(a => a.id); };
+  const tokens = '---\ntypography:\n  body:\n    fontFamily: Inter\n---\n\n';
+  assert.ok(ids(tokens).includes('ia-fonte-padrao'), 'citar nos tokens não basta');
+  assert.ok(ids(`${tokens}## Typography\n\nUsamos Inter porque sim.\n`).includes('g-fonte-nao-servida'), 'fora de "Do\'s and Don\'ts" não conta');
+  assert.ok(ids(`${tokens}## Do's and Don'ts\n\n- Usamos Inter nos títulos.\n`).includes('ia-fonte-padrao'), 'sem motivo não conta');
+  assert.ok(ids(`${tokens}## Do's and Don'ts\n\n- Usamos Barlow porque a interface é densa.\n`).includes('ia-fonte-padrao'), '"interface" não aprova a Inter');
+  const comMotivo = ids(`${tokens}## Do's and Don'ts\n\n- Usamos Inter porque o sistema da empresa já a serve em todas as telas.\n`);
+  assert.ok(!comMotivo.includes('ia-fonte-padrao') && !comMotivo.includes('g-fonte-nao-servida'), 'com o motivo, é decisão');
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('fonte em local() não conta como servida; arquivo do projeto, sim', () => {
+  const p = temp();
+  const pagina = src => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>@font-face{font-family:"Marca Texto";src:${src};font-weight:100 900}body{margin:0;font-family:"Marca Texto",sans-serif}</style></head><body><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1></main></body></html>`;
+  writeFileSync(join(p, 'local.html'), pagina('local("Georgia")'));
+  writeFileSync(join(p, 'arquivo.html'), pagina(`url("${pathToFileURL(join(raiz, 'ferramentas/fixtures/fontes/public-sans-latin-wght-normal.woff2')).href}") format("woff2")`));
+  const [local, arquivo] = lerRelatorio(kit('verificar', join(p, 'local.html'), join(p, 'arquivo.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(local.achados.some(a => a.id === 'g-fonte-nao-servida'), 'local() é a fonte do sistema com outro nome');
+  assert.ok(!arquivo.achados.some(a => a.id === 'g-fonte-nao-servida'), 'WOFF2 do projeto é servida');
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('herói dentro de header conta palavras; cabeçalho de navegação, não', () => {
+  const p = temp();
+  const muitas = 'Texto do herói para medir a primeira dobra. '.repeat(25);
+  const pagina = (cabecalho, corpo) => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><header>${cabecalho}</header><main id="c">${corpo}</main></body></html>`;
+  writeFileSync(join(p, 'heroi.html'), pagina(`<h1>Título</h1><p>${muitas}</p>`, ''));
+  writeFileSync(join(p, 'barra.html'), pagina(`<p>${muitas}</p>`, '<h1>Título</h1>'));
+  const [heroi, barra] = lerRelatorio(kit('verificar', join(p, 'heroi.html'), join(p, 'barra.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(heroi.achados.some(a => a.id === 'g-muito-texto'), 'o texto do herói conta');
+  assert.ok(!barra.achados.some(a => a.id === 'g-muito-texto'), 'header sem h1 fica fora da conta');
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('creme, serifa e ferrugem escura ainda são o mesmo clichê', () => {
+  const p = temp();
+  writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#f5eedf;color:#241a12"><a href="#c" style="display:inline-block;padding:14px;color:#241a12">Pular para o conteúdo</a><main id="c"><h1 style="font-family:Georgia,serif">Queijo de família</h1><a href="#x" style="display:inline-block;padding:14px;background:#8c3a13;color:#fff">Pedir</a></main></body></html>');
+  const [t] = lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(t.achados.some(a => a.id === 'ia-creme-terracota'));
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('identificador fora de ordem não é numeração', () => {
+  const p = temp();
+  const pagina = numeros => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1>${numeros.map(n => `<div><span>${n}</span></div>`).join('')}</main></body></html>`;
+  writeFileSync(join(p, 'ids.html'), pagina(['01', '03', '02', '04', '07', '05']));
+  writeFileSync(join(p, 'seq.html'), pagina(['01', '02', '03']));
+  const [ids, seq] = lerRelatorio(kit('verificar', join(p, 'ids.html'), join(p, 'seq.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(!ids.achados.some(a => a.id === 'ia-numeracao'));
+  assert.ok(seq.achados.some(a => a.id === 'ia-numeracao'));
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('botão fixo em shadow DOM: o foco de dentro conta, e o texto sob ele é apontado', () => {
+  const s = temp();
+  const [sonda] = lerRelatorio(kit('verificar', SONDA_CAMADA, '--saida', s, '--json'));
+  const camada = sonda.achados.find(a => a.id === 'q-camada-sobre-texto');
+  assert.equal(camada?.nivel, 'aviso'); assert.match(camada.exemplos.join(), /Texto que passa/); assert.ok(camada.tamanhos.includes('375x812'));
+  for (const id of ['a11y-foco-invisivel', 'a11y-foco-encoberto', 'a11y-foco-contraste']) assert.ok(!sonda.achados.some(a => a.id === id), id);
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('botão no canto só é apontado onde rolar não tira o texto de baixo', () => {
+  const p = temp();
+  const pagina = fim => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;font:1.125rem/1.6 sans-serif"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c" style="padding:16px${fim}"><h1>Título</h1>${'<p>Texto da página com largura inteira para encostar no botão que fica no canto da tela do celular.</p>'.repeat(14)}<p style="text-align:right">Total do pedido</p></main><a href="#n" style="position:fixed;right:16px;bottom:16px;width:96px;height:48px;background:#14304f;color:#fff;display:flex;align-items:center;justify-content:center">Novo</a></body></html>`;
+  writeFileSync(join(p, 'folga.html'), pagina(';padding-bottom:96px'));
+  writeFileSync(join(p, 'cobre.html'), pagina(''));
+  const [folga, cobre] = lerRelatorio(kit('verificar', join(p, 'folga.html'), join(p, 'cobre.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(!folga.achados.some(a => a.id === 'q-camada-sobre-texto'), 'com folga no fim, rolar resolve');
+  assert.ok(cobre.achados.some(a => a.id === 'q-camada-sobre-texto'), 'sem folga, o fim da página fica coberto');
   rmSync(p, { recursive: true, force: true });
 });
 

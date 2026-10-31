@@ -1,0 +1,12 @@
+{
+ "Tela 1": "q2",
+ "Tela 2": "q1",
+ "Tela 3": "g2",
+ "Tela 4": "g1",
+ "origem": {
+  "q1": "queijaria com kit",
+  "q2": "queijaria sem kit",
+  "g1": "guincho com kit",
+  "g2": "guincho sem kit"
+ }
+}

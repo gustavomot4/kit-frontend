@@ -66,8 +66,8 @@ Por baixo, o script trabalha em OKLCH, em que a claridade é perceptualmente uni
 
 Sem fonte definida, siga `references/recursos/fontes.md`: candidatas por personalidade, como testar e como servir.
 
-Sirva a fonte pelo próprio projeto em produção, em WOFF2, com `font-display: swap`. Em protótipo pode vir de CDN. Fontes de CDN mandam o IP do visitante a terceiros, o que pesa na LGPD. A pilha do sistema é uma decisão válida quando há motivo (velocidade, telas de baixo custo): escreva o motivo no `DESIGN.md`.
+Sirva a fonte pelo próprio projeto em produção, em WOFF2, com `font-display: swap`. Em protótipo pode vir de CDN. Fontes de CDN mandam o IP do visitante a terceiros, o que pesa na LGPD. A pilha do sistema é uma decisão válida quando há motivo (velocidade, telas de baixo custo): escreva o motivo em "Do's and Don'ts" no `DESIGN.md`.
 
-**Fonte instalada no seu computador não é identidade.** Corbel, Trebuchet, Verdana e Segoe vêm com o Windows e não existem no Android nem no iPhone: a captura fica bonita e, no celular da pessoa, a tela muda de letra. "Sem CDN" não quer dizer "sem fonte": um WOFF2 com subconjunto latino, servido pelo projeto, não depende de internet externa e funciona em navegador antigo.
+**Fonte instalada no seu computador não é identidade.** Corbel, Trebuchet, Verdana e Segoe vêm com o Windows e não existem no Android nem no iPhone: a captura fica bonita e, no celular da pessoa, a tela muda de letra. `@font-face` com `src: local()` também não conta. "Sem CDN" não quer dizer "sem fonte": um WOFF2 com subconjunto latino, servido pelo projeto, não depende de internet externa e funciona em navegador antigo.
 
 Se usar componentes prontos (shadcn/ui, Radix, React Aria), use o comportamento e a acessibilidade deles e troque a aparência inteira. O visual padrão deles é parte do que hoje se lê como "feito por IA".

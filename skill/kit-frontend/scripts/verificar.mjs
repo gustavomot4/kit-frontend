@@ -43,8 +43,9 @@ function acharNavegador() {
 const exe = acharNavegador();
 if (!exe) { console.error('Não achei Chrome, Edge nem Chromium. Defina CHROME_PATH, ou cole scripts/tela.js no console do navegador.'); process.exit(2); }
 
-// fontes declaradas no DESIGN.md foram decisão, não padrão de gerador
-const fontesAprovadas = existsSync(arquivoDesign) ? [...readFileSync(arquivoDesign, 'utf8').matchAll(/fontFamily:\s*["']?([^"'\n,]+)/g)].map(m => m[1].trim()) : [];
+// fonte é decisão quando o motivo está em "Do's and Don'ts" do DESIGN.md; só citar nos tokens não basta
+const decisoes = existsSync(arquivoDesign) ? /^## Do['’]s and Don['’]ts[^\n]*\n([\s\S]*?)(?=^## |(?![\s\S]))/m.exec(readFileSync(arquivoDesign, 'utf8').replace(/\r\n/g, '\n'))?.[1] || '' : '';
+const fontesComMotivo = decisoes.split('\n').filter(l => /\b(porque|pois|motivo|por causa|por isso|j[aá] que)\b/i.test(l));
 const tela = readFileSync(join(aqui, 'tela.js'), 'utf8');
 // para quem é a tela: muda o rigor de algumas checagens (references/qualidade/publicos.md)
 const produto = existsSync(arquivoProduto) ? readFileSync(arquivoProduto, 'utf8') : '';
@@ -119,10 +120,13 @@ function medirPeso(somar, onde) {
 
 // Passada de Tab: compara o estilo com foco e sem foco, no elemento e em volta dele
 const lerFoco = `(() => {
-  const e = document.activeElement; if (!e || e === document.body) return null;
-  const P = ['outlineStyle','outlineWidth','outlineColor','boxShadow','borderTopColor','borderTopWidth','backgroundColor','color','textDecorationLine'];
+  let e = document.activeElement; if (!e || e === document.body) return null;
+  // botão de terceiros, como o do VLibras, vive num shadow DOM: o foco de verdade está lá dentro
+  while (e.shadowRoot && e.shadowRoot.activeElement) e = e.shadowRoot.activeElement;
+  const pai = n => n.parentElement || n.getRootNode().host || null;
+  const P =['outlineStyle','outlineWidth','outlineColor','boxShadow','borderTopColor','borderTopWidth','backgroundColor','color','textDecorationLine'];
   const foto = n => n ? P.map(p => getComputedStyle(n)[p]).join('|') + getComputedStyle(n,'::after').boxShadow + getComputedStyle(n,'::after').outlineStyle + getComputedStyle(n,'::before').boxShadow : '';
-  const cadeia = [e]; for (let n = e.parentElement, i = 0; n && i < 6; n = n.parentElement, i++) cadeia.push(n);
+  const cadeia = [e]; for (let n = pai(e), i = 0; n && i < 6; n = pai(n), i++) cadeia.push(n);
   // contraste do anel contra o fundo em que ele é desenhado; anel duplo com box-shadow fica de fora
   const ctx = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
   const cor = c => { ctx.clearRect(0, 0, 1, 1); ctx.fillStyle = '#000'; ctx.fillStyle = c; ctx.fillRect(0, 0, 1, 1); const d = ctx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255]; };
@@ -132,14 +136,14 @@ const lerFoco = `(() => {
   // campo invisível (opacidade 0) não pinta o próprio anel: quem desenha é o rótulo em volta
   if (est.outlineStyle !== 'none' && parseFloat(est.outlineWidth) >= 1 && est.boxShadow === 'none' && +est.opacity > 0) {
     const a = cor(est.outlineColor); let f = [255, 255, 255, 1], medivel = a[3] === 1;
-    for (let n = parseFloat(est.outlineOffset) < 0 ? e : e.parentElement; n; n = n.parentElement) { const st = getComputedStyle(n); if (st.backgroundImage !== 'none') { medivel = false; break; } const c = cor(st.backgroundColor); if (c[3] === 1) { f = c; break; } }
+    for (let n = parseFloat(est.outlineOffset) < 0 ? e : pai(e); n; n = pai(n)) { const st = getComputedStyle(n); if (st.backgroundImage !== 'none') { medivel = false; break; } const c = cor(st.backgroundColor); if (c[3] === 1) { f = c; break; } }
     if (medivel) { const [x, y] = [lum(a), lum(f)].sort((p, q) => q - p); anel = (x + .05) / (y + .05); }
   }
   const com = cadeia.map(foto); e.blur(); const sem = cadeia.map(foto); e.focus();
   const r = e.getBoundingClientRect();
   const pontos = [[r.left + r.width / 2, r.top + r.height / 2], [r.left + 3, r.top + 3], [r.right - 3, r.top + 3], [r.left + 3, r.bottom - 3], [r.right - 3, r.bottom - 3]];
   const dentro = pontos.filter(([x, y]) => x >= 0 && y >= 0 && x < innerWidth && y < innerHeight);
-  const descoberto = dentro.some(([x, y]) => { const n = document.elementFromPoint(x, y); return n && (n === e || e.contains(n) || n.contains(e)); });
+  const descoberto = dentro.some(([x, y]) => { const n = e.getRootNode().elementFromPoint(x, y); return n && (n === e || e.contains(n) || n.contains(e)); });
   return { nome: (e.getAttribute('aria-label') || e.textContent || e.value || e.name || e.tagName).trim().replace(/\\s+/g,' ').slice(0, 30), muda: com.some((v, i) => v !== sem[i]), encoberto: !descoberto && dentro.length > 0, anel };
 })()`;
 async function passarTab(paradas = 14) {
@@ -226,7 +230,7 @@ for (const entrada of args) {
   try {
     for (const t of TAMANHOS) {
       await abrir(url, t);
-      await avaliar(`window.__kitOpcoes = ${JSON.stringify({ papel: t.papel, fontesAprovadas, publicos, superficie })}`);
+      await avaliar(`window.__kitOpcoes = ${JSON.stringify({ papel: t.papel, fontesComMotivo, publicos, superficie })}`);
       const r = await avaliar(tela);
       r.achados.forEach(a => somar(a, r.tamanho));
       medidas[t.papel] = r.medidas;
