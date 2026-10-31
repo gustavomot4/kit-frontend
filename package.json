@@ -1,6 +1,6 @@
 {
   "name": "kit-frontend",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Artefatos para qualquer agente criar frontend com identidade própria, padrões de mercado e acessibilidade verificada.",
   "private": true,
   "repository": { "type": "git", "url": "git+https://github.com/gustavomot4/kit-frontend.git" },

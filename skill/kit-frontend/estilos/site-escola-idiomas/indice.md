@@ -1,6 +1,6 @@
 # Índice do estilo site-escola-idiomas
 
-Gerado de `prds/site-escola-idiomas/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/estilos.md`.
+Gerado de `prds/site-escola-idiomas/prd.md` por `kit empacotar`. Não edite aqui. Abra só o que a tarefa pede e confira as ressalvas em `references/recursos/estilos.md`.
 
 | Seção | Arquivo | Tokens |
 | --- | --- | --- |
@@ -31,4 +31,4 @@ Gerado de `prds/site-escola-idiomas/prd.md` por `kit empacotar`. Não edite aqui
 | 10. Checklist de aceite | `24-10-checklist-de-aceite.md` | 1070 |
 | Aviso de uso | `25-aviso-de-uso.md` | 162 |
 
-Exemplos em HTML: `exemplos/home.html`, `exemplos/pagina-de-curso.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/estilos.md`).
+Exemplos em HTML: `exemplos/home.html`, `exemplos/pagina-de-curso.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/recursos/estilos.md`).

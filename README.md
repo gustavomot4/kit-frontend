@@ -4,14 +4,16 @@ Artefatos que qualquer agente de código usa para criar frontend com a sua cara,
 
 | A causa do retrabalho | O que o kit faz |
 | --- | --- |
+| Visual decidido sem saber o que a marca quer dizer | [Brief de marca](skill/kit-frontend/references/marca/criar-marca.md) com mensagem, personas, concorrentes e voz, antes de qualquer tela |
+| Pessoa sem fonte, cor, voz nem mensagem | [Caminho para quem não tem nada](skill/kit-frontend/references/marca/criar-marca.md#quando-a-pessoa-não-tem-nada): perguntas simples e opções para escolher, com [gerador de paleta](skill/kit-frontend/scripts/paleta.mjs) e [guia de fontes](skill/kit-frontend/references/recursos/fontes.md) |
 | Código antes de a direção visual ser aprovada | Três direções em imagem e tela-modelo: o agente para e espera |
-| Gosto que precisa ser repetido a cada projeto | [Perfil de gosto](skill/kit-frontend/references/gosto.md) tirado das suas reprovações reais |
+| Gosto que precisa ser repetido a cada projeto | [Perfil de gosto](skill/kit-frontend/references/gosto/perfil.md) tirado das suas reprovações reais |
 | "Está pronto" sem prova | [Verificador](skill/kit-frontend/scripts/verificar.mjs) que abre a tela no navegador e mede |
 | Correção numa tela, esquecida nas outras | Toda reprovação vira regra em `design/correcoes.md` e volta para o kit |
-| Cara de IA | [Lista do que denuncia](skill/kit-frontend/references/anti-generico.md) e [método de identidade](skill/kit-frontend/references/identidade.md) |
-| Reinventar o que já existe | [Padrões](skill/kit-frontend/references/) tirados do [benchmark](pesquisa/benchmark.md) |
-| Tela correta, mas sem impacto | [Criatividade](skill/kit-frontend/references/criatividade.md), medida [nos sites que você admira](pesquisa/referencias-sites.md) |
-| Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/bibliotecas.md) |
+| Cara de IA | [Lista do que denuncia](skill/kit-frontend/references/marca/anti-generico.md) e [método de identidade](skill/kit-frontend/references/marca/identidade.md) |
+| Reinventar o que já existe | [Padrões](skill/kit-frontend/references/) tirados do [benchmark](docs/pesquisa/benchmark.md) |
+| Tela correta, mas sem impacto | [Criatividade](skill/kit-frontend/references/marca/criatividade.md), medida [nos sites que você admira](docs/pesquisa/referencias-sites.md) |
+| Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/recursos/bibliotecas.md) |
 
 Princípio: **convenção na interação, identidade na expressão.** Como navegar e preencher segue o que as pessoas conhecem; tipografia, cor, forma e voz são do produto.
 
@@ -58,12 +60,13 @@ Force outros agentes com `--agentes cursor,copilot` ou `--agentes todos`. Testei
 Peça o que pediria normalmente: "cria o painel de agendamentos". O agente acha a skill e segue as etapas:
 
 1. **Entende** o produto em `PRODUTO.md`, com no máximo 5 perguntas.
-2. **Mostra três direções** em imagem. Você escolhe ou mistura.
-3. **Trava** a decisão em `DESIGN.md`, o formato aberto do Google.
-4. **Constrói a tela-modelo** em código. Você aprova.
-5. **Constrói o resto**, por entregas de até 3 telas, consultando os padrões.
-6. **Verifica** cada tela e mostra o resultado real.
-7. **Aprende:** cada reprovação vira regra e é corrigida em todas as telas.
+2. **Define a marca** em `MARCA.md`: mensagem, personas, concorrentes, personalidade e voz. Você confirma.
+3. **Mostra três direções** em imagem. Você escolhe ou mistura.
+4. **Trava** a decisão em `DESIGN.md`, o formato aberto do Google, e faz o kit de identidade: logotipo, ícone, fontes e manual.
+5. **Constrói a tela-modelo** em código. Você aprova.
+6. **Constrói o resto**, por entregas de até 3 telas, consultando os padrões.
+7. **Verifica** cada tela e mostra o resultado real.
+8. **Aprende:** cada reprovação vira regra e é corrigida em todas as telas.
 
 ## Comandos
 
@@ -78,6 +81,18 @@ node bin/kit.mjs contraste DESIGN.md
 ```
 
 ```bash
+node bin/kit.mjs marca ../meu-projeto
+```
+
+```bash
+node bin/kit.mjs paleta "#0e5f4b"
+```
+
+```bash
+node bin/kit.mjs referencia https://site-de-que-voce-gosta.com.br
+```
+
+```bash
 node bin/kit.mjs coletar ../meu-projeto
 ```
 
@@ -89,7 +104,7 @@ node bin/kit.mjs empacotar
 
 ## Estilos de partida
 
-Receitas completas, extraídas de produtos reais. Dão estrutura e medidas; a identidade vem do `DESIGN.md`. [Quando usar cada um e o que trocar antes](skill/kit-frontend/references/estilos.md).
+Receitas completas, extraídas de produtos reais. Dão estrutura e medidas; a identidade vem do `DESIGN.md`. [Quando usar cada um e o que trocar antes](skill/kit-frontend/references/recursos/estilos.md).
 
 | PRD | Use para | Versão | Exemplos |
 | --- | --- | --- | --- |
@@ -99,30 +114,45 @@ Receitas completas, extraídas de produtos reais. Dão estrutura e medidas; a id
 | [Sistema de clínica no estilo conversa](prds/sistema-clinica-conversa/prd.md) | Sistema de atendimento com agenda, usado pela recepção no computador e no celular | 2.0.0 (rascunho) | [hoje](prds/sistema-clinica-conversa/exemplos/hoje.png) · [agenda](prds/sistema-clinica-conversa/exemplos/agenda-semana.png) · [celular](prds/sistema-clinica-conversa/exemplos/hoje-celular.png) |
 | [Aplicativo acessível orientado a tarefas](prds/app-tarefas-acessivel/prd.md) | Aplicativos de atendimento, catálogos, comunidades e solicitações, com controles grandes, formulários por etapas e três temas | 1.0.0 (rascunho) | [catálogo](prds/app-tarefas-acessivel/exemplos/catalogo.png) · [etapa de formulário](prds/app-tarefas-acessivel/exemplos/etapa.png) |
 
-Marcas, nomes e dados das telas de exemplo são fictícios. Os exemplos têm falhas conhecidas, listadas em [pendências](pesquisa/pendencias.md).
+Marcas, nomes e dados das telas de exemplo são fictícios. O que ainda falha está em [pendências](docs/pendencias.md).
 
 ## Estrutura
 
 ```
 .
+├── README.md                 o que é e como instalar
+├── AGENTS.md                 como trabalhar neste repositório
+├── package.json              metadados do comando
+├── bin/kit.mjs               instalador e comandos
 ├── skill/kit-frontend/       o que é instalado nos projetos
 │   ├── SKILL.md              entrada: etapas e portões
-│   ├── references/           gosto, identidade, anti-genérico, acessibilidade, padrões
-│   ├── assets/               modelos de DESIGN.md, PRODUTO.md e correções
-│   ├── scripts/              verificador e contraste
+│   ├── references/
+│   │   ├── gosto/            perfil do dono e correções coletadas
+│   │   ├── marca/            criar a marca, identidade, criatividade, anti-genérico
+│   │   ├── padroes/          uma ficha por tipo de tela
+│   │   ├── qualidade/        acessibilidade
+│   │   └── recursos/         bibliotecas, fontes e estilos de partida
+│   ├── assets/
+│   │   ├── modelos/          MARCA.md, DESIGN.md, PRODUTO.md, correções, mídia
+│   │   └── exemplos/         marca e design preenchidos
+│   ├── scripts/              verificador, contraste, paleta, referências, marca, logotipo
 │   └── estilos/              PRDs por seção (gerado)
-├── bin/kit.mjs               instalador e comandos
+├── prds/                     fonte dos estilos, com exemplos e o modelo de PRD novo
 ├── dist/                     prompt único e llms.txt (gerado)
-├── prds/                     fonte dos estilos, com exemplos
-├── pesquisa/                 benchmark, fontes e pendências
-├── auditorias/               registro das rodadas de auditoria
-├── modelos/                  ponto de partida para um estilo novo
-└── ferramentas/              validador do repositório e testes
+├── docs/
+│   ├── CONTRIBUTING.md       o padrão do repositório
+│   ├── pendencias.md         o que falta fazer
+│   ├── pesquisa/             benchmark e medições dos sites
+│   ├── testes/               calibração e teste cego, com telas e relatório
+│   └── auditorias/           registro das rodadas de auditoria
+└── ferramentas/              validador do repositório, testes e fixtures
 ```
+
+Na raiz fica só o que uma convenção exige ali. O validador recusa arquivo solto.
 
 ## Mudar o kit
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) e [AGENTS.md](AGENTS.md). Antes de concluir:
+Ver [CONTRIBUTING.md](docs/CONTRIBUTING.md) e [AGENTS.md](AGENTS.md). Antes de concluir:
 
 ```bash
 node bin/kit.mjs empacotar
@@ -138,5 +168,5 @@ node ferramentas/testar.mjs
 
 ## Auditorias
 
-- [Rodada de 2026-10-09](auditorias/2026-10-09/relatorio.md): 168 achados nas versões 1.0.0 de três PRDs. As correções estão no `CHANGELOG.md` de cada um.
-- Sem auditoria, por isso em `rascunho`: `app-tarefas-acessivel` e `sistema-clinica-conversa`. Os três estáveis estão em 2.x e aguardam nova rodada.
+- [Rodada de 2026-10-09](docs/auditorias/2026-10-09/relatorio.md): 168 achados nas versões 1.0.0 de três PRDs. As correções estão no `CHANGELOG.md` de cada um.
+- Sem auditoria, por isso em `rascunho`: `app-tarefas-acessivel` e `sistema-clinica-conversa`. Os três estáveis estão em 3.x e aguardam nova rodada.

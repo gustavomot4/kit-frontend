@@ -157,5 +157,5 @@ else for (const r of relatorios) {
   for (const a of r.achados) { console.log(`  ${a.nivel === 'falha' ? 'FALHA' : 'aviso'}  ${a.id}: ${a.msg} [${a.tamanhos.join(', ')}]`); a.exemplos.forEach(x => console.log(`         - ${x}`)); }
   const d = r.medidas.desktop; if (d) console.log(`  medidas: fontes ${d.fontes.join(', ')}; tamanhos ${d.tamanhosDeFonte.join(' ')}; ${d.palavrasNaDobra} palavras na dobra`);
 }
-console.log(`\nNão coberto por este script: leitor de tela real, teste com pessoas, estados que dependem de interação, texto sobre imagem. Faça o roteiro de references/acessibilidade.md.`);
+console.log(`\nNão coberto por este script: leitor de tela real, teste com pessoas, estados que dependem de interação, texto sobre imagem. Faça o roteiro de references/qualidade/acessibilidade.md.`);
 await encerrar(relatorios.some(r => r.falhas) ? 1 : 0);
