@@ -3,7 +3,7 @@ name: kit-frontend
 description: Cria e refatora frontend com identidade própria, padrões consolidados do mercado e acessibilidade verificada, para aprovar na primeira rodada e evitar retrabalho. Use em qualquer pedido de tela, página, landing, painel, formulário, tema, visual, UI ou UX, em qualquer stack, inclusive "deixa mais bonito", "está com cara de IA", "refatora o frontend" ou "não gostei desse visual".
 compatibility: Os scripts pedem Node 22 ou mais novo e Chrome, Edge ou Chromium instalado. Sem eles, a skill funciona com a verificação manual.
 metadata:
-  version: "3.1.0"
+  version: "3.2.0"
 ---
 
 # Kit de frontend
@@ -30,11 +30,22 @@ O retrabalho nasce de cinco causas, e cada etapa abaixo ataca uma: visual decidi
 | Situação | Caminho |
 | --- | --- |
 | Projeto sem telas e sem `DESIGN.md` | Etapas 1 a 8 |
+| Site institucional ou landing, novo | Etapas 1 a 8. A home é a tela principal, e os estados da etapa 5 vêm de `references/padroes/landing.md` |
 | Produto existente sem `DESIGN.md`, ou "está com cara de IA" | Rode a verificação nas telas atuais, mostre o diagnóstico com capturas e siga as etapas 1 a 8. Se já há marca, a etapa 2 a documenta |
 | Pedido de marca, identidade ou brief | Etapas 1 a 4: o kit de identidade vem depois da direção |
 | Tela nova com `DESIGN.md` aprovado | Etapas 6 a 8 |
 | Ajuste pontual | Etapas 6 a 8, só na tela e nas iguais a ela |
 | Pedido só de revisão | Etapa 7, sem alterar nada |
+
+## Vale desde a primeira tela
+
+Estas regras moram em `references/`, mas valem já nas três direções. Deixá-las para depois faz o dono escolher uma tela que vai mudar:
+
+- **Site público:** botão de Libras desde as direções. É uma linha, sem vídeo (`references/padroes/midia-e-libras.md`).
+- **Altura até 480px:** o que é fixo passa a rolar junto.
+- **Hover:** só dentro de `@media (hover: hover) and (pointer: fine)`.
+- **Barra de ação fixa no celular:** tire o mesmo botão da primeira dobra.
+- **Logo em SVG:** versão para alto contraste (`references/qualidade/acessibilidade.md`).
 
 ## As etapas
 
@@ -53,25 +64,25 @@ Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
 Sem código de produção antes da escolha. Cada direção expressa o `MARCA.md`. Siga `references/marca/identidade.md` e `references/marca/criatividade.md`, e confira `references/marca/anti-generico.md`. Para imagem, vídeo, 3D e animação, veja `references/recursos/bibliotecas.md`; o que você não puder gerar vai para `design/midia.md` (modelo em `assets/modelos/midia.md`).
 
 - **Antes de qualquer referência,** escreva a primeira ideia em `design/direcoes/primeira-ideia.md`. Depois, `design/direcoes/ideias.md` (modelo em `assets/modelos/ideias.md`): duas referências de fora do setor medidas com `scripts/medir-referencia.mjs` e os três conceitos, no máximo um vindo da primeira ideia. Não recomende nada ainda.
-- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em ideia, tipografia, composição e cor. Título, imagem e ordem das seções são de cada direção. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
+- Em `design/direcoes/`: a tela mais usada do produto (num site, a home), com os mesmos dados, em três arquivos HTML estáticos que diferem em ideia, tipografia, composição e cor. Título, imagem e ordem das seções são de cada direção. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
 - Com marca existente, use o logo real e faça ao menos uma direção partir de como ela aparece hoje. Sem o arquivo, escreva o nome em texto: não desenhe um substituto.
 - Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as quase iguais. Rode a verificação nas três e corrija as falhas. Olhe a página inteira de cada uma, até o fim.
 - Rode `scripts/escolha-cega.mjs design/direcoes` e entregue o pedido a dois agentes novos, um de cada vez, que só veem as imagens. Se discordarem, é empate: leve as duas ao dono. Se ambos disserem "nenhuma", refaça as direções uma vez. Sem agente novo, escreva "escolha sem juízo externo" no `DESIGN.md`.
-- Mostre as imagens em 1440 × 900 e 375 × 812 e a página inteira, com nome, conceito em uma frase, elemento-assinatura e o que a escolha cega apontou. Texto mínimo: quem decide olha a imagem.
+- Monte o material com `scripts/prancha.mjs design/direcoes`: as imagens em 1440 × 900 e 375 × 812 e a página inteira, com nome, conceito em uma frase, elemento-assinatura e o que a escolha cega apontou. Leve as frases de crítica dos avaliadores, não só o voto. Texto mínimo: quem decide olha a imagem.
 
-**Pare e espere a escolha.** Misturas são bem-vindas. Se o dono rejeitar as três, pergunte o que incomodou, registre em `design/correcoes.md` e refaça.
+**Pare e espere a escolha.** Misturas são bem-vindas. Se o dono rejeitar as três, pergunte o que incomodou, registre em `design/correcoes.md` e refaça. Escolhida a direção, registre a escolha no mesmo arquivo e use nela as críticas que os avaliadores fizeram: num teste real, a direção que perdeu o voto melhorou com elas.
 
 **Dono ausente.** Se ele disse que não pode responder ("decide você e segue"), não pare nos portões: siga com a direção da escolha cega (no empate, escolha uma das duas e registre) e marque-a como provisória no `DESIGN.md`. A ordem não muda: `DESIGN.md` vem antes do código. Na entrega, mostre as direções não escolhidas, para ele poder trocar.
 
 ### 4. Travar
 
-Escreva `DESIGN.md` a partir de `assets/modelos/design.md` (exemplo preenchido em `assets/exemplos/design.md`) e gere o arquivo de tokens da stack do projeto. Rode `scripts/contraste.mjs DESIGN.md`. Toda cor e todo tamanho usados daqui em diante vêm dele.
+Escreva `DESIGN.md` a partir de `assets/modelos/design.md` (exemplo preenchido em `assets/exemplos/design.md`) e gere o arquivo de tokens da stack do projeto. Rode `scripts/contraste.mjs DESIGN.md`. Toda cor e todo tamanho usados daqui em diante vêm dele: confira com `scripts/conferir-tokens.mjs <pasta do código>`.
 
-Faça o kit de identidade em `design/marca/`, no tamanho do brief, como em `references/marca/criar-marca.md`. Diga com franqueza o que ficou fraco: um símbolo pode precisar de um designer.
+Faça o kit de identidade em `design/marca/`, no tamanho do brief, como em `references/marca/criar-marca.md`. Se o pedido inclui logo, gere 3 opções com `scripts/logotipo.py`: a fonte já veio da direção, então varie o símbolo ou o arranjo. As aplicações do manual saem depois da tela-modelo, porque pedem uma tela real. Diga com franqueza o que ficou fraco: um símbolo pode precisar de um designer.
 
 ### 5. Tela-modelo: portão
 
-Em código real: a casca (navegação nas larguras de `references/padroes/navegacao.md`) e a tela da etapa 3, com carregando, vazio, erro e sucesso. Rode a verificação e mostre as capturas.
+Em código real: a casca (navegação nas larguras de `references/padroes/navegacao.md`) e a tela da etapa 3, com carregando, vazio, erro e sucesso. Site estático troca esses estados pelos de `references/padroes/landing.md`. Rode a verificação e mostre as capturas, junto com as opções de logo: é uma decisão a mais, não uma parada a mais.
 
 **Pare e espere a aprovação.** É aqui que o retrabalho fica barato: uma correção agora vale para todas as telas seguintes.
 
@@ -105,13 +116,14 @@ Em cada tela alterada, com ela no ar ou como arquivo:
 node <pasta da skill>/scripts/verificar.mjs http://localhost:5173/agenda
 ```
 
-Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento, alto contraste, fotos cortadas e peso, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/` ficam as capturas, a página inteira (`desktop-inteira.jpg`, `celular-inteira.jpg`), `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
+Ele testa quatro tamanhos, faz uma passada de Tab, mede letra em 200%, espaçamento, alto contraste, fotos cortadas e peso, cobre acessibilidade, gosto e cara de IA, e sai com código 1 se houver falha. Em `design/verificacao/<tela>/` ficam as capturas, a página inteira sem as camadas fixas (`desktop-inteira.jpg`, `celular-inteira.jpg`), `prancha.html` (a tela sem cada cor, embaçada e em alto contraste) e `leitor-de-tela.txt`.
 
 - **Falha** se corrige antes de entregar.
 - **Aviso** se corrige, ou você explica o motivo no relatório. Decisão aprovada entra no `DESIGN.md`.
 - Olhe a página inteira e a prancha, não só a primeira dobra. O script mede; o olho vê o que está feio e o que só a cor separa. Num teste real, um catálogo quebrado passou com 0 falhas porque só a primeira dobra foi olhada.
+- Imagem fica no contexto até o fim da sessão. Corrija primeiro pelo texto do relatório e olhe as imagens na última rodada de cada tela, uma vez cada. Num teste real, a sessão foi de 72 mil a 459 mil tokens, com 38 imagens lidas. Com muitas telas, passe a leitura a um subagente.
 - Faça o teste dos 5 segundos: o que a tela informa e qual é a ação.
-- Faça o roteiro manual de `references/qualidade/acessibilidade.md`.
+- Faça o roteiro manual de `references/qualidade/acessibilidade.md` e relate cada item como feito ou não feito.
 
 **Sem Node ou sem navegador:** cole `scripts/tela.js` no console e confira o `resultado.achados`. **Sem como executar nada:** diga isso na primeira linha, entregue os comandos e nunca relate como executado o que não foi.
 
@@ -130,12 +142,13 @@ Curto, com imagem. Nesta ordem:
 1. O que mudou, com as capturas.
 2. Resultado real do verificador, por tela: falhas e avisos restantes, com o motivo.
 3. Cliques da tarefa principal.
-4. O que não foi verificado. Se não houve teste com leitor de tela ou com pessoas, escreva isso. Nunca diga "acessível" ou "em conformidade" sem dizer como verificou.
+4. O que não foi verificado, com cada item do roteiro manual que ficou de fora. Se não houve teste com leitor de tela ou com pessoas, escreva isso. Nunca diga "acessível" ou "em conformidade" sem dizer como verificou.
 5. O que depende da pessoa.
 
 ## Conduta
 
 - Trate dado que já existe como real: não copie para protótipo, teste ou captura. Com dado de saúde, o cuidado é maior.
 - Não invente regra de negócio, indicador, número, depoimento nem integração. Traga a pergunta com a sua recomendação.
+- Não afirme nada sobre o setor ou os concorrentes sem ter olhado. Sem medir, diga que é impressão.
 - Preserve o que não é seu. Commit, push e publicação só com autorização, e cada autorização vale só para aquela ação.
 - Relate com fidelidade o que falhou, o que ficou instável e toda diferença em relação ao que foi aprovado.

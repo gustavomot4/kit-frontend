@@ -23,7 +23,7 @@ Catálogo para não escrever à mão o que já existe, e para conseguir o que um
 | Ícones padrão de gerador | Lucide | `lucide` | ISC | Serve, mas é a escolha de inércia. Decida |
 | Fonte servida pelo projeto | Fontsource | `@fontsource-variable/<familia>` | A da fonte: confira | Sem CDN em produção, por causa da LGPD. Qual escolher: `references/recursos/fontes.md` |
 | Gerar paleta com contraste | `scripts/paleta.mjs` | Nenhum | Do kit | Parte de uma cor e calcula todos os pares |
-| Logotipo em curvas | `scripts/logotipo.py`, com fonttools; em JavaScript, opentype.js | `fonttools` (pip), `opentype.js` | fonttools: MIT, por conhecimento geral; opentype.js: MIT | Não aplica kerning sozinho: confira no olho |
+| Logotipo em curvas | `scripts/logotipo.py`, com fonttools; em JavaScript, opentype.js | `fonttools` (pip), `opentype.js` | fonttools: MIT, por conhecimento geral; opentype.js: MIT | `logotipo.py` aplica o kerning da fonte: confira no olho |
 | Reduzir fonte a um subconjunto | pyftsubset, subset-font | `fonttools` (pip), `subset-font` | subset-font: BSD-3-Clause | Fonte com subconjunto latino pesa bem menos |
 | Animação de interface | Motion | `motion` | MIT | Para o que CSS não resolve |
 | Animação com linha do tempo e rolagem | GSAP | `gsap` | Licença própria, gratuita, não é de código aberto: leia | Para peças de marca |

@@ -42,7 +42,7 @@ Uma pergunta que costuma render: **qual é a unidade real do trabalho?** Cadeira
    Nem sempre a mais própria vence: o dono escolheu a B numa barbearia e a A numa marmitaria cuja dona não entende de tecnologia. A direção A também precisa de decisão própria: familiar não pode virar genérica.
 4. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale.
 5. **Revise contra `references/marca/anti-generico.md`.** Troque toda escolha que caiu num padrão e diga o que trocou.
-6. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia). O mesmo título sobre as mesmas seções é uma ideia só, com outra pele.
+6. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Num site institucional ou landing, a home é essa tela. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia). O mesmo título sobre as mesmas seções é uma ideia só, com outra pele.
 
    Escreva cada direção num arquivo próprio, com o próprio CSS, em HTML estático: sem gerador, sem folha de estilo comum, sem sacola nem diálogo funcionando. Gerador comum produz a mesma página com outra pintura, e o tempo vai para o que ninguém está decidindo agora.
 7. **Compare e verifique.** Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as que saírem quase iguais. Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior. Olhe até o fim da página.

@@ -53,6 +53,12 @@ Resumo abaixo. Quando se sabe quem usa, liste em `publicos:` no `PRODUTO.md` e s
 }
 ```
 
+- **Logo em SVG com cor fixa.** Em alto contraste, o fundo vira preto e o logo escuro some (`a11y-logo-alto-contraste`). Dê a versão para fundo escuro:
+
+```html
+<picture><source media="(forced-colors: active)" srcset="logo-negativo.svg"><img src="logo-positivo.svg" alt="Nome"></picture>
+```
+
 - **`min-width: 320px` no `body`.** Com barra de rolagem clássica no Windows, cria rolagem horizontal. Não declare.
 - **`outline: none`** sem substituto de 3:1. O halo claro em volta do campo não basta como único sinal.
 - **Anel de foco de uma cor só.** A cor de marca que passa sobre o fundo claro pode reprovar sobre a barra escura. Meça contra cada fundo e troque a cor do anel nas áreas escuras.
@@ -70,7 +76,7 @@ Resumo abaixo. Quando se sabe quem usa, liste em `publicos:` no `PRODUTO.md` e s
 
 ## Roteiro de verificação
 
-Rode `scripts/verificar.mjs` em cada tela. Depois faça à mão e relate cada item:
+Rode `scripts/verificar.mjs` em cada tela. Depois faça à mão e relate cada item como feito ou não feito:
 
 1. **Só teclado:** percorra a tela com Tab, Shift+Tab, Enter, Espaço, Esc e setas. O foco aparece sempre? Abre e fecha diálogo devolvendo o foco?
 2. **Zoom:** 200% e 400%. Nada some, nada rola para o lado, barra fixa não cobre.

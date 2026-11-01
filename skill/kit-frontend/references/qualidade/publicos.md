@@ -17,7 +17,7 @@ superficie: publica
 
 | Valor | Na tela | Verificador | À mão |
 | --- | --- | --- | --- |
-| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras` vira falha em superfície pública; `a11y-video-legenda` | Tarefa com uma pessoa surda |
+| `surdos-libras` | Siga `references/padroes/midia-e-libras.md`. Em site público, a base é um botão de VLibras, sem vídeo. Português simples: para muitos surdos, o texto é segunda língua. Nada só em som. Contato por mensagem, não só por telefone | `a11y-libras` vira falha em superfície pública; `a11y-video-legenda` | Tarefa com uma pessoa surda |
 | `pouca-leitura` | Coluna única e menu linear. O principal no alto. Ícone sempre com texto. Nada se mexendo perto do texto. Busca que aceita erro de digitação | `a11y-icone-sem-texto` e `a11y-letra-apertada` viram falha; `a11y-leitura-dificil` aperta o limite | Leia em voz alta. Tarefa com alguém do público |
 | `idosos` | Alvo de 44px também com mouse. Ícone com texto. Sem gesto escondido nem tempo limite. Letra que cresce sem quebrar | `a11y-icone-sem-texto`, `a11y-letra-200`, `a11y-espacamento` | Letra do aparelho no máximo, num celular simples |
 | `baixa-visao` | Contraste acima do mínimo no que decide a tarefa. Nada que dependa só de passar o mouse. Temas e tamanho de letra, quando o uso for diário | `a11y-letra-200`, `a11y-espacamento`, `a11y-alto-contraste`; visão embaçada na prancha | Zoom de 400% e alto contraste do sistema |

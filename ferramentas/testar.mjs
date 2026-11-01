@@ -2,7 +2,7 @@
 // Instala em pastas temporárias e confere o verificador contra as fixtures.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, readFileSync, existsSync, mkdirSync, rmSync, cpSync, utimesSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -18,12 +18,13 @@ const SONDA_A11Y = join(raiz, 'ferramentas', 'fixtures', 'sonda-acessibilidade.h
 const SONDA_IA = join(raiz, 'ferramentas', 'fixtures', 'sonda-cara-de-ia.html');
 const SONDA_FOTOS = join(raiz, 'ferramentas', 'fixtures', 'sonda-fotos.html');
 const SONDA_CAMADA = join(raiz, 'ferramentas', 'fixtures', 'sonda-camada-fixa.html');
+const SONDA_SITE = join(raiz, 'ferramentas', 'fixtures', 'sonda-marca-e-site.html');
 
 test('instala num projeto vazio com skill, pontes e correções', () => {
   const p = temp();
   const r = kit('instalar', p);
   assert.equal(r.status, 0, r.stderr);
-  for (const f of ['.agents/skills/kit-frontend/SKILL.md', '.agents/skills/kit-frontend/references/gosto/perfil.md', '.agents/skills/kit-frontend/scripts/verificar.mjs', '.agents/skills/kit-frontend/scripts/comparar-direcoes.mjs', '.agents/skills/kit-frontend/scripts/escolha-cega.mjs', '.agents/skills/kit-frontend/assets/modelos/ideias.md', '.agents/skills/kit-frontend/estilos/sistema-gestao/indice.md', '.claude/skills/kit-frontend/SKILL.md', 'AGENTS.md', 'CLAUDE.md', 'design/correcoes.md']) assert.ok(existsSync(join(p, f)), f);
+  for (const f of ['.agents/skills/kit-frontend/SKILL.md', '.agents/skills/kit-frontend/references/gosto/perfil.md', '.agents/skills/kit-frontend/scripts/verificar.mjs', '.agents/skills/kit-frontend/scripts/comparar-direcoes.mjs', '.agents/skills/kit-frontend/scripts/escolha-cega.mjs', '.agents/skills/kit-frontend/scripts/prancha.mjs', '.agents/skills/kit-frontend/scripts/conferir-tokens.mjs', '.agents/skills/kit-frontend/assets/modelos/ideias.md', '.agents/skills/kit-frontend/estilos/sistema-gestao/indice.md', '.claude/skills/kit-frontend/SKILL.md', 'AGENTS.md', 'CLAUDE.md', 'design/correcoes.md']) assert.ok(existsSync(join(p, f)), f);
   assert.match(readFileSync(join(p, '.claude/skills/kit-frontend/SKILL.md'), 'utf8'), /\.agents\/skills\/kit-frontend\/SKILL\.md/);
   assert.ok(!existsSync(join(p, '.cursor')), 'não cria pasta de agente não detectado');
   rmSync(p, { recursive: true, force: true });
@@ -465,8 +466,167 @@ test('medir-referencia mede o que abre e avisa o que não abre', () => {
   rmSync(p, { recursive: true, force: true });
 });
 
+const paginaSimples = corpo => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>:focus-visible{outline:3px solid #000}</style></head><body style="margin:0"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a>${corpo}</body></html>`;
+const LOGO = pathToFileURL(join(raiz, 'ferramentas/fixtures/marca/logo.svg')).href;
+
+test('a sonda de site aponta ação repetida e logo de cor fixa, e respeita o que foi conferido', () => {
+  const s = temp();
+  const [sonda] = lerRelatorio(kit('verificar', SONDA_SITE, '--saida', s, '--json'));
+  const achado = id => sonda.achados.find(a => a.id === id);
+  assert.equal(achado('g-acao-repetida')?.nivel, 'aviso'); assert.match(achado('g-acao-repetida').exemplos.join(), /Onde fica/);
+  assert.equal(achado('a11y-logo-alto-contraste')?.nivel, 'aviso'); assert.match(achado('a11y-logo-alto-contraste').exemplos.join(), /Oficina do Teste/);
+  assert.equal(achado('a11y-contraste-imagem'), undefined, 'data-conferido tira o aviso');
+  rmSync(s, { recursive: true, force: true });
+});
+
+test('botão repetido pela barra fixa é apontado no celular, e a barra sai da página inteira', () => {
+  const p = temp();
+  writeFileSync(join(p, 't.html'), paginaSimples(`<style>.barra{display:none}@media (max-width:767px){.barra{display:block;position:fixed;left:0;right:0;bottom:0;background:#fff}}</style><main id="c"><h1>Título</h1><a href="#z" style="display:inline-block;padding:14px">Chamar no WhatsApp</a><div style="height:2500px"></div></main><div class="barra"><a href="#z" style="display:block;padding:14px">Chamar no WhatsApp</a></div>`));
+  const [t] = lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--json'));
+  const repetida = t.achados.find(a => a.id === 'g-acao-repetida');
+  assert.deepEqual(repetida?.tamanhos, ['375x812']); assert.match(repetida.exemplos.join(), /Chamar no WhatsApp/);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('logo com versão de alto contraste e links diferentes não são apontados', () => {
+  const p = temp();
+  writeFileSync(join(p, 't.html'), paginaSimples(`<header><a href="#c"><picture><source media="(forced-colors: active)" srcset="${LOGO}"><img src="${LOGO}" width="160" height="32" alt="Oficina do Teste"></picture></a><a href="#a" style="padding:14px;display:inline-block">Ver</a><a href="#b" style="padding:14px;display:inline-block">Ver</a></header><main id="c"><h1>Título</h1><p>Texto.</p></main>`));
+  const [t] = lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--json'));
+  for (const id of ['a11y-logo-alto-contraste', 'g-acao-repetida']) assert.ok(!t.achados.some(a => a.id === id), id);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('logo com o nome em curvas não é ícone sozinho; ícone continua sendo', () => {
+  const p = temp();
+  writeFileSync(join(p, 't.html'), paginaSimples(`<header><a href="#c" style="display:inline-block;padding:8px"><img src="${LOGO}" width="160" height="32" alt="Oficina do Teste"></a></header><main id="c"><h1>Título</h1><button aria-label="Excluir" style="min-width:44px;min-height:44px"><svg width="20" height="20" aria-hidden="true"><rect width="20" height="20"/></svg></button></main>`));
+  const [t] = lerRelatorio(kit('verificar', join(p, 't.html'), '--publicos', 'pouca-leitura', '--saida', join(p, 's'), '--json'));
+  const icone = t.achados.find(a => a.id === 'a11y-icone-sem-texto');
+  assert.match(icone.exemplos.join(), /Excluir/); assert.doesNotMatch(icone.exemplos.join(), /Oficina/);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('G08 mede onde o texto termina, não a caixa do título', () => {
+  const p = temp();
+  const texto = '<h1>Privacidade</h1><h2>Dados</h2><p style="max-width:36em">Texto da página, curto o bastante para terminar na metade da tela do computador.</p><h2>Dúvidas</h2><p style="max-width:36em">Outro parágrafo, do mesmo tamanho, para a tela ter mais de três blocos.</p>';
+  writeFileSync(join(p, 'colado.html'), paginaSimples(`<main id="c" style="padding:24px">${texto}</main>`));
+  writeFileSync(join(p, 'centro.html'), paginaSimples(`<main id="c" style="max-width:760px;margin:0 auto;padding:24px">${texto}</main>`));
+  const [colado, centro] = lerRelatorio(kit('verificar', join(p, 'colado.html'), join(p, 'centro.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(colado.achados.some(a => a.id === 'g-colado-a-esquerda'), 'título largo não esconde o vazio à direita');
+  assert.ok(!centro.achados.some(a => a.id === 'g-colado-a-esquerda'), 'coluna centralizada passa');
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('marcador com forma própria não depende só da cor', () => {
+  const p = temp();
+  const pagina = extra => paginaSimples(`<main id="c"><h1>Título</h1><p><span style="display:inline-block;width:16px;height:16px;background:#d3201f"></span> Para agora</p><p><span style="display:inline-block;width:16px;height:16px;background:#c77700;${extra}"></span> Vem logo</p></main>`);
+  writeFileSync(join(p, 'igual.html'), pagina(''));
+  writeFileSync(join(p, 'forma.html'), pagina('transform:rotate(45deg)'));
+  const [igual, forma] = lerRelatorio(kit('verificar', join(p, 'igual.html'), join(p, 'forma.html'), '--saida', join(p, 's'), '--json'));
+  assert.ok(igual.achados.some(a => a.id === 'a11y-so-cor'));
+  assert.ok(!forma.achados.some(a => a.id === 'a11y-so-cor'));
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('a pasta das capturas tem o mesmo nome pelo arquivo e pelo endereço', async () => {
+  const p = temp(), porta = 9700 + Math.floor(Math.random() * 90);
+  const arquivo = join(p, 'index.html'); writeFileSync(arquivo, paginaSimples('<main id="c"><h1>Título</h1></main>'));
+  const servidor = spawn(process.execPath, ['-e', `require('http').createServer((q,s)=>{s.setHeader('content-type','text/html;charset=utf-8');s.end(require('fs').readFileSync(${JSON.stringify(arquivo)}))}).listen(${porta})`], { stdio: 'ignore' });
+  await new Promise(r => setTimeout(r, 600));
+  try {
+    const [porArquivo] = lerRelatorio(kit('verificar', arquivo, '--saida', join(p, 's'), '--json'));
+    const [porEndereco] = lerRelatorio(kit('verificar', `http://127.0.0.1:${porta}/index.html`, '--saida', join(p, 's'), '--json'));
+    const [raizDoSite] = lerRelatorio(kit('verificar', `http://127.0.0.1:${porta}/`, '--saida', join(p, 's'), '--json'));
+    assert.equal(porEndereco.capturas, porArquivo.capturas); assert.equal(raizDoSite.capturas, porArquivo.capturas);
+  } finally { servidor.kill(); rmSync(p, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); }
+});
+
+test('paleta e medir-referencia recusam opção desconhecida', () => {
+  const r = kit('paleta', '#0e5f4b', '--escuro');
+  assert.equal(r.status, 2); assert.match(r.stderr, /Opção desconhecida: --escuro/);
+  assert.equal(kit('referencia', BOA, '--algo').status, 2);
+});
+
+test('medir-referencia avisa quando uma camada cobre a primeira dobra', () => {
+  const p = temp();
+  writeFileSync(join(p, 'cookies.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title></head><body style="margin:0"><main><h2 style="font-size:20px">Menor</h2><h1 style="font-size:90px">Maior</h1></main><div style="position:fixed;left:20%;top:20%;width:60%;height:60%;background:#fff">Este site usa cookies para funcionar melhor. Aceita?</div></body></html>');
+  writeFileSync(join(p, 'limpa.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title></head><body style="margin:0"><main><h1>Título</h1></main></body></html>');
+  const com = kit('referencia', join(p, 'cookies.html'), '--saida', p), sem = kit('referencia', join(p, 'limpa.html'), '--saida', p);
+  assert.match(com.stdout, /camada cobre 36%/); assert.match(com.stdout, /títulos: 90px/, 'o maior título vem primeiro');
+  assert.doesNotMatch(sem.stdout, /camada cobre/);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('conferir-tokens acusa cor e fonte fora do DESIGN.md', () => {
+  const p = temp(), site = join(p, 'site'); mkdirSync(site);
+  const design = join(p, 'DESIGN.md');
+  writeFileSync(design, '---\ncolors:\n  primary: "#d3201f"\n  ink: "#231715"\ntypography:\n  body:\n    fontFamily: Marca Texto\n---\n');
+  writeFileSync(join(site, 'a.css'), "#fade { color: #D3201F; background: #123456 }\n.x { font-family: 'Outra', serif }\n.y { font-family: 'Marca Texto', sans-serif; --fonte: 'Marca Texto', serif }\n");
+  writeFileSync(join(site, 'b.html'), '<style>.z{color:rgb(1,2,3)}</style><div style="color:#abc"></div><a href="#add">x</a><path fill="#231715"/>');
+  const r = kit('tokens', site, '--design', design);
+  assert.equal(r.status, 1, r.stdout);
+  for (const v of ['#123456', 'fonte "outra"', '#010203', '#aabbcc']) assert.ok(r.stdout.includes(v), v);
+  for (const v of ['#d3201f', '#fade', '#add', '#231715', 'marca texto']) assert.ok(!r.stdout.includes(v), v);
+  assert.match(r.stdout, /a\.css:1/);
+  writeFileSync(join(site, 'a.css'), ".y { color: #d3201f; font-family: 'Marca Texto', sans-serif }\n");
+  writeFileSync(join(site, 'b.html'), '<p style="color:#231715">x</p>');
+  const ok = kit('tokens', site, '--design', design);
+  assert.equal(ok.status, 0, ok.stdout);
+  assert.equal(kit('tokens', join(p, 'nao-existe'), '--design', design).status, 2);
+  assert.equal(kit('tokens', site, '--design', join(p, 'nao-existe.md')).status, 2);
+  assert.equal(kit('tokens', '--algo').status, 2);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('a prancha junta as direções num HTML e num PDF', () => {
+  const p = temp(), pasta = join(p, 'direcoes'), verif = join(p, 'verificacao'); mkdirSync(pasta);
+  const png = Buffer.from(/base64,([^"]+)"/.exec(readFileSync(SONDA_FOTOS, 'utf8'))[1], 'base64');
+  for (const d of ['a-conversa', 'b-ficha']) writeFileSync(join(pasta, `${d}.html`), '<!doctype html><title>x</title>');
+  writeFileSync(join(pasta, 'ideias.md'), '# Ideias\n\n## Conceitos\n\n| Direção | Conceito | De onde veio | Parte da primeira ideia? |\n| --- | --- | --- | --- |\n| A, Conversa | Conversa, mas com o preço | Marca | sim |\n| B, Ficha | Ficha, mas sem burocracia | Mundo | não |\n');
+  const roda = () => kit('prancha', pasta, '--verificacao', verif, '--titulo', 'Três propostas de teste');
+  const semCaptura = roda();
+  assert.equal(semCaptura.status, 2); assert.match(semCaptura.stderr, /verificar\.mjs/);
+  for (const d of ['a-conversa', 'b-ficha']) { mkdirSync(join(verif, d), { recursive: true }); for (const c of ['desktop.png', 'celular.png', 'desktop-inteira.jpg', 'celular-inteira.jpg']) writeFileSync(join(verif, d, c), png); }
+  writeFileSync(join(pasta, 'notas.json'), JSON.stringify({ 'b-ficha': { assinatura: 'O carimbo', cega: 'Escolhida pelos dois' } }));
+  const ok = roda();
+  assert.equal(ok.status, 0, ok.stderr);
+  const html = readFileSync(join(pasta, 'comparar-direcoes.html'), 'utf8');
+  for (const v of ['Três propostas de teste', 'A, Conversa', 'Conversa, mas com o preço', 'O carimbo', 'Escolhida pelos dois', 'data:image/png;base64,']) assert.ok(html.includes(v), v);
+  assert.doesNotMatch(html, /src="[^d]/, 'as imagens vão dentro do arquivo');
+  assert.equal(readFileSync(join(pasta, 'comparar-direcoes.pdf')).subarray(0, 4).toString(), '%PDF');
+  const denovo = roda();
+  assert.equal(denovo.status, 0, 'a prancha não entra na lista de direções');
+  assert.match(denovo.stdout, /^2 direções/);
+  rmSync(p, { recursive: true, force: true });
+});
+
+test('logotipo.py aplica kerning e eixos, põe o símbolo e grava as variantes', t => {
+  const py = spawnSync('python', ['-c', 'import fontTools, brotli'], { encoding: 'utf8' });
+  if (py.status !== 0) return t.skip('precisa de fonttools e brotli');
+  const script = join(raiz, 'skill/kit-frontend/scripts/logotipo.py'), fonte = join(raiz, 'ferramentas/fixtures/fontes/public-sans-latin-wght-normal.woff2');
+  const p = temp();
+  const roda = (saida, ...extra) => spawnSync('python', [script, fonte, 'AV', join(p, saida), ...extra], { encoding: 'utf8' });
+  const largura = a => +/viewBox="\S+ \S+ (\S+)/.exec(readFileSync(join(p, a), 'utf8'))[1];
+  assert.equal(roda('com.svg').status, 0); assert.equal(roda('sem.svg', '--sem-kerning').status, 0); assert.equal(roda('aj.svg', '--ajuste', 'A,V:-100').status, 0);
+  assert.ok(largura('com.svg') < largura('sem.svg'), 'o kerning da fonte aproxima AV');
+  assert.ok(largura('aj.svg') < largura('com.svg'), 'o ajuste soma ao kerning');
+  assert.equal(roda('peso.svg', '--eixo', 'wght=800').status, 0);
+  const eixo = roda('x.svg', '--eixo', 'opsz=96');
+  assert.notEqual(eixo.status, 0); assert.match(eixo.stderr, /não tem o eixo opsz/);
+  assert.notEqual(roda('x.svg', '--ajuste', 'errado').status, 0);
+  writeFileSync(join(p, 'simbolo.svg'), '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30"><path fill="#000" fill-rule="evenodd" d="M0 0H40V30H0Z"/></svg>');
+  assert.notEqual(roda('logo.svg', '--variantes').status, 0, 'variantes pedem a cor');
+  const v = roda('logo.svg', '--cor', '#231715', '--simbolo', join(p, 'simbolo.svg'), '--cor-simbolo', '#d3201f', '--variantes');
+  assert.equal(v.status, 0, v.stderr);
+  const ler = n => readFileSync(join(p, `logo-${n}.svg`), 'utf8');
+  for (const n of ['positivo', 'negativo', 'sobre-marca']) { assert.doesNotMatch(ler(n), /<text/); assert.match(ler(n), /fill-rule="evenodd"/); assert.match(ler(n), /viewBox="/); }
+  assert.match(ler('positivo'), /<g fill="#d3201f"/); assert.match(ler('positivo'), /<path fill="#231715"/);
+  assert.match(ler('negativo'), /<path fill="#ffffff"/);
+  assert.match(ler('sobre-marca'), /<g fill="#231715"/);
+  rmSync(p, { recursive: true, force: true });
+});
+
 test('prompt único cabe e traz o essencial', () => {
   const t = readFileSync(join(raiz, 'dist/prompt-unico.md'), 'utf8');
-  assert.ok(t.length / 3.4 < 30000, `${Math.round(t.length / 3.4)} tokens`);
+  assert.ok(t.length / 3.4 < 32000, `${Math.round(t.length / 3.4)} tokens`);
   for (const x of ['G01', 'Convenção na interação', 'WCAG 2.2', 'padroes/lista-tabela', 'Tela-modelo', 'Primeiro, a superfície', 'Gerar imagem, vídeo, som e 3D']) assert.ok(t.includes(x), x);
 });

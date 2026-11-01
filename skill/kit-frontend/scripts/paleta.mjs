@@ -9,6 +9,8 @@ const opcao = n => { const i = args.indexOf(n); if (i < 0) return null; const v 
 const tema = opcao('--tema') || 'claro';
 const evitar = (opcao('--evitar') || '').split(',').map(s => s.trim()).filter(Boolean);
 const comoCss = args.includes('--css'); if (comoCss) args.splice(args.indexOf('--css'), 1);
+const estranha = args.find(a => a.startsWith('-'));
+if (estranha) { console.error(`Opção desconhecida: ${estranha}\nUso: paleta.mjs "#0e5f4b" [--tema claro|escuro] [--evitar "#d71920,#8d0de3"] [--css]`); process.exit(2); }
 const semente = args[0];
 if (!semente || !lerCor(semente) || !['claro', 'escuro'].includes(tema)) { console.error('Uso: paleta.mjs "#0e5f4b" [--tema claro|escuro] [--evitar "#d71920,#8d0de3"] [--css]'); process.exit(2); }
 

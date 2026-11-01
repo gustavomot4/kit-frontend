@@ -59,6 +59,8 @@ Inclua o que a pessoa usa hoje, mesmo que não seja um sistema.
 
 ### Frases
 
+<!-- Só as frases que a tela vai usar. Site estático costuma ficar com botão, vazio e erro. -->
+
 - Botão: "<frase real>"
 - Vazio: "<frase real>"
 - Erro: "<frase real>"

@@ -88,7 +88,7 @@ const abrir = async (arquivo, w, h, movel) => {
 const imagens = [];
 const gravar = (nome, c) => { if (c.result?.data) { writeFileSync(join(saida, nome), Buffer.from(c.result.data, 'base64')); imagens.push(nome); } };
 // camada fixa na página inteira cai no meio do conteúdo e cobre texto, sem ser defeito da tela: ela aparece só na primeira dobra
-const ESCONDER_FIXAS = `(() => { const visita = r => { for (const e of r.querySelectorAll('*')) { if (getComputedStyle(e).position === 'fixed') e.style.visibility = 'hidden'; if (e.shadowRoot) visita(e.shadowRoot); } }; visita(document.body); return 1; })()`;
+const ESCONDER_FIXAS = `(() => { const visita = r => { for (const e of r.querySelectorAll('*')) { if (getComputedStyle(e).position === 'fixed') e.style.setProperty('display', 'none', 'important'); if (e.shadowRoot) visita(e.shadowRoot); } }; visita(document.body); return 1; })()`;
 // página alta vira várias imagens: inteira, ela chega reduzida a quem lê, e o texto fica ilegível
 const capturarInteira = async (nome, w) => {
   await ev(ESCONDER_FIXAS);

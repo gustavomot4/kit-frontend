@@ -6,7 +6,7 @@ Tudo aqui afeta decisões de tela. O que não souber, marque como "não sei" e s
 - **Perfis:** <quem, e o que cada um vê>
 - **Familiaridade com tecnologia:** <o que essas pessoas já usam no dia a dia>
 - **Letramento, idade, necessidades de acessibilidade conhecidas:** <…>
-- **publicos:** [] <!-- Liste os que valem, mesmo como hipótese: surdos-libras, pouca-leitura, idosos, baixa-visao, pessoas-cegas, daltonismo, dislexia, cognitivo, mobilidade. Ver references/qualidade/publicos.md -->
+- **publicos:** [] <!-- Liste os que valem, mesmo como hipótese: surdos-libras, pouca-leitura, idosos, baixa-visao, pessoas-cegas, daltonismo, dislexia, cognitivo, mobilidade. Em site público, inclua surdos-libras: a base é um botão de VLibras e português simples, sem vídeo. Ver references/qualidade/publicos.md -->
 - **superficie:** <publica ou interna>
 - **Aparelho e situação:** <celular na mão, computador o dia todo, sol, pressa, uma mão só>
 

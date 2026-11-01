@@ -170,6 +170,8 @@ const AJUDA = `kit-frontend ${versao}
   referencia <url|arquivo>    mede fontes, escala, cores e raios de páginas de que a pessoa gosta
   direcoes <pasta|arquivos>   compara as direções visuais; sai com 1 se duas forem quase iguais
   escolha [pasta]             prepara a escolha da direção por um agente novo, às cegas; sai com 1 se faltar ideias.md
+  prancha [pasta]             junta as direções num HTML e num PDF para o dono decidir; rode depois de verificar
+  tokens <pasta|arquivos>     confere se as cores e as fontes do código estão no DESIGN.md; sai com 1 se houver desvio
   coletar <pasta>             traz as correções de um projeto para o kit
   empacotar                   gera estilos/ por seção e dist/prompt-unico.md
 `;
@@ -182,6 +184,8 @@ switch (comando) {
   case 'referencia': delegar('medir-referencia.mjs'); break;
   case 'direcoes': delegar('comparar-direcoes.mjs'); break;
   case 'escolha': delegar('escolha-cega.mjs'); break;
+  case 'prancha': delegar('prancha.mjs'); break;
+  case 'tokens': delegar('conferir-tokens.mjs'); break;
   case 'coletar': coletar(); break;
   case 'empacotar': empacotar(); break;
   default: console.log(AJUDA);

@@ -101,7 +101,7 @@
     let medidos = 0, semMedida = 0; const reprova = [];
     for (const e of textos) {
       if (oculto(e) && e.closest('[aria-hidden="true"]')) continue;
-      const b = fundo(e); if (!b) { semMedida++; continue; }
+      const b = fundo(e); if (!b) { if (!e.closest('[data-conferido~="a11y-contraste-imagem"]')) semMedida++; continue; }
       const c = cor(cs(e).color); if (c.a === 0) continue;
       const rz = razao(sobre(c, b), b), s = num(cs(e).fontSize), g = s >= 24 || (s >= 18.66 && +cs(e).fontWeight >= 700);
       if (rz < 1.05) continue;   // invisível de propósito
@@ -131,9 +131,15 @@
     if (tabPositivo.length) achar('a11y-tabindex-positivo', 'aviso', `${tabPositivo.length} elemento(s) com tabindex positivo: a ordem do Tab deixa de seguir a tela (WCAG 2.4.3).`, tabPositivo.map(e => curto(nomeDe(e), 24)));
     const pontos = todos.filter(e => { const r = e.getBoundingClientRect(), c = cor(cs(e).backgroundColor); return !e.children.length && !(e.textContent || '').trim() && !e.matches('input,img,svg,video,canvas') && !e.getAttribute('aria-label') && !e.title && r.width >= 6 && r.width <= 24 && Math.abs(r.width - r.height) < 2 && c.a > .5 && satura(c) > .25; });
     const coresDePonto = new Set(pontos.map(e => hex(cor(cs(e).backgroundColor))));
-    if (coresDePonto.size >= 2) achar('a11y-so-cor', 'aviso', `${pontos.length} marcador(es) de ${coresDePonto.size} cores, sem texto nem forma: confira se a situação não depende só da cor (WCAG 1.4.1).`, [...coresDePonto]);
+    // cada cor com forma própria não depende só da cor: quadrado e losango se distinguem em cinza
+    const formasPorCor = new Map();
+    pontos.forEach(e => { const c = hex(cor(cs(e).backgroundColor)), f = [cs(e).borderTopLeftRadius, cs(e).transform, cs(e).clipPath].join('|'); if (!formasPorCor.has(c)) formasPorCor.set(c, new Set()); formasPorCor.get(c).add(f); });
+    const formasSeparam = [...formasPorCor.values()].every((a, i, l) => l.every((b, j) => i === j || ![...a].some(f => b.has(f))));
+    if (coresDePonto.size >= 2 && !formasSeparam) achar('a11y-so-cor', 'aviso', `${pontos.length} marcador(es) de ${coresDePonto.size} cores, sem texto nem forma: confira se a situação não depende só da cor (WCAG 1.4.1).`, [...coresDePonto]);
     if (['pouca-leitura', 'idosos', 'cognitivo'].some(p => publicos.includes(p))) {
-      const soIcone = interativos.filter(e => !simples(e.innerText) && e.querySelector('svg,img'));
+      // logo com o nome desenhado em curvas é texto para quem olha: passa se for largo e tiver nome para o leitor de tela
+      const logoComNome = e => { const m = e.querySelector('svg,img'), r = m.getBoundingClientRect(); return r.width / Math.max(r.height, 1) >= 2.5 && (m.getAttribute('alt') || m.getAttribute('aria-label') || e.getAttribute('aria-label') || '').trim(); };
+      const soIcone = interativos.filter(e => !simples(e.innerText) && e.querySelector('svg,img') && !logoComNome(e));
       if (soIcone.length) achar('a11y-icone-sem-texto', 'falha', `${soIcone.length} controle(s) só com ícone: para este público, ícone anda com texto.`, soIcone.map(e => curto(nomeDe(e), 24)));
     }
 
@@ -232,6 +238,12 @@
 
   // --- gosto -----------------------------------------------------------------------------------------
   if (papel === 'desktop' || papel === 'celular') {
+    // a mesma ação duas vezes à vista: menu que sobrou de outra largura, ou botão repetido pela barra fixa
+    const repetidos = {};
+    interativos.filter(primeiraDobra).filter(e => e.matches('a[href]')).forEach(e => { const nome = curto(nomeDe(e), 40).toLowerCase(); if (nome) (repetidos[`${nome} ${e.href}`] ||= []).push(curto(nomeDe(e), 30)); });
+    const acoesIguais = Object.values(repetidos).filter(l => l.length > 1).map(l => l[0]);
+    if (acoesIguais.length) achar('g-acao-repetida', 'aviso', `${acoesIguais.length} ação(ões) aparecem duas vezes na primeira dobra: deixe uma (G01).`, acoesIguais);
+
     const doc = raiz.scrollHeight > innerHeight + 40;
     const presas = todos.filter(e => { const s = cs(e); return /(auto|scroll)/.test(s.overflowY) && e.scrollHeight > e.clientHeight + 40 && e.clientHeight > 80 && e !== document.body && e !== raiz && !e.closest('dialog,[role=dialog],[data-rolagem-propria],textarea,pre'); });
     if (doc && presas.length) achar('g-rolagem-presa', 'aviso', 'Área com rolagem própria dentro de página que também rola: a pessoa fica presa e o resto não aparece (G09).', presas.map(e => `${e.tagName.toLowerCase()}.${String(e.className).split(' ')[0]}`));
@@ -271,7 +283,11 @@
     const folhas = todos.filter(e => { const r = e.getBoundingClientRect(); return (comTexto.has(e) || e.matches('img,svg,table,canvas,video,input,select,button')) && r.top < innerHeight * 2 && r.left >= area.left - 1 && r.right <= area.right + 1 && (document.querySelector('main,[role=main]') ? e.closest('main,[role=main]') : true) && !cs(e).position.match(/fixed/); });
     if (folhas.length > 3 && innerWidth >= 1200) {
       const esq = Math.min(...folhas.map(e => e.getBoundingClientRect().left)), dir = Math.max(...folhas.map(e => e.getBoundingClientRect().right));
-      const sobraE = esq - area.left, sobraD = area.right - dir, largura = area.width;
+      // a caixa de um título vai até a borda mesmo com texto curto: G08 mede onde o texto termina
+      const fimDoTexto = e => { const r = e.getBoundingClientRect(); if (!comTexto.has(e) || e.matches('button,input,select,table')) return r.right; const g = document.createRange(); g.selectNodeContents(e); const q = g.getBoundingClientRect(); return q.width > 0 ? q.right : r.right; };
+      // coluna centralizada na tela já está equilibrada, mesmo com o texto mais curto que ela
+      const centrada = area.left > 24 && Math.abs(area.left - (document.documentElement.clientWidth - area.right)) < 32;
+      const sobraE = esq - area.left, sobraD = area.right - (centrada ? dir : Math.max(...folhas.map(fimDoTexto))), largura = area.width;
       if (sobraD > largura * .25 && sobraD > 2 * sobraE + 48) achar('g-colado-a-esquerda', 'aviso', `Conteúdo termina ${Math.round(sobraD)}px antes da borda direita e começa a ${Math.round(sobraE)}px da esquerda: parece desalinhado (G08).`);
       else if ((dir - esq) / largura < .5) achar('g-pouco-uso-da-tela', 'aviso', `Conteúdo usa ${Math.round((dir - esq) / largura * 100)}% da largura: parece o celular colado no computador (G07).`);
     }
@@ -281,6 +297,10 @@
     interativos.filter(primeiraDobra).filter(e => e.matches('button,a,[role=button]')).forEach(e => { const c = cor(cs(e).backgroundColor); if (c.a > .9 && satura(c) > .25) { (grupos[hex(c)] ||= []).push(curto(e.textContent, 20)); } });
     const maior = Object.values(grupos).sort((a, b) => b.length - a.length)[0];
     if (maior && maior.length >= 3) achar('g-acoes-demais', 'aviso', `${maior.length} botões preenchidos com a mesma cor na primeira dobra: qual é a ação principal? (G01)`, maior);
+
+    // SVG em <img> tem cor fixa: em alto contraste o fundo muda, e o logo pode sumir
+    const logosFixos = [...document.images].filter(vis).filter(i => /\.svg(\?|$)/i.test(i.currentSrc || i.src) && (/logo|marca/i.test(i.currentSrc || i.src) || i.closest('header'))).filter(i => !i.closest('picture')?.querySelector('source[media*="forced-colors"]') && !i.closest('[data-conferido~="a11y-logo-alto-contraste"]'));
+    if (logosFixos.length) achar('a11y-logo-alto-contraste', 'aviso', 'Logo em SVG com cor fixa pode sumir em alto contraste: dê a versão para fundo escuro com <picture> e media="(forced-colors: active)".', logosFixos.map(i => curto(i.alt || i.src.split('/').pop(), 30)));
 
     // logo em quadradinho
     const logos = todos.filter(e => { const r = e.getBoundingClientRect(), s = cs(e), t = (e.textContent || '').trim(); const raio = num(s.borderTopLeftRadius); return r.top < 140 && r.left < 320 && r.width >= 24 && r.width <= 72 && Math.abs(r.width / r.height - 1) < .15 && raio > 0 && !s.borderTopLeftRadius.includes('%') && raio < r.width / 2 && cor(s.backgroundColor).a > .9 && satura(cor(s.backgroundColor)) > .2 && /^[A-ZÀ-Ú]{1,3}$/.test(t); });

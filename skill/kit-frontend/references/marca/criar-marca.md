@@ -48,7 +48,7 @@ O script lista fontes, escala, cores, raios e mídia, sem clicar em nada. Diga o
 | Voz | A mesma mensagem de erro, em 3 tons | É mais fácil escolher lendo do que definindo |
 | Cor | 3 paletas | 3 cores vindas do mundo do produto, longe dos concorrentes: `node scripts/paleta.mjs "#cor" --evitar "#concorrente"` |
 | Fonte | 3 candidatas | `references/recursos/fontes.md` |
-| Logotipo | 3 logotipos tipográficos | `scripts/logotipo.py`, com cada candidata de fonte |
+| Logotipo | 3 logotipos tipográficos | `scripts/logotipo.py`, com cada candidata de fonte. Depois da escolha da direção, a fonte está decidida: varie o símbolo ou o arranjo |
 
 Junte para não cansar. Mensagem, personalidade e voz vão numa única rodada, em texto curto. Cor, fonte e logotipo aparecem juntos nas três direções: ninguém escolhe bem uma paleta no abstrato. Se a pessoa disser "escolhe você", decida e marque como provisório.
 
@@ -81,6 +81,8 @@ De 1 a 3 personas: objetivo, medo, contexto de uso e familiaridade com tecnologi
 
 **Concorrentes olhados de verdade.** De 3 a 5, incluindo o que a pessoa usa hoje, mesmo que seja caderno ou WhatsApp. Abra as telas com `scripts/medir-referencia.mjs` e anote cor, fonte e tom. "Não verificado" só depois de tentar. Termine dizendo qual é o espaço livre: o que ninguém ocupa e faz sentido para este produto.
 
+**Sem palpite sobre o setor.** O brief curto não tem seção de concorrentes, mas isso não autoriza dizer que uma cor ou um jeito é comum sem ter olhado. Abra duas ou três telas com `scripts/medir-referencia.mjs`, ou diga que é impressão.
+
 **Sem promessa falsa.** Não invente número, prêmio nem depoimento.
 
 ## Kit de identidade
@@ -89,14 +91,14 @@ Faça **depois** da escolha da direção (etapa 4 da skill), para não desenhar 
 
 | Peça | Arquivo | Regra |
 | --- | --- | --- |
-| Logotipo | `design/marca/logo-positivo.svg`, `logo-negativo.svg` | Em curvas, sem `<text>`. Legível com 24px de altura. 3:1 contra o fundo. Sem iniciais em quadrado (G17) |
+| Logotipo | `design/marca/logo-positivo.svg`, `logo-negativo.svg` | Em curvas, sem `<text>`. Legível com 24px de altura. 3:1 contra o fundo. Sem iniciais em quadrado (G17). Na tela, com versão para alto contraste (`references/qualidade/acessibilidade.md`) |
 | Ícone | `design/marca/icone.svg` | Funciona em 16 e 32px, como ícone de aba e de aplicativo |
 | Cor, tipografia, forma | `DESIGN.md` | Valores e motivos, com contraste calculado |
 | Fontes | `design/marca/fontes/` | WOFF2 com subconjunto latino e o arquivo de licença ao lado |
 | Imagem e ilustração | `design/midia.md` | Um estilo único. Ver `references/recursos/bibliotecas.md` |
-| Voz | `MARCA.md` | Frases reais de botão, vazio, erro e sucesso |
+| Voz | `MARCA.md` | Frases reais de botão, vazio, erro e sucesso, só as que a tela vai usar |
 | Manual | `design/marca/manual.html` | Uma página: logotipo e usos errados, cor, tipo, voz e o que não fazer |
-| Aplicações | No manual | A marca em uma tela real, um post quadrado e o ícone do aplicativo |
+| Aplicações | No manual, depois da tela-modelo | A marca em uma tela real, um post quadrado e o ícone do aplicativo |
 
 Confira com `node scripts/conferir-marca.mjs` e rode `scripts/verificar.mjs` no manual.
 
@@ -105,10 +107,10 @@ Confira com `node scripts/conferir-marca.mjs` e rode `scripts/verificar.mjs` no 
 Um agente resolve bem o **logotipo tipográfico**: o nome, numa fonte escolhida, com um detalhe próprio. É o caminho padrão.
 
 ```bash
-python scripts/logotipo.py fonte.ttf "Nome" design/marca/logo-positivo.svg --peso 700 --cor "#14304f"
+python scripts/logotipo.py fonte.woff2 "Nome" design/marca/logo.svg --peso 800 --eixo opsz=96 --cor "#14304f" --simbolo simbolo.svg --cor-simbolo "#b3261e" --variantes
 ```
 
-O script não aplica kerning. Olhe o resultado e ajuste com `--espaco`. Sem logo definido, gere 3 versões com fontes diferentes e mostre cada uma com 24 e 64px de altura, sobre fundo claro e escuro. Um logotipo que só funciona grande está reprovado.
+O script aplica o kerning da fonte e aceita outros eixos, como `--eixo opsz=96`. Olhe o resultado e corrija pares com `--ajuste "r,e:-14"`. Com `--simbolo`, ele põe o desenho ao lado do nome; com `--variantes`, grava `logo-positivo.svg`, `logo-negativo.svg` e `logo-sobre-marca.svg`. Sem logo definido, gere 3 versões e mostre cada uma com 24 e 64px de altura, sobre fundo claro e escuro. Antes da direção, varie a fonte; depois dela, o símbolo ou o arranjo. Um logotipo que só funciona grande está reprovado.
 
 Um **símbolo** só se tiver ideia simples, do mundo do produto: uma forma geométrica, poucos traços. Se sair genérico, diga. Não entregue um símbolo fraco só para ter um. Para símbolo memorável, indique gerador de imagem ou designer, e registre em `design/midia.md`.
 

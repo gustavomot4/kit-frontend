@@ -20,12 +20,12 @@ Gratuito, do governo federal, com tradução automática do português por avata
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js" defer></script>
 ```
 
-Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Chrome. Para trocar o lado ou o avatar, a documentação oficial cita `new window.VLibras.Widget({ position: 'L', avatar: 'guga' })`; essa forma não foi testada.
+Com essa linha, o botão apareceu na borda direita em teste de 31/10/2026, no Chrome. Para trocar o lado ou o avatar, a documentação oficial cita `new window.VLibras.Widget({ position: 'L', avatar: 'guga' })`. Em teste de 01/11/2026, `position: 'L'` levou o botão para a esquerda, e `'BR'` e `'TR'` não o tiraram do lugar. O avatar não foi testado.
 
 - **Desde as três direções.** O botão ocupa a borda da tela e faz parte do que o dono está escolhendo. Não deixe para depois.
 - **Carregue sem esperar interação.** Quem precisa de Libras precisa ver o botão ao chegar. Use `defer` ou tempo ocioso, nunca "depois do primeiro clique".
 - **Janela baixa.** Com altura até 480px, confira se o botão não cobre conteúdo nem foco.
-- **Celular.** O botão fica no meio da borda direita, e o texto passa por baixo ao rolar (`q-camada-sobre-texto`). Reserve margem à direita, ou diga no relatório por que não.
+- **Celular.** O botão mede 40 × 40px, a 10px da borda direita e no meio da altura (medido em 375 × 812, em 01/11/2026), e o texto passa por baixo ao rolar (`q-camada-sobre-texto`). No texto corrido, reserve a margem: `padding-right: 52px` abaixo de 768px. Balão, cartão e botão podem passar por baixo, porque rolar resolve: diga isso no relatório.
 - **Depende de terceiros.** O script baixa arquivos de `vlibras.gov.br` e de `cdn.jsdelivr.net`, e o serviço pode sair do ar. Cite na política de privacidade. O restante da tela não pode depender dele.
 - **Não basta.** Não é atestado de acessibilidade. Há também opção comercial (Hand Talk), que não foi avaliada.
 

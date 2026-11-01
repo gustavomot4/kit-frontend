@@ -146,7 +146,7 @@ Marcas, nomes e dados das telas de exemplo são fictícios. O que ainda falha es
 │   ├── assets/
 │   │   ├── modelos/          MARCA.md, DESIGN.md, PRODUTO.md, correções, mídia
 │   │   └── exemplos/         marca e design preenchidos
-│   ├── scripts/              verificador, comparador de direções, contraste, paleta, referências, marca, logotipo
+│   ├── scripts/              verificador, comparador de direções, contraste, paleta, referências, marca, logotipo, prancha, tokens
 │   └── estilos/              PRDs por seção (gerado)
 ├── prds/                     fonte dos estilos, com exemplos e o modelo de PRD novo
 ├── dist/                     prompt único e llms.txt (gerado)

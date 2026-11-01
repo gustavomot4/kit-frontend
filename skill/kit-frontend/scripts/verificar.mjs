@@ -102,10 +102,24 @@ async function abrir(url, t) {
   await dorme(250);
 }
 
+// A barra de rolagem só existe na captura: esconde na hora da foto, para a medida continuar vendo a largura de verdade
+async function fotografar(params) {
+  await avaliar(`document.head.appendChild(Object.assign(document.createElement('style'), { id: '__kitBarra', textContent: 'html{scrollbar-width:none}::-webkit-scrollbar{display:none}' })) && 1`); await dorme(80);
+  const c = await cdp('Page.captureScreenshot', params);
+  await avaliar(`document.getElementById('__kitBarra')?.remove(); 1`);
+  return c;
+}
+
+// Camada fixa na página inteira cai no meio do conteúdo, sem ser defeito da tela: sai desta captura e aparece em desktop.png e celular.png
+const ESCONDER_FIXAS = `(() => { window.__kitFixas = []; const visita = r => { for (const e of r.querySelectorAll('*')) { if (getComputedStyle(e).position === 'fixed') { window.__kitFixas.push([e, e.style.getPropertyValue('display'), e.style.getPropertyPriority('display')]); e.style.setProperty('display', 'none', 'important'); } if (e.shadowRoot) visita(e.shadowRoot); } }; visita(document.body); return 1; })()`;
+const MOSTRAR_FIXAS = `(() => { (window.__kitFixas || []).forEach(([e, v, p]) => { if (v) e.style.setProperty('display', v, p); else e.style.removeProperty('display'); }); return 1; })()`;
+
 // A primeira dobra não mostra o resto da página: num teste real, fotos de catálogo com 1402px de altura passaram porque ninguém viu essa parte
 async function capturarInteira(pasta, t) {
+  await avaliar(ESCONDER_FIXAS);
   const altura = await avaliar('document.documentElement.scrollHeight');
-  const c = await cdp('Page.captureScreenshot', { format: 'jpeg', quality: 80, captureBeyondViewport: true, clip: { x: 0, y: 0, width: t.w, height: Math.min(altura, 12000), scale: 1 } });
+  const c = await fotografar({ format: 'jpeg', quality: 80, captureBeyondViewport: true, clip: { x: 0, y: 0, width: t.w, height: Math.min(altura, 12000), scale: 1 } });
+  await avaliar(MOSTRAR_FIXAS);
   if (c.result?.data) writeFileSync(join(pasta, `${t.papel}-inteira.jpg`), Buffer.from(c.result.data, 'base64'));
 }
 
@@ -182,7 +196,7 @@ async function passarPreferencias(pasta, somar, onde) {
   if (espaco.length) somar({ id: 'a11y-espacamento', nivel: 'falha', msg: `${espaco.length} texto(s) cortados quando a pessoa aumenta o espaçamento (WCAG 1.4.12).`, exemplos: espaco.slice(0, 5) }, onde);
   await cdp('Emulation.setEmulatedMedia', { features: [{ name: 'forced-colors', value: 'active' }] }); await dorme(120);
   const semContorno = await avaliar(SEM_CONTORNO);
-  const contraste = await cdp('Page.captureScreenshot', { format: 'png' }); writeFileSync(join(pasta, 'alto-contraste.png'), Buffer.from(contraste.result.data, 'base64'));
+  const contraste = await fotografar({ format: 'png' }); writeFileSync(join(pasta, 'alto-contraste.png'), Buffer.from(contraste.result.data, 'base64'));
   await cdp('Emulation.setEmulatedMedia', { features: [] });
   if (semContorno.length) somar({ id: 'a11y-alto-contraste', nivel: 'falha', msg: `${semContorno.length} campo(s) somem em alto contraste: o contorno vem só de box-shadow ou do fundo. Declare uma borda, mesmo transparente.`, exemplos: semContorno.slice(0, 5) }, onde);
 }
@@ -192,7 +206,7 @@ const VISOES = [['deuteranopia', 'Sem verde (deuteranopia)'], ['protanopia', 'Se
 async function montarPrancha(pasta, tela) {
   for (const [tipo] of VISOES) {
     await cdp('Emulation.setEmulatedVisionDeficiency', { type: tipo }); await dorme(60);
-    const c = await cdp('Page.captureScreenshot', { format: 'png' });
+    const c = await fotografar({ format: 'png' });
     if (c.result?.data) writeFileSync(join(pasta, `visao-${tipo}.png`), Buffer.from(c.result.data, 'base64'));
   }
   await cdp('Emulation.setEmulatedVisionDeficiency', { type: 'none' });
@@ -223,7 +237,7 @@ async function lerArvore(pasta, somar, onde) {
 const relatorios = [];
 for (const entrada of args) {
   const url = /^(https?|file):/.test(entrada) ? entrada : pathToFileURL(resolve(entrada)).href;
-  const nomeBase = (/^https?:/.test(entrada) ? new URL(entrada).pathname.replace(/\W+/g, '-').replace(/^-|-$/g, '') || 'inicio' : basename(entrada.split('?')[0], '.html')).toLowerCase();
+  const nomeBase = (/^https?:/.test(entrada) ? new URL(entrada).pathname.replace(/\.html?$/i, '').replace(/\W+/g, '-').replace(/^-|-$/g, '') || 'index' : basename(entrada.split('?')[0], '.html')).toLowerCase();
   const pasta = join(saida, nomeBase); mkdirSync(pasta, { recursive: true });
   const achados = new Map(); const medidas = {}; erros.length = 0;
   const somar = (a, onde) => { const k = a.id; if (!achados.has(k)) achados.set(k, { ...a, tamanhos: [onde] }); else { const v = achados.get(k); v.tamanhos.push(onde); if (a.nivel === 'falha') { v.nivel = 'falha'; v.msg = a.msg; v.exemplos = a.exemplos; } } };
@@ -234,7 +248,7 @@ for (const entrada of args) {
       const r = await avaliar(tela);
       r.achados.forEach(a => somar(a, r.tamanho));
       medidas[t.papel] = r.medidas;
-      if (t.captura) { const c = await cdp('Page.captureScreenshot', { format: 'png' }); writeFileSync(join(pasta, `${t.papel}.png`), Buffer.from(c.result.data, 'base64')); }
+      if (t.captura) { const c = await fotografar({ format: 'png' }); writeFileSync(join(pasta, `${t.papel}.png`), Buffer.from(c.result.data, 'base64')); }
       if (t.papel === 'desktop' || t.papel === 'celular') await capturarInteira(pasta, t);
       if (t.papel === 'celular') r.medidas.bytes = medirPeso(somar, r.tamanho);
       if (t.papel === 'desktop') {
