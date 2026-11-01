@@ -3,7 +3,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, readFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, existsSync, mkdirSync, rmSync, cpSync, utimesSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -23,7 +23,7 @@ test('instala num projeto vazio com skill, pontes e correções', () => {
   const p = temp();
   const r = kit('instalar', p);
   assert.equal(r.status, 0, r.stderr);
-  for (const f of ['.agents/skills/kit-frontend/SKILL.md', '.agents/skills/kit-frontend/references/gosto/perfil.md', '.agents/skills/kit-frontend/scripts/verificar.mjs', '.agents/skills/kit-frontend/scripts/comparar-direcoes.mjs', '.agents/skills/kit-frontend/estilos/sistema-gestao/indice.md', '.claude/skills/kit-frontend/SKILL.md', 'AGENTS.md', 'CLAUDE.md', 'design/correcoes.md']) assert.ok(existsSync(join(p, f)), f);
+  for (const f of ['.agents/skills/kit-frontend/SKILL.md', '.agents/skills/kit-frontend/references/gosto/perfil.md', '.agents/skills/kit-frontend/scripts/verificar.mjs', '.agents/skills/kit-frontend/scripts/comparar-direcoes.mjs', '.agents/skills/kit-frontend/scripts/escolha-cega.mjs', '.agents/skills/kit-frontend/assets/modelos/ideias.md', '.agents/skills/kit-frontend/estilos/sistema-gestao/indice.md', '.claude/skills/kit-frontend/SKILL.md', 'AGENTS.md', 'CLAUDE.md', 'design/correcoes.md']) assert.ok(existsSync(join(p, f)), f);
   assert.match(readFileSync(join(p, '.claude/skills/kit-frontend/SKILL.md'), 'utf8'), /\.agents\/skills\/kit-frontend\/SKILL\.md/);
   assert.ok(!existsSync(join(p, '.cursor')), 'não cria pasta de agente não detectado');
   rmSync(p, { recursive: true, force: true });
@@ -221,6 +221,56 @@ test('o comparador acusa direções quase iguais e aceita as diferentes', () => 
   rmSync(p, { recursive: true, force: true });
 });
 
+test('o comparador acusa a mesma ideia com outra pele', () => {
+  const r = kit('direcoes', join(raiz, 'ferramentas/fixtures/direcoes-mesma-ideia'));
+  assert.equal(r.status, 1, r.stdout);
+  assert.match(r.stdout, /mesma ideia/); assert.doesNotMatch(r.stdout, /composição não muda/, 'só a ideia repete');
+});
+
+test('a escolha cega exige ideias.md, recusa direções iguais e não entrega a origem', () => {
+  const p = temp(), pasta = join(p, 'design', 'direcoes'), ref = join(p, 'design', 'referencias');
+  mkdirSync(pasta, { recursive: true }); mkdirSync(ref, { recursive: true });
+  writeFileSync(join(ref, 'um.jpg'), 'x'); writeFileSync(join(ref, 'dois.jpg'), 'x');
+  writeFileSync(join(p, 'MARCA.md'), readFileSync(join(raiz, 'skill/kit-frontend/assets/exemplos/marca.md'), 'utf8'));
+  for (const f of ['a', 'b', 'c']) cpSync(join(raiz, `docs/testes/2026-10-30-teste-cego/com-kit/${f}.html`), join(pasta, `${f}.html`));
+  const roda = () => spawnSync(process.execPath, [join(raiz, 'skill/kit-frontend/scripts/escolha-cega.mjs'), 'design/direcoes'], { encoding: 'utf8', cwd: p, maxBuffer: 1e8 });
+  const ideias = ({ referencia = 'um.com', medida = 'design/referencias/um.jpg', refs = 2, sim = 1, extra = '' } = {}) => writeFileSync(join(pasta, 'ideias.md'), `# Ideias\n\n## Referências de fora do setor\n\n| Referência | Setor | Medida | O que levar |\n| --- | --- | --- | --- |\n| ${referencia} | Bancos | ${medida} | Número grande |\n${refs > 1 ? '| dois.com | Jogos | design/referencias/dois.jpg | Mapa como menu |\n' : ''}\n## Conceitos\n\n| Direção | Conceito | De onde veio | Parte da primeira ideia? |\n| --- | --- | --- | --- |\n| A | Conversa, mas sem bate-papo | Marca | ${sim > 0 ? 'sim' : 'não'} |\n| B | Entregador, mas sem mapa | Referência | ${sim > 1 ? 'sim' : 'não'} |\n| C | Caderno, mas que soma | Mundo do produto | não |\n${extra}`);
+  assert.match(roda().stdout, /Falta .*ideias\.md/);
+  assert.match(roda().stdout, /Escreva em .*primeira-ideia\.md/);
+  // a primeira ideia precisa ser mais antiga que as referências e as direções
+  // bem no passado: no Windows, a cópia mantém a data original das direções
+  const primeira = join(pasta, 'primeira-ideia.md'), antes = new Date('2000-01-01');
+  writeFileSync(primeira, 'Lista de pedidos do dia.\n');
+  ideias();
+  assert.match(roda().stdout, /já não é a primeira/, 'escrita por último, ela não é a primeira');
+  utimesSync(primeira, antes, antes);
+  writeFileSync(join(pasta, 'ideias.md'), readFileSync(join(raiz, 'skill/kit-frontend/assets/modelos/ideias.md'), 'utf8'));
+  const modelo = roda();
+  assert.equal(modelo.status, 1); assert.match(modelo.stdout, /Faltam referências/); assert.doesNotMatch(modelo.stdout, /primeira ideia:/);
+  ideias({ refs: 1 }); assert.match(roda().stdout, /Faltam referências/);
+  ideias({ referencia: 'nubank.com.br' }); assert.match(roda().stdout, /repertório do kit/);
+  ideias({ medida: 'olhei o site' }); assert.match(roda().stdout, /sem medida/);
+  ideias({ medida: 'erro: o site bloqueou' }); assert.doesNotMatch(roda().stdout, /sem medida/, 'o erro ao tentar vale como registro');
+  ideias({ sim: 2 }); assert.match(roda().stdout, /Mais de uma direção/);
+  ideias({ extra: '\nRecomendo a B.\n' }); assert.match(roda().stdout, /Tire a recomendação/);
+  ideias();
+  const pronto = roda();
+  assert.equal(pronto.status, 0, pronto.stdout + pronto.stderr);
+  const chave = JSON.parse(readFileSync(join(pasta, 'cega-chave.json'), 'utf8'));
+  assert.deepEqual(Object.values(chave).sort(), ['a.html', 'b.html', 'c.html']);
+  for (const letra of Object.keys(chave)) for (const f of ['primeira-dobra', 'computador-1', 'celular-primeira-dobra', 'celular-1']) assert.ok(existsSync(join(pasta, 'cega', `tela-${letra}-${f}.jpg`)), `${letra} ${f}`);
+  assert.ok(!existsSync(join(pasta, 'cega', 'cega-chave.json')), 'a chave fica fora do pacote');
+  const pedido = readFileSync(join(pasta, 'cega', 'pedido.md'), 'utf8');
+  assert.doesNotMatch(pedido, /[abc]\.html|Conversa, mas|Entregador, mas/, 'quem escolhe não sabe qual é qual');
+  assert.doesNotMatch(pedido, /nenhum pedido se perde/, 'a marca fica fora do pedido, até dizer o que viu');
+  assert.match(readFileSync(join(pasta, 'cega', 'etapa-2.md'), 'utf8'), /nenhum pedido se perde/);
+  for (const f of ['a', 'b', 'c']) rmSync(join(pasta, `${f}.html`));
+  for (const f of ['a', 'b']) cpSync(join(raiz, `ferramentas/fixtures/direcoes-mesma-ideia/${f}.html`), join(pasta, `${f}.html`));
+  const iguais = roda();
+  assert.equal(iguais.status, 1); assert.match(iguais.stdout, /mesma ideia/);
+  rmSync(p, { recursive: true, force: true });
+});
+
 test('botão dentro de parágrafo é medido; link no meio da frase, não', () => {
   const p = temp();
   writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>:focus-visible{outline:3px solid #000}.b{height:18px;width:18px;padding:0}</style></head><body><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c"><h1>Título</h1><p>Veja <a href="#r">o regulamento completo</a> antes.</p><p><button class="b" aria-label="Fechar aviso">x</button></p></main></body></html>');
@@ -255,17 +305,18 @@ test('anel de foco sem contraste contra o fundo é falha', () => {
   rmSync(p, { recursive: true, force: true });
 });
 
-test('fonte só deixa de ser aviso com o motivo em "Do\'s and Don\'ts"', () => {
+test('o motivo tira o aviso de fonte padrão, não o de fonte que não vem do projeto', () => {
   const p = temp();
   writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;font-family:Inter,sans-serif"><main style="padding:24px"><h1>Título</h1><p>Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura.</p><a href="#" style="display:inline-block;padding:14px">Abrir o relatório</a></main></body></html>');
   const ids = conteudo => { writeFileSync(join(p, 'DESIGN.md'), conteudo); return lerRelatorio(kit('verificar', join(p, 't.html'), '--saida', join(p, 's'), '--design', join(p, 'DESIGN.md'), '--json'))[0].achados.map(a => a.id); };
   const tokens = '---\ntypography:\n  body:\n    fontFamily: Inter\n---\n\n';
   assert.ok(ids(tokens).includes('ia-fonte-padrao'), 'citar nos tokens não basta');
-  assert.ok(ids(`${tokens}## Typography\n\nUsamos Inter porque sim.\n`).includes('g-fonte-nao-servida'), 'fora de "Do\'s and Don\'ts" não conta');
+  assert.ok(ids(`${tokens}## Typography\n\nUsamos Inter porque sim.\n`).includes('ia-fonte-padrao'), 'fora de "Do\'s and Don\'ts" não conta');
   assert.ok(ids(`${tokens}## Do's and Don'ts\n\n- Usamos Inter nos títulos.\n`).includes('ia-fonte-padrao'), 'sem motivo não conta');
   assert.ok(ids(`${tokens}## Do's and Don'ts\n\n- Usamos Barlow porque a interface é densa.\n`).includes('ia-fonte-padrao'), '"interface" não aprova a Inter');
   const comMotivo = ids(`${tokens}## Do's and Don'ts\n\n- Usamos Inter porque o sistema da empresa já a serve em todas as telas.\n`);
-  assert.ok(!comMotivo.includes('ia-fonte-padrao') && !comMotivo.includes('g-fonte-nao-servida'), 'com o motivo, é decisão');
+  assert.ok(!comMotivo.includes('ia-fonte-padrao'), 'com o motivo, a fonte padrão é decisão');
+  assert.ok(comMotivo.includes('g-fonte-nao-servida'), 'mas o motivo não põe a fonte no aparelho de quem usa');
   rmSync(p, { recursive: true, force: true });
 });
 
@@ -343,6 +394,9 @@ test('conferir-marca aprova o exemplo e reprova o que falta', () => {
   const so = marca();
   assert.equal(so.status, 0, so.stdout); assert.match(so.stdout, /Ainda não há design\/marca/);
   assert.doesNotMatch(so.stdout, /arquivo do logo/, 'marca nova não precisa do arquivo');
+  assert.doesNotMatch(so.stdout, /Nenhum concorrente/, 'o exemplo olhou um concorrente');
+  writeFileSync(join(p, 'MARCA.md'), asset('exemplos/marca.md').replace('| Observado |', '| Não verificado |'));
+  assert.match(marca().stdout, /Nenhum concorrente foi olhado/);
   const comIdentidade = campo => asset('exemplos/marca.md').replace('## Público e personas', `## Identidade existente\n\n- **Onde aparece hoje:** Instagram\n${campo}\n## Público e personas`);
   writeFileSync(join(p, 'MARCA.md'), comIdentidade(''));
   assert.match(marca().stdout, /arquivo do logo/);

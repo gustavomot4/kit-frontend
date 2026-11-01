@@ -28,7 +28,7 @@ O retrabalho nasce de cinco causas, e cada etapa abaixo ataca uma: visual decidi
 | --- | --- |
 | Projeto sem telas e sem `DESIGN.md` | Etapas 1 a 8 |
 | Produto existente sem `DESIGN.md`, ou "está com cara de IA" | Rode a verificação nas telas atuais, mostre o diagnóstico com capturas e siga as etapas 1 a 8. Se já há marca, a etapa 2 a documenta |
-| Pedido de marca, identidade ou brief | Etapa 1, etapa 2 e o kit da etapa 4 |
+| Pedido de marca, identidade ou brief | Etapas 1 a 4: o kit de identidade vem depois da direção |
 | Tela nova com `DESIGN.md` aprovado | Etapas 6 a 8 |
 | Ajuste pontual | Etapas 6 a 8, só na tela e nas iguais a ela |
 | Pedido só de revisão | Etapa 7, sem alterar nada |
@@ -49,20 +49,22 @@ Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
 
 Sem código de produção antes da escolha. Cada direção expressa o `MARCA.md`. Siga `references/marca/identidade.md` e `references/marca/criatividade.md`, e confira `references/marca/anti-generico.md`. Para imagem, vídeo, 3D e animação, veja `references/recursos/bibliotecas.md`; o que você não puder gerar vai para `design/midia.md` (modelo em `assets/modelos/midia.md`).
 
-- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em tipografia, composição e cor, não só na cor. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
+- **Antes de qualquer referência,** escreva a primeira ideia em `design/direcoes/primeira-ideia.md`. Depois, `design/direcoes/ideias.md` (modelo em `assets/modelos/ideias.md`): duas referências de fora do setor medidas com `scripts/medir-referencia.mjs` e os três conceitos, no máximo um vindo da primeira ideia. Não recomende nada ainda.
+- Em `design/direcoes/`: a tela mais usada do produto, com os mesmos dados, em três arquivos HTML estáticos que diferem em ideia, tipografia, composição e cor. Título, imagem e ordem das seções são de cada direção. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
 - Com marca existente, use o logo real e faça ao menos uma direção partir de como ela aparece hoje. Sem o arquivo, escreva o nome em texto: não desenhe um substituto.
 - Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as quase iguais. Rode a verificação nas três e corrija as falhas. Olhe a página inteira de cada uma, até o fim.
-- Mostre as imagens em 1440 × 900 e 375 × 812 e a página inteira, com nome, conceito em uma frase, elemento-assinatura e a sua recomendação. Texto mínimo: quem decide olha a imagem.
+- Rode `scripts/escolha-cega.mjs design/direcoes` e entregue o pedido a dois agentes novos, um de cada vez, que só veem as imagens. Se discordarem, é empate: leve as duas ao dono. Se ambos disserem "nenhuma", refaça as direções uma vez. Sem agente novo, escreva "escolha sem juízo externo" no `DESIGN.md`.
+- Mostre as imagens em 1440 × 900 e 375 × 812 e a página inteira, com nome, conceito em uma frase, elemento-assinatura e o que a escolha cega apontou. Texto mínimo: quem decide olha a imagem.
 
 **Pare e espere a escolha.** Misturas são bem-vindas. Se o dono rejeitar as três, pergunte o que incomodou, registre em `design/correcoes.md` e refaça.
 
-**Dono ausente.** Se ele disse que não pode responder ("decide você e segue"), não pare nos portões: siga com a sua recomendação e marque a escolha como provisória no `DESIGN.md`. A ordem não muda: `DESIGN.md` vem antes do código. Na entrega, mostre as direções não escolhidas, para ele poder trocar.
+**Dono ausente.** Se ele disse que não pode responder ("decide você e segue"), não pare nos portões: siga com a direção da escolha cega (no empate, escolha uma das duas e registre) e marque-a como provisória no `DESIGN.md`. A ordem não muda: `DESIGN.md` vem antes do código. Na entrega, mostre as direções não escolhidas, para ele poder trocar.
 
 ### 4. Travar
 
 Escreva `DESIGN.md` a partir de `assets/modelos/design.md` (exemplo preenchido em `assets/exemplos/design.md`) e gere o arquivo de tokens da stack do projeto. Rode `scripts/contraste.mjs DESIGN.md`. Toda cor e todo tamanho usados daqui em diante vêm dele.
 
-Faça o kit de identidade em `design/marca/` (logotipo em curvas, ícone, fontes, manual de uma página), como em `references/marca/criar-marca.md`. Diga com franqueza o que ficou fraco: um símbolo pode precisar de um designer.
+Faça o kit de identidade em `design/marca/`, no tamanho do brief, como em `references/marca/criar-marca.md`. Diga com franqueza o que ficou fraco: um símbolo pode precisar de um designer.
 
 ### 5. Tela-modelo: portão
 
@@ -397,7 +399,7 @@ Diga a verdade sobre o resultado: é um bom ponto de partida, feito em horas. N�
 
 De 1 a 3 personas: objetivo, medo, contexto de uso e familiaridade com tecnologia. Sem dados reais de pessoas.
 
-**Concorrentes olhados de verdade.** De 3 a 5, incluindo o que a pessoa usa hoje, mesmo que seja caderno ou WhatsApp. Abra as telas e anote cor, fonte e tom. Sem acesso, marque "não verificado". Termine dizendo qual é o espaço livre: o que ninguém ocupa e faz sentido para este produto.
+**Concorrentes olhados de verdade.** De 3 a 5, incluindo o que a pessoa usa hoje, mesmo que seja caderno ou WhatsApp. Abra as telas com `scripts/medir-referencia.mjs` e anote cor, fonte e tom. "Não verificado" só depois de tentar. Termine dizendo qual é o espaço livre: o que ninguém ocupa e faz sentido para este produto.
 
 **Sem promessa falsa.** Não invente número, prêmio nem depoimento.
 
@@ -569,22 +571,24 @@ Uma pergunta que costuma render: **qual é a unidade real do trabalho?** Cadeira
 
 ## Método
 
-1. **Mundo do produto.** Liste 10 coisas concretas do setor: materiais, ferramentas, documentos, lugares, gírias, rituais. Numa barbearia: navalha, espelho, ficha de papel, cadeira, listras. Use as palavras de `PRODUTO.md` e o espaço livre de `MARCA.md`.
-2. **Três conceitos, em dimensões diferentes.** Não são três cores do mesmo layout: pelo menos tipografia, composição e cor precisam mudar, da primeira dobra ao fim da página.
+1. **Primeira ideia e fora do setor.** Antes de tudo, escreva em `design/direcoes/primeira-ideia.md` a ideia que veio primeiro: num teste real, ela foi a mesma com e sem o kit. Só uma direção pode partir dela. Depois, meça duas referências de outros setores com `scripts/medir-referencia.mjs`.
+2. **Mundo do produto.** Liste 10 coisas concretas do setor: materiais, ferramentas, documentos, lugares, gírias, rituais. Numa barbearia: navalha, espelho, ficha de papel, cadeira, listras. Use as palavras de `PRODUTO.md` e o espaço livre de `MARCA.md`.
+3. **Três conceitos, em dimensões diferentes.** Não são três cores do mesmo layout: pelo menos tipografia, composição e cor precisam mudar, da primeira dobra ao fim da página.
    - **A, familiar:** o mais próximo do que o público já usa. Risco baixo.
    - **B, própria:** a que mais parece com o produto e com mais nenhum.
    - **C, inesperada:** um passo além do confortável, para abrir a conversa. Se a saída óbvia do setor é o editorial de moda, ela não é inesperada.
 
    Com marca existente, ao menos uma direção parte de como ela aparece hoje: o mesmo fundo, as mesmas cores, o nome na mesma forma. Claro por padrão (G05) não dispensa mostrar essa opção.
 
-   Recomende pelo público, e diga por quê. Nem sempre a mais própria vence: o dono escolheu a B numa barbearia e a A numa marmitaria cuja dona não entende de tecnologia. A direção A também precisa de decisão própria: familiar não pode virar genérica.
-3. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale.
-4. **Revise contra `references/marca/anti-generico.md`.** Troque toda escolha que caiu num padrão e diga o que trocou.
-5. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia).
+   Nem sempre a mais própria vence: o dono escolheu a B numa barbearia e a A numa marmitaria cuja dona não entende de tecnologia. A direção A também precisa de decisão própria: familiar não pode virar genérica.
+4. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale.
+5. **Revise contra `references/marca/anti-generico.md`.** Troque toda escolha que caiu num padrão e diga o que trocou.
+6. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia). O mesmo título sobre as mesmas seções é uma ideia só, com outra pele.
 
    Escreva cada direção num arquivo próprio, com o próprio CSS, em HTML estático: sem gerador, sem folha de estilo comum, sem sacola nem diálogo funcionando. Gerador comum produz a mesma página com outra pintura, e o tempo vai para o que ninguém está decidindo agora.
-6. **Compare e verifique.** Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as que saírem quase iguais. Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior. Abra `desktop-inteira.jpg` e `celular-inteira.jpg` e olhe até o fim da página.
-7. **Mostre as imagens.** Para cada uma: nome, conceito em uma frase, o elemento-assinatura, a primeira dobra em 1440 × 900 e 375 × 812, e a página inteira. Diga qual recomenda e por quê. Pare e espere.
+7. **Compare e verifique.** Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as que saírem quase iguais. Rode `scripts/verificar.mjs` nas três e corrija as falhas antes de mostrar: acessibilidade não é rodada posterior. Olhe até o fim da página.
+8. **Escolha cega.** Quem fez não recomenda: rode `scripts/escolha-cega.mjs design/direcoes` e dê o pedido a dois agentes novos.
+9. **Mostre as imagens**, como pede o `SKILL.md`, e diga o que a escolha cega apontou. Pare e espere.
 
 ## Depois da escolha
 
@@ -605,9 +609,9 @@ Por baixo, o script trabalha em OKLCH, em que a claridade é perceptualmente uni
 
 Sem fonte definida, siga `references/recursos/fontes.md`: candidatas por personalidade, como testar e como servir.
 
-Sirva a fonte pelo próprio projeto em produção, em WOFF2, com `font-display: swap`. Em protótipo pode vir de CDN. Fontes de CDN mandam o IP do visitante a terceiros, o que pesa na LGPD. A pilha do sistema é uma decisão válida quando há motivo (velocidade, telas de baixo custo): escreva o motivo em "Do's and Don'ts" no `DESIGN.md`.
+Sirva a fonte pelo próprio projeto em produção, em WOFF2, com `font-display: swap`. Em protótipo pode vir de CDN. Fontes de CDN mandam o IP do visitante a terceiros, o que pesa na LGPD. A pilha genérica (`system-ui`) é uma decisão válida quando há motivo (velocidade, telas de baixo custo): escreva o motivo em "Do's and Don'ts" no `DESIGN.md`.
 
-**Fonte instalada no seu computador não é identidade.** Corbel, Trebuchet, Verdana e Segoe vêm com o Windows e não existem no Android nem no iPhone: a captura fica bonita e, no celular da pessoa, a tela muda de letra. `@font-face` com `src: local()` também não conta. "Sem CDN" não quer dizer "sem fonte": um WOFF2 com subconjunto latino, servido pelo projeto, não depende de internet externa e funciona em navegador antigo.
+**Fonte instalada no seu computador não é identidade, mesmo com motivo.** Corbel, Trebuchet, Verdana, Segoe e Bahnschrift vêm com o Windows e não existem no Android nem no iPhone: a captura fica bonita e, no celular da pessoa, a tela muda de letra. `@font-face` com `src: local()` também não conta. "Sem CDN" não quer dizer "sem fonte": um WOFF2 com subconjunto latino, servido pelo projeto, não depende de internet externa e funciona em navegador antigo.
 
 Se usar componentes prontos (shadcn/ui, Radix, React Aria), use o comportamento e a acessibilidade deles e troque a aparência inteira. O visual padrão deles é parte do que hoje se lê como "feito por IA".
 
@@ -1384,7 +1388,7 @@ colors:
 typography:
   title:
     fontFamily: <Família>
-    fontSize: 2rem
+    fontSize: <em rem, vindo do conceito>
     fontWeight: 700
     lineHeight: 1.15
   body:
@@ -1398,8 +1402,8 @@ typography:
     fontWeight: 600
     lineHeight: 1.4
 rounded:
-  control: 8px
-  surface: 12px
+  control: <px, vindo do conceito>
+  surface: <px, vindo do conceito>
 spacing:
   sm: 8px
   md: 16px

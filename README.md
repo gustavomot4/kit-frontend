@@ -82,6 +82,10 @@ node ../kit-frontend/bin/kit.mjs direcoes design/direcoes
 ```
 
 ```bash
+node ../kit-frontend/bin/kit.mjs escolha design/direcoes
+```
+
+```bash
 node ../kit-frontend/bin/kit.mjs contraste DESIGN.md
 ```
 

@@ -169,6 +169,7 @@ const AJUDA = `kit-frontend ${versao}
   paleta <cor>                gera paleta completa com contraste calculado; --tema escuro, --evitar, --css
   referencia <url|arquivo>    mede fontes, escala, cores e raios de páginas de que a pessoa gosta
   direcoes <pasta|arquivos>   compara as direções visuais; sai com 1 se duas forem quase iguais
+  escolha [pasta]             prepara a escolha da direção por um agente novo, às cegas; sai com 1 se faltar ideias.md
   coletar <pasta>             traz as correções de um projeto para o kit
   empacotar                   gera estilos/ por seção e dist/prompt-unico.md
 `;
@@ -180,6 +181,7 @@ switch (comando) {
   case 'paleta': delegar('paleta.mjs'); break;
   case 'referencia': delegar('medir-referencia.mjs'); break;
   case 'direcoes': delegar('comparar-direcoes.mjs'); break;
+  case 'escolha': delegar('escolha-cega.mjs'); break;
   case 'coletar': coletar(); break;
   case 'empacotar': empacotar(); break;
   default: console.log(AJUDA);

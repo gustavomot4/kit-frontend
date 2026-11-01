@@ -48,6 +48,9 @@ const MEDIR = `(async () => {
   for (let n; (n = tw.nextNode());) { const p = n.parentElement, t = n.textContent.trim(); if (t && p && !['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(p.tagName) && vis(p)) { const f = familia(p); pesos[f] = (pesos[f] || 0) + t.length; } }
   const h1 = document.querySelector('h1') || document.querySelector('h2');
   const tipografia = { titulo: h1 ? familia(h1) : '', peso: h1 ? +cs(h1).fontWeight : 0, tamanho: h1 ? parseFloat(cs(h1).fontSize) : 0, corpo: Object.entries(pesos).sort((a, b) => b[1] - a[1])[0]?.[0] || '' };
+  // ideia: outra pele na mesma página mantém o título e as seções, na mesma ordem
+  const limpo = t => (t || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/\\s+/g, ' ').trim();
+  const ideia = { titulo: limpo(document.querySelector('h1')?.textContent), secoes: [...document.querySelectorAll('h2')].filter(vis).map(h => limpo(h.textContent)) };
   // composição: o que ocupa cada célula de uma grade de 120 x 60 px, nos primeiros 3 mil px
   const tipoDe = e => e.matches('img,svg,video,canvas,picture') ? 'm' : e.matches('button,input,select,textarea,a[href]') ? 'c' : [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) ? 't' : '';
   const celulas = {};
@@ -79,7 +82,7 @@ const MEDIR = `(async () => {
   for (const e of document.querySelectorAll('body *')) { if (e.closest('svg') && e.tagName !== 'svg') continue; const nome = n => n.tagName.toLowerCase() + '.' + [...n.classList].sort().join('.'); const k = nome(e.parentElement) + '>' + nome(e); estrutura[k] = (estrutura[k] || 0) + 1; }
   // código comum: as folhas externas de cada direção; o tamanho vem do disco
   const folhas = [...document.querySelectorAll('link[rel=stylesheet]')].map(l => l.href), dentro = [...document.querySelectorAll('style')].reduce((n, s) => n + s.textContent.length, 0);
-  return { tipografia, celulas, cores, estrutura, folhas, dentro };
+  return { tipografia, ideia, celulas, cores, estrutura, folhas, dentro };
 })()`;
 
 const direcoes = [];
@@ -101,15 +104,19 @@ const coresEmComum = (a, b) => { let s = 0; for (const k of new Set([...Object.k
 const tipografiaIgual = (a, b) => a.titulo === b.titulo && a.corpo === b.corpo && Math.abs(a.peso - b.peso) < 200 && Math.min(a.tamanho, b.tamanho) / Math.max(a.tamanho, b.tamanho) > .75;
 const tamanho = h => { try { return statSync(fileURLToPath(h)).size; } catch { return 0; } };
 const folhaComum = (a, b) => { const total = a.folhas.reduce((t, h) => t + tamanho(h), a.dentro), comum = a.folhas.filter(h => b.folhas.includes(h)).reduce((t, h) => t + tamanho(h), 0); return total ? comum / total : 0; };
+// quantas seções vêm na mesma ordem, a partir do começo do que as duas têm em comum
+const secoesEmOrdem = (a, b) => { const x = a.filter(s => b.includes(s)), y = b.filter(s => a.includes(s)), maior = Math.max(a.length, b.length); let i = 0; while (i < x.length && x[i] === y[i]) i++; return maior ? i / maior : 0; };
 
 // Calibrado em 31/10/2026: direções de um mesmo gerador deram HTML de 77 a 84% e composição de 52 a 68%; direções feitas à parte, de 2 a 14% e de 21 a 32%.
 // A cor mede só o fundo pintado na primeira dobra: duas direções claras podem dar 90% e ser diferentes no acento.
-const LIMITE = { estrutura: .5, composicao: .45, cor: .95, folha: .5 };
+// Com o mesmo título, seções na mesma ordem: 75% em três direções de uma ideia só e até 20% em ideias diferentes, em três conjuntos reais.
+const LIMITE = { estrutura: .5, composicao: .45, cor: .95, folha: .5, secoes: .6 };
 const pares = [];
 for (let i = 0; i < direcoes.length; i++) for (let j = i + 1; j < direcoes.length; j++) {
   const a = direcoes[i], b = direcoes[j];
-  const p = { par: `${a.nome} x ${b.nome}`, tipografiaIgual: tipografiaIgual(a.tipografia, b.tipografia), composicao: celulasEmComum(a.celulas, b.celulas), cor: coresEmComum(a.cores, b.cores), estrutura: emComum(a.estrutura, b.estrutura), folha: Math.max(folhaComum(a, b), folhaComum(b, a)) };
+  const p = { par: `${a.nome} x ${b.nome}`, tipografiaIgual: tipografiaIgual(a.tipografia, b.tipografia), composicao: celulasEmComum(a.celulas, b.celulas), cor: coresEmComum(a.cores, b.cores), estrutura: emComum(a.estrutura, b.estrutura), folha: Math.max(folhaComum(a, b), folhaComum(b, a)), mesmoTitulo: Boolean(a.ideia.titulo) && a.ideia.titulo === b.ideia.titulo, secoes: secoesEmOrdem(a.ideia.secoes, b.ideia.secoes) };
   p.motivos = [];
+  if (p.mesmoTitulo && p.secoes >= LIMITE.secoes) p.motivos.push('mesma ideia: o título e a ordem das seções não mudam');
   if (p.estrutura >= LIMITE.estrutura) p.motivos.push('quase todo o HTML é igual');
   if (p.folha >= LIMITE.folha) p.motivos.push('a maior parte do CSS é comum');
   const iguais = [p.tipografiaIgual && 'tipografia', p.composicao >= LIMITE.composicao && 'composição', p.cor >= LIMITE.cor && 'cor'].filter(Boolean);
@@ -122,7 +129,7 @@ if (comoJson) console.log(JSON.stringify({ direcoes: direcoes.map(d => ({ nome: 
 else {
   for (const d of direcoes) console.log(`${d.nome}: título ${d.tipografia.titulo} ${d.tipografia.peso} em ${Math.round(d.tipografia.tamanho)}px; texto ${d.tipografia.corpo}`);
   console.log('');
-  for (const p of pares) console.log(`${p.par}: HTML ${pct(p.estrutura)}, CSS comum ${pct(p.folha)}, composição ${pct(p.composicao)}, cor ${pct(p.cor)}, tipografia ${p.tipografiaIgual ? 'igual' : 'muda'}${p.motivos.length ? `\n  QUASE IGUAIS: ${p.motivos.join('; ')}` : ''}`);
-  console.log(proximos.length ? `\n${proximos.length} de ${pares.length} par(es) quase iguais. Refaça cada direção num arquivo próprio, sem gerador nem CSS comum: tipografia, composição e cor precisam mudar. Veja references/marca/identidade.md.` : `\nAs ${direcoes.length} direções diferem. Isto mede a diferença, não a qualidade: quem julga é o dono.`);
+  for (const p of pares) console.log(`${p.par}: HTML ${pct(p.estrutura)}, CSS comum ${pct(p.folha)}, composição ${pct(p.composicao)}, cor ${pct(p.cor)}, seções em ordem ${pct(p.secoes)}, título ${p.mesmoTitulo ? 'igual' : 'muda'}, tipografia ${p.tipografiaIgual ? 'igual' : 'muda'}${p.motivos.length ? `\n  QUASE IGUAIS: ${p.motivos.join('; ')}` : ''}`);
+  console.log(proximos.length ? `\n${proximos.length} de ${pares.length} par(es) quase iguais. Refaça cada direção num arquivo próprio, sem gerador nem CSS comum: tipografia, composição, cor e ideia precisam mudar. Veja references/marca/identidade.md.` : `\nAs ${direcoes.length} direções diferem. Isto mede a diferença, não a qualidade: quem julga é o dono.`);
 }
 await fechar(proximos.length ? 1 : 0);

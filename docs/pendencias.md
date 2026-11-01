@@ -18,7 +18,8 @@ Avisos continuam nos outros exemplos, como fonte comum, texto na primeira dobra 
 2. Nova auditoria dos PRDs que mudaram de versão maior. Os estáveis estão em 3.x e 4.x, com auditoria da 1.0.0, e `app-tarefas-acessivel` segue em rascunho na 2.0.0.
 3. Fases 2 e 3 do plano do benchmark: gancho, integração contínua, desvio contra o `DESIGN.md`, método de direções, roteiro de estados e teste cego com origem oculta.
 4. Do [teste no Codex](testes/2026-10-31-outro-agente/relatorio.md): medir links repetidos com o mesmo nome e controles repetidos por item, e repetir o teste com o kit corrigido, até a etapa 8.
-5. Da [auditoria de 31/10](auditorias/2026-10-31/relatorio.md): as 10 mudanças da seção 6 e as perguntas ao dono. Da mudança 8, só falta o desvio contra o `DESIGN.md` e as contradições M1 a M3; o resto está em [testes/2026-10-31-correcoes-verificador](testes/2026-10-31-correcoes-verificador/relatorio.md).
+5. Da [auditoria de 31/10](auditorias/2026-10-31/relatorio.md): as mudanças 1, 2, 4 a 7, 9 e 10 e as perguntas ao dono. Da mudança 8, só falta o desvio contra o `DESIGN.md` ([o que já foi feito](testes/2026-10-31-correcoes-verificador/relatorio.md)).
+6. Da [mudança 3](testes/2026-10-31-ritual-completo/relatorio.md): repetir o ritual com as correções, em mais briefs e com controle sem kit. Conferir o gesto de "linha com marcos", que apareceu em 3 de 3 telas, e o possível falso alarme de `a11y-letra-200` com media queries em `rem`.
 
 ## Decisões em aberto
 

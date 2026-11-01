@@ -15,7 +15,7 @@ colors:
 typography:
   title:
     fontFamily: <Família>
-    fontSize: 2rem
+    fontSize: <em rem, vindo do conceito>
     fontWeight: 700
     lineHeight: 1.15
   body:
@@ -29,8 +29,8 @@ typography:
     fontWeight: 600
     lineHeight: 1.4
 rounded:
-  control: 8px
-  surface: 12px
+  control: <px, vindo do conceito>
+  surface: <px, vindo do conceito>
 spacing:
   sm: 8px
   md: 16px

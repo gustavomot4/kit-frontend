@@ -79,7 +79,7 @@ Diga a verdade sobre o resultado: é um bom ponto de partida, feito em horas. N�
 
 De 1 a 3 personas: objetivo, medo, contexto de uso e familiaridade com tecnologia. Sem dados reais de pessoas.
 
-**Concorrentes olhados de verdade.** De 3 a 5, incluindo o que a pessoa usa hoje, mesmo que seja caderno ou WhatsApp. Abra as telas e anote cor, fonte e tom. Sem acesso, marque "não verificado". Termine dizendo qual é o espaço livre: o que ninguém ocupa e faz sentido para este produto.
+**Concorrentes olhados de verdade.** De 3 a 5, incluindo o que a pessoa usa hoje, mesmo que seja caderno ou WhatsApp. Abra as telas com `scripts/medir-referencia.mjs` e anote cor, fonte e tom. "Não verificado" só depois de tentar. Termine dizendo qual é o espaço livre: o que ninguém ocupa e faz sentido para este produto.
 
 **Sem promessa falsa.** Não invente número, prêmio nem depoimento.
 
