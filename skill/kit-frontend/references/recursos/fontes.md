@@ -19,7 +19,7 @@ Parta das três palavras de `MARCA.md`.
 | Manual, de caderno | Caveat, Kalam, Gloria Hallelujah. Só em detalhe, nunca em texto corrido | `-variable/caveat`, `/kalam`, `/gloria-hallelujah` |
 | Leitura em primeiro lugar | Atkinson Hyperlegible Next, Lexend. Boas para baixa visão e público amplo | `-variable/atkinson-hyperlegible-next`, `-variable/lexend` |
 
-Por inércia, evite: Inter, Roboto, Poppins, Montserrat, Open Sans e Lato, que o verificador aponta. Fraunces e Space Grotesk também viraram padrão. Se uma delas for a escolha certa, escreva o motivo no `DESIGN.md`.
+Por inércia, evite: Inter, Roboto, Poppins, Montserrat, Open Sans e Lato, que o verificador aponta. Fraunces e Space Grotesk também viraram padrão. Se uma delas for a escolha certa, escreva o motivo em "Do's and Don'ts" no `DESIGN.md`.
 
 ## Como escolher
 

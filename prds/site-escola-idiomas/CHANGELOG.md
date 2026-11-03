@@ -1,5 +1,15 @@
 # Changelog — Site de escola de idiomas
 
+## 4.0.0 — 2026-10-31
+
+### Corrigido
+
+- Carga do VLibras: depois da primeira interação → com `defer`, sem esperar interação. Quem precisa de Libras não via o botão ao chegar. O chat continua carregando depois da primeira interação.
+
+### Decisões para o autor revisar
+
+- O script do VLibras passa a pesar em toda visita, e baixa arquivos de `vlibras.gov.br` e `cdn.jsdelivr.net`. Medir no celular simples quando o site existir.
+
 ## 3.0.0 — 2026-10-30
 
 Correções de `docs/pendencias.md`, medidas com `scripts/verificar.mjs` nos dois exemplos. Nenhum token mudou, então a tabela de contraste continua a mesma.

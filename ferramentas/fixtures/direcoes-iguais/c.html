@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direção C</title>
+<style>
+  body { margin: 0; font: 1rem/1.5 "Times New Roman", serif; background: #17110f; color: #f5efe9; }
+  .editorial-topo { display: flex; justify-content: space-between; padding: 1rem 5rem; }
+  .editorial-heroi { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem 5rem; }
+  .editorial-heroi h1 { font-size: 4rem; line-height: 1.1; margin: 0 0 1rem; }
+  .editorial-heroi a { display: inline-block; padding: .9rem 1.5rem; background: #b0235f; color: #fff; }
+  .editorial-heroi img, .editorial-grade img { width: 100%; height: auto; display: block; }
+  .editorial-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 2rem 5rem; list-style: none; margin: 0; }
+</style>
+</head>
+<body>
+<header class="editorial-topo"><strong>Loja de exemplo</strong><a href="#c">Sacola</a></header>
+<main id="c">
+  <section class="editorial-heroi">
+    <div><h1>Roupa do dia à festa</h1><p>Peças para todo dia.</p><a href="#g">Ver roupas</a></div>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Modelo fictícia" width="200" height="250">
+  </section>
+  <ul class="editorial-grade" id="g">
+    <li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Regata" width="200" height="250"><h2>Regata</h2></li>
+    <li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Vestido" width="200" height="250"><h2>Vestido</h2></li>
+    <li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Conjunto" width="200" height="250"><h2>Conjunto</h2></li>
+  </ul>
+</main>
+</body>
+</html>

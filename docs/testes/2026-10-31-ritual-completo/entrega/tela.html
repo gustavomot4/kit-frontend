@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Amparo | Funerária em Juiz de Fora, atendimento 24 horas</title>
+<meta name="description" content="Funerária em Juiz de Fora há 40 anos. Atendimento 24 horas: (32) 99999-0000. Serviços Essencial, Completo e Cremação, com preço.">
+<meta name="theme-color" content="#843143">
+<link rel="icon" href="marca/icone.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FuneralHome",
+  "name": "Casa Amparo",
+  "description": "Funerária de família em Juiz de Fora há 40 anos. Atendimento 24 horas.",
+  "telephone": "+55 32 99999-0000",
+  "areaServed": { "@type": "City", "name": "Juiz de Fora" },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Serviços",
+    "itemListElement": [
+      { "@type": "Offer", "name": "Essencial", "price": "2900", "priceCurrency": "BRL" },
+      { "@type": "Offer", "name": "Completo", "price": "4800", "priceCurrency": "BRL" },
+      { "@type": "Offer", "name": "Cremação", "price": "5600", "priceCurrency": "BRL" }
+    ]
+  }
+}
+</script>
+<style>
+@font-face { font-family: 'Newsreader'; src: url('fontes/newsreader-latin-wght-normal.woff2') format('woff2'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Public Sans'; src: url('fontes/public-sans-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+:root {
+  --vinho: #843143;
+  --vinho-fundo: #6f2335;
+  --papel: #fbf5f6;
+  --rosado: #f3e6e9;
+  --rosa: #f3d6dc;
+  --tinta: #231719;
+  --apoio: #52424a;
+  --linha: #dcc8cd;
+}
+* { box-sizing: border-box; }
+html { font-size: 100%; }
+body { margin: 0; background: var(--papel); color: var(--tinta); font-family: 'Public Sans', system-ui, sans-serif; font-size: 1.125rem; line-height: 1.6; }
+h1, h2, h3, p, ol, ul { margin: 0; }
+h1, h2, h3, .serifa { font-family: 'Newsreader', Georgia, serif; font-variant-numeric: lining-nums tabular-nums; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--tinta); outline-offset: 3px; box-shadow: 0 0 0 6px #fff; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.salto { position: absolute; left: 1rem; top: -4rem; background: #fff; color: var(--tinta); padding: .75rem 1rem; z-index: 10; }
+.salto:focus { top: 1rem; }
+
+.pagina { display: grid; grid-template-columns: minmax(0, 34%) minmax(0, 1fr); min-height: 100vh; }
+
+/* painel de cor: o ponto de partida, sempre à vista no computador */
+.painel { background: var(--vinho); color: var(--papel); padding: 2.5rem clamp(1.5rem, 3.5vw, 3.5rem); position: sticky; top: 0; min-height: 100vh; align-self: start; display: flex; flex-direction: column; gap: 2rem; }
+.marca { width: 100%; max-width: 19rem; padding: .4rem 0; line-height: 0; }
+.marca img { display: block; width: 100%; height: auto; }
+.cidade { font-size: 1rem; color: var(--rosa); margin-top: .25rem; }
+.painel-meio { margin-block: auto; display: grid; gap: 1.25rem; }
+.painel h1 { font-size: clamp(2.25rem, 3.1vw, 3.5rem); line-height: 1.08; font-weight: 500; }
+.horas { font-size: 1.375rem; font-weight: 600; color: var(--rosa); }
+.numero { display: inline-block; width: fit-content; font-family: 'Newsreader', Georgia, serif; font-weight: 600; font-size: clamp(1.75rem, 3.2vw, 3.75rem); line-height: 1.15; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; color: var(--papel); text-decoration: underline; text-decoration-color: var(--rosa); text-decoration-thickness: 3px; text-underline-offset: .18em; padding: .25rem 0; }
+.numero:hover { text-decoration-color: var(--papel); }
+.botoes { display: grid; gap: .875rem; margin-top: .5rem; }
+.btn { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 4rem; padding: .625rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 1.25rem; line-height: 1.25; border: 2px solid var(--papel); }
+.btn small { font-size: 1.0625rem; font-weight: 500; }
+.btn-claro { background: var(--papel); color: var(--vinho-fundo); }
+.btn-claro:hover { background: var(--rosa); border-color: var(--rosa); }
+.btn-contorno { background: transparent; color: var(--papel); }
+.btn-contorno:hover { background: var(--vinho-fundo); }
+.painel a.preco-sinal { display: inline-block; width: fit-content; color: var(--rosa); font-weight: 600; font-size: 1.0625rem; text-underline-offset: .22em; text-decoration-thickness: 2px; padding: .5rem 0; }
+.painel :focus-visible { outline-color: #fff; box-shadow: 0 0 0 6px var(--vinho); }
+
+/* o caminho: uma linha com três paradas */
+.caminho { padding: 4.5rem 6vw 2rem 4.5rem; max-width: 62rem; }
+.trilha { list-style: none; padding: 0; }
+.parada { position: relative; padding: 0 0 3.5rem 4.25rem; }
+.parada::before { content: ''; position: absolute; left: 1rem; top: 0; bottom: 0; width: 0; border-left: 3px solid var(--vinho); }
+.parada::after { content: ''; position: absolute; left: 0; top: .4rem; width: 2.1875rem; height: 2.1875rem; border-radius: 50%; border: 3px solid var(--vinho); background: var(--papel); }
+.parada.aqui::after { background: var(--vinho); box-shadow: 0 0 0 7px var(--rosa); }
+.parada.ultima { padding-bottom: 1rem; }
+.parada.ultima::before { bottom: auto; height: 1.5rem; }
+.tag { display: inline-block; background: var(--vinho); color: var(--papel); font-weight: 700; font-size: 1rem; padding: .3rem .875rem .3rem 1.375rem; margin-bottom: .75rem; clip-path: polygon(.75rem 0, 100% 0, 100% 100%, .75rem 100%, 0 50%); }
+.parada h2 { font-size: clamp(1.875rem, 2.8vw, 2.625rem); line-height: 1.15; font-weight: 600; max-width: 22ch; }
+.parada p { margin-top: .875rem; max-width: 46ch; }
+.parada p.menor { color: var(--apoio); }
+.parada p.fone a { font-weight: 700; color: var(--vinho-fundo); white-space: nowrap; text-underline-offset: .2em; text-decoration-thickness: 2px; }
+.parada a.texto { font-weight: 700; color: var(--vinho-fundo); text-underline-offset: .25em; text-decoration-thickness: 2px; display: inline-block; padding: .5rem 0; }
+
+/* fora do caminho: serviços e convite */
+.bloco { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 3px solid var(--vinho); }
+.bloco h2 { font-size: clamp(1.875rem, 2.8vw, 2.625rem); line-height: 1.15; font-weight: 600; }
+.precos { list-style: none; padding: 0; margin-top: 1.5rem; max-width: 40rem; }
+.precos li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: .25rem 1.5rem; padding: 1.125rem 0; border-top: 2px solid var(--linha); }
+.precos li:last-child { border-bottom: 2px solid var(--linha); }
+.precos h3 { font-size: 1.875rem; font-weight: 600; }
+.precos .valor { font-family: 'Newsreader', Georgia, serif; font-size: 2.125rem; font-weight: 600; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
+.precos a { grid-column: 1 / -1; font-weight: 600; color: var(--vinho-fundo); text-underline-offset: .25em; padding: .5rem 0; width: fit-content; }
+.nota { margin-top: 1.25rem; font-size: 1.0625rem; color: var(--apoio); max-width: 46ch; }
+.antes { background: var(--rosado); border-top: 0; border-radius: 6px; padding: 2rem 2rem 2.25rem; }
+.antes p { margin-top: .875rem; max-width: 46ch; }
+.btn-vinho { display: inline-flex; margin-top: 1.5rem; background: var(--vinho); color: var(--papel); border-color: var(--vinho); width: fit-content; }
+.btn-vinho:hover { background: var(--vinho-fundo); border-color: var(--vinho-fundo); }
+
+.fim { max-width: 62rem; padding: 2.5rem 6vw 3rem 4.5rem; color: var(--apoio); font-size: 1.0625rem; display: grid; gap: .5rem; }
+.fim img { display: block; width: min(100%, 12.5rem); height: auto; margin-bottom: .5rem; }
+.fim a { color: var(--tinta); font-weight: 700; white-space: nowrap; }
+
+.barra { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--vinho); padding: .75rem 1rem calc(.75rem + env(safe-area-inset-bottom)); gap: .75rem; }
+.barra .btn { flex: 1; min-height: 3.5rem; padding: .25rem .75rem; font-size: 1.125rem; }
+.barra :focus-visible { outline-color: #fff; box-shadow: 0 0 0 6px var(--vinho); }
+
+@media (max-width: 64rem) {
+  .pagina { display: block; }
+  .painel { position: static; min-height: 0; padding: 1.25rem 5vw 2rem; gap: 1.25rem; }
+  .painel h1 { font-size: clamp(2.25rem, 9vw, 3.5rem); }
+  .numero { font-size: clamp(2rem, 9.5vw, 3.5rem); }
+  .painel .botoes { display: none; }
+  .caminho { padding: 3rem 5vw 1rem; max-width: none; }
+  .parada { padding-left: 3.5rem; }
+  .fim { padding: 1.5rem 5vw 7rem; max-width: none; }
+  .barra { display: flex; }
+}
+@media (max-width: 40rem) {
+  /* o botão do VLibras fica na borda direita: o texto não passa por baixo dele */
+  .painel, .caminho, .fim { padding-left: 1.25rem; padding-right: 3.5rem; }
+  .parada { padding-left: 3.25rem; }
+  .marca { max-width: 15.5rem; }
+  .precos h3 { font-size: 1.5rem; }
+  .precos .valor { font-size: 1.75rem; }
+  .antes { padding: 1.5rem 1.25rem 1.75rem; }
+  .btn-vinho { width: 100%; }
+}
+@media (min-width: 64.0625rem) and (max-height: 43.75rem) { .painel { position: static; min-height: 0; } }
+@media (max-height: 480px) { .painel { position: static; min-height: 0; } .barra { position: static; } }
+/* alto contraste do sistema: fundos somem, então forma e contorno carregam o sentido */
+@media (forced-colors: active) {
+  .parada.aqui::after { forced-color-adjust: none; background: CanvasText; box-shadow: none; }
+  .tag { forced-color-adjust: none; background: CanvasText; color: Canvas; }
+  .antes { border: 2px solid CanvasText; }
+  .btn-claro { border-color: ButtonText; }
+  .marca img { forced-color-adjust: none; background: #843143; padding: .5rem .75rem; }
+}
+@media (prefers-reduced-motion: no-preference) { .btn, .numero { transition: background-color .15s ease, text-decoration-color .15s ease; } }
+</style>
+</head>
+<body>
+<a class="salto" href="#caminho">Ir para o conteúdo</a>
+<div class="pagina">
+  <header class="painel">
+    <div>
+      <div class="marca"><img src="marca/logo-negativo.svg" alt="Casa Amparo" width="305" height="44"></div>
+      <p class="cidade">Juiz de Fora, há 40 anos</p>
+    </div>
+    <div class="painel-meio">
+      <h1>Comece pela ligação. A gente mostra o resto.</h1>
+      <p class="horas">Atendemos 24 horas.</p>
+      <a class="numero" href="tel:+5532999990000">(32) 99999-0000</a>
+      <div class="botoes">
+        <a class="btn btn-claro" href="tel:+5532999990000"><span>Ligar agora</span></a>
+        <a class="btn btn-contorno" href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20da%20Casa%20Amparo.">Chamar no WhatsApp</a>
+      </div>
+      <a class="preco-sinal" href="#servicos">Serviços de R$ 2.900 a R$ 5.600: ver preços</a>
+    </div>
+  </header>
+
+  <div class="direita">
+    <main class="caminho" id="caminho">
+      <ol class="trilha">
+        <li class="parada aqui">
+          <span class="tag">Comece aqui</span>
+          <h2>Ligue ou mande mensagem.</h2>
+          <p class="fone"><a href="tel:+5532999990000">(32) 99999-0000</a>. A gente atende a qualquer hora.</p>
+          <p>Diga onde a pessoa está: em casa, no hospital ou em outro lugar.</p>
+          <p class="menor">Se puder, separe um documento com foto dela. Se não achar, ligue assim mesmo.</p>
+          <a class="texto" href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20da%20Casa%20Amparo.">Prefiro mandar mensagem no WhatsApp</a>
+        </li>
+        <li class="parada">
+          <h2>A gente leva a pessoa até o velório.</h2>
+          <p>Na nossa capela ou no cemitério.</p>
+        </li>
+        <li class="parada ultima">
+          <h2>A gente resolve a papelada do cartório.</h2>
+          <p>É com a gente. A família não precisa correr atrás de papel.</p>
+        </li>
+      </ol>
+
+      <section class="bloco" id="servicos" aria-labelledby="t-servicos">
+        <h2 id="t-servicos">Os três serviços</h2>
+        <ul class="precos">
+          <li><h3>Essencial</h3><span class="valor">R$ 2.900</span><a href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20quero%20saber%20o%20que%20inclui%20o%20servi%C3%A7o%20Essencial.">Perguntar sobre o Essencial</a></li>
+          <li><h3>Completo</h3><span class="valor">R$ 4.800</span><a href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20quero%20saber%20o%20que%20inclui%20o%20servi%C3%A7o%20Completo.">Perguntar sobre o Completo</a></li>
+          <li><h3>Cremação</h3><span class="valor">R$ 5.600</span><a href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20quero%20saber%20o%20que%20inclui%20o%20servi%C3%A7o%20de%20Crema%C3%A7%C3%A3o.">Perguntar sobre a Cremação</a></li>
+        </ul>
+        <p class="nota">O que cada serviço inclui, a gente explica por telefone ou WhatsApp, antes de você decidir.</p>
+      </section>
+
+      <section class="bloco antes" aria-labelledby="t-antes">
+        <h2 id="t-antes">Quer deixar tudo combinado antes?</h2>
+        <p>Quem combina antes poupa a família de decidir no pior dia. Converse com a gente, no seu tempo.</p>
+        <a class="btn btn-vinho" href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20quero%20deixar%20tudo%20combinado%20com%20anteced%C3%AAncia.">Combinar com antecedência</a>
+      </section>
+    </main>
+
+    <footer class="fim">
+      <img src="marca/logo-positivo.svg" alt="Casa Amparo" width="195" height="28">
+      <p>Juiz de Fora, Minas Gerais. Atendimento 24 horas: <a href="tel:+5532999990000">(32) 99999-0000</a></p>
+      <p>Esta página não usa cookies nem rastreia quem a visita. O botão de Libras é o VLibras, do governo federal, e carrega arquivos de vlibras.gov.br.</p>
+    </footer>
+  </div>
+</div>
+
+<nav class="barra" aria-label="Falar com a Casa Amparo">
+  <a class="btn btn-claro" href="tel:+5532999990000">Ligar agora</a>
+  <a class="btn btn-contorno" href="https://wa.me/5532999990000?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20da%20Casa%20Amparo.">WhatsApp</a>
+</nav>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js" defer></script>
+</body>
+</html>

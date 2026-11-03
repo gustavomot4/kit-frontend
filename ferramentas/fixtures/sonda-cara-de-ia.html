@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonda de clichês</title>
+<!-- Clichês plantados para testar o verificador. Ver ferramentas/testar.mjs. -->
+<style>
+  body { margin: 0; font: 1.05rem/1.6 "Georgia", serif; color: #2b2622; background: #f4f1ea; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #8a3d22; outline-offset: 2px; }
+  header, main, footer { max-width: 68rem; margin: 0 auto; padding: 2rem; }
+  /* C1 creme com serifa e terracota */
+  h1 { font-size: 4rem; line-height: 1.05; font-weight: 400; margin: 0 0 1rem; letter-spacing: -.05em; }
+  /* C2 uma palavra em itálico e cor no título */
+  h1 em { font-style: italic; color: #a4502f; }
+  /* C3 rótulo em monoespaçada como enfeite técnico */
+  .mono { font-family: "Consolas", monospace; font-size: .85rem; color: #5e534a; }
+  /* C4 números de seção decorativos */
+  .num { font-family: "Consolas", monospace; color: #8a3d22; font-size: .9rem; display: block; }
+  /* C5 sombra dura deslocada */
+  .botao { display: inline-block; padding: .8rem 1.4rem; background: #a4502f; color: #fff; text-decoration: none; box-shadow: 4px 4px 0 #2b2622; }
+  /* C6 vidro decorativo */
+  .vidro { backdrop-filter: blur(12px); background: rgba(255,255,255,.45); border: 1px solid rgba(255,255,255,.6); padding: 1.5rem; border-radius: 1rem; margin-top: 2rem; }
+  /* C7 número grande, rótulo pequeno, acento */
+  .metricas { display: flex; gap: 3rem; margin-top: 2rem; }
+  .metricas b { display: block; font-size: 3rem; font-weight: 400; color: #a4502f; line-height: 1; }
+  .metricas small { font-size: .9rem; color: #5e534a; }
+  /* C8 grade com fios finos de jornal */
+  .fios { border-top: 1px solid #2b2622; border-bottom: 1px solid #2b2622; padding: 1rem 0; margin-top: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .fios > div { border-left: 1px solid #cfc7ba; padding-left: 1rem; }
+  /* C9 pulso sem significado */
+  .pulso { display: inline-block; width: .6rem; height: .6rem; border-radius: 50%; background: #1f8a3b; animation: p 1.5s infinite; }
+  @keyframes p { 50% { transform: scale(1.6); opacity: .4; } }
+  @media (prefers-reduced-motion: reduce) { .pulso { animation: none; } }
+</style>
+</head>
+<body>
+<a href="#conteudo">Pular para o conteúdo</a>
+<header><nav aria-label="Principal"><a href="#a">Sobre</a> <a href="#b">Preços</a></nav></header>
+<main id="conteudo">
+  <!-- C10 linha de metadados com pontos médios -->
+  <p class="mono"><span class="pulso" aria-hidden="true"></span> Edição 12 · Outono 2026 · São Paulo</p>
+  <h1>Cuidado feito com <em>calma</em> para quem tem pressa</h1>
+  <p>Mais do que uma agenda: um jeito novo de cuidar. Não é só tecnologia, é tempo devolvido.</p>
+  <!-- C11 seta no fim do botão -->
+  <a class="botao" href="#c">Começar agora →</a>
+
+  <!-- C7 -->
+  <div class="metricas">
+    <div><b>98%</b><small>de satisfação</small></div>
+    <div><b>12 mil</b><small>clientes atendidos</small></div>
+    <div><b>4,9</b><small>de nota média</small></div>
+  </div>
+
+  <div class="fios">
+    <div><span class="num">01</span><h2>Agende</h2><p>Escolha o horário sem ligar para ninguém.</p></div>
+    <div><span class="num">02</span><h2>Confirme</h2><p>Receba o lembrete no celular.</p></div>
+    <div><span class="num">03</span><h2>Chegue</h2><p>A ficha já está pronta quando você entra.</p></div>
+  </div>
+
+  <div class="vidro"><h2>Feito para a sua rotina</h2><p>Cuidado — sem complicação — todos os dias.</p></div>
+</main>
+<footer><p class="mono">Feito com carinho · Termos · Privacidade</p></footer>
+</body>
+</html>

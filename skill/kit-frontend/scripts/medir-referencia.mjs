@@ -12,6 +12,8 @@ import { pathToFileURL } from 'node:url';
 const args = process.argv.slice(2);
 const i = args.indexOf('--saida'); const saida = resolve(i >= 0 ? args.splice(i, 2)[1] : 'design/referencias');
 if (!args.length) { console.error('Uso: medir-referencia.mjs <url ou arquivo.html> [outros] [--saida pasta]'); process.exit(2); }
+const estranha = args.find(a => a.startsWith('-'));
+if (estranha) { console.error(`Opção desconhecida: ${estranha}\nUso: medir-referencia.mjs <url ou arquivo.html> [outros] [--saida pasta]`); process.exit(2); }
 const exe = [process.env.CHROME_PATH, 'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe', `${process.env.LOCALAPPDATA}/Google/Chrome/Application/chrome.exe`, 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium'].find(c => c && existsSync(c));
 if (!exe) { console.error('Não achei Chrome, Edge nem Chromium. Defina CHROME_PATH.'); process.exit(2); }
 
@@ -41,10 +43,18 @@ const MEDIR = `(() => {
   const hex = c => { ctx.clearRect(0, 0, 1, 1); ctx.fillStyle = '#000'; ctx.fillStyle = c; ctx.fillRect(0, 0, 1, 1); const d = ctx.getImageData(0, 0, 1, 1).data; return d[3] < 200 ? null : '#' + [d[0], d[1], d[2]].map(v => v.toString(16).padStart(2, '0')).join(''); };
   const area = {}; todos.forEach(e => { const c = hex(cs(e).backgroundColor); if (!c) return; const r = e.getBoundingClientRect(); area[c] = (area[c] || 0) + r.width * r.height; });
   const raios = {}; todos.forEach(e => { const v = cs(e).borderTopLeftRadius; if (v !== '0px') raios[v] = (raios[v] || 0) + 1; });
-  const titulos = [...document.querySelectorAll('h1,h2')].filter(vis).slice(0, 3).map(h => { const s = cs(h); return Math.round(parseFloat(s.fontSize)) + 'px peso ' + s.fontWeight + (s.textTransform === 'uppercase' ? ' caixa alta' : ''); });
+  const titulos = [...document.querySelectorAll('h1,h2')].filter(vis).sort((a, b) => parseFloat(cs(b).fontSize) - parseFloat(cs(a).fontSize)).slice(0, 3).map(h => { const s = cs(h); return Math.round(parseFloat(s.fontSize)) + 'px peso ' + s.fontWeight + (s.textTransform === 'uppercase' ? ' caixa alta' : ''); });
   const top = o => Object.entries(o).sort((a, b) => b[1] - a[1]).map(x => x[0]);
   const corpo = document.body.innerText || '';
-  return { titulo: document.title.slice(0, 70), fontes: top(fam).slice(0, 4), maiorFonte: tam.length ? Math.round(Math.max(...tam)) : 0, menorFonte: tam.length ? Math.round(Math.min(...tam) * 10) / 10 : 0, titulos, cores: top(area).slice(0, 6), raios: top(raios).slice(0, 4), imagens: document.images.length, videos: document.querySelectorAll('video').length, canvas: document.querySelectorAll('canvas').length, bloqueio: /verifica[cç][aã]o de seguran|um momento|just a moment|access denied|verify you are human/i.test(document.title + ' ' + corpo.slice(0, 300)) };
+  // o que está à frente da primeira dobra: um aviso de cookies muda a captura e parte das medidas, e título em imagem não aparece nos tamanhos
+  const dobra = innerWidth * innerHeight;
+  const naDobra = e => { const r = e.getBoundingClientRect(), l = Math.min(r.right, innerWidth) - Math.max(r.left, 0), a = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0); return l > 0 && a > 0 ? l * a : 0; };
+  const fixoDe = e => { for (let n = e; n && n !== document.body; n = n.parentElement) if (cs(n).position === 'fixed') return n; return null; };
+  const noMeio = fixoDe(document.elementFromPoint(innerWidth / 2, innerHeight / 2));
+  const cookies = todos.filter(e => cs(e).position === 'fixed' && /cookie|consent|lgpd/i.test(e.textContent || '') && naDobra(e) > dobra * .1).sort((a, b) => naDobra(b) - naDobra(a))[0];
+  const camada = noMeio && (noMeio.textContent || '').trim().length > 20 && naDobra(noMeio) > dobra * .15 ? noMeio : cookies;
+  const maiorMidia = Math.max(0, ...[...document.querySelectorAll('img,svg,video,canvas')].filter(e => !e.parentElement.closest('svg') && vis(e)).map(naDobra));
+  return { camada: camada ? Math.round(naDobra(camada) / dobra * 100) : 0, maiorMidia: Math.round(maiorMidia / dobra * 100), titulo: document.title.slice(0, 70), fontes: top(fam).slice(0, 4), maiorFonte: tam.length ? Math.round(Math.max(...tam)) : 0, menorFonte: tam.length ? Math.round(Math.min(...tam) * 10) / 10 : 0, titulos, cores: top(area).slice(0, 6), raios: top(raios).slice(0, 4), imagens: document.images.length, videos: document.querySelectorAll('video').length, canvas: document.querySelectorAll('canvas').length, bloqueio: /verifica[cç][aã]o de seguran|um momento|just a moment|access denied|verify you are human/i.test(document.title + ' ' + corpo.slice(0, 300)) };
 })()`;
 
 let medidas = 0;
@@ -62,7 +72,8 @@ for (const entrada of args) {
   mkdirSync(saida, { recursive: true });
   const c = await cdp('Page.captureScreenshot', { format: 'jpeg', quality: 70 });
   if (c.result?.data) writeFileSync(join(saida, `${nome}.jpg`), Buffer.from(c.result.data, 'base64'));
-  console.log(`  fontes: ${m.fontes.join(', ')}\n  tamanhos: de ${m.menorFonte} a ${m.maiorFonte}px; títulos: ${m.titulos.join('; ') || 'nenhum'}\n  cores por área: ${m.cores.join(' ')}\n  raios: ${m.raios.join(', ') || 'nenhum'}\n  mídia: ${m.imagens} imagens, ${m.videos} vídeos, ${m.canvas} canvas`);
+  console.log(`  fontes: ${m.fontes.join(', ')}\n  tamanhos: de ${m.menorFonte} a ${m.maiorFonte}px; títulos: ${m.titulos.join('; ') || 'nenhum'}\n  cores por área: ${m.cores.join(' ')}\n  raios: ${m.raios.join(', ') || 'nenhum'}\n  mídia: ${m.imagens} imagens, ${m.videos} vídeos, ${m.canvas} canvas\n  maior imagem ou desenho: ${m.maiorMidia}% da primeira dobra`);
+  if (m.camada) console.log(`  AVISO: uma camada cobre ${m.camada}% da primeira dobra, provavelmente de cookies. A captura e parte das medidas são dela: peça uma captura limpa à pessoa.`);
 }
 console.log('\nCopie o raciocínio, nunca a marca, a fonte, a imagem ou o texto. Capturas em ' + saida + '.');
 ws.close(); nav.kill(); await dorme(400); try { rmSync(perfil, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); } catch { /* o sistema limpa depois */ }

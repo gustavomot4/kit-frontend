@@ -6,13 +6,15 @@ Artefatos que qualquer agente de código usa para criar frontend com a sua cara,
 | --- | --- |
 | Visual decidido sem saber o que a marca quer dizer | [Brief de marca](skill/kit-frontend/references/marca/criar-marca.md) com mensagem, personas, concorrentes e voz, antes de qualquer tela |
 | Pessoa sem fonte, cor, voz nem mensagem | [Caminho para quem não tem nada](skill/kit-frontend/references/marca/criar-marca.md#quando-a-pessoa-não-tem-nada): perguntas simples e opções para escolher, com [gerador de paleta](skill/kit-frontend/scripts/paleta.mjs) e [guia de fontes](skill/kit-frontend/references/recursos/fontes.md) |
-| Código antes de a direção visual ser aprovada | Três direções em imagem e tela-modelo: o agente para e espera |
+| Código antes de a direção visual ser aprovada | Três direções em imagem, [comparadas](skill/kit-frontend/scripts/comparar-direcoes.mjs) para não serem a mesma tela, e tela-modelo: o agente para e espera |
 | Gosto que precisa ser repetido a cada projeto | [Perfil de gosto](skill/kit-frontend/references/gosto/perfil.md) tirado das suas reprovações reais |
 | "Está pronto" sem prova | [Verificador](skill/kit-frontend/scripts/verificar.mjs) que abre a tela no navegador e mede |
 | Correção numa tela, esquecida nas outras | Toda reprovação vira regra em `design/correcoes.md` e volta para o kit |
 | Cara de IA | [Lista do que denuncia](skill/kit-frontend/references/marca/anti-generico.md) e [método de identidade](skill/kit-frontend/references/marca/identidade.md) |
+| "Para todos" só no texto | [Fichas por público](skill/kit-frontend/references/qualidade/publicos.md) e [Libras e mídia](skill/kit-frontend/references/padroes/midia-e-libras.md), ativadas pelo `PRODUTO.md` e cobradas pelo verificador |
 | Reinventar o que já existe | [Padrões](skill/kit-frontend/references/) tirados do [benchmark](docs/pesquisa/benchmark.md) |
 | Tela correta, mas sem impacto | [Criatividade](skill/kit-frontend/references/marca/criatividade.md), medida [nos sites que você admira](docs/pesquisa/referencias-sites.md) |
+| Marca que só aparece na home | [Estudo de identidade e sistemas](docs/pesquisa/identidade-e-sistemas.md): sete referências novas, regras compartilhadas e aplicação nos componentes |
 | Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/recursos/bibliotecas.md) |
 
 Princípio: **convenção na interação, identidade na expressão.** Como navegar e preencher segue o que as pessoas conhecem; tipografia, cor, forma e voz são do produto.
@@ -53,7 +55,7 @@ Para atualizar, rode `git pull` no clone e `node ../kit-frontend/bin/kit.mjs atu
 | Windsurf, Cline | Regra em `.windsurf/rules/` e `.clinerules/` |
 | ChatGPT, Gemini, Claude na web, ou qualquer LLM sem arquivos | Cole [`dist/prompt-unico.md`](dist/prompt-unico.md) |
 
-Force outros agentes com `--agentes cursor,copilot` ou `--agentes todos`. Testei a instalação e os arquivos gerados; não abri cada um desses agentes para confirmar que lê as pontes.
+Force outros agentes com `--agentes cursor,copilot` ou `--agentes todos`. O Codex achou e seguiu a skill num [teste real](docs/testes/2026-10-31-outro-agente/relatorio.md). Nos outros, testei a instalação e os arquivos gerados, mas não abri cada agente para confirmar que lê as pontes.
 
 ## Usar
 
@@ -70,37 +72,47 @@ Peça o que pediria normalmente: "cria o painel de agendamentos". O agente acha 
 
 ## Comandos
 
-Rode dentro do clone do kit.
+Rode dentro do projeto, para as capturas ficarem na pasta dele.
 
 ```bash
-node bin/kit.mjs verificar http://localhost:5173/agenda
+node ../kit-frontend/bin/kit.mjs verificar http://localhost:5173/agenda
 ```
 
 ```bash
-node bin/kit.mjs contraste DESIGN.md
+node ../kit-frontend/bin/kit.mjs direcoes design/direcoes
 ```
 
 ```bash
-node bin/kit.mjs marca ../meu-projeto
+node ../kit-frontend/bin/kit.mjs escolha design/direcoes
 ```
 
 ```bash
-node bin/kit.mjs paleta "#0e5f4b"
+node ../kit-frontend/bin/kit.mjs contraste DESIGN.md
 ```
 
 ```bash
-node bin/kit.mjs referencia https://site-de-que-voce-gosta.com.br
+node ../kit-frontend/bin/kit.mjs marca
 ```
 
 ```bash
-node bin/kit.mjs coletar ../meu-projeto
+node ../kit-frontend/bin/kit.mjs paleta "#0e5f4b"
 ```
+
+```bash
+node ../kit-frontend/bin/kit.mjs referencia https://site-de-que-voce-gosta.com.br
+```
+
+```bash
+node ../kit-frontend/bin/kit.mjs coletar
+```
+
+Depois de mudar a skill ou um PRD, rode dentro do clone do kit:
 
 ```bash
 node bin/kit.mjs empacotar
 ```
 
-`verificar` testa 1440 × 900, 768 × 1024, 375 × 812 com toque e 320 × 256 (zoom de 400%), com passada de Tab e movimento reduzido. `coletar` traz as correções de um projeto para o kit, e é assim que ele aprende o seu gosto. `empacotar` gera os estilos por seção e o prompt único, e precisa rodar depois de mudar a skill ou um PRD.
+`verificar` testa 1440 × 900, 768 × 1024, 375 × 812 com toque e 320 × 256 (zoom de 400%), com passada de Tab e movimento reduzido. Também mede letra em 200%, espaçamento, alto contraste, fotos cortadas e peso, e guarda a página inteira (`desktop-inteira.jpg`, `celular-inteira.jpg`), `prancha.html` (a tela sem cada cor e embaçada) e `leitor-de-tela.txt`. Com `publicos:` no `PRODUTO.md`, ou `--publicos`, o rigor muda conforme quem usa. `direcoes` compara as propostas visuais e reprova as quase iguais. `coletar` traz as correções de um projeto para o kit, e é assim que ele aprende o seu gosto. `empacotar` gera os estilos por seção e o prompt único.
 
 ## Estilos de partida
 
@@ -109,10 +121,10 @@ Receitas completas, extraídas de produtos reais. Dão estrutura e medidas; a id
 | PRD | Use para | Versão | Exemplos |
 | --- | --- | --- | --- |
 | [Design system base](prds/base-design-system/prd.md) | Produto sem PRD específico: landing, fluxo ou ferramenta, em linguagem sóbria, com neutros e um único acento | 3.0.0 | [landing](prds/base-design-system/exemplos/landing.png) · [ferramenta](prds/base-design-system/exemplos/ferramenta.png) |
-| [Site de escola de idiomas](prds/site-escola-idiomas/prd.md) | Site institucional de escola de idiomas ou curso livre, voltado a matrícula e captação de contatos | 3.0.0 | [home](prds/site-escola-idiomas/exemplos/home.png) · [página de curso](prds/site-escola-idiomas/exemplos/pagina-de-curso.png) |
+| [Site de escola de idiomas](prds/site-escola-idiomas/prd.md) | Site institucional de escola de idiomas ou curso livre, voltado a matrícula e captação de contatos | 4.0.0 | [home](prds/site-escola-idiomas/exemplos/home.png) · [página de curso](prds/site-escola-idiomas/exemplos/pagina-de-curso.png) |
 | [Sistema de gestão](prds/sistema-gestao/prd.md) | Sistema de trabalho com painel, agenda, cadastros, listas e relatórios. Traz também processo, arquitetura e validação | 3.0.0 | [painel](prds/sistema-gestao/exemplos/painel.png) · [agenda](prds/sistema-gestao/exemplos/agenda.png) |
 | [Sistema de clínica no estilo conversa](prds/sistema-clinica-conversa/prd.md) | Sistema de atendimento com agenda, usado pela recepção no computador e no celular | 2.0.0 (rascunho) | [hoje](prds/sistema-clinica-conversa/exemplos/hoje.png) · [agenda](prds/sistema-clinica-conversa/exemplos/agenda-semana.png) · [celular](prds/sistema-clinica-conversa/exemplos/hoje-celular.png) |
-| [Aplicativo acessível orientado a tarefas](prds/app-tarefas-acessivel/prd.md) | Aplicativos de atendimento, catálogos, comunidades e solicitações, com controles grandes, formulários por etapas e três temas | 1.0.0 (rascunho) | [catálogo](prds/app-tarefas-acessivel/exemplos/catalogo.png) · [etapa de formulário](prds/app-tarefas-acessivel/exemplos/etapa.png) |
+| [Aplicativo acessível orientado a tarefas](prds/app-tarefas-acessivel/prd.md) | Aplicativos de atendimento, catálogos, comunidades e solicitações, com controles grandes, formulários por etapas e três temas | 2.0.0 (rascunho) | [catálogo](prds/app-tarefas-acessivel/exemplos/catalogo.png) · [etapa de formulário](prds/app-tarefas-acessivel/exemplos/etapa.png) |
 
 Marcas, nomes e dados das telas de exemplo são fictícios. O que ainda falha está em [pendências](docs/pendencias.md).
 
@@ -135,7 +147,7 @@ Marcas, nomes e dados das telas de exemplo são fictícios. O que ainda falha es
 │   ├── assets/
 │   │   ├── modelos/          MARCA.md, DESIGN.md, PRODUTO.md, correções, mídia
 │   │   └── exemplos/         marca e design preenchidos
-│   ├── scripts/              verificador, contraste, paleta, referências, marca, logotipo
+│   ├── scripts/              verificador, comparador de direções, contraste, paleta, referências, marca, logotipo, prancha, tokens
 │   └── estilos/              PRDs por seção (gerado)
 ├── prds/                     fonte dos estilos, com exemplos e o modelo de PRD novo
 ├── dist/                     prompt único e llms.txt (gerado)
@@ -169,4 +181,4 @@ node ferramentas/testar.mjs
 ## Auditorias
 
 - [Rodada de 2026-10-09](docs/auditorias/2026-10-09/relatorio.md): 168 achados nas versões 1.0.0 de três PRDs. As correções estão no `CHANGELOG.md` de cada um.
-- Sem auditoria, por isso em `rascunho`: `app-tarefas-acessivel` e `sistema-clinica-conversa`. Os três estáveis estão em 3.x e aguardam nova rodada.
+- Sem auditoria, por isso em `rascunho`: `app-tarefas-acessivel` e `sistema-clinica-conversa`. Os três estáveis estão em 3.x e 4.x e aguardam nova rodada.

@@ -25,10 +25,10 @@ Gerado de `prds/site-escola-idiomas/prd.md` por `kit empacotar`. Não edite aqui
 | 5.5 Pré-matrícula (`/pre-matricula`) — wizard de 3 passos | `18-5-5-pre-matricula-pre-matricula-wizard-de-3-.md` | 759 |
 | 5.7 Teste de nível (`/teste-de-nivel`) | `19-5-7-teste-de-nivel-teste-de-nivel.md` | 799 |
 | 6. Movimento e microinterações | `20-6-movimento-e-microinteracoes.md` | 575 |
-| 7. Acessibilidade — o que copiar e o que corrigir | `21-7-acessibilidade-o-que-copiar-e-o-que-corrig.md` | 2154 |
+| 7. Acessibilidade — o que copiar e o que corrigir | `21-7-acessibilidade-o-que-copiar-e-o-que-corrig.md` | 2166 |
 | 8. Conversão e confiança — os padrões que geram valor | `22-8-conversao-e-confianca-os-padroes-que-geram.md` | 838 |
-| 9. Stack recomendada | `23-9-stack-recomendada.md` | 367 |
-| 10. Checklist de aceite | `24-10-checklist-de-aceite.md` | 1070 |
+| 9. Stack recomendada | `23-9-stack-recomendada.md` | 381 |
+| 10. Checklist de aceite | `24-10-checklist-de-aceite.md` | 1083 |
 | Aviso de uso | `25-aviso-de-uso.md` | 162 |
 
 Exemplos em HTML: `exemplos/home.html`, `exemplos/pagina-de-curso.html`. Eles mostram estrutura; foram medidos e têm falhas conhecidas (ver `references/recursos/estilos.md`).

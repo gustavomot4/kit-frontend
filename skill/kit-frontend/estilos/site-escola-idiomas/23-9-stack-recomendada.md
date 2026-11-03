@@ -9,7 +9,7 @@ Parte do que o autor identificou no site analisado, reduzida ao que o guia preci
 - **Tailwind** com o config do §1.2, ou CSS puro com as custom properties
 - **Montserrat** variável (`wght 400..700`), auto-hospedada via `@fontsource-variable/montserrat`, com `font-display: swap`. Só os pesos 400, 500, 600 e 700 são usados.
 - **Lucide** para os ícones
-- **VLibras** (`https://vlibras.gov.br/app/vlibras-plugin.js`) para acessibilidade em Libras, carregado depois da primeira interação com a página
+- **VLibras** (`https://vlibras.gov.br/app/vlibras-plugin.js`) para acessibilidade em Libras, carregado com `defer`, sem esperar interação: quem precisa de Libras precisa ver o botão ao chegar
 
 O site analisado usa também Framer Motion e Lenis; este guia dispensa os dois para não pôr três bibliotecas de animação na conta de desempenho.
 

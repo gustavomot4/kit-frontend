@@ -163,11 +163,15 @@ const AJUDA = `kit-frontend ${versao}
       --agentes claude,cursor,copilot,gemini,windsurf,cline | todos
       --global                instala para todos os projetos desta máquina
   atualizar [pasta]           igual a instalar; nunca toca em DESIGN.md, PRODUTO.md nem design/correcoes.md
-  verificar <url|arquivo>     audita telas em 4 tamanhos; sai com 1 se houver falha
+  verificar <url|arquivo>     audita telas em 4 tamanhos e para outros públicos; --publicos a,b; sai com 1 se houver falha
   contraste <a> <b>           razão entre duas cores; ou contraste DESIGN.md
   marca [pasta]               confere se MARCA.md e design/marca/ estão completos
   paleta <cor>                gera paleta completa com contraste calculado; --tema escuro, --evitar, --css
   referencia <url|arquivo>    mede fontes, escala, cores e raios de páginas de que a pessoa gosta
+  direcoes <pasta|arquivos>   compara as direções visuais; sai com 1 se duas forem quase iguais
+  escolha [pasta]             prepara a escolha da direção por um agente novo, às cegas; sai com 1 se faltar ideias.md
+  prancha [pasta]             junta as direções num HTML e num PDF para o dono decidir; rode depois de verificar
+  tokens <pasta|arquivos>     confere se as cores e as fontes do código estão no DESIGN.md; sai com 1 se houver desvio
   coletar <pasta>             traz as correções de um projeto para o kit
   empacotar                   gera estilos/ por seção e dist/prompt-unico.md
 `;
@@ -178,6 +182,10 @@ switch (comando) {
   case 'marca': delegar('conferir-marca.mjs'); break;
   case 'paleta': delegar('paleta.mjs'); break;
   case 'referencia': delegar('medir-referencia.mjs'); break;
+  case 'direcoes': delegar('comparar-direcoes.mjs'); break;
+  case 'escolha': delegar('escolha-cega.mjs'); break;
+  case 'prancha': delegar('prancha.mjs'); break;
+  case 'tokens': delegar('conferir-tokens.mjs'); break;
   case 'coletar': coletar(); break;
   case 'empacotar': empacotar(); break;
   default: console.log(AJUDA);

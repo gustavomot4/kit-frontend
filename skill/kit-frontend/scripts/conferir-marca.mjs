@@ -59,6 +59,13 @@ if (completo) {
   if (!/\*\*Espaço livre:\*\*\s*\S/.test(conc)) falha('Concorrentes sem o "Espaço livre".');
 }
 
+// Espaço livre sem nenhum concorrente olhado é palpite, por mais bem escrito que esteja
+const situacoes = linhasDeTabela(secao('Concorrentes')).map(l => l.split('|').at(-2) || '');
+if (/Espaço livre/.test(texto) && !situacoes.some(s => /observado|verificado/i.test(s) && !/n[aã]o verificado/i.test(s))) aviso('Nenhum concorrente foi olhado de verdade: o espaço livre é hipótese. Tente scripts/medir-referencia.mjs.');
+
+// Marca que já existe: sem o arquivo, a direção desenha um substituto, e o dono não reconhece a própria marca
+if (secao('Identidade existente') !== null && !/\*\*Arquivo do logo:\*\*\s*\S/.test(secao('Identidade existente'))) aviso('Marca existente sem dizer se o arquivo do logo foi recebido. Peça antes de mostrar as direções.');
+
 // O kit só existe depois da escolha da direção: sem a pasta, é aviso
 const pasta = join(raiz, 'design', 'marca');
 if (!existsSync(pasta)) aviso('Ainda não há design/marca/. O kit vem depois da escolha da direção.');

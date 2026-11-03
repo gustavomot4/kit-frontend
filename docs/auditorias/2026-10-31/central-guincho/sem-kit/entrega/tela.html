@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Atendimento BR-381</title>
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="tela.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="marca">
+    <h1>Central de Atendimento</h1>
+    <p>BR-381 Fernão Dias · Contagem a Extrema · 24 horas</p>
+  </div>
+
+  <ul class="kpis" id="kpis" aria-label="Resumo do turno"></ul>
+
+  <div class="relogio-bloco">
+    <div class="relogio" id="relogio" aria-hidden="true">--:--:--</div>
+    <div class="turno" id="turno"></div>
+  </div>
+
+  <div class="topo-acoes">
+    <span class="selo-exemplo" title="Os nomes, placas, km e horários desta tela são inventados">Dados de exemplo</span>
+    <button type="button" class="btn-tema" id="btn-tema" aria-label="Trocar entre tema claro e escuro">Tema</button>
+  </div>
+</header>
+
+<main class="miolo">
+
+  <section class="painel fila" aria-labelledby="t-fila">
+    <div class="painel-cab">
+      <h2 id="t-fila">Chamadas</h2>
+      <p class="dica-barra" id="dica-barra">
+        <span class="amostra-barra" aria-hidden="true"><i></i></span> tempo do prazo já gasto
+        <span class="amostra-marca" aria-hidden="true"></span> chegada prevista do guincho
+      </p>
+    </div>
+    <div class="rolagem" id="rolagem-fila">
+      <h3 class="grupo-tit" id="tit-aguardando"></h3>
+      <ul class="lista" id="lista-aguardando" aria-labelledby="tit-aguardando"></ul>
+      <h3 class="grupo-tit" id="tit-acaminho"></h3>
+      <ul class="lista" id="lista-acaminho" aria-labelledby="tit-acaminho"></ul>
+    </div>
+  </section>
+
+  <div class="direita">
+
+    <section class="painel faixa" aria-labelledby="t-faixa">
+      <div class="painel-cab">
+        <div class="cab-faixa"><h2 id="t-faixa">Rodovia e guinchos</h2><button type="button" class="btn-faixa" id="btn-faixa" aria-expanded="true" aria-controls="estrada">Ocultar</button></div>
+        <p class="dica-faixa">
+          <span>BH = sentido Belo Horizonte</span>
+          <span>SP = sentido São Paulo</span>
+          <span class="dica-chip"><i class="mk-amostra g" aria-hidden="true"></i> guincho livre</span>
+          <span class="dica-chip"><i class="mk-amostra c" aria-hidden="true"></i> chamada</span>
+          <span class="dica-chip"><i class="pat-amostra" aria-hidden="true"></i> pátio</span>
+        </p>
+      </div>
+      <div class="estrada" id="estrada" role="img" aria-label="Posição dos guinchos e das chamadas ao longo da rodovia. Os mesmos dados estão nas listas ao lado."></div>
+    </section>
+
+    <section class="painel frota" aria-labelledby="t-frota">
+      <div class="painel-cab">
+        <h2 id="t-frota">Guinchos</h2>
+        <p class="resumo-frota" id="resumo-frota"></p>
+      </div>
+      <div class="despacho" id="despacho"></div>
+      <div class="rolagem" id="rolagem-frota">
+        <div id="tabela-frota"></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div class="avisos" id="avisos" aria-live="polite" aria-atomic="false"></div>
+
+<script src="dados.js"></script>
+<script src="tela.js"></script>
+</body>
+</html>

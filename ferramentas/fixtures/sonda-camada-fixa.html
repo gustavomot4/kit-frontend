@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonda de camada fixa</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font: 1.125rem/1.6 system-ui, sans-serif; background: #fff; color: #1a1a1a; }
+  :focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }
+  .pular { position: absolute; left: -999px; top: 8px; background: #fff; padding: .75rem 1rem; }
+  .pular:focus { left: 8px; }
+  main { padding: 1rem; }
+  p { margin: 0 0 1rem; }
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<main id="conteudo">
+  <h1>Texto sob o botão fixo</h1>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+  <p>Texto que passa por baixo do botão ao rolar a página, porque ocupa a largura inteira da coluna de leitura no celular.</p>
+</main>
+<!-- Botão de terceiro, como o do VLibras: fixo, no meio da borda direita, dentro de um shadow DOM aberto, com o foco lá dentro -->
+<div id="terceiro"></div>
+<script>
+  const sombra = document.getElementById('terceiro').attachShadow({ mode: 'open' });
+  sombra.innerHTML = '<style>button{position:fixed;right:10px;top:calc(50vh - 22px);width:72px;height:44px;background:#1351b4;color:#fff;border:0}button:focus-visible{outline:3px solid #000;outline-offset:2px}</style><button type="button" aria-label="Abrir ajuda">?</button>';
+</script>
+</body>
+</html>

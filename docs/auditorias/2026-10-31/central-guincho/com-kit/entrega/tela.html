@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Central Fernão Dias: despacho</title>
+<style>
+:root{
+  --primary:#0a5c43; --primary-hover:#004a34; --primary-soft:#d6f8e8; --on-primary:#fff;
+  --bg:#f3f8f6; --surf:#fff; --ink:#121e18; --mut:#5f6d66; --line:#d7e1dc; --ctl:#819089;
+  --danger:#a43b35; --warn-fill:#f3b63f; --warn-txt:#8a5601;
+  --placa:"Bahnschrift","DIN Alternate","Arial Narrow",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{font-size:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--placa);font-size:1rem;line-height:1.35;-webkit-text-size-adjust:100%}
+.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.pular{position:absolute;left:-999px;top:8px}
+.pular:focus{left:8px;background:#fff;padding:8px 12px;z-index:9;border:2px solid var(--primary)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.faixa :focus-visible{outline-color:#fff}
+.faixa{background:var(--primary);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:0 28px;min-height:64px;box-shadow:inset 0 -4px 0 var(--primary-hover)}
+.faixa h1{margin:0;font-size:1.75rem;font-weight:600;font-variation-settings:"wdth" 75;letter-spacing:.01em}
+.br{border:2px solid #fff;border-radius:6px;padding:0 8px;font-weight:700;font-size:1.125rem;line-height:1.5}
+.ex{border:1.5px solid #fff;border-radius:4px;padding:0 8px;font-size:.875rem}
+.faixa .esp{flex:1}
+.faixa time{font-size:2rem;font-weight:600;font-variation-settings:"wdth" 80;font-variant-numeric:tabular-nums}
+main{padding:16px 28px 28px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.cx{background:var(--surf);border:1px solid var(--line);border-radius:6px}
+h2{margin:0;font-size:1.25rem;font-weight:600;font-variation-settings:"wdth" 80}
+h2 .n{font-weight:400;margin-left:2px}
+.cab-s{padding:12px 16px 8px}
+.mut{color:var(--mut)}
+/* régua */
+.regua{padding:12px 16px 14px}
+.regua .cab{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
+.regua .lg{color:var(--mut);font-size:.9375rem}
+.rua{position:relative;height:200px;margin:6px 28px 0}
+.estrada{position:absolute;left:-12px;right:-12px;top:70px;height:8px;background:var(--ink);border-radius:2px;z-index:1}
+.estrada::after{content:"";position:absolute;left:0;right:0;top:3px;border-top:2px dashed #fff}
+.banda{position:absolute;top:26px;height:112px;background:var(--primary-soft);border:1.5px dashed var(--primary);border-radius:4px;z-index:0}
+.trecho{position:absolute;top:66px;height:16px;background:var(--primary);border-radius:2px;z-index:2}
+.pin{position:absolute;transform:translateX(-50%);min-width:32px;text-align:center;padding:1px 4px;border:1.5px solid var(--ink);background:var(--surf);border-radius:4px;font-weight:700;font-size:.9375rem;font-variant-numeric:tabular-nums;line-height:1.35;z-index:3}
+.pin::after{content:"";position:absolute;left:50%;top:100%;margin-left:-5px;border:5px solid transparent;border-top-color:var(--ink)}
+.pin.b::before{content:"";position:absolute;left:50%;top:100%;height:34px;border-left:1.5px solid var(--ink)}
+.pin.est{background:var(--danger);border-color:var(--danger);color:#fff}.pin.est::after{border-top-color:var(--danger)}
+.pin.log{background:var(--warn-fill)}
+.pin.sel{outline:3px solid var(--primary);outline-offset:2px;font-size:1.0625rem}
+.cam{position:absolute;width:26px;height:26px;transform:translateX(-50%);border:2px solid var(--ink);border-radius:50%;background:var(--surf);display:grid;place-items:center;font-size:.75rem;font-weight:700;font-variant-numeric:tabular-nums;z-index:3}
+.cam.cheio{background:var(--ink);color:#fff}
+.cam.fora{border-style:dashed;border-color:var(--mut);color:var(--mut)}
+.cam.sug{border-color:var(--primary);border-width:3px;background:var(--primary-soft);outline:2px solid var(--primary);outline-offset:1px}
+.dist{position:absolute;transform:translateX(-50%);white-space:nowrap;background:var(--primary);color:#fff;border-radius:4px;padding:0 8px;font-weight:600;font-size:.9375rem;z-index:4}
+.cid{position:absolute;top:172px;transform:translateX(-50%);font-size:.875rem;color:var(--mut);white-space:nowrap}
+.cid::before{content:"";position:absolute;left:50%;top:-10px;height:6px;border-left:1.5px solid var(--mut)}
+/* corpo */
+.corpo{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:16px;align-items:start}
+.pilha{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+table{width:100%;border-collapse:collapse}
+th{font-weight:600;text-align:left;font-size:.9375rem;color:var(--mut);padding:8px 10px;border-bottom:2px solid var(--ink);height:44px}
+td{padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.p,th:first-child{min-width:8.5rem;white-space:nowrap}
+.loc{white-space:nowrap}
+tbody tr.cham{height:64px;cursor:pointer}
+tbody tr.sel{background:var(--primary-soft);outline:2px solid var(--primary);outline-offset:-2px}
+tbody tr.fim td{border-bottom:0}
+.linha-btn{all:unset;box-sizing:border-box;cursor:pointer;display:block;min-height:44px;width:100%}
+.linha-btn:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.pz{display:inline-grid;min-width:68px;padding:2px 6px;border:1.5px solid var(--ink);border-radius:4px;text-align:center;line-height:1.05;font-variant-numeric:tabular-nums;background:var(--surf)}
+.pz b{font-size:1.75rem;font-weight:700;font-variation-settings:"wdth" 75}
+.pz small{font-size:.8125rem}
+.pz.est{background:var(--danger);border-color:var(--danger);color:#fff}
+.pz.log{background:var(--warn-fill)}
+.sit{display:flex;align-items:center;gap:4px;font-weight:600;font-size:.9375rem;margin-top:2px}
+.sit svg{width:16px;height:16px;flex:none}
+.sit.est{color:var(--danger)}.sit.log{color:var(--warn-txt)}
+.loc b{font-size:1.1875rem;font-weight:600}
+.tag{display:inline-block;border:1.5px solid var(--ink);border-radius:4px;padding:0 6px;font-size:.875rem;font-weight:600;margin-left:6px}
+.sg{font-weight:700;font-size:1.1875rem;font-variant-numeric:tabular-nums}
+.sg small{display:block;font-weight:400;font-size:.9375rem;color:var(--mut)}
+.sg small.est{color:var(--danger);font-weight:600}
+.btn{display:block;width:100%;min-height:56px;border:0;border-radius:6px;background:var(--primary);color:var(--on-primary);font:inherit;font-weight:700;font-size:1.375rem;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--primary-hover)}
+.btn.sec{min-height:44px;width:auto;margin:0;padding:0 14px;font-size:1rem;background:var(--surf);color:var(--primary);border:2px solid var(--primary)}
+.btn.sec:hover{background:var(--primary-soft)}
+.btn:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.mandar{padding:0 0 16px}
+.mandar .t{background:var(--primary);color:#fff;border-radius:5px 5px 0 0;padding:10px 16px;box-shadow:inset 0 0 0 3px var(--primary),inset 0 0 0 5px #fff}
+.mandar .t h2{color:#fff;font-size:1.25rem;padding:4px 6px}
+.mandar .c{padding:16px 16px 0}
+.mandar .id{font-size:3rem;font-weight:700;font-variation-settings:"wdth" 75;line-height:1}
+.mandar .li{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0;font-size:1.125rem;font-variant-numeric:tabular-nums}
+.alt{list-style:none;margin:16px 0 0;padding:0;border-top:2px solid var(--ink)}
+.alt li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.alt b{font-size:1.125rem}
+.alt .sub{color:var(--mut);font-size:.9375rem}
+.alt-t{margin:16px 0 0;font-weight:600;color:var(--mut);font-size:.9375rem}
+.aviso{margin:12px 16px 0;padding:12px 16px;border:2px solid var(--primary);border-radius:6px;background:var(--primary-soft);display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.aviso:empty{display:block;height:0;padding:0;border:0;margin:0;background:none;overflow:hidden}
+.aviso.erro{border-color:var(--danger);background:#fee9e6}
+.aviso p{margin:0;flex:1 1 14rem;font-weight:600}
+.vazio{padding:32px 16px;text-align:center;font-size:1.25rem;font-weight:600}
+.esq{display:grid;gap:8px;padding:12px 16px 16px}
+.esq i{display:block;height:48px;background:linear-gradient(90deg,#e4ece8,#eef3f1);border-radius:4px}
+.frota{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,12rem),1fr));gap:0 12px;list-style:none;margin:0;padding:8px 12px 12px}
+.frota li{display:flex;align-items:center;gap:8px;min-height:40px;border-bottom:1px solid var(--line);font-size:.9375rem}
+.frota b{width:2.6rem;font-size:1.0625rem;flex:none}
+.o{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink);flex:none}.o.c{background:var(--ink)}.o.f{border-style:dashed;border-color:var(--mut)}
+@media (max-width:90em){.loc{white-space:normal}td.p,th:first-child{min-width:7.5rem}}
+@media (max-width:64em){
+  .corpo{grid-template-columns:minmax(0,1fr)}
+  .pilha{display:contents}
+  .s-fila{order:1}.s-mandar{order:2}.s-cam{order:3}.s-frota{order:4}
+}
+@media (max-width:52em){
+  main{padding:12px 16px 24px}.faixa{padding:8px 16px}
+  .regua{display:none}
+  thead{position:absolute;left:-999px}
+  table,tbody{display:block}
+  tbody tr{display:block;height:auto!important;padding:10px 0;border-bottom:1px solid var(--line)}
+  td{display:block;border:0;padding:3px 10px;min-width:0}
+  td.p{min-width:0;white-space:normal}.loc{white-space:normal}
+  td[data-r]::before{content:attr(data-r) ": ";color:var(--mut);font-size:.9375rem}
+  td.p::before{content:""!important}
+}
+@media (max-height:480px){.faixa{position:static}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (forced-colors:active){.pin,.cam,.pz,.btn{border:2px solid CanvasText}.estrada{background:CanvasText}}
+</style>
+</head>
+<body>
+<a class="pular" href="#fila">Pular para a fila</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="x" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M5 5l6 6M11 5l-6 6" stroke="#fff" stroke-width="2"/></symbol><symbol id="t" viewBox="0 0 16 16"><path d="M8 1.5l7 12.5H1z" fill="currentColor"/><path d="M8 6v4M8 11.5v1" stroke="#fff" stroke-width="1.8"/></symbol></svg>
+
+<header class="faixa">
+  <h1>Central Fernão Dias</h1><span class="br">BR-381</span><span class="ex">Dados de exemplo</span>
+  <span class="esp"></span><span id="data">sáb 31/10</span><time id="relogio">19:42</time>
+</header>
+
+<main>
+  <noscript><p class="aviso erro">Esta tela precisa de JavaScript ligado para mostrar a fila e mandar guinchos.</p></noscript>
+
+  <section class="cx regua" aria-labelledby="h-r">
+    <div class="cab"><h2 id="h-r">Rodovia, de Contagem a Extrema</h2><span class="lg" id="legenda"></span></div>
+    <div class="rua" id="rua" role="img" aria-label=""></div>
+  </section>
+
+  <div class="corpo">
+    <div class="pilha">
+      <section class="cx s-fila" aria-labelledby="h-f" id="fila">
+        <div class="cab-s"><h2 id="h-f">Esperando guincho<span class="n" id="n-espera"></span></h2></div>
+        <div id="fila-corpo"></div>
+      </section>
+      <section class="cx s-cam" aria-labelledby="h-c">
+        <div class="cab-s"><h2 id="h-c">A caminho<span class="n" id="n-caminho"></span></h2></div>
+        <div id="caminho-corpo"></div>
+      </section>
+    </div>
+
+    <div class="pilha">
+      <section class="cx mandar s-mandar" aria-labelledby="h-m">
+        <div id="painel-t"></div>
+        <div class="aviso" id="aviso-ok" role="status"></div>
+        <div class="aviso erro" id="aviso-erro" role="alert"></div>
+        <div class="c" id="painel-c"></div>
+      </section>
+      <section class="cx s-frota" aria-labelledby="h-g">
+        <div class="cab-s" style="padding-bottom:0"><h2 id="h-g">Guinchos<span class="n" id="n-frota"></span></h2></div>
+        <ul class="frota" id="frota"></ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  /* Regras do exemplo (hipóteses de PRODUTO.md, todas ajustáveis aqui):
+     prazo de 60 min a partir da abertura; guincho a 70 km/h em linha reta pela rodovia;
+     "vence logo" = faltam 15 min ou menos, ou o guincho sugerido chegaria depois do prazo;
+     a sugestão nunca repete guincho: cada livre vai para a chamada que vence primeiro. */
+  var PRAZO = 60, VEL = 70, VENCE_LOGO = 15, KM_A = 490, KM_B = 940;
+  var hash = location.hash.replace('#', '');
+  var ESTADO = /^(vazio|erro|carregando)$/.test(hash) ? hash : '';
+
+  function hm(s) { var p = s.split(':'); return +p[0] * 60 + +p[1]; }
+  function fm(m) { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+  function eta(d) { return Math.ceil(d * 60 / VEL); }
+  function pct(km) { return (km - KM_A) / (KM_B - KM_A) * 100; }
+  function gid(n) { return 'G-' + String(n).padStart(2, '0'); }
+  var $ = function (id) { return document.getElementById(id); };
+  var TIPO = { P: 'plataforma', PE: 'pesado' };
+  var ST = { livre: 'Livre', caminho: 'A caminho', local: 'No local', levando: 'Levando', fora: 'Fora de serviço' };
+
+  var S = {
+    agora: hm('19:42'), sel: null, aviso: null,
+    calls: [
+      { id: 327, km: 522, onde: 'Igarapé', sent: 'SP', veic: 'Mercedes Accelo baú', prob: 'pane no motor', tipo: 'PE', quem: 'Serra Azul Seguros', ab: hm('18:38'), st: 'espera' },
+      { id: 331, km: 664, onde: 'Oliveira', sent: 'SP', veic: 'Fiat Strada', prob: 'não liga', tipo: 'P', quem: 'Vale Verde Seguros', ab: hm('18:53'), st: 'espera' },
+      { id: 334, km: 858, onde: 'Pouso Alegre', sent: 'BH', veic: 'Toyota Corolla', prob: 'pneu furado', tipo: 'P', quem: 'Particular', ab: hm('19:04'), st: 'espera' },
+      { id: 336, km: 905, onde: 'Cambuí', sent: 'BH', veic: 'Honda HR-V', prob: 'bateria', tipo: 'P', quem: 'Mantiqueira Seguros', ab: hm('19:10'), st: 'espera' },
+      { id: 338, km: 503, onde: 'Betim', sent: 'SP', veic: 'VW Gol', prob: 'colisão leve, sem feridos', tipo: 'P', quem: 'Vale Verde Seguros', ab: hm('19:12'), st: 'espera' },
+      { id: 339, km: 491, onde: 'Contagem', sent: 'BH', veic: 'Chevrolet Onix', prob: 'pneu furado', tipo: 'P', quem: 'Serra Azul Seguros', ab: hm('19:19'), st: 'espera' },
+      { id: 340, km: 812, onde: 'Três Corações', sent: 'SP', veic: 'Toyota Hilux', prob: 'pane seca', tipo: 'P', quem: 'Mantiqueira Seguros', ab: hm('19:27'), st: 'espera' },
+      { id: 342, km: 938, onde: 'Extrema', sent: 'BH', veic: 'Renault Kwid', prob: 'colisão traseira', tipo: 'P', quem: 'Particular', ab: hm('19:38'), st: 'espera' },
+      { id: 318, km: 868, onde: 'Pouso Alegre', sent: 'SP', veic: 'Hyundai HB20', prob: 'pane elétrica', tipo: 'P', quem: 'Mantiqueira Seguros', ab: hm('18:58'), st: 'caminho', t: 10, cheg: hm('20:02') },
+      { id: 322, km: 625, onde: '', sent: 'SP', veic: 'Renault Duster', prob: 'pneu furado', tipo: 'P', quem: 'Serra Azul Seguros', ab: hm('19:05'), st: 'caminho', t: 4, cheg: hm('19:55') },
+      { id: 325, km: 735, onde: '', sent: 'BH', veic: 'Jeep Compass', prob: 'não liga', tipo: 'P', quem: 'Vale Verde Seguros', ab: hm('19:20'), st: 'caminho', t: 6, cheg: hm('20:12') }
+    ],
+    trucks: [
+      { id: 1, tipo: 'P', km: 497, st: 'livre' }, { id: 2, tipo: 'P', km: 531, st: 'livre' },
+      { id: 3, tipo: 'PE', km: 508, st: 'livre' }, { id: 4, tipo: 'P', km: 610, st: 'caminho', c: 322 },
+      { id: 5, tipo: 'P', km: 660, st: 'local', c: 315, desde: hm('19:31') }, { id: 6, tipo: 'P', km: 700, st: 'caminho', c: 325 },
+      { id: 7, tipo: 'P', km: 653, st: 'livre' }, { id: 8, tipo: 'PE', km: 742, st: 'levando' },
+      { id: 9, tipo: 'P', km: 790, st: 'livre' }, { id: 10, tipo: 'P', km: 845, st: 'caminho', c: 318 },
+      { id: 11, tipo: 'P', km: 862, st: 'livre' }, { id: 12, tipo: 'PE', km: 880, st: 'livre' },
+      { id: 13, tipo: 'P', km: 855, st: 'fora' }, { id: 14, tipo: 'P', km: 925, st: 'livre' }
+    ]
+  };
+  if (ESTADO === 'vazio') S.calls = S.calls.filter(function (c) { return c.st !== 'espera'; });
+
+  /* ---------- cálculos ---------- */
+  function falta(c) { return c.ab + PRAZO - S.agora; }
+  function espera() { return S.calls.filter(function (c) { return c.st === 'espera'; }).sort(function (a, b) { return falta(a) - falta(b) || a.id - b.id; }); }
+  function livres(c) { return S.trucks.filter(function (t) { return t.st === 'livre' && t.tipo === c.tipo; }); }
+  function info(c, t) { var d = Math.abs(c.km - t.km), e = eta(d), ch = S.agora + e; return { d: d, e: e, ch: ch, m: c.ab + PRAZO - ch }; }
+  function ranking(c) { return livres(c).sort(function (a, b) { return Math.abs(c.km - a.km) - Math.abs(c.km - b.km) || a.id - b.id; }); }
+  function plano() {
+    var usados = {}, p = {};
+    espera().forEach(function (c) {
+      var t = ranking(c).filter(function (x) { return !usados[x.id]; })[0];
+      p[c.id] = t || null; if (t) usados[t.id] = c.id;
+    });
+    return { sug: p, usados: usados };
+  }
+  function callPorId(id) { return S.calls.filter(function (c) { return c.id === id; })[0]; }
+  function truckPorId(id) { return S.trucks.filter(function (t) { return t.id === id; })[0]; }
+
+  /* ---------- ações ---------- */
+  function foto() { return JSON.stringify({ calls: S.calls, trucks: S.trucks, sel: S.sel }); }
+  function proximaSel() { var e = espera(); return e.length ? e[0].id : null; }
+
+  function mandar(cid, tid) {
+    var c = callPorId(cid), t = truckPorId(tid);
+    if (!c || !t || t.st !== 'livre') return;
+    if (ESTADO === 'erro') {
+      S.aviso = { erro: true, texto: 'Não deu para mandar o ' + gid(t.id) + '. A chamada ' + c.id + ' continua esperando: tente de novo.' };
+      return;
+    }
+    var antes = foto(), i = info(c, t);
+    c.st = 'caminho'; c.t = t.id; c.cheg = i.ch;
+    t.st = 'caminho'; t.c = c.id;
+    S.sel = proximaSel();
+    S.aviso = { texto: gid(t.id) + ' a caminho de ' + lugar(c) + '. Chega ' + fm(i.ch) + '.', desfazer: antes };
+  }
+  function desfazer() {
+    if (!S.aviso || !S.aviso.desfazer) return;
+    var f = JSON.parse(S.aviso.desfazer); S.calls = f.calls; S.trucks = f.trucks; S.sel = f.sel;
+    S.aviso = { texto: 'Desfeito. A chamada voltou para a fila.' };
+  }
+  function voltar(cid) {
+    var c = callPorId(cid); if (!c) return;
+    var t = truckPorId(c.t);
+    c.st = 'espera'; delete c.t; delete c.cheg;
+    if (t) { t.st = 'livre'; delete t.c; }
+    S.sel = c.id;
+    S.aviso = { texto: 'Chamada ' + c.id + ' voltou para a fila.' + (t ? ' ' + gid(t.id) + ' está livre.' : '') };
+  }
+  function chegadas() {
+    S.calls = S.calls.filter(function (c) {
+      if (c.st === 'caminho' && c.cheg <= S.agora) {
+        var t = truckPorId(c.t);
+        if (t) { t.st = 'local'; t.c = c.id; t.km = c.km; t.desde = c.cheg; }
+        return false;
+      }
+      return true;
+    });
+    var e = espera().map(function (c) { return c.id; });
+    if (S.sel === null || e.indexOf(S.sel) < 0) S.sel = e.length ? e[0] : null;
+  }
+
+  /* ---------- texto ---------- */
+  function lugar(c) { return (c.onde ? c.onde + ', ' : '') + 'km ' + c.km; }
+  function icone(t) { return '<svg aria-hidden="true"><use href="#' + t + '"/></svg>'; }
+  function situacao(c, sug) {
+    var f = falta(c);
+    if (f < 0) return 'est';
+    if (f <= VENCE_LOGO || (sug && info(c, sug).m < 0)) return 'log';
+    return '';
+  }
+  function minutos(n) { return n + ' min'; }
+
+  /* ---------- desenho ---------- */
+  function desenhaFila(P) {
+    var el = $('fila-corpo'), e = espera();
+    $('n-espera').textContent = ESTADO === 'carregando' ? '' : ' ' + e.length;
+    if (ESTADO === 'carregando') {
+      el.innerHTML = '<p class="oculto" role="status">Carregando as chamadas</p><div class="esq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>';
+      return;
+    }
+    if (!e.length) { el.innerHTML = '<p class="vazio">Nenhuma chamada esperando. Tudo despachado.</p>'; return; }
+    var h = '<table><caption class="oculto">Chamadas esperando guincho, da que vence primeiro para a que vence depois</caption><thead><tr><th scope="col">Falta</th><th scope="col">Onde</th><th scope="col">Veículo e problema</th><th scope="col">Quem pediu</th><th scope="col">Guincho sugerido</th></tr></thead><tbody>';
+    e.forEach(function (c) {
+      var f = falta(c), sug = P.sug[c.id], s = situacao(c, sug), sel = c.id === S.sel;
+      var rot = s === 'est' ? 'Estourou' : s === 'log' ? 'Vence logo' : '';
+      var cel;
+      if (sug) {
+        var i = info(c, sug);
+        cel = gid(sug.id) + '<small' + (f >= 0 && i.m < 0 ? ' class="est">' + minutos(i.e) + ', atrasa' : '>' + minutos(i.e)) + '</small>';
+      } else cel = 'Nenhum<small>livre agora</small>';
+      h += '<tr class="cham' + (sel ? ' sel' : '') + '" data-c="' + c.id + '">' +
+        '<td class="p" data-r="Falta"><button class="linha-btn" data-foco="c' + c.id + '" data-acao="sel" data-c="' + c.id + '"' + (sel ? ' aria-current="true"' : '') + '>' +
+        '<span class="oculto">Chamada ' + c.id + ', ' + lugar(c) + ': </span><span class="pz ' + s + '"><b>' + (f < 0 ? '−' + (-f) : f) + '</b><small>min</small></span>' +
+        (rot ? '<span class="sit ' + s + '">' + icone(s === 'est' ? 'x' : 't') + rot + '</span>' : '') + '</button></td>' +
+        '<td class="loc" data-r="Onde"><b>' + (c.onde || 'Km ' + c.km) + '</b> <span class="mut">km ' + c.km + ', sentido ' + c.sent + '</span></td>' +
+        '<td data-r="Veículo">' + c.veic + ', ' + c.prob + (c.tipo === 'PE' ? '<span class="tag">Pesado</span>' : '') + '</td>' +
+        '<td data-r="Quem pediu">' + c.quem + '</td>' +
+        '<td data-r="Sugerido" class="sg' + (sug ? '' : ' mut') + '">' + cel + '</td></tr>';
+    });
+    el.innerHTML = h + '</tbody></table>';
+  }
+
+  function desenhaCaminho() {
+    var el = $('caminho-corpo'), l = S.calls.filter(function (c) { return c.st === 'caminho'; }).sort(function (a, b) { return a.cheg - b.cheg; });
+    $('n-caminho').textContent = ESTADO === 'carregando' ? '' : ' ' + l.length;
+    if (ESTADO === 'carregando') { el.innerHTML = '<div class="esq" aria-hidden="true"><i></i><i></i></div>'; return; }
+    if (!l.length) { el.innerHTML = '<p class="vazio" style="font-size:1rem">Nenhum guincho a caminho.</p>'; return; }
+    var h = '<table><caption class="oculto">Chamadas com guincho a caminho</caption><thead><tr><th scope="col">Chamada</th><th scope="col">Guincho</th><th scope="col">Onde</th><th scope="col">Chega às</th><th scope="col">Prazo</th><th scope="col"><span class="oculto">Ação</span></th></tr></thead><tbody>';
+    l.forEach(function (c) {
+      var m = c.ab + PRAZO - c.cheg;
+      h += '<tr style="height:56px"><td data-r="Chamada">' + c.id + '</td><td data-r="Guincho"><b>' + gid(c.t) + '</b></td><td data-r="Onde">' + lugar(c) + '</td><td data-r="Chega às">' + fm(c.cheg) + '</td>' +
+        '<td data-r="Prazo">' + (m < 0 ? '<span class="sit est">' + icone('x') + 'Atrasa ' + minutos(-m) + '</span>' : 'Sobram ' + minutos(m)) + '</td>' +
+        '<td><button class="btn sec" data-foco="v' + c.id + '" data-acao="voltar" data-c="' + c.id + '">Voltar à fila<span class="oculto"> a chamada ' + c.id + '</span></button></td></tr>';
+    });
+    el.innerHTML = h + '</tbody></table>';
+  }
+
+  function desenhaPainel(P) {
+    var tt = $('painel-t'), el = $('painel-c'), c = S.sel === null ? null : callPorId(S.sel);
+    if (ESTADO === 'carregando') { tt.innerHTML = '<div class="t"><h2 id="h-m">Mandar guincho</h2></div>'; el.innerHTML = '<div class="esq" aria-hidden="true" style="padding:0"><i></i><i></i></div>'; return; }
+    if (!c) { tt.innerHTML = '<div class="t"><h2 id="h-m">Mandar guincho</h2></div>'; el.innerHTML = '<p class="vazio">Nenhuma chamada esperando. Tudo despachado.</p>'; return; }
+    var sug = P.sug[c.id], rk = ranking(c), tipo = TIPO[c.tipo];
+    tt.innerHTML = '<div class="t"><h2 id="h-m">Chamada ' + c.id + ' · ' + lugar(c) + '</h2></div>';
+    var h = '';
+    if (sug) {
+      var i = info(c, sug), perto = rk[0];
+      h += '<div class="mut">Sugerido, guincho ' + tipo + '</div><div class="id">' + gid(sug.id) + '</div>' +
+        '<div class="li"><span>' + i.d + ' km</span><span>' + minutos(i.e) + '</span><span>chega ' + fm(i.ch) + '</span></div>' +
+        (i.m < 0 ? '<div class="sit est" style="font-size:1.0625rem">' + icone('x') + minutos(-i.m) + ' depois do prazo</div>' : '<div style="font-size:1.0625rem">Sobram ' + minutos(i.m) + ' no prazo</div>') +
+        '<button class="btn" data-foco="mandar" data-acao="mandar" data-c="' + c.id + '" data-t="' + sug.id + '">Mandar ' + gid(sug.id) + '</button>';
+      if (perto && perto.id !== sug.id) h += '<p class="mut" style="margin:12px 0 0">Mais perto: ' + gid(perto.id) + ', sugerido para a chamada ' + P.usados[perto.id] + '.</p>';
+    } else if (rk.length) {
+      h += '<div class="id" style="font-size:1.5rem">Nenhum guincho sobrando</div><p class="mut" style="margin:8px 0 0">Os guinchos livres do tipo ' + tipo + ' já estão sugeridos para chamadas que vencem antes.</p>';
+    } else {
+      h += '<div class="id" style="font-size:1.5rem">Nenhum guincho ' + tipo + ' livre</div><p class="mut" style="margin:8px 0 0">Quando um ficar livre, ele aparece aqui.</p>';
+    }
+    var outros = rk.filter(function (t) { return !sug || t.id !== sug.id; });
+    if (outros.length) {
+      var mostra = outros.slice(0, 3);
+      h += '<p class="alt-t">' + (sug ? 'Outros livres' : 'Livres') + ', tipo ' + tipo + ', do mais perto' + (outros.length > 3 ? ' (mostrando 3 de ' + outros.length + ')' : '') + '</p><ul class="alt">';
+      mostra.forEach(function (t) {
+        var j = info(c, t), para = P.usados[t.id], nota = [];
+        if (j.m < 0) nota.push('atrasa ' + minutos(-j.m));
+        if (para && para !== c.id) nota.push('sugerido para a chamada ' + para);
+        h += '<li><span><b>' + gid(t.id) + '</b> <span class="sub">' + j.d + ' km, ' + minutos(j.e) + '</span>' + (nota.length ? '<br><span class="sub">' + nota.join(', ') + '</span>' : '') + '</span>' +
+          '<button class="btn sec" data-foco="a' + t.id + '" data-acao="mandar" data-c="' + c.id + '" data-t="' + t.id + '">Mandar ' + gid(t.id) + '</button></li>';
+      });
+      h += '</ul>';
+    }
+    el.innerHTML = h;
+  }
+
+  function desenhaFrota() {
+    var livre = S.trucks.filter(function (t) { return t.st === 'livre'; }).length;
+    $('n-frota').textContent = ESTADO === 'carregando' ? '' : ' ' + livre + ' livres de ' + S.trucks.length;
+    $('frota').innerHTML = S.trucks.map(function (t) {
+      var cls = t.st === 'livre' ? '' : t.st === 'fora' ? ' f' : ' c';
+      var txt = ST[t.st] + (t.st === 'livre' ? ', km ' + t.km : '') + (t.st === 'local' && t.desde ? ' desde ' + fm(t.desde) : '');
+      return '<li><b>' + gid(t.id) + '</b><span class="o' + cls + '"></span><span>' + txt + (t.tipo === 'PE' ? '<span class="tag">pesado</span>' : '') + '</span></li>';
+    }).join('');
+  }
+
+  function desenhaRegua(P) {
+    var el = $('rua'), W = el.clientWidth || 1200, e = ESTADO === 'carregando' ? [] : espera(), c = S.sel === null ? null : callPorId(S.sel);
+    var sug = c ? P.sug[c.id] : null, h = '<div class="estrada"></div>', tem_banda = false;
+    if (c && falta(c) > 0) {
+      var r = falta(c) * VEL / 60, a = Math.max(pct(c.km - r), -1), b = Math.min(pct(c.km + r), 101);
+      h += '<div class="banda" style="left:' + a + '%;width:' + (b - a) + '%"></div>'; tem_banda = true;
+    }
+    if (c && sug) {
+      var k1 = Math.min(c.km, sug.km), k2 = Math.max(c.km, sug.km), i = info(c, sug);
+      h += '<div class="trecho" style="left:' + pct(k1) + '%;width:' + (pct(k2) - pct(k1)) + '%"></div>' +
+        '<div class="dist" style="left:' + pct((k1 + k2) / 2) + '%;top:150px">' + i.d + ' km · ' + minutos(i.e) + '</div>';
+    }
+    var la = -99, lb = -99;
+    e.slice().sort(function (x, y) { return x.km - y.km; }).forEach(function (q) {
+      var x = pct(q.km) * W / 100, linha = 'a', s = situacao(q, P.sug[q.id]), f = falta(q);
+      if (x - la >= 40) la = x; else if (x - lb >= 40) { lb = x; linha = 'b'; } else la = x;
+      h += '<span class="pin ' + linha + ' ' + s + (q.id === S.sel ? ' sel' : '') + '" style="left:' + pct(q.km) + '%;top:' + (linha === 'a' ? 36 : 4) + 'px">' + (f < 0 ? '−' + (-f) : f) + '</span>';
+    });
+    var ta = -99, tb = -99, tc = -99;
+    S.trucks.slice().sort(function (x, y) { return x.km - y.km; }).forEach(function (t) {
+      var x = pct(t.km) * W / 100, top = 86;
+      if (x - ta >= 30) ta = x; else if (x - tb >= 30) { tb = x; top = 114; } else { tc = x; top = 142; }
+      var cls = t.st === 'livre' ? '' : t.st === 'fora' ? ' fora' : ' cheio';
+      h += '<span class="cam' + cls + (sug && sug.id === t.id ? ' sug' : '') + '" style="left:' + pct(t.km) + '%;top:' + top + 'px">' + String(t.id).padStart(2, '0') + '</span>';
+    });
+    var ult = -999;
+    [['Contagem 490', 490, 'ini'], ['Oliveira 664', 664], ['Três Corações 812', 812], ['Pouso Alegre 855', 855], ['Extrema 940', 940, 'fim']].forEach(function (m) {
+      var x = pct(m[1]) * W / 100, w = m[0].length * 6.6, ini = m[2] === 'ini' ? x : m[2] === 'fim' ? x - w : x - w / 2;
+      if (ini < ult + 6) return;
+      ult = ini + w;
+      h += '<span class="cid" style="left:' + pct(m[1]) + '%' + (m[2] === 'ini' ? ';transform:none' : m[2] === 'fim' ? ';transform:translateX(-100%)' : '') + '">' + m[0] + '</span>';
+    });
+    el.innerHTML = h;
+    $('legenda').textContent = 'Em cima, minutos que faltam. Embaixo, guinchos: vazado livre, cheio ocupado.' + (tem_banda ? ' Faixa verde: até onde um guincho chega antes do prazo.' : '');
+    var resumo = 'Régua da rodovia, de Contagem, km 490, a Extrema, km 940. Em cima, ' + e.length + ' chamadas esperando; embaixo, os ' + S.trucks.length + ' guinchos.';
+    if (c && sug) resumo += ' Chamada ' + c.id + ' escolhida, em ' + lugar(c) + ': o ' + gid(sug.id) + ' está a ' + info(c, sug).d + ' km.';
+    resumo += ' O mesmo conteúdo está nas listas ao lado e abaixo.';
+    el.setAttribute('aria-label', resumo);
+  }
+
+  function desenhaAviso() {
+    var ok = $('aviso-ok'), er = $('aviso-erro'), a = S.aviso;
+    if (a && !a.erro) {
+            ok.innerHTML = '<p>' + a.texto + '</p>' + (a.desfazer ? '<button class="btn sec" data-foco="desfazer" data-acao="desfazer">Desfazer</button>' : '');
+    } else { ok.innerHTML = ''; }
+    if (a && a.erro) { er.innerHTML = '<p>' + a.texto + '</p>'; } else { er.innerHTML = ''; }
+  }
+
+  function desenha() {
+    var foco = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-foco');
+    var P = plano();
+    $('relogio').textContent = fm(S.agora); $('relogio').setAttribute('datetime', fm(S.agora));
+    desenhaFila(P); desenhaCaminho(); desenhaPainel(P); desenhaFrota(); desenhaRegua(P); desenhaAviso();
+    if (foco) { var n = document.querySelector('[data-foco="' + foco + '"]'); if (n) n.focus({ preventScroll: true }); }
+  }
+
+  /* ---------- eventos ---------- */
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-acao]'), tr = ev.target.closest('tr.cham');
+    if (b) {
+      var a = b.getAttribute('data-acao'), c = +b.getAttribute('data-c'), t = +b.getAttribute('data-t');
+      if (a === 'sel') { S.sel = c; S.aviso = null; }
+      else if (a === 'mandar') mandar(c, t);
+      else if (a === 'voltar') voltar(c);
+      else if (a === 'desfazer') desfazer();
+      desenha();
+    } else if (tr) { S.sel = +tr.getAttribute('data-c'); S.aviso = null; desenha(); var n = document.querySelector('[data-foco="c' + S.sel + '"]'); if (n) n.focus({ preventScroll: true }); }
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return;
+    var b = ev.target.closest && ev.target.closest('[data-acao="sel"]'); if (!b) return;
+    var e = espera().map(function (c) { return c.id; }), i = e.indexOf(+b.getAttribute('data-c')) + (ev.key === 'ArrowDown' ? 1 : -1);
+    if (i < 0 || i >= e.length) return;
+    ev.preventDefault(); S.sel = e[i]; S.aviso = null; desenha();
+    var n = document.querySelector('[data-foco="c' + S.sel + '"]'); if (n) n.focus();
+  });
+  var larg = 0;
+  window.addEventListener('resize', function () { var w = $('rua').clientWidth; if (Math.abs(w - larg) > 4) { larg = w; desenha(); } });
+
+  /* relógio de exemplo: começa às 19:42 e anda em tempo real, de minuto em minuto */
+  var t0 = Date.now(), base = S.agora;
+  if (ESTADO !== 'carregando') setInterval(function () {
+    var n = base + Math.floor((Date.now() - t0) / 60000);
+    if (n !== S.agora) { S.agora = n; chegadas(); desenha(); }
+  }, 5000);
+
+  S.sel = proximaSel();
+  if (ESTADO === 'erro') S.aviso = null;
+  desenha();
+  larg = $('rua').clientWidth;
+})();
+</script>
+</body>
+</html>

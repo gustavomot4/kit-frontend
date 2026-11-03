@@ -5,7 +5,7 @@ Piso: WCAG 2.2 AA.
 **Copie:**
 - `aria-label` descritivo em todo link cujo único texto visível é genérico (`aria-label="{título do post}. Continuar lendo"`, `aria-label="Saiba mais: {assunto}"`) e em todo botão só de ícone (`aria-label="Próximo campo"`, "Abrir menu", "Abrir chat"). Quando o link já contém o nome do destino, como o tile de curso, não precisa.
 - `<nav aria-label="Cursos">`, `<nav aria-label="Sobre nós">` — nomeie cada bloco de navegação.
-- **Widget de Libras** (VLibras) na posição padrão do plugin, no meio da borda direita. Recomendado em site educacional brasileiro; não substitui a conformidade com a WCAG.
+- **Widget de Libras** (VLibras) na posição padrão do plugin, no meio da borda direita. Recomendado em site educacional brasileiro; não substitui a conformidade com a WCAG. Aparece ao chegar, sem depender de clique.
 - Alvos de 44px nos botões e campos; nenhum alvo com menos de 24px.
 
 **Semântica:**

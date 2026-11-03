@@ -1,6 +1,6 @@
 # Perfil de gosto do dono do kit
 
-Tirado das mensagens que ele escreveu ao aprovar ou reprovar telas em projetos reais, de agosto a outubro de 2026. Cada regra traz a frase e a data. Prevalece sobre `references/padroes/` e `estilos/`, e perde para o piso de `references/qualidade/acessibilidade.md`, para o `DESIGN.md` aprovado no projeto e para um pedido explícito na conversa.
+Tirado das mensagens que ele escreveu ao aprovar ou reprovar telas e indicar referências, de agosto a novembro de 2026. Cada regra traz a frase e a data. Prevalece sobre `references/padroes/` e `estilos/`, e perde para o piso de `references/qualidade/acessibilidade.md`, para o `DESIGN.md` aprovado no projeto e para um pedido explícito na conversa.
 
 Em uma frase: **em tela de trabalho, limpo e direto como a Apple e familiar como o WhatsApp e o Uber; em tela de marca, impacto como Nubank e Valorant. Sempre com cara própria, e sem nada que pareça feito por IA.**
 
@@ -32,6 +32,7 @@ As regras marcadas com `[script]` são checadas por `scripts/verificar.mjs`. As 
 | G20 | **Responsivo de verdade.** Formulário longo é o que mais quebra: teste cada um em 375 e 320. `[script]` | "a tela de agendar consulta tem muitos erros de responsividade" (28/10) |
 | G21 | **Tema escuro só com estudo.** Nunca inverta cores. Siga `references/padroes/tema-escuro.md` e mostre ideias antes de aplicar. | "esse modo escuro está muito feio"; "faça um estudo com outros do mercado" (09/10) |
 | G22 | **Emoção quando o produto pede.** Em jogo e entretenimento, animação, som e imagem são o produto. Só de bater o olho a pessoa sabe o que é. | "sinto que falta emoção" (20/08) |
+| G23 | **Para todos, de verdade.** Libras, pouca leitura, daltonismo e baixa visão são requisito de produto, e não podem custar a identidade. Liste quem usa em `publicos:` e siga `references/qualidade/publicos.md`. `[script]` | "com acessibilidades (libras, leitura, daltonismos, pessoas com pouca leitura, pessoas com pouca visibilidade etc...) para todos, bonito, intuitivo" (30/10) |
 
 ## Como ele decide
 
@@ -50,10 +51,11 @@ Escolhas feitas olhando telas lado a lado. Cada linha é um sinal, não uma regr
 | 30/10/2026 | Tela Hoje de uma barbearia fictícia. A: lista como a de conversas. B: o salão por cadeira, com a listra do poste. C: cartaz com o próximo cliente | **B** | Prefere a tela organizada por algo real do negócio a uma lista genérica. Aceita tipografia com caráter e cantos retos num sistema de trabalho, quando têm função |
 
 | 30/10/2026 | Tela principal de uma marmitaria fictícia: uma tela feita por agente sem o kit contra três direções feitas com ele | **A, lista e detalhe, a mais familiar** | Para uma dona que não entende de tecnologia, prefere o formato que ela já conhece, sem painel de indicadores e com pouco texto |
+| 01/11/2026 | Site de uma oficina de bairro, em teste do kit. A: conversa de WhatsApp. B: ordem de serviço. C: luzes do painel | **A, a conversa** | De novo o formato familiar para público leigo. Os dois agentes da escolha cega apontaram a B |
 
-Nas duas vezes ele só deu a escolha, sem motivo: a coluna da direita é leitura do agente. Na primeira, a prancha recomendava a B, o que pode ter pesado. Na segunda, a prancha dizia qual tela vinha do kit, que é dele, e não recomendava nenhuma.
+Nas três vezes ele só deu a escolha, sem motivo: a coluna da direita é leitura do agente. Na primeira, a prancha recomendava a B, o que pode ter pesado. Na segunda, a prancha dizia qual tela vinha do kit, que é dele, e não recomendava nenhuma.
 
-Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade de quem usa, mais pesa o formato conhecido. A clínica aponta para o mesmo lado: em 28/10, o grupo preferiu a proposta "conversa".
+Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade de quem usa, mais pesa o formato conhecido. A clínica aponta para o mesmo lado: em 28/10, o grupo preferiu a proposta "conversa". A oficina também, e mostra que a escolha cega não prevê o dono: use a crítica dos avaliadores, não só o voto.
 
 ## Referências que ele cita
 
@@ -68,6 +70,14 @@ Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade
 | Hyper3D, CozyGPU, Cequence | Produto em ação, ilustração própria, diagrama | Citados em 30/10, para criatividade |
 
 Como aplicar essas referências está em `references/marca/criatividade.md`. Ele citou os sites sem dizer do que gosta em cada um: o "o que aproveitar" dessas três linhas é leitura do agente.
+
+## Referências indicadas em 01/11/2026
+
+McDonald’s, Burger King, Canva, Globoplay, Netflix Brasil, Mercado Livre e Inter. Links e análise em `references/marca/criatividade.md`.
+
+> "site que eu acho bonito e o kit deveria pegar inspirações neles, para entender como essas marcas construa sua identidade visual e como elas transmite isso e como elas construem o seus sistemas" — dono do kit, 01/11/2026, nesta conversa.
+
+Pedido confirmado: estudar identidade, sua transmissão e construção de sistemas. Ele não escolheu cor, fonte, tema ou detalhe de cada site. As interpretações do estudo são do agente e dependem da marca e do público do projeto; não ampliam automaticamente G05 ou G22.
 
 ## Já reprovado
 

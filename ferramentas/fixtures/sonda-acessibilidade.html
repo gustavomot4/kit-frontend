@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sonda de acessibilidade</title>
+<!-- Defeitos plantados para testar o verificador. Ver ferramentas/testar.mjs. -->
+<style>
+  html { font-size: 100%; }
+  body { margin: 0; font: 1rem/1.5 Georgia, serif; color: #1c2430; background: #fdfcf9; }
+  header, main, footer { max-width: 72rem; margin: 0 auto; padding: 1.5rem; }
+  a { color: #0b4f8a; }
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid #0b4f8a; outline-offset: 2px; }
+  h1 { font-size: 2rem; margin: 0 0 1rem; } h2 { font-size: 1.25rem; margin: 2rem 0 .5rem; }
+  button { min-height: 2.75rem; min-width: 2.75rem; padding: 0 1rem; font: inherit; background: #0b4f8a; color: #fff; border: 0; border-radius: .25rem; }
+  .d1 span { display: inline-block; width: 1rem; height: 1rem; border-radius: 50%; margin-right: .5rem; vertical-align: middle; }
+  .verde { background: #1f8a3b; } .vermelho { background: #c0392b; }
+  .d2 { display: inline-block; padding: .75rem 1rem; background: #0b4f8a; color: #fff; cursor: pointer; }
+  .d6 { display: block; width: 100%; max-width: 24rem; min-height: 2.75rem; border: 0; padding: 0 .75rem; font: inherit; box-shadow: 0 0 0 1px #5a6573; background: #fff; }
+  .d11 { height: 44px; width: 420px; overflow: hidden; background: #0b4f8a; color: #fff; padding: 10px; }
+  .d12 { text-align: justify; text-transform: uppercase; font-style: italic; }
+  .d13 { max-width: none; }
+  .d20 { font-size: .75rem; line-height: 1.05; max-width: 20rem; }
+  .barras { display: flex; gap: 1rem; align-items: flex-end; height: 7rem; }
+  .barras div { width: 3rem; }
+  video { width: 16rem; height: 9rem; background: #223; display: block; }
+</style>
+</head>
+<body>
+<a href="#conteudo">Pular para o conteúdo</a>
+<header><nav aria-label="Principal"><a href="#a">Início</a> <a href="#b">Serviços</a></nav></header>
+<main id="conteudo">
+  <h1>Sonda de defeitos plantados</h1>
+
+  <h2>Situação das consultas</h2>
+  <!-- D1: situação só por cor -->
+  <p class="d1"><span class="verde" aria-hidden="true"></span>Ana Beatriz Moraes</p>
+  <p class="d1"><span class="vermelho" aria-hidden="true"></span>Carlos Eduardo Lima</p>
+
+  <h2>Ações</h2>
+  <!-- D2: div clicável -->
+  <div class="d2" onclick="void 0">Marcar horário</div>
+  <!-- D3: aria-label sem o texto visível (2.5.3) -->
+  <button aria-label="Enviar formulário de cadastro">Salvar</button>
+  <!-- D4: botão só com ícone, sem texto visível, para público de baixo letramento -->
+  <button aria-label="Excluir registro"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12l-1 12H5L4 6zm3-3h6v2H7V3z" fill="currentColor"/></svg></button>
+  <!-- D5: tabindex positivo muda a ordem de foco -->
+  <button tabindex="3">Terceiro na tela, primeiro no Tab</button>
+  <!-- D6: contorno de campo feito só com box-shadow some em forced-colors -->
+  <p><label for="nome">Nome completo</label><input id="nome" class="d6" autocomplete="name"></p>
+  <!-- D7: erro sem ligação com o campo -->
+  <p><label for="cep">CEP</label><input id="cep" class="d6" autocomplete="postal-code" value="123"></p>
+  <p style="color:#a11">Campo inválido</p>
+
+  <h2>Texto</h2>
+  <!-- D8: texto difícil para quem tem pouca leitura -->
+  <p>Outrossim, consoante o disposto na regulamentação vigente, a efetivação da solicitação de agendamento condiciona-se à prévia apresentação da documentação comprobatória pertinente, ressalvadas as hipóteses excepcionais supervenientemente deliberadas pela autoridade administrativa competente, sob pena de indeferimento liminar.</p>
+  <!-- D9: link sem sentido fora de contexto -->
+  <p>Para ver o regulamento, <a href="#r">clique aqui</a>. Para ver os preços, <a href="#p">saiba mais</a>.</p>
+  <!-- D10: alt que não descreve -->
+  <p><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='90'%3E%3Crect width='160' height='90' fill='%23889'/%3E%3C/svg%3E" width="160" height="90" alt="IMG_2034.jpg"></p>
+  <!-- D11: altura fixa corta o texto quando a letra cresce ou o espaçamento aumenta (1.4.4, 1.4.12) -->
+  <div class="d11">Agendar consulta com a médica da família agora mesmo</div>
+  <!-- D12: bloco justificado, caixa alta e itálico -->
+  <p class="d12">Leve um documento com foto no dia da consulta e chegue quinze minutos antes do horário marcado para fazer a sua ficha na recepção da clínica.</p>
+  <!-- D13: linha muito longa -->
+  <p class="d13">Esta linha atravessa toda a largura disponível sem nenhum limite de medida de leitura, então em monitores grandes a pessoa perde o começo da próxima linha quando termina de ler a anterior, o que atrapalha muito quem tem baixa visão ou dificuldade de leitura e obriga a mover a cabeça de um lado para o outro para acompanhar o texto até o fim.</p>
+  <!-- D20: altura de linha apertada -->
+  <p class="d20">Horários sujeitos a alteração. Consulte a recepção para confirmar a disponibilidade de cada profissional durante os feriados e as semanas de campanha.</p>
+
+  <h2>Gráfico</h2>
+  <!-- D14: gráfico só por cor, com par vermelho e verde de claridade parecida -->
+  <div class="barras" role="img" aria-label="Entradas e saídas">
+    <div style="height:6rem;background:#2e8b57"></div>
+    <div style="height:4rem;background:#b5651d"></div>
+    <div style="height:5rem;background:#2e8b57"></div>
+    <div style="height:3rem;background:#b5651d"></div>
+  </div>
+  <p>Legenda: verde é entrada, marrom é saída.</p>
+
+  <h2>Mídia</h2>
+  <!-- D15: vídeo com fala, sem legenda -->
+  <video controls src="data:video/mp4;base64,"></video>
+  <!-- D16: toca sozinho em loop, sem controle -->
+  <video autoplay muted loop src="data:video/mp4;base64,"></video>
+
+  <h2>Controles que o kit já deveria pegar</h2>
+  <!-- C1: campo sem rótulo, só placeholder -->
+  <p><input class="d6" placeholder="Telefone"></p>
+  <!-- C2: contraste baixo -->
+  <p style="color:#a9a9a9">Texto cinza claro que não passa no contraste.</p>
+  <!-- C3: foco removido -->
+  <p><button style="outline:none" onfocus="this.style.outline='none'">Sem foco visível</button></p>
+  <!-- C4: alvo pequeno -->
+  <p><button style="min-height:0;min-width:0;padding:0;height:18px;width:18px;font-size:.75rem" aria-label="Fechar aviso">x</button></p>
+  <!-- C5: salto de título -->
+  <h4>Título que pula um nível</h4>
+</main>
+<footer><p>Sonda usada só neste estudo.</p></footer>
+</body>
+</html>

@@ -12,58 +12,58 @@ O limite adotado é 4,5:1 para os pares de texto e 3:1 para ícone informativo, 
 
 | Uso e fundo | Texto ou traço | Fundo | Razão | Critério | Resultado |
 | --- | --- | --- | --- | --- | --- |
-| Texto principal sobre `--ui-bg` | `#111827` | `#f4f5f8` | 16,27:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-bar` | `#111827` | `#ffffff` | 17,74:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-surface` | `#111827` | `#ffffff` | 17,74:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-surface-2` | `#111827` | `#f0f1f6` | 15,73:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-bg` | `#374151` | `#f4f5f8` | 9,45:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-bar` | `#374151` | `#ffffff` | 10,31:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-surface` | `#374151` | `#ffffff` | 10,31:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-surface-2` | `#374151` | `#f0f1f6` | 9,14:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-bg` | `#312e81` | `#f4f5f8` | 10,48:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-bar` | `#312e81` | `#ffffff` | 11,42:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-surface` | `#312e81` | `#ffffff` | 11,42:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-surface-2` | `#312e81` | `#f0f1f6` | 10,13:1 | Texto 4,5 | Passa |
-| Texto de ação sobre `--ui-action-soft` | `#312e81` | `#eef0ff` | 10,09:1 | Texto 4,5 | Passa |
-| Botão primário sobre `--ui-action` | `#ffffff` | `#4338ca` | 7,90:1 | Texto 4,5 | Passa |
-| Destaque sobre `--ui-highlight` | `#ffffff` | `#4338ca` | 7,90:1 | Texto 4,5 | Passa |
-| Opção escolhida sobre `--ui-selected` | `#312e81` | `#eef0ff` | 10,09:1 | Texto 4,5 | Passa |
-| Menu escolhido sobre `--ui-tab-active` | `#4338ca` | `#eef0ff` | 6,98:1 | Texto 4,5 | Passa |
-| Desabilitado sobre `--ui-disabled` | `#4b5563` | `#e5e7eb` | 6,10:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-bg` | `#111a20` | `#f3f6f8` | 16,23:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-bar` | `#111a20` | `#ffffff` | 17,61:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-surface` | `#111a20` | `#ffffff` | 17,61:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-surface-2` | `#111a20` | `#edf2f5` | 15,62:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-bg` | `#384249` | `#f3f6f8` | 9,47:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-bar` | `#384249` | `#ffffff` | 10,28:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-surface` | `#384249` | `#ffffff` | 10,28:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-surface-2` | `#384249` | `#edf2f5` | 9,11:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-bg` | `#014261` | `#f3f6f8` | 9,91:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-bar` | `#014261` | `#ffffff` | 10,75:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-surface` | `#014261` | `#ffffff` | 10,75:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-surface-2` | `#014261` | `#edf2f5` | 9,53:1 | Texto 4,5 | Passa |
+| Texto de ação sobre `--ui-action-soft` | `#014261` | `#e7f3fc` | 9,54:1 | Texto 4,5 | Passa |
+| Botão primário sobre `--ui-action` | `#ffffff` | `#025e88` | 7,10:1 | Texto 4,5 | Passa |
+| Destaque sobre `--ui-highlight` | `#ffffff` | `#025e88` | 7,10:1 | Texto 4,5 | Passa |
+| Opção escolhida sobre `--ui-selected` | `#014261` | `#e7f3fc` | 9,54:1 | Texto 4,5 | Passa |
+| Menu escolhido sobre `--ui-tab-active` | `#025e88` | `#e7f3fc` | 6,29:1 | Texto 4,5 | Passa |
+| Desabilitado sobre `--ui-disabled` | `#4b565d` | `#e4e8ea` | 6,11:1 | Texto 4,5 | Passa |
 | Sucesso sobre `--ui-ok-soft` | `#0a554f` | `#d9f5ee` | 7,52:1 | Texto 4,5 | Passa |
-| Aviso sobre `--ui-warn-soft` | `#7c3a03` | `#fef3c7` | 7,66:1 | Texto 4,5 | Passa |
-| Erro sobre `--ui-danger-soft` | `#8f1616` | `#fee2e2` | 7,49:1 | Texto 4,5 | Passa |
-| Neutro sobre `--ui-neutral-soft` | `#374151` | `#e5e7eb` | 8,33:1 | Texto 4,5 | Passa |
-| Contagem sobre `--ui-count` | `#ffffff` | `#b91c1c` | 6,47:1 | Texto 4,5 | Passa |
+| Aviso sobre `--ui-warn-soft` | `#7c3a03` | `#f9f5c8` | 7,68:1 | Texto 4,5 | Passa |
+| Erro sobre `--ui-danger-soft` | `#8f1616` | `#fee2df` | 7,48:1 | Texto 4,5 | Passa |
+| Neutro sobre `--ui-neutral-soft` | `#384249` | `#e4e8ea` | 8,33:1 | Texto 4,5 | Passa |
+| Contagem sobre `--ui-count` | `#ffffff` | `#b42b01` | 6,39:1 | Texto 4,5 | Passa |
 | Contato opcional sobre `--ui-contact` | `#06281c` | `#25d366` | 7,97:1 | Texto 4,5 | Passa |
-| Ícone 1 sobre `--ui-bg` | `#4338ca` | `#f4f5f8` | 7,25:1 | UI 3,0 | Passa |
-| Ícone 1 sobre `--ui-surface` | `#4338ca` | `#ffffff` | 7,90:1 | UI 3,0 | Passa |
-| Ícone 2 sobre `--ui-bg` | `#8a4b00` | `#f4f5f8` | 6,24:1 | UI 3,0 | Passa |
+| Ícone 1 sobre `--ui-bg` | `#025e88` | `#f3f6f8` | 6,54:1 | UI 3,0 | Passa |
+| Ícone 1 sobre `--ui-surface` | `#025e88` | `#ffffff` | 7,10:1 | UI 3,0 | Passa |
+| Ícone 2 sobre `--ui-bg` | `#8a4b00` | `#f3f6f8` | 6,27:1 | UI 3,0 | Passa |
 | Ícone 2 sobre `--ui-surface` | `#8a4b00` | `#ffffff` | 6,80:1 | UI 3,0 | Passa |
-| Ícone 3 sobre `--ui-bg` | `#0f766e` | `#f4f5f8` | 5,02:1 | UI 3,0 | Passa |
-| Ícone 3 sobre `--ui-surface` | `#0f766e` | `#ffffff` | 5,47:1 | UI 3,0 | Passa |
-| Ícone 4 sobre `--ui-bg` | `#9d174d` | `#f4f5f8` | 7,23:1 | UI 3,0 | Passa |
-| Ícone 4 sobre `--ui-surface` | `#9d174d` | `#ffffff` | 7,88:1 | UI 3,0 | Passa |
-| Ícone neutro sobre `--ui-bg` | `#374151` | `#f4f5f8` | 9,45:1 | UI 3,0 | Passa |
-| Ícone neutro sobre `--ui-surface` | `#374151` | `#ffffff` | 10,31:1 | UI 3,0 | Passa |
-| Borda de campo sobre `--ui-bg` | `#7f8798` | `#f4f5f8` | 3,31:1 | UI 3,0 | Passa |
-| Borda de campo sobre `--ui-surface` | `#7f8798` | `#ffffff` | 3,61:1 | UI 3,0 | Passa |
-| Borda de campo sobre `--ui-surface-2` | `#7f8798` | `#f0f1f6` | 3,20:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-bg` | `#4338ca` | `#f4f5f8` | 7,25:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-bar` | `#4338ca` | `#ffffff` | 7,90:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-surface` | `#4338ca` | `#ffffff` | 7,90:1 | UI 3,0 | Passa |
-| Foco sobre `--ui-surface-2` | `#4338ca` | `#f0f1f6` | 7,01:1 | UI 3,0 | Passa |
-| Interruptor desligado sobre `--ui-toggle-off` | `#ffffff` | `#7f8798` | 3,61:1 | UI 3,0 | Passa |
-| Interruptor ligado sobre `--ui-toggle-on` | `#ffffff` | `#0f766e` | 5,47:1 | UI 3,0 | Passa |
-| Texto principal sobre `--ui-action-soft` | `#111827` | `#eef0ff` | 15,66:1 | Texto 4,5 | Passa |
-| Texto principal sobre `--ui-ok-soft` | `#111827` | `#d9f5ee` | 15,41:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-action-soft` | `#374151` | `#eef0ff` | 9,10:1 | Texto 4,5 | Passa |
-| Texto secundário sobre `--ui-ok-soft` | `#374151` | `#d9f5ee` | 8,96:1 | Texto 4,5 | Passa |
-| Ação de erro sobre `--ui-bg` | `#8f1616` | `#f4f5f8` | 8,40:1 | Texto 4,5 | Passa |
+| Ícone 3 sobre `--ui-bg` | `#077674` | `#f3f6f8` | 5,02:1 | UI 3,0 | Passa |
+| Ícone 3 sobre `--ui-surface` | `#077674` | `#ffffff` | 5,45:1 | UI 3,0 | Passa |
+| Ícone 4 sobre `--ui-bg` | `#9f1640` | `#f3f6f8` | 7,27:1 | UI 3,0 | Passa |
+| Ícone 4 sobre `--ui-surface` | `#9f1640` | `#ffffff` | 7,89:1 | UI 3,0 | Passa |
+| Ícone neutro sobre `--ui-bg` | `#384249` | `#f3f6f8` | 9,47:1 | UI 3,0 | Passa |
+| Ícone neutro sobre `--ui-surface` | `#384249` | `#ffffff` | 10,28:1 | UI 3,0 | Passa |
+| Borda de campo sobre `--ui-bg` | `#7d8991` | `#f3f6f8` | 3,30:1 | UI 3,0 | Passa |
+| Borda de campo sobre `--ui-surface` | `#7d8991` | `#ffffff` | 3,58:1 | UI 3,0 | Passa |
+| Borda de campo sobre `--ui-surface-2` | `#7d8991` | `#edf2f5` | 3,18:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-bg` | `#025e88` | `#f3f6f8` | 6,54:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-bar` | `#025e88` | `#ffffff` | 7,10:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-surface` | `#025e88` | `#ffffff` | 7,10:1 | UI 3,0 | Passa |
+| Foco sobre `--ui-surface-2` | `#025e88` | `#edf2f5` | 6,29:1 | UI 3,0 | Passa |
+| Interruptor desligado sobre `--ui-toggle-off` | `#ffffff` | `#7d8991` | 3,58:1 | UI 3,0 | Passa |
+| Interruptor ligado sobre `--ui-toggle-on` | `#ffffff` | `#077674` | 5,45:1 | UI 3,0 | Passa |
+| Texto principal sobre `--ui-action-soft` | `#111a20` | `#e7f3fc` | 15,62:1 | Texto 4,5 | Passa |
+| Texto principal sobre `--ui-ok-soft` | `#111a20` | `#d9f5ee` | 15,30:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-action-soft` | `#384249` | `#e7f3fc` | 9,11:1 | Texto 4,5 | Passa |
+| Texto secundário sobre `--ui-ok-soft` | `#384249` | `#d9f5ee` | 8,93:1 | Texto 4,5 | Passa |
+| Ação de erro sobre `--ui-bg` | `#8f1616` | `#f3f6f8` | 8,43:1 | Texto 4,5 | Passa |
 | Ação de erro sobre `--ui-surface` | `#8f1616` | `#ffffff` | 9,15:1 | Texto 4,5 | Passa |
-| Ação de erro sobre `--ui-surface-2` | `#8f1616` | `#f0f1f6` | 8,11:1 | Texto 4,5 | Passa |
-| Foco em superfície semântica sobre `--ui-action-soft` | `#4338ca` | `#eef0ff` | 6,98:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-ok-soft` | `#4338ca` | `#d9f5ee` | 6,87:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-warn-soft` | `#4338ca` | `#fef3c7` | 7,10:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-danger-soft` | `#4338ca` | `#fee2e2` | 6,47:1 | UI 3,0 | Passa |
-| Foco em superfície semântica sobre `--ui-neutral-soft` | `#4338ca` | `#e5e7eb` | 6,38:1 | UI 3,0 | Passa |
+| Ação de erro sobre `--ui-surface-2` | `#8f1616` | `#edf2f5` | 8,12:1 | Texto 4,5 | Passa |
+| Foco em superfície semântica sobre `--ui-action-soft` | `#025e88` | `#e7f3fc` | 6,29:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-ok-soft` | `#025e88` | `#d9f5ee` | 6,17:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-warn-soft` | `#025e88` | `#f9f5c8` | 6,39:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-danger-soft` | `#025e88` | `#fee2df` | 5,80:1 | UI 3,0 | Passa |
+| Foco em superfície semântica sobre `--ui-neutral-soft` | `#025e88` | `#e4e8ea` | 5,75:1 | UI 3,0 | Passa |

@@ -31,7 +31,7 @@
 - [ ] Imagens em WebP com `srcset`, `width`, `height` e `alt` real (ou `alt=""` se decorativa); `loading="lazy"` abaixo da dobra e nunca na imagem do hero, que leva `fetchpriority="high"`
 - [ ] Em 320 × 256 (altura até 480px), header, barra das conversões, cookie bar, chat e Libras rolam junto com a página e nada fixo cobre a janela; todo link fora de parágrafo tem 44px de altura (§4).
 - [ ] Cookie bar não-bloqueante, com `Recusar` e `Aceitar` de mesmo peso; nenhuma tag de rastreamento dispara antes do aceite; eventos do item 10 do §8 só depois dele
-- [ ] Chat e VLibras só carregam depois da primeira interação; chat no canto inferior direito acima da cookie bar e da barra das conversões; Libras no meio da borda direita
+- [ ] Chat só carrega depois da primeira interação; VLibras carrega com `defer` e o botão aparece ao chegar; chat no canto inferior direito acima da cookie bar e da barra das conversões; Libras no meio da borda direita
 - [ ] Lighthouse ≥ 90 em Performance, Acessibilidade, SEO e Boas Práticas
 
 ---

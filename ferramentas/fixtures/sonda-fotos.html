@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sonda de fotos</title>
+<style>
+  /* Defeitos plantados: foto em tira, foto esticada e foto boa de controle. Só a boa não pode aparecer no resultado. */
+  body { margin: 0; font: 1rem/1.5 Georgia, serif; color: #1a1a1a; background: #fff; }
+  main { max-width: 60rem; margin: 0 auto; padding: 1.5rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  /* height no HTML, sem height:auto: o aspect-ratio é ignorado, como no teste real */
+  .tira { width: 140px; aspect-ratio: 3 / 4; object-fit: cover; }
+  .esticada { width: 280px; height: 90px; }
+  .boa { width: 200px; height: auto; }
+</style>
+</head>
+<body>
+<a href="#conteudo" style="display:inline-block;padding:14px">Pular para o conteúdo</a>
+<main id="conteudo">
+  <h1>Catálogo</h1>
+  <ul>
+    <li><img class="tira" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Foto em tira" width="200" height="1402"></li>
+    <li><img class="esticada" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Foto esticada" width="200" height="250"></li>
+    <li><img class="boa" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAD6CAIAAABriJ9vAAACo0lEQVR42u3S1REQBgBEQerE3QkeDtfgLoFCKJAmjq/bma3gzTvw+2Cg7oAE/J2xDgXqjIWxMBbzYx0O1BkLY2Es5sc6EqgzFsbCWMyPdTRQZyyMhbGYH+tYoM5YGAtjMT/W8UCdsTAWxmJ+rBOBOmNhLIzF/FgnA3XGwlgYi/mxTgXqjIWxMBbzY50O1BkLY2Es5sc6E6gzFsbCWMyPdTZQZyyMhbGYH+tcoM5YGAtjMT/W+UCdsTAWxmJ+rAuBOmNhLIzF/FgXA3XGwlgYi/mxLgXqjIWxMBbzY10O1BkLY2Es5se6EqgzFsbCWMyP9U+gzlgYC2MxP9bVQJ2xMBbGYn6sa4E6Y2EsjMX8WNcDdcbCWBiL+bFuBOqMhbEwFvNj3QzUGQtjYSzmx7oVqDMWxsJYzI91O1BnLIyFsZgf699AnbEwFsZifqw7gTpjYSyMxfxYCdQZC2NhLObHuhuoMxbGwljMj3UvUGcsjIWxmB/rfqDOWBgLYzE/1oNAnbEwFsZifqyHgTpjYSyMxfxYjwJ1xsJYGIv5sR4H6oyFsTAW82M9CdQZC2NhLObHehqoMxbGwljMj/UsUGcsjIWxmB/reaDOWBgLYzE/1otAnbEwFsZifqz/AnXGwlgYi/mxXgbqjIWxMBbzY70K1BkLY2Es5sd6HagzFsbCWMyP9SZQZyyMhbGYH+ttoM5YGAtjMT/Wu0CdsTAWxmJ+rPeBOmNhLIzF/FgfAnXGwlgYi/mxPgbqjIWxMBbzY30K1BkLY2Es5sf6HKgzFsbCWMyP9SVQZyyMhbGYH+troM5YGAtjMT/Wt0CdsTAWxmJ+rO+BOmNhLIzF/Fg/AnXGwlgYi/mx/g/UGQtjYSzmx/oZqDMWxsJYzI/1K1BnLIyFsRj3B27EddBfDHa6AAAAAElFTkSuQmCC" alt="Foto boa" width="200" height="250"></li>
+  </ul>
+</main>
+</body>
+</html>

@@ -15,7 +15,7 @@ colors:
 typography:
   title:
     fontFamily: <Família>
-    fontSize: 2rem
+    fontSize: <em rem, vindo do conceito>
     fontWeight: 700
     lineHeight: 1.15
   body:
@@ -29,8 +29,8 @@ typography:
     fontWeight: 600
     lineHeight: 1.4
 rounded:
-  control: 8px
-  surface: 12px
+  control: <px, vindo do conceito>
+  surface: <px, vindo do conceito>
 spacing:
   sm: 8px
   md: 16px
@@ -60,6 +60,10 @@ components:
 
 **Como expressa a marca:** <como este visual traduz as palavras de personalidade de `MARCA.md`.>
 
+**O que se repete:** <sinais de marca e regras compartilhadas entre navegação, conteúdo e estados.>
+
+**O que varia por superfície:** <diferenças entre marca, trabalho e tarefa curta; só as que o produto tem.>
+
 ## Colors
 
 <Papel de cada cor, onde pode e onde não pode aparecer, e o porquê da escolha.>
@@ -82,8 +86,8 @@ components:
 
 ## Components
 
-<O que muda em relação aos padrões do kit. Estados: padrão, hover, foco, ativo, desabilitado, erro.>
+<Componentes que consomem os tokens; variantes e composições de domínio. O que muda em relação aos padrões do kit. Estados: padrão, hover, foco, ativo, desabilitado, erro.>
 
 ## Do's and Don'ts
 
-<Decisões que parecem exceção, com o motivo: "Usamos Inter porque…". O verificador aceita fontes declaradas aqui.>
+<Decisões que parecem exceção, com o motivo: "Usamos Inter porque…". O verificador só aceita a fonte citada aqui com o motivo na mesma linha.>

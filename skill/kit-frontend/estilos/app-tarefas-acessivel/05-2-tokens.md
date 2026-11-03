@@ -9,51 +9,51 @@ O tema claro é o padrão do CSS. A aplicação pode selecionar o tema inicial p
   color-scheme: light;
 
   /* superfícies */
-  --ui-bg: #f4f5f8;
+  --ui-bg: #f3f6f8;
   --ui-bar: #ffffff;
   --ui-surface: #ffffff;
-  --ui-surface-2: #f0f1f6;
-  --ui-line: #dfe2ec;
-  --ui-card-border: #dfe2ec;
-  --ui-field-border: #7f8798;
+  --ui-surface-2: #edf2f5;
+  --ui-line: #dae4eb;
+  --ui-card-border: #dae4eb;
+  --ui-field-border: #7d8991;
   --ui-overlay: rgba(15, 19, 32, 0.5);
 
   /* texto */
-  --ui-text: #111827;
-  --ui-text-2: #374151;
+  --ui-text: #111a20;
+  --ui-text-2: #384249;
 
   /* ação */
-  --ui-action: #4338ca;
+  --ui-action: #025e88;
   --ui-on-action: #ffffff;
-  --ui-action-text: #312e81;
-  --ui-action-soft: #eef0ff;
-  --ui-action-line: #c9cdfb;
-  --ui-selected: #eef0ff;
-  --ui-on-selected: #312e81;
-  --ui-tab-active: #eef0ff;
-  --ui-on-tab-active: #4338ca;
-  --ui-highlight: #4338ca;
+  --ui-action-text: #014261;
+  --ui-action-soft: #e7f3fc;
+  --ui-action-line: #b1d7f1;
+  --ui-selected: #e7f3fc;
+  --ui-on-selected: #014261;
+  --ui-tab-active: #e7f3fc;
+  --ui-on-tab-active: #025e88;
+  --ui-highlight: #025e88;
   --ui-on-highlight: #ffffff;
-  --ui-focus: #4338ca;
-  --ui-disabled: #e5e7eb;
-  --ui-on-disabled: #4b5563;
+  --ui-focus: #025e88;
+  --ui-disabled: #e4e8ea;
+  --ui-on-disabled: #4b565d;
   --ui-disabled-line: transparent;
 
   /* situação */
   --ui-ok: #0a554f;
   --ui-ok-soft: #d9f5ee;
   --ui-warn: #7c3a03;
-  --ui-warn-soft: #fef3c7;
+  --ui-warn-soft: #f9f5c8;
   --ui-danger: #8f1616;
-  --ui-danger-soft: #fee2e2;
-  --ui-neutral: #374151;
-  --ui-neutral-soft: #e5e7eb;
-  --ui-count: #b91c1c;
+  --ui-danger-soft: #fee2df;
+  --ui-neutral: #384249;
+  --ui-neutral-soft: #e4e8ea;
+  --ui-count: #b42b01;
   --ui-on-count: #ffffff;
 
   /* liga e desliga */
-  --ui-toggle-off: #7f8798;
-  --ui-toggle-on: #0f766e;
+  --ui-toggle-off: #7d8991;
+  --ui-toggle-on: #077674;
   --ui-toggle-knob: #ffffff;
   --ui-toggle-knob-on: #ffffff;
 
@@ -65,23 +65,23 @@ O tema claro é o padrão do CSS. A aplicação pode selecionar o tema inicial p
   --ui-on-contact: #06281c;
 
   /* blocos de desenho dos cards */
-  --ui-tone-1: #eef0ff;
-  --ui-on-tone-1: #4338ca;
+  --ui-tone-1: #e7f3fc;
+  --ui-on-tone-1: #025e88;
   --ui-tone-2: #fff1cf;
   --ui-on-tone-2: #8a4b00;
   --ui-tone-3: #d9f5ee;
-  --ui-on-tone-3: #0f766e;
+  --ui-on-tone-3: #077674;
   --ui-tone-4: #ffe1ea;
-  --ui-on-tone-4: #9d174d;
-  --ui-tone-neutral: #eceef3;
-  --ui-on-tone-neutral: #374151;
+  --ui-on-tone-4: #9f1640;
+  --ui-tone-neutral: #eaeff2;
+  --ui-on-tone-neutral: #384249;
 
   /* desenhos Duotone sobre a superfície, sem caixa pastel */
-  --ui-icon-1: #4338ca;
+  --ui-icon-1: #025e88;
   --ui-icon-2: #8a4b00;
-  --ui-icon-3: #0f766e;
-  --ui-icon-4: #9d174d;
-  --ui-icon-neutral: #374151;
+  --ui-icon-3: #077674;
+  --ui-icon-4: #9f1640;
+  --ui-icon-neutral: #384249;
 
   /* contorno extra de selos e avisos: só o alto contraste usa */
   --ui-edge: 0px;
