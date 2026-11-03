@@ -40,7 +40,7 @@ Uma pergunta que costuma render: **qual é a unidade real do trabalho?** Cadeira
    Com marca existente, ao menos uma direção parte de como ela aparece hoje: o mesmo fundo, as mesmas cores, o nome na mesma forma. Claro por padrão (G05) não dispensa mostrar essa opção.
 
    Nem sempre a mais própria vence: o dono escolheu a B numa barbearia e a A numa marmitaria cuja dona não entende de tecnologia. A direção A também precisa de decisão própria: familiar não pode virar genérica.
-4. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale.
+4. **Derive os tokens do conceito** e escreva uma linha do porquê de cada escolha. Se a justificativa serve para qualquer produto, ela não vale. Registre também o que se repete nos componentes e o que varia por superfície, como em `references/marca/criatividade.md`.
 5. **Revise contra `references/marca/anti-generico.md`.** Troque toda escolha que caiu num padrão e diga o que trocou.
 6. **Aplique à mesma tela real, com os mesmos dados.** A tela mais usada do produto, não a home nem o login. Num site institucional ou landing, a home é essa tela. Dados fictícios realistas, nomes brasileiros, um caso difícil (nome longo, lista cheia). O mesmo título sobre as mesmas seções é uma ideia só, com outra pele.
 

@@ -1,6 +1,6 @@
 # Criatividade: o que os sites admirados fazem
 
-Medido em 11 sites que o dono do kit citou como os que gosta bastante, em 30/10/2026: Nubank, C6, Itaú, 99, iFood Parceiros, Valorant, Fortnite, Epic Store, Hyper3D, CozyGPU e Cequence. Os números estão em `docs/pesquisa/referencias-sites.md`, no repositório do kit. Copie o raciocínio, nunca a marca, a fonte, a imagem ou o texto.
+Referências do dono de 30/10 e 01/11/2026; interpretações do agente. Evidências em `docs/pesquisa/referencias-sites.md` e `docs/pesquisa/identidade-e-sistemas.md`, no repositório do kit. A síntese abaixo acompanha a instalação. Crie a expressão a partir de `MARCA.md`.
 
 ## Primeiro, a superfície
 
@@ -10,71 +10,52 @@ Medido em 11 sites que o dono do kit citou como os que gosta bastante, em 30/10/
 | **Trabalho** | Sistema, painel, cadastro, tela usada o dia inteiro | Contida. `references/gosto/perfil.md` manda (G01 a G03). Use uma ou duas ideias daqui, como escala no dado principal e o elemento-assinatura |
 | **Tarefa curta** | Cadastro, pagamento, passo a passo | Baixa no meio do fluxo. Marca na abertura e na conclusão |
 
-## O que levar
+## O que a primeira rodada ensinou
 
-### 1. Título muito maior do que parece seguro
+Observações de 30/10/2026, contextualizadas:
 
-Marcas grandes medidas usam títulos de 54 a 156px no computador. Um gerador costuma parar em 48px. Na superfície de marca, comece em 72px no computador e reduza com `clamp()` em `rem` e `vw`, sem quebrar em 320px.
+| Decisão | Referência e aplicação |
+| --- | --- |
+| Escala e peso | Nubank: 156px; C6: 100px, peso 300; Valorant: condensada pesada. Hierarquia com escala responsiva |
+| Tipografia | Nubank, C6, Itaú, 99, iFood, Valorant e Fortnite têm fonte própria ou distinta. Epic, Hyper3D e Cequence mostram que fonte comum pode conviver com identidade |
+| Cor e forma | 99: amarelo e imagens com cantos amplos; Valorant: cortes retos; Nubank: curvas. Defina papéis e motivos para cor e forma |
+| Imagem | Nove dos onze usam foto, arte ou render com peso; CozyGPU repete desenho de linha; Hyper3D mostra resultado; Cequence, diagrama. Use material próprio ou licenciado |
+| Mensagem e ritmo | Nubank e iFood Parceiros aproximam promessa e primeiro campo. Alterne composição conforme o conteúdo, com uma ação dominante e prova verificável |
+| Tema | Jogos e ferramentas de criação da amostra usam escuro; bancos variam. Tema depende da superfície e do produto; trabalho segue G05 |
 
-### 2. Peso extremo, não médio
+## Sete referências acrescentadas em 01/11/2026
 
-C6 usa peso 300 em 100px; Valorant, uma condensada pesada em caixa alta; Nubank, 600 em tamanho enorme. Peso 600 em tamanho médio é o que todo mundo faz. Escolha um extremo e fique nele.
+Páginas públicas em 1280 × 720; base documental no Canva. Não é manual oficial das marcas.
 
-### 3. A fonte carrega a marca
+| Referência | Como a identidade aparece | O que levar para um sistema |
+| --- | --- | --- |
+| [McDonald’s](https://www.mcdonalds.com.br/) | Speedee, amarelo, alimento e voz cotidiana | A abertura orienta retirada ou entrega; o cardápio muda a composição e preserva os sinais |
+| [Burger King](https://www.burgerking.com.br/) | Flame, creme e marrom; letras volumosas e fotos do alimento | A personalidade continua nos nomes e cartões do cardápio, além da campanha |
+| [Canva](https://www.canva.com/) | Criações variadas dentro de uma casca estável | Deixar o conteúdo variar e manter controles, hierarquia e espaçamento consistentes |
+| [Globoplay](https://globoplay.globo.com/) | Fundo escuro, capas e curadoria por assunto | Fileiras repetem proporções e navegação; categorias mudam a seleção. A arte do destaque não carregou |
+| [Netflix](https://www.netflix.com/br/) | Arte, fundo escuro e vermelho nas ações | Landing e ficha pública mantêm atmosfera, mas oferecem informações diferentes para decidir |
+| [Mercado Livre](https://www.mercadolivre.com.br/) | Cabeçalho amarelo, área neutra e ação azul | Busca persiste; filtros e cartões dão ordem à comparação. Marca e ação podem ter cores diferentes |
+| [Inter](https://inter.co/) | Citrina nos títulos, laranja e controles arredondados | Home e Conta PJ conectam assuntos diferentes por tipografia, imagem e ações |
 
-Nubank, C6, Itaú, iFood, 99, Valorant e Fortnite usam tipografia própria ou pouco comum. Sem orçamento para isso, escolha uma família gratuita, pouco usada e com personalidade, para os títulos. Os que usam Inter, Poppins ou Montserrat (Epic, Hyper3D, Cequence) compensam com imagem forte.
+O Canva documenta [tokens e variantes](https://www.canva.dev/docs/apps/app-ui-kit/design-tokens/) e a composição responsiva no [Easel](https://www.canva.dev/blog/engineering/adding-responsiveness-to-canvas-design-system/). O relato do [Hawkins, no Netflix Studio, de 2021](https://netflixtechblog.com/hawkins-diving-into-the-reasoning-behind-our-design-system-964a7357547) e a [entrevista sobre Andes publicada pela Figma](https://www.figma.com/customers/mercado-libre-scales-design-across-latin-america/) sustentam base compartilhada e composições específicas. Não comprovam a implementação atual de cada página observada.
 
-### 4. Cor de marca em área grande
+## Da referência para as telas
 
-99 pinta metade da primeira dobra de amarelo; Nubank usa faixas inteiras em roxo; iFood, vermelho; Valorant, vermelho e um quase branco quente. A cor não fica só no botão. Regra de partida na superfície de marca: de 20 a 50% da primeira dobra, ou uma faixa de ponta a ponta por página.
-
-O problema nunca foi a cor em si. O roxo da Nubank é da Nubank; o índigo padrão do Tailwind não é de ninguém. Veja que cor os concorrentes do setor usam e escolha outra.
-
-### 5. Imagem real manda
-
-Nove dos onze sites têm foto, arte ou render ocupando boa parte da primeira dobra: gente de verdade nos bancos e na 99, personagens nos jogos, o próprio resultado na Hyper3D. É o que um agente menos entrega. Siga `references/recursos/bibliotecas.md`: material real, depois gerado com estilo único, depois ilustração própria.
-
-Texto sobre foto precisa de escurecimento calculado. Sem isso, reprova em contraste.
-
-### 6. Ilustração própria e barata
-
-CozyGPU não usa foto: cada modelo tem um desenho de linha fina sobre preto, com um único ponto laranja. Um gesto repetido virou identidade. **Um agente consegue fazer isso em SVG.** É a melhor saída quando não há foto: defina uma regra simples (traço, cor, um detalhe que se repete) e siga em todos os desenhos.
-
-### 7. Forma extrema e coerente
-
-Valorant usa raio zero. Nubank, pílula em tudo. A 99, cantos de 72px em imagem. O genérico fica no meio: 8 a 12px em tudo. Escolha um extremo, com motivo.
-
-### 8. Mostre o produto funcionando
-
-Hyper3D mostra a entrada e o resultado; Cequence, um diagrama do que o produto faz. Vale mais que três cartões de benefícios. Em sistema, mostre a tela real com dados reais.
-
-### 9. Uma ação na primeira dobra
-
-Nubank e iFood Parceiros colocam o primeiro campo do cadastro direto na primeira dobra. Peça uma coisa só, com finalidade e política à vista.
-
-### 10. Frase curta, com posição
-
-Poucas palavras, uma promessa que só aquela empresa faria. Depois, prova concreta: número real, com unidade e fonte. Número inventado é pior que nenhum.
-
-### 11. Ritmo por contraste
-
-As páginas alternam faixa de cor cheia, branco e imagem de ponta a ponta. Mude a composição a cada bloco, não só o fundo.
-
-### 12. Tema escuro é decisão de setor
-
-Jogos e ferramentas de IA abrem em escuro (Fortnite, Epic, Valorant, Hyper3D, CozyGPU); C6 usa o preto como sinal de exclusividade. Serviço de massa abre em claro (Nubank, 99, iFood, Itaú). Sistema de trabalho do dono segue claro por padrão (G05).
+1. Em `design/direcoes/ideias.md`, ligue **sinal observado → mensagem percebida → regra aproveitável → aplicação no produto**. Marque a interpretação. O repertório acima não substitui as duas novas referências de fora do setor.
+2. Em `DESIGN.md`, registre o que se repete: papéis de cor, tipografia, tratamento de imagem, voz e formas. Separe marca, ação, foco e estados; evite valores isolados por tela.
+3. Defina o que varia entre marca, trabalho e tarefa curta. Componentes compartilham tokens, variantes e estados; composições específicas ficam no domínio que as usa.
+4. Na tela-modelo, confira a continuidade na navegação, no conteúdo e nos estados. Reuse essas regras nas telas seguintes e documente exceções. Uma campanha não define sozinha um sistema.
 
 ## O que não levar
 
-Esses sites também têm problemas medidos. Não copie:
+Respeite o piso do kit. Evite:
 
-- Avisos de cookies que cobrem boa parte da tela: o piso de `references/qualidade/acessibilidade.md` prevalece.
-- Texto muito pequeno. Hyper3D chega a 7,2px, e CozyGPU a 11px.
-- Carrossel como herói: esconde o conteúdo. Só com pausa e quando indispensável.
-- Títulos vagos e densidade de anúncio numa tela de trabalho.
+- Logos, fontes proprietárias, textos e imagens de terceiros como ativos do produto.
+- Banners cobrindo a tarefa, texto pequeno e movimento sem controle. Carrossel exige motivo, pausa e navegação acessível. Texto sobre imagem pede contraste calculado.
+- Transferir densidade comercial ou efeitos de campanha para telas de trabalho.
 
 ## Como usar nas três direções
 
-Numa superfície de marca, ao menos uma direção precisa aplicar de verdade os itens 1, 4 e 5. Se todas ficarem com título de 48px, cor só no botão e sem imagem, refaça: essa é a cara média de gerador, mesmo sem nenhum clichê da lista de `references/marca/anti-generico.md`.
+Em superfície de marca, cada direção tem hierarquia e recursos visuais com propósito que continuam nos componentes. Escala, área de cor e tema dependem de `MARCA.md` e da tarefa. Confira identidade e clichês em `references/marca/identidade.md` e `references/marca/anti-generico.md`.
 
 Identidade exigente não dispensa o piso: contraste, foco, teclado, zoom e movimento reduzido continuam valendo.

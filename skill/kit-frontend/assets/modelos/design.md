@@ -60,6 +60,10 @@ components:
 
 **Como expressa a marca:** <como este visual traduz as palavras de personalidade de `MARCA.md`.>
 
+**O que se repete:** <sinais de marca e regras compartilhadas entre navegação, conteúdo e estados.>
+
+**O que varia por superfície:** <diferenças entre marca, trabalho e tarefa curta; só as que o produto tem.>
+
 ## Colors
 
 <Papel de cada cor, onde pode e onde não pode aparecer, e o porquê da escolha.>
@@ -82,7 +86,7 @@ components:
 
 ## Components
 
-<O que muda em relação aos padrões do kit. Estados: padrão, hover, foco, ativo, desabilitado, erro.>
+<Componentes que consomem os tokens; variantes e composições de domínio. O que muda em relação aos padrões do kit. Estados: padrão, hover, foco, ativo, desabilitado, erro.>
 
 ## Do's and Don'ts
 

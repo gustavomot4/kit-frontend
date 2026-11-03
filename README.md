@@ -14,6 +14,7 @@ Artefatos que qualquer agente de código usa para criar frontend com a sua cara,
 | "Para todos" só no texto | [Fichas por público](skill/kit-frontend/references/qualidade/publicos.md) e [Libras e mídia](skill/kit-frontend/references/padroes/midia-e-libras.md), ativadas pelo `PRODUTO.md` e cobradas pelo verificador |
 | Reinventar o que já existe | [Padrões](skill/kit-frontend/references/) tirados do [benchmark](docs/pesquisa/benchmark.md) |
 | Tela correta, mas sem impacto | [Criatividade](skill/kit-frontend/references/marca/criatividade.md), medida [nos sites que você admira](docs/pesquisa/referencias-sites.md) |
+| Marca que só aparece na home | [Estudo de identidade e sistemas](docs/pesquisa/identidade-e-sistemas.md): sete referências novas, regras compartilhadas e aplicação nos componentes |
 | Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/recursos/bibliotecas.md) |
 
 Princípio: **convenção na interação, identidade na expressão.** Como navegar e preencher segue o que as pessoas conhecem; tipografia, cor, forma e voz são do produto.

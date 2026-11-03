@@ -1,6 +1,6 @@
 # Perfil de gosto do dono do kit
 
-Tirado das mensagens que ele escreveu ao aprovar ou reprovar telas em projetos reais, de agosto a outubro de 2026. Cada regra traz a frase e a data. Prevalece sobre `references/padroes/` e `estilos/`, e perde para o piso de `references/qualidade/acessibilidade.md`, para o `DESIGN.md` aprovado no projeto e para um pedido explícito na conversa.
+Tirado das mensagens que ele escreveu ao aprovar ou reprovar telas e indicar referências, de agosto a novembro de 2026. Cada regra traz a frase e a data. Prevalece sobre `references/padroes/` e `estilos/`, e perde para o piso de `references/qualidade/acessibilidade.md`, para o `DESIGN.md` aprovado no projeto e para um pedido explícito na conversa.
 
 Em uma frase: **em tela de trabalho, limpo e direto como a Apple e familiar como o WhatsApp e o Uber; em tela de marca, impacto como Nubank e Valorant. Sempre com cara própria, e sem nada que pareça feito por IA.**
 
@@ -70,6 +70,14 @@ Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade
 | Hyper3D, CozyGPU, Cequence | Produto em ação, ilustração própria, diagrama | Citados em 30/10, para criatividade |
 
 Como aplicar essas referências está em `references/marca/criatividade.md`. Ele citou os sites sem dizer do que gosta em cada um: o "o que aproveitar" dessas três linhas é leitura do agente.
+
+## Referências indicadas em 01/11/2026
+
+McDonald’s, Burger King, Canva, Globoplay, Netflix Brasil, Mercado Livre e Inter. Links e análise em `references/marca/criatividade.md`.
+
+> "site que eu acho bonito e o kit deveria pegar inspirações neles, para entender como essas marcas construa sua identidade visual e como elas transmite isso e como elas construem o seus sistemas" — dono do kit, 01/11/2026, nesta conversa.
+
+Pedido confirmado: estudar identidade, sua transmissão e construção de sistemas. Ele não escolheu cor, fonte, tema ou detalhe de cada site. As interpretações do estudo são do agente e dependem da marca e do público do projeto; não ampliam automaticamente G05 ou G22.
 
 ## Já reprovado
 

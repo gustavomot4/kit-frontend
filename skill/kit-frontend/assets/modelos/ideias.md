@@ -4,12 +4,14 @@
 
 ## Referências de fora do setor
 
-Medidas com `scripts/medir-referencia.mjs`. Copie o raciocínio, nunca a marca. Os sites citados em `references/marca/criatividade.md` não valem aqui: repetidos, todo projeto sai do mesmo repertório.
+Medidas com `scripts/medir-referencia.mjs`. As referências admiradas de `references/marca/criatividade.md` formam repertório; estas duas precisam trazer sites adicionais de fora do setor do produto.
 
 | Referência | Setor | Medida | O que levar |
 | --- | --- | --- | --- |
 | <site> | <setor diferente do produto> | <design/referencias/site.jpg, ou o erro ao tentar> | <o raciocínio, em uma frase> |
 | <site> | <outro setor diferente> | <design/referencias/site.jpg, ou o erro ao tentar> | <o raciocínio, em uma frase> |
+
+Para cada referência usada, inclusive as admiradas: **sinal observado → mensagem percebida (interpretação) → regra de sistema → aplicação no produto**. Cite página e data; sem observar, marque como hipótese. Diga também o que depende do contexto e não será transferido.
 
 ## Conceitos
 

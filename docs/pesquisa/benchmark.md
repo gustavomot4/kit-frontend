@@ -1,6 +1,6 @@
 # Benchmark: o que cada sistema faz bem e o que o kit aproveitou
 
-Consulta feita em 30/10/2026, com acréscimos de 31/10/2026. **Lido na fonte** quer dizer que abri a página oficial. **Observação** quer dizer que vem do uso do produto ou de conhecimento geral, sem documento oficial lido nesta rodada: trate como ponto de partida.
+Consulta feita em 30/10/2026, com acréscimos de 31/10 e 01/11/2026. **Lido na fonte** quer dizer que abri a página oficial; entrevistas publicadas por fornecedores são identificadas como tais. **Observação** quer dizer que vem do uso do produto ou de conhecimento geral, sem documento oficial lido nesta rodada: trate como ponto de partida.
 
 ## Sistemas de design e produtos
 
@@ -101,6 +101,18 @@ Nada foi copiado desses projetos: as regras foram escritas aqui a partir do que 
 ## Criatividade
 
 Os sites de marca que o dono citou em 30/10/2026 foram medidos em [referencias-sites.md](referencias-sites.md), e o resultado está em `skill/kit-frontend/references/marca/criatividade.md`.
+
+## Identidade e construção de sistemas — 01/11/2026
+
+As sete referências novas do dono foram estudadas em [identidade-e-sistemas.md](identidade-e-sistemas.md). Ali estão os links de cada página e a distinção entre sinais observados, documentos e interpretações do agente.
+
+| Fonte consultada | Base e escopo | O que entrou | Onde |
+| --- | --- | --- | --- |
+| [Canva Engineering: Easel](https://www.canva.dev/blog/engineering/adding-responsiveness-to-canvas-design-system/) | Lido na fonte; artigo de 22/08/2024 | Composição e regras compartilhadas de layout | `marca/criatividade`, modelo `design` |
+| [Canva: tokens](https://www.canva.dev/docs/apps/app-ui-kit/design-tokens/) e [tipografia](https://www.canva.dev/docs/apps/design-guidelines/typography/) | Lido na fonte; documentação pública para apps no Canva | Papéis semânticos de valores e estilos; variantes dos componentes | `marca/criatividade`, modelo `design` |
+| [Netflix TechBlog: Hawkins](https://netflixtechblog.com/hawkins-diving-into-the-reasoning-behind-our-design-system-964a7357547) | Lido na fonte; relato de 10/02/2021 sobre Netflix Studio | Base reutilizável e composições específicas com documentação | `marca/criatividade` |
+| [Figma: Andes, com a equipe do Mercado Libre](https://www.figma.com/customers/mercado-libre-scales-design-across-latin-america/) | Lido na fonte do relato: entrevista publicada pelo fornecedor; sem inspeção do código | Núcleo compartilhado e padrões de domínio | `marca/criatividade` |
+| McDonald’s, BK, Canva, Globoplay, Netflix, Mercado Livre e Inter | Observação das superfícies descritas no estudo; inferências identificadas. Nenhuma preferência por detalhe foi atribuída ao dono | Relacionar mensagem, sinal visual, regra de componente e tarefa; medidas sem receita universal | `gosto/perfil`, `marca/criatividade`, `marca/identidade`, `SKILL.md`, modelos `ideias` e `design` |
 
 ## O que falta estudar
 

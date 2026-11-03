@@ -29,3 +29,9 @@ A detecção de biblioteca olha scripts e marcadores da página: uma ausência n
 - **Clichês:** C6 e Cequence destacam uma palavra do título em cor; CozyGPU, Hyper3D, Epic e Cequence usam fontes comuns. Isso matizou `references/marca/anti-generico.md`: o problema é a soma sem ideia, não cada item.
 
 Tudo isso é leitura do agente. O dono não disse do que gosta em cada site: a pergunta está em `references/gosto/perfil.md`.
+
+## Ampliação de 01/11/2026: identidade e sistemas
+
+O dono acrescentou McDonald’s, Burger King, Canva, Globoplay, Netflix Brasil, Mercado Livre e Inter. Pediu estudar a construção e a transmissão da identidade, além da construção dos sistemas. A nova rodada está em [identidade-e-sistemas.md](identidade-e-sistemas.md), com páginas consultadas, amostras de estilos, fontes primárias e limites por site.
+
+As observações no navegador usaram 1280 × 720 e incluem superfícies secundárias públicas. Não some suas medidas à amostra de 1440 × 900 acima. Canva teve consulta documental como base principal; o destaque do Globoplay ficou parcialmente carregado. A síntese acrescenta continuidade entre componentes e telas e trata as medidas anteriores como referências contextualizadas.
