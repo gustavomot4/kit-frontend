@@ -3,7 +3,7 @@ name: kit-frontend
 description: Cria e refatora frontend com identidade própria, padrões consolidados do mercado e acessibilidade verificada, para aprovar na primeira rodada e evitar retrabalho. Use em qualquer pedido de tela, página, landing, painel, formulário, tema, visual, UI ou UX, em qualquer stack, inclusive "deixa mais bonito", "está com cara de IA", "refatora o frontend" ou "não gostei desse visual".
 compatibility: Os scripts pedem Node 22 ou mais novo e Chrome, Edge ou Chromium instalado. Sem eles, a skill funciona com a verificação manual.
 metadata:
-  version: "3.2.0"
+  version: "3.3.0"
 ---
 
 # Kit de frontend
@@ -53,11 +53,16 @@ Estas regras moram em `references/`, mas valem já nas três direções. Deixá-
 
 Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do código e dos documentos. Pergunte no máximo 5 coisas, cada uma com a sua recomendação, e só o que muda decisão de tela. Preencha `publicos:` e siga `references/qualidade/publicos.md`: quem vai usar muda as decisões e o rigor da verificação.
 
+Em site, landing ou portfólio, faça também:
+
+- **Inventário de provas** (`references/marca/conteudo.md`): leia todas as fontes, não só as que parecem principais, e registre na tabela "Provas" fatos com fonte e o que podem ser publicados.
+- **Nível de expressão:** pergunte se a pessoa quer `sobrio`, `marcante` ou `espetaculo` (3D e movimento na rolagem), mostrando um exemplo de cada (`references/marca/criatividade.md`), e preencha `expressao:`.
+
 ### 2. Marca: portão
 
 Defina o que o produto quer dizer antes de desenhar. Siga `references/marca/criar-marca.md`: crie `MARCA.md` a partir de `assets/modelos/marca.md` (exemplo em `assets/exemplos/marca.md`), no tamanho certo para o projeto. Personas sem pesquisa ficam marcadas como hipótese, e todo item precisa dizer o que muda na tela. Confira com `scripts/conferir-marca.mjs`. Se a marca já existe, peça o arquivo do logo e as cores originais antes de confirmar. Se a pessoa não tem fonte, cor, voz nem mensagem, siga "Quando a pessoa não tem nada": perguntas que qualquer um responde e opções para escolher, nunca "qual é a sua mensagem?".
 
-Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
+Mostre um resumo de até 10 linhas, com as provas mais fortes quando houver inventário. **Pare e espere a confirmação.**
 
 ### 3. Três direções: portão
 
@@ -66,6 +71,8 @@ Sem código de produção antes da escolha. Cada direção expressa o `MARCA.md`
 - **Antes de qualquer referência,** escreva a primeira ideia em `design/direcoes/primeira-ideia.md`. Depois, `design/direcoes/ideias.md` (modelo em `assets/modelos/ideias.md`): duas referências de fora do setor medidas com `scripts/medir-referencia.mjs` e os três conceitos, no máximo um vindo da primeira ideia. Não recomende nada ainda.
 - Nas referências, ligue sinal visual, mensagem percebida, regra de sistema e aplicação no produto (`references/marca/criatividade.md`). Separe observação de interpretação.
 - Em `design/direcoes/`: a tela mais usada do produto (num site, a home), com os mesmos dados, em três arquivos HTML estáticos que diferem em ideia, tipografia, composição e cor. Título, imagem e ordem das seções são de cada direção. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
+- Em superfície de marca, ao menos uma direção fica um nível de expressão acima do pedido. O texto e as provas são os mesmos nas três (`references/marca/conteudo.md`).
+- Com movimento ou 3D, rode `scripts/rolagem.mjs` em cada direção e leve os quadros ao dono e à escolha cega: capturas paradas escondem o que mais pesa.
 - Com marca existente, use o logo real e faça ao menos uma direção partir de como ela aparece hoje. Sem o arquivo, escreva o nome em texto: não desenhe um substituto.
 - Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as quase iguais. Rode a verificação nas três e corrija as falhas. Olhe a página inteira de cada uma, até o fim.
 - Rode `scripts/escolha-cega.mjs design/direcoes` e entregue o pedido a dois agentes novos, um de cada vez, que só veem as imagens. Se discordarem, é empate: leve as duas ao dono. Se ambos disserem "nenhuma", refaça as direções uma vez. Sem agente novo, escreva "escolha sem juízo externo" no `DESIGN.md`.
@@ -103,6 +110,7 @@ No máximo 3 telas por entrega. Antes de cada tela, leia o padrão correspondent
 | Aviso, confirmação, desfazer | `references/padroes/retorno.md` |
 | Vídeo, áudio, Libras | `references/padroes/midia-e-libras.md` |
 | Landing, site, tela de marca | `references/padroes/landing.md` e `references/marca/criatividade.md` |
+| Texto de site, landing, portfólio | `references/marca/conteudo.md` |
 | Escolher biblioteca, ícone, animação, 3D, gerar mídia | `references/recursos/bibliotecas.md` |
 | Tema escuro | `references/padroes/tema-escuro.md` |
 | Receita completa de um tipo de produto | `references/recursos/estilos.md` |

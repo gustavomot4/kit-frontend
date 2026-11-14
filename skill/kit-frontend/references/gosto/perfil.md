@@ -52,10 +52,12 @@ Escolhas feitas olhando telas lado a lado. Cada linha é um sinal, não uma regr
 
 | 30/10/2026 | Tela principal de uma marmitaria fictícia: uma tela feita por agente sem o kit contra três direções feitas com ele | **A, lista e detalhe, a mais familiar** | Para uma dona que não entende de tecnologia, prefere o formato que ela já conhece, sem painel de indicadores e com pouco texto |
 | 01/11/2026 | Site de uma oficina de bairro, em teste do kit. A: conversa de WhatsApp. B: ordem de serviço. C: luzes do painel | **A, a conversa** | De novo o formato familiar para público leigo. Os dois agentes da escolha cega apontaram a B |
+| 13/11/2026 | Portfólio pessoal do dono, rodada 1. A: perfil. B: traço do mural como linha de metrô. C: catálogo escuro | **Nenhuma**: "achei bem fraquinho o três, eu queria algo mais criativo que chocasse, [...] gosto bastante de animações, modelos 3D, efeitos quando scrolla o mouse" | Em marca pessoal, o padrão do kit ficou tímido. Gostou da cor da B, mas "utilizou pouquíssimo disso" |
+| 13/11/2026 | Rodada 2. D: fitas do mural em 3D. E: a foto que se abre no mural. F: máquinas 3D em fundo escuro | **Fusão de D com E**, recusando a F. Depois reprovou o zoom na própria foto e o texto: "o conteúdo não vende" | Impacto alto em tema claro, com a cor do produto em telas inteiras. Os dois agentes da escolha cega apontaram a D, a base da fusão |
 
 Nas três vezes ele só deu a escolha, sem motivo: a coluna da direita é leitura do agente. Na primeira, a prancha recomendava a B, o que pode ter pesado. Na segunda, a prancha dizia qual tela vinha do kit, que é dele, e não recomendava nenhuma.
 
-Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade de quem usa, mais pesa o formato conhecido. A clínica aponta para o mesmo lado: em 28/10, o grupo preferiu a proposta "conversa". A oficina também, e mostra que a escolha cega não prevê o dono: use a crítica dos avaliadores, não só o voto.
+Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade de quem usa, mais pesa o formato conhecido. A clínica aponta para o mesmo lado: em 28/10, o grupo preferiu a proposta "conversa". A oficina também, e mostra que a escolha cega não prevê o dono: use a crítica dos avaliadores, não só o voto. O portfólio de 13/11 reforça o outro lado: com público técnico (recrutadores de tecnologia), ele quis mais expressão, não menos.
 
 ## Referências que ele cita
 

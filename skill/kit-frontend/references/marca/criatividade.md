@@ -10,6 +10,18 @@ Referências do dono de 30/10 e 01/11/2026; interpretações do agente. Evidênc
 | **Trabalho** | Sistema, painel, cadastro, tela usada o dia inteiro | Contida. `references/gosto/perfil.md` manda (G01 a G03). Use uma ou duas ideias daqui, como escala no dado principal e o elemento-assinatura |
 | **Tarefa curta** | Cadastro, pagamento, passo a passo | Baixa no meio do fluxo. Marca na abertura e na conclusão |
 
+## Depois, o nível de expressão
+
+Em superfície de marca, pergunte na etapa 1 quanto impacto a pessoa quer, mostrando um exemplo de cada nível. Registre a resposta em `expressao:` no `PRODUTO.md`.
+
+| Nível | O que tem | Exemplo de recurso |
+| --- | --- | --- |
+| `sobrio` | Tipografia e cor decididas, imagem real, movimento só de transição | Título grande, foto do produto, nada animando sozinho |
+| `marcante` | Elemento-assinatura forte, cor de marca em áreas inteiras, movimento que acompanha a rolagem | Números que contam ao entrar, imagens que se endireitam ao rolar |
+| `espetaculo` | 3D, cena que reage ao mouse e à rolagem, trilho horizontal, transição de tela inteira | Objeto 3D na abertura, projetos que deslizam de lado |
+
+Sem resposta, comece em `marcante`. Na rodada 1, ao menos uma direção fica um nível acima do pedido: errar para mais custa uma frase do dono; errar para menos custou uma rodada inteira em 13/11/2026 ("achei bem fraquinho o três, eu queria algo mais criativo que chocasse"). Se o dono reprovar as três por falta de impacto, a rodada 2 sobe um nível em todas.
+
 ## O que a primeira rodada ensinou
 
 Observações de 30/10/2026, contextualizadas:
@@ -45,6 +57,15 @@ O Canva documenta [tokens e variantes](https://www.canva.dev/docs/apps/app-ui-ki
 2. Em `DESIGN.md`, registre o que se repete: papéis de cor, tipografia, tratamento de imagem, voz e formas. Separe marca, ação, foco e estados; evite valores isolados por tela.
 3. Defina o que varia entre marca, trabalho e tarefa curta. Componentes compartilham tokens, variantes e estados; composições específicas ficam no domínio que as usa.
 4. Na tela-modelo, confira a continuidade na navegação, no conteúdo e nos estados. Reuse essas regras nas telas seguintes e documente exceções. Uma campanha não define sozinha um sistema.
+
+## Movimento e 3D
+
+Quando o nível é `marcante` ou `espetaculo`, o movimento faz parte da identidade, não é enfeite. Regras de implementação e de acessibilidade estão em "Movimento" de `references/padroes/landing.md`; bibliotecas em `references/recursos/bibliotecas.md`.
+
+- **O movimento conta a ideia.** No teste de 13/11, fitas do mural em 3D seguiam o mouse e davam lugar a um trilho com um projeto por tela. O movimento tem de vir do conceito da direção, como o elemento-assinatura.
+- **Um efeito principal por página.** Abertura em 3D e trilho horizontal já bastam. Repetir a mesma entrada em todas as seções é clichê (`anti-generico.md`).
+- **A foto da pessoa não é palco de efeito.** Zoom de tela inteira na foto do dono, com uma frase por cima, foi reprovado em 13/11: "tire esse zoom na minha foto". Movimento perto do rosto, só se ele pedir.
+- **Mostre o movimento na escolha.** Capturas paradas escondem o que mais pesa. Rode `scripts/rolagem.mjs` em cada direção e leve os quadros ao dono e à escolha cega.
 
 ## O que não levar
 

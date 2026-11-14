@@ -10,6 +10,7 @@
 - [gosto/correcoes-coletadas.md](../skill/kit-frontend/references/gosto/correcoes-coletadas.md)
 - [gosto/perfil.md](../skill/kit-frontend/references/gosto/perfil.md)
 - [marca/anti-generico.md](../skill/kit-frontend/references/marca/anti-generico.md)
+- [marca/conteudo.md](../skill/kit-frontend/references/marca/conteudo.md)
 - [marca/criar-marca.md](../skill/kit-frontend/references/marca/criar-marca.md)
 - [marca/criatividade.md](../skill/kit-frontend/references/marca/criatividade.md)
 - [marca/identidade.md](../skill/kit-frontend/references/marca/identidade.md)

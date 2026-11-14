@@ -158,8 +158,23 @@ const lerFoco = `(() => {
   const pontos = [[r.left + r.width / 2, r.top + r.height / 2], [r.left + 3, r.top + 3], [r.right - 3, r.top + 3], [r.left + 3, r.bottom - 3], [r.right - 3, r.bottom - 3]];
   const dentro = pontos.filter(([x, y]) => x >= 0 && y >= 0 && x < innerWidth && y < innerHeight);
   const descoberto = dentro.some(([x, y]) => { const n = e.getRootNode().elementFromPoint(x, y); return n && (n === e || e.contains(n) || n.contains(e)); });
-  return { nome: (e.getAttribute('aria-label') || e.textContent || e.value || e.name || e.tagName).trim().replace(/\\s+/g,' ').slice(0, 30), muda: com.some((v, i) => v !== sem[i]), encoberto: !descoberto && dentro.length > 0, anel };
+  // fora: nenhum ponto do controle cai na tela, porque o navegador não conseguiu rolar até ele (trilho com overflow:clip, transform)
+  const fora = r.width > 0 && r.height > 0 && dentro.length === 0;
+  return { nome: (e.getAttribute('aria-label') || e.textContent || e.value || e.name || e.tagName).trim().replace(/\\s+/g,' ').slice(0, 30), muda: com.some((v, i) => v !== sem[i]), encoberto: !descoberto && dentro.length > 0, fora, anel };
 })()`;
+// Com movimento: trilho horizontal preso à rolagem só existe sem movimento reduzido, e anima depois do foco
+const TEM_ROLAGEM_ANIMADA = `!!(window.ScrollTrigger || document.querySelector('.pin-spacer, [data-scroll-container], [data-scroll]'))`;
+const FORA_DA_TELA = `(() => { let e = document.activeElement; if (!e || e === document.body) return null; while (e.shadowRoot && e.shadowRoot.activeElement) e = e.shadowRoot.activeElement; const r = e.getBoundingClientRect(); const x = r.left + r.width / 2, y = r.top + r.height / 2; return { nome: (e.getAttribute('aria-label') || e.textContent || e.tagName).trim().replace(/\\s+/g, ' ').slice(0, 30), fora: r.width > 0 && !(x >= 0 && y >= 0 && x < innerWidth && y < innerHeight) }; })()`;
+async function passarTabComMovimento(paradas = 40) {
+  const lista = [];
+  for (let i = 0; i < paradas; i++) {
+    await cdp('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+    await cdp('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
+    await dorme(700);
+    const f = await avaliar(FORA_DA_TELA); if (f) lista.push(f);
+  }
+  return lista;
+}
 async function passarTab(paradas = 14) {
   await cdp('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
   const movimento = await avaliar(`document.getAnimations().filter(a => { const t = a.effect && a.effect.getTiming(); return t && t.iterations === Infinity && a.playState === 'running' && (t.duration > 1); }).length`);
@@ -259,6 +274,13 @@ for (const entrada of args) {
         if (fracos.length) somar({ id: 'a11y-foco-contraste', nivel: 'falha', msg: `${fracos.length} anel(éis) de foco abaixo de 3:1 contra o fundo (WCAG 1.4.11).`, exemplos: fracos.slice(0, 5) }, r.tamanho);
         const cobertos = lista.filter(f => f.encoberto).map(f => f.nome);
         if (cobertos.length) somar({ id: 'a11y-foco-encoberto', nivel: 'falha', msg: `${cobertos.length} controle(s) com foco escondido atrás de outra camada (WCAG 2.4.11).`, exemplos: cobertos.slice(0, 5) }, r.tamanho);
+        const fora = lista.filter(f => f.fora).map(f => f.nome);
+        if (await avaliar(TEM_ROLAGEM_ANIMADA)) {
+          await abrir(url, t);
+          for (const f of await passarTabComMovimento()) if (f.fora) fora.push(`${f.nome} (com movimento)`);
+        }
+        const foraUnicos = [...new Set(fora)];
+        if (foraUnicos.length) somar({ id: 'a11y-foco-fora-da-tela', nivel: 'falha', msg: `${foraUnicos.length} controle(s) recebem foco fora da tela: quem usa teclado não vê onde está. Em trilho horizontal, leve o painel para a tela ao receber foco (references/padroes/landing.md, "Movimento").`, exemplos: foraUnicos.slice(0, 5) }, r.tamanho);
         if (lista.length && !/pular|ir para|skip/i.test(lista[0].nome)) somar({ id: 'a11y-pular', nivel: 'aviso', msg: `A primeira parada de Tab é "${lista[0].nome}", não o link de pular para o conteúdo.`, exemplos: [] }, r.tamanho);
         if (!lista.length) somar({ id: 'a11y-teclado', nivel: 'falha', msg: 'Nenhum controle recebeu foco pelo Tab.', exemplos: [] }, r.tamanho);
         if (movimento) somar({ id: 'a11y-movimento', nivel: 'falha', msg: `${movimento} animação(ões) em loop continuam com movimento reduzido ativado.`, exemplos: [] }, r.tamanho);

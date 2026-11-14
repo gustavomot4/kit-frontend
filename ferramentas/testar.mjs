@@ -306,6 +306,19 @@ test('anel de foco sem contraste contra o fundo é falha', () => {
   rmSync(p, { recursive: true, force: true });
 });
 
+test('controle que recebe foco fora da tela é falha; o que o navegador consegue mostrar, não', () => {
+  const p = temp();
+  // trilho com overflow:clip e painel deslocado por transform: o navegador não rola até o link
+  const tela = trilho => `<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>:focus-visible{outline:3px solid #14304f;outline-offset:2px}</style></head><body style="margin:0;font:1rem/1.5 sans-serif"><a href="#c" style="display:inline-block;padding:14px">Pular para o conteúdo</a><main id="c" style="padding:24px"><h1>Projetos</h1><div style="${trilho}"><div style="display:flex;width:300vw"><section style="width:100vw"><a href="#a" style="display:inline-block;padding:14px">Primeiro projeto</a></section><section style="width:100vw;transform:translateX(100vw)"><a href="#b" style="display:inline-block;padding:14px">Segundo projeto</a></section></div></div></main></body></html>`;
+  writeFileSync(join(p, 'preso.html'), tela('overflow:clip'));
+  writeFileSync(join(p, 'livre.html'), tela('overflow-x:auto'));
+  const [preso, livre] = lerRelatorio(kit('verificar', join(p, 'preso.html'), join(p, 'livre.html'), '--saida', join(p, 's'), '--json'));
+  const achado = preso.achados.find(a => a.id === 'a11y-foco-fora-da-tela');
+  assert.equal(achado?.nivel, 'falha'); assert.match(achado.exemplos.join(), /Segundo projeto/);
+  assert.ok(!livre.achados.some(a => a.id === 'a11y-foco-fora-da-tela'), 'trilho que rola mostra o foco');
+  rmSync(p, { recursive: true, force: true });
+});
+
 test('o motivo tira o aviso de fonte padrão, não o de fonte que não vem do projeto', () => {
   const p = temp();
   writeFileSync(join(p, 't.html'), '<!doctype html><html lang="pt-BR"><head><title>t</title><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;font-family:Inter,sans-serif"><main style="padding:24px"><h1>Título</h1><p>Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura. Texto da tela para medir, com o bastante para ocupar a largura.</p><a href="#" style="display:inline-block;padding:14px">Abrir o relatório</a></main></body></html>');
@@ -627,6 +640,6 @@ test('logotipo.py aplica kerning e eixos, põe o símbolo e grava as variantes',
 
 test('prompt único cabe e traz o essencial', () => {
   const t = readFileSync(join(raiz, 'dist/prompt-unico.md'), 'utf8');
-  assert.ok(t.length / 3.4 < 32000, `${Math.round(t.length / 3.4)} tokens`);
+  assert.ok(t.length / 3.4 < 38000, `${Math.round(t.length / 3.4)} tokens`);
   for (const x of ['G01', 'Convenção na interação', 'WCAG 2.2', 'padroes/lista-tabela', 'Tela-modelo', 'Primeiro, a superfície', 'Gerar imagem, vídeo, som e 3D']) assert.ok(t.includes(x), x);
 });

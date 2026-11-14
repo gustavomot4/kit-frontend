@@ -1,4 +1,4 @@
-# Kit de frontend (versão 3.2.0): prompt único
+# Kit de frontend (versão 3.3.0): prompt único
 
 Cole este arquivo numa conversa com qualquer LLM. Tudo o que o texto cita em `references/` está incluído abaixo. Sem acesso a arquivos ou terminal, a resposta entrega o HTML e os comandos e diz o que não pôde executar. Os estilos de partida e os scripts ficam no repositório.
 
@@ -50,11 +50,16 @@ Estas regras moram em `references/`, mas valem já nas três direções. Deixá-
 
 Crie `PRODUTO.md` a partir de `assets/modelos/produto.md`. Deduza o que puder do código e dos documentos. Pergunte no máximo 5 coisas, cada uma com a sua recomendação, e só o que muda decisão de tela. Preencha `publicos:` e siga `references/qualidade/publicos.md`: quem vai usar muda as decisões e o rigor da verificação.
 
+Em site, landing ou portfólio, faça também:
+
+- **Inventário de provas** (`references/marca/conteudo.md`): leia todas as fontes, não só as que parecem principais, e registre na tabela "Provas" fatos com fonte e o que podem ser publicados.
+- **Nível de expressão:** pergunte se a pessoa quer `sobrio`, `marcante` ou `espetaculo` (3D e movimento na rolagem), mostrando um exemplo de cada (`references/marca/criatividade.md`), e preencha `expressao:`.
+
 ### 2. Marca: portão
 
 Defina o que o produto quer dizer antes de desenhar. Siga `references/marca/criar-marca.md`: crie `MARCA.md` a partir de `assets/modelos/marca.md` (exemplo em `assets/exemplos/marca.md`), no tamanho certo para o projeto. Personas sem pesquisa ficam marcadas como hipótese, e todo item precisa dizer o que muda na tela. Confira com `scripts/conferir-marca.mjs`. Se a marca já existe, peça o arquivo do logo e as cores originais antes de confirmar. Se a pessoa não tem fonte, cor, voz nem mensagem, siga "Quando a pessoa não tem nada": perguntas que qualquer um responde e opções para escolher, nunca "qual é a sua mensagem?".
 
-Mostre um resumo de até 10 linhas. **Pare e espere a confirmação.**
+Mostre um resumo de até 10 linhas, com as provas mais fortes quando houver inventário. **Pare e espere a confirmação.**
 
 ### 3. Três direções: portão
 
@@ -63,6 +68,8 @@ Sem código de produção antes da escolha. Cada direção expressa o `MARCA.md`
 - **Antes de qualquer referência,** escreva a primeira ideia em `design/direcoes/primeira-ideia.md`. Depois, `design/direcoes/ideias.md` (modelo em `assets/modelos/ideias.md`): duas referências de fora do setor medidas com `scripts/medir-referencia.mjs` e os três conceitos, no máximo um vindo da primeira ideia. Não recomende nada ainda.
 - Nas referências, ligue sinal visual, mensagem percebida, regra de sistema e aplicação no produto (`references/marca/criatividade.md`). Separe observação de interpretação.
 - Em `design/direcoes/`: a tela mais usada do produto (num site, a home), com os mesmos dados, em três arquivos HTML estáticos que diferem em ideia, tipografia, composição e cor. Título, imagem e ordem das seções são de cada direção. Cada um com o próprio CSS, sem gerador nem folha comum, e sem sacola, diálogo ou filtro funcionando. Gere cada paleta com `scripts/paleta.mjs`. Sem fonte definida, escolha com `references/recursos/fontes.md`.
+- Em superfície de marca, ao menos uma direção fica um nível de expressão acima do pedido. O texto e as provas são os mesmos nas três (`references/marca/conteudo.md`).
+- Com movimento ou 3D, rode `scripts/rolagem.mjs` em cada direção e leve os quadros ao dono e à escolha cega: capturas paradas escondem o que mais pesa.
 - Com marca existente, use o logo real e faça ao menos uma direção partir de como ela aparece hoje. Sem o arquivo, escreva o nome em texto: não desenhe um substituto.
 - Rode `scripts/comparar-direcoes.mjs design/direcoes` e refaça as quase iguais. Rode a verificação nas três e corrija as falhas. Olhe a página inteira de cada uma, até o fim.
 - Rode `scripts/escolha-cega.mjs design/direcoes` e entregue o pedido a dois agentes novos, um de cada vez, que só veem as imagens. Se discordarem, é empate: leve as duas ao dono. Se ambos disserem "nenhuma", refaça as direções uma vez. Sem agente novo, escreva "escolha sem juízo externo" no `DESIGN.md`.
@@ -100,6 +107,7 @@ No máximo 3 telas por entrega. Antes de cada tela, leia o padrão correspondent
 | Aviso, confirmação, desfazer | `references/padroes/retorno.md` |
 | Vídeo, áudio, Libras | `references/padroes/midia-e-libras.md` |
 | Landing, site, tela de marca | `references/padroes/landing.md` e `references/marca/criatividade.md` |
+| Texto de site, landing, portfólio | `references/marca/conteudo.md` |
 | Escolher biblioteca, ícone, animação, 3D, gerar mídia | `references/recursos/bibliotecas.md` |
 | Tema escuro | `references/padroes/tema-escuro.md` |
 | Receita completa de um tipo de produto | `references/recursos/estilos.md` |
@@ -210,10 +218,12 @@ Escolhas feitas olhando telas lado a lado. Cada linha é um sinal, não uma regr
 
 | 30/10/2026 | Tela principal de uma marmitaria fictícia: uma tela feita por agente sem o kit contra três direções feitas com ele | **A, lista e detalhe, a mais familiar** | Para uma dona que não entende de tecnologia, prefere o formato que ela já conhece, sem painel de indicadores e com pouco texto |
 | 01/11/2026 | Site de uma oficina de bairro, em teste do kit. A: conversa de WhatsApp. B: ordem de serviço. C: luzes do painel | **A, a conversa** | De novo o formato familiar para público leigo. Os dois agentes da escolha cega apontaram a B |
+| 13/11/2026 | Portfólio pessoal do dono, rodada 1. A: perfil. B: traço do mural como linha de metrô. C: catálogo escuro | **Nenhuma**: "achei bem fraquinho o três, eu queria algo mais criativo que chocasse, [...] gosto bastante de animações, modelos 3D, efeitos quando scrolla o mouse" | Em marca pessoal, o padrão do kit ficou tímido. Gostou da cor da B, mas "utilizou pouquíssimo disso" |
+| 13/11/2026 | Rodada 2. D: fitas do mural em 3D. E: a foto que se abre no mural. F: máquinas 3D em fundo escuro | **Fusão de D com E**, recusando a F. Depois reprovou o zoom na própria foto e o texto: "o conteúdo não vende" | Impacto alto em tema claro, com a cor do produto em telas inteiras. Os dois agentes da escolha cega apontaram a D, a base da fusão |
 
 Nas três vezes ele só deu a escolha, sem motivo: a coluna da direita é leitura do agente. Na primeira, a prancha recomendava a B, o que pode ter pesado. Na segunda, a prancha dizia qual tela vinha do kit, que é dele, e não recomendava nenhuma.
 
-Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade de quem usa, mais pesa o formato conhecido. A clínica aponta para o mesmo lado: em 28/10, o grupo preferiu a proposta "conversa". A oficina também, e mostra que a escolha cega não prevê o dono: use a crítica dos avaliadores, não só o voto.
+Hipótese a confirmar: a escolha muda com o público. Quanto menos familiaridade de quem usa, mais pesa o formato conhecido. A clínica aponta para o mesmo lado: em 28/10, o grupo preferiu a proposta "conversa". A oficina também, e mostra que a escolha cega não prevê o dono: use a crítica dos avaliadores, não só o voto. O portfólio de 13/11 reforça o outro lado: com público técnico (recrutadores de tecnologia), ele quis mais expressão, não menos.
 
 ## Referências que ele cita
 
@@ -335,6 +345,66 @@ Geradores repetem as mesmas escolhas porque são as médias do que viram. Cada i
 Volte a `references/marca/identidade.md`: conceito do mundo do produto, elemento-assinatura funcional, voz de quem é do setor. Substituir um clichê por outro não conta.
 
 Dados de exemplo fazem parte da identidade. "João Silva", "Empresa ABC" e valores redondos denunciam tanto quanto a cor. Use nomes e situações que existiriam nesse negócio.
+
+
+---
+
+<!-- references/marca/conteudo.md -->
+
+# Conteúdo: o texto como argumento
+
+**Quando:** site, landing, portfólio, página de produto. Em tela de marca, o visual faz a pessoa ficar; o texto faz a pessoa agir. "Pouco texto" (G03) continua valendo: pouco não quer dizer vazio.
+
+De onde veio: teste de 13/11/2026 (`docs/testes/2026-11-13-portfolio`, no repositório do kit). O dono aprovou o visual e reprovou o texto duas vezes: "o site está muito bonito, mas o conteúdo não vende, [...] não bate na ferida". A primeira correção, em perguntas e respostas dirigidas ao leitor, também foi reprovada: "meio forçado".
+
+## 1. Inventário de provas, na etapa 1
+
+Antes do brief, levante os fatos. O texto só é tão bom quanto as provas que você achou.
+
+- **Leia todas as fontes, não só as que parecem principais:** todos os repositórios, os READMEs inteiros, currículo, site atual, apresentação, avaliações reais. No teste de 13/11, as provas mais fortes (um jogo publicado e jogável, deploy com volta automática) só apareceram na segunda leitura, quando o dono pediu "verifique o meu GitHub inteiro".
+- **Registre no `PRODUTO.md`,** na tabela "Provas": fato verificável, o que ele prova, fonte, se pode publicar.
+- **Só fato com fonte.** Número sem fonte não entra. Use a palavra que a fonte permite: "em produção", "em uso por uma loja", "prova de conceito" e "protótipo" não são sinônimos.
+- **Fonte que não pode aparecer** (trabalho sob sigilo, cliente que não autorizou): entra só como conhecimento genérico, como a tecnologia e o tipo de problema, sem nome, tela nem número. Não abra arquivos de anotação ou de credenciais ao levantar material.
+- **Dado pessoal** (telefone, endereço, contato de terceiros) não vai para página nem para PDF publicado sem pedido explícito.
+
+## 2. O que o público precisa acreditar
+
+Para cada perfil de `PRODUTO.md`, escreva de 2 a 4 crenças que levam à ação, e a prova que sustenta cada uma. A ordem dos blocos da página segue essas crenças, da mais decisiva para a menos.
+
+| Público (exemplo) | Precisa acreditar | Prova que sustenta |
+| --- | --- | --- |
+| Quem contrata dev de IA | "Usa IA fora do tutorial" | Trabalho real com agentes, com o que foi entregue |
+| | "Entende além do prompt" | Sistema próprio com testes e arquitetura |
+| | "Sabe provar que funciona" | Métrica de avaliação, backtest, QA |
+| | "Entrega de ponta a ponta" | Algo publicado que a pessoa pode abrir agora |
+
+Crença sem prova não vira frase: vira pergunta ao dono ou fica de fora.
+
+## 3. Como escrever
+
+- **Afirmação, prova e habilidade nomeada.** "Faço vários LLMs trabalharem como um sistema só." Logo abaixo, o fato que prova e as tecnologias. A crença do público fica implícita: o texto mostra, não anuncia que está respondendo.
+- **Não fale com o leitor sobre o que ele quer.** "O que todo recrutador quer saber" e listas de "Sim." soaram forçados. O mesmo vale para "Por que me contratar?" e afins.
+- **Caso ou projeto: problema, o que eu fiz, número.** Uma linha cada. O número fica grande, com legenda curta embaixo.
+- **Limite honesto vira "Próximo passo".** Mostra evolução sem esconder o que falta.
+- **Número no lugar de adjetivo.** "568 testes aprovados", não "robusto e confiável".
+- **A coisa mais forte que dá para tocar vem antes.** Produto publicado com botão "Jogar agora" ou "Abrir" vale mais que descrição.
+- **Título que só serve para esta pessoa ou empresa.** Se trocar o nome e a frase continua funcionando para outra, é genérica. Teste também contra `references/marca/anti-generico.md` (frases vazias e de efeito).
+- **Primeira pessoa e linguagem literal** em portfólio; a voz de `MARCA.md` nos demais.
+
+## 4. No processo
+
+- **Etapa 1:** o inventário de provas entra no `PRODUTO.md`.
+- **Etapa 2:** o resumo da marca mostra ao dono as 3 a 6 provas mais fortes, em até 10 linhas junto com o resto. Prova fraca ou dúvida sobre o que pode publicar vira pergunta, com recomendação.
+- **Etapa 3:** as três direções usam o mesmo texto e as mesmas provas. O texto é dado do produto, não decoração de uma direção.
+- **Revisão:** antes de mostrar, leia a página como o público, em 30 segundos. Diga em voz alta quem é, o que faz, qual prova ficou na memória e qual é a ação. Se faltar uma, o texto não terminou.
+
+## Conferência
+
+- [ ] Toda frase com número ou resultado tem fonte no inventário.
+- [ ] Cada bloco sustenta uma crença do público, e a mais decisiva vem primeiro.
+- [ ] Nenhuma pergunta dirigida ao leitor sobre o que ele quer.
+- [ ] Cada projeto tem problema, o que foi feito e um número, com limite em "Próximo passo".
+- [ ] Nada de trabalho sob sigilo ou dado pessoal sem autorização.
 
 
 ---
@@ -490,6 +560,18 @@ Referências do dono de 30/10 e 01/11/2026; interpretações do agente. Evidênc
 | **Trabalho** | Sistema, painel, cadastro, tela usada o dia inteiro | Contida. `references/gosto/perfil.md` manda (G01 a G03). Use uma ou duas ideias daqui, como escala no dado principal e o elemento-assinatura |
 | **Tarefa curta** | Cadastro, pagamento, passo a passo | Baixa no meio do fluxo. Marca na abertura e na conclusão |
 
+## Depois, o nível de expressão
+
+Em superfície de marca, pergunte na etapa 1 quanto impacto a pessoa quer, mostrando um exemplo de cada nível. Registre a resposta em `expressao:` no `PRODUTO.md`.
+
+| Nível | O que tem | Exemplo de recurso |
+| --- | --- | --- |
+| `sobrio` | Tipografia e cor decididas, imagem real, movimento só de transição | Título grande, foto do produto, nada animando sozinho |
+| `marcante` | Elemento-assinatura forte, cor de marca em áreas inteiras, movimento que acompanha a rolagem | Números que contam ao entrar, imagens que se endireitam ao rolar |
+| `espetaculo` | 3D, cena que reage ao mouse e à rolagem, trilho horizontal, transição de tela inteira | Objeto 3D na abertura, projetos que deslizam de lado |
+
+Sem resposta, comece em `marcante`. Na rodada 1, ao menos uma direção fica um nível acima do pedido: errar para mais custa uma frase do dono; errar para menos custou uma rodada inteira em 13/11/2026 ("achei bem fraquinho o três, eu queria algo mais criativo que chocasse"). Se o dono reprovar as três por falta de impacto, a rodada 2 sobe um nível em todas.
+
 ## O que a primeira rodada ensinou
 
 Observações de 30/10/2026, contextualizadas:
@@ -525,6 +607,15 @@ O Canva documenta [tokens e variantes](https://www.canva.dev/docs/apps/app-ui-ki
 2. Em `DESIGN.md`, registre o que se repete: papéis de cor, tipografia, tratamento de imagem, voz e formas. Separe marca, ação, foco e estados; evite valores isolados por tela.
 3. Defina o que varia entre marca, trabalho e tarefa curta. Componentes compartilham tokens, variantes e estados; composições específicas ficam no domínio que as usa.
 4. Na tela-modelo, confira a continuidade na navegação, no conteúdo e nos estados. Reuse essas regras nas telas seguintes e documente exceções. Uma campanha não define sozinha um sistema.
+
+## Movimento e 3D
+
+Quando o nível é `marcante` ou `espetaculo`, o movimento faz parte da identidade, não é enfeite. Regras de implementação e de acessibilidade estão em "Movimento" de `references/padroes/landing.md`; bibliotecas em `references/recursos/bibliotecas.md`.
+
+- **O movimento conta a ideia.** No teste de 13/11, fitas do mural em 3D seguiam o mouse e davam lugar a um trilho com um projeto por tela. O movimento tem de vir do conceito da direção, como o elemento-assinatura.
+- **Um efeito principal por página.** Abertura em 3D e trilho horizontal já bastam. Repetir a mesma entrada em todas as seções é clichê (`anti-generico.md`).
+- **A foto da pessoa não é palco de efeito.** Zoom de tela inteira na foto do dono, com uma frase por cima, foi reprovado em 13/11: "tire esse zoom na minha foto". Movimento perto do rosto, só se ele pedir.
+- **Mostre o movimento na escolha.** Capturas paradas escondem o que mais pesa. Rode `scripts/rolagem.mjs` em cada direção e leve os quadros ao dono e à escolha cega.
 
 ## O que não levar
 
@@ -761,7 +852,7 @@ Rótulo dentro do campo; campo de data em três dropdowns; máscara que impede c
 
 - **A primeira tela diz o que é, para quem e o que fazer.** Em 5 segundos, sem rolar. Título concreto, do setor, com a palavra que o cliente usaria. (G01)
 - **Herói vem do assunto:** o produto real, o lugar real, o resultado real. Nada de captura flutuando em perspectiva nem blob.
-- **Só o que convence.** Cada bloco responde a uma objeção de quem vai comprar. Sem contador de vaidade e sem logos de quem não é cliente. Depoimento só real, com nome e resultado.
+- **Só o que convence.** Cada bloco sustenta, com prova, uma crença de quem vai decidir (`references/marca/conteudo.md`), sem perguntar ao leitor o que ele quer. Sem contador de vaidade e sem logos de quem não é cliente. Depoimento só real, com nome e resultado.
 - **Uma ação principal, repetida no fim.** Negócio local: telefone, WhatsApp e endereço sempre à vista.
 - **Ritmo:** troque composição entre os blocos: não repita a mesma grade de cartões. Texto de leitura com até 70 caracteres por linha.
 - **Mobile primeiro de verdade:** mais de metade do público chega pelo celular. A primeira dobra é desenhada em 375px.
@@ -770,13 +861,30 @@ Rótulo dentro do campo; campo de data em três dropdowns; máscara que impede c
 - **Carrossel:** só quando indispensável, com pausa, sem autoplay fora do herói.
 - **SEO local:** `title` e `description` únicos, HTML semântico, JSON-LD do tipo do negócio.
 
+## Texto
+
+O texto é argumento, com provas levantadas antes do brief. Siga `references/marca/conteudo.md`: inventário de provas, o que o público precisa acreditar e afirmação com prova, sem perguntas dirigidas ao leitor.
+
+## Movimento
+
+Para os níveis `marcante` e `espetaculo` de `references/marca/criatividade.md`. Vem do teste de 13/11/2026 (`docs/testes/2026-11-13-portfolio`, no repositório do kit).
+
+- **A página funciona sem ele.** Todo o conteúdo está no HTML e legível sem JavaScript. Biblioteca que não carregar deixa a página parada, nunca vazia.
+- **Movimento reduzido:** com `prefers-reduced-motion: reduce`, nada se move sozinho. Cena 3D num quadro só, trilho horizontal vira coluna, números já no valor final.
+- **Peso no celular:** não baixe a biblioteca 3D quando a cena está escondida naquela largura. Confira se o elemento aparece antes do `import()`. No teste, isso levou a página de 1,2 MB para 0,6 MB. Em tela estreita, troque a cena por um desenho parado em SVG.
+- **Trilho horizontal fixado na rolagem:** o foco do teclado precisa trazer o painel para a tela. Ao receber foco, leve a rolagem até o painel e zere o `scrollLeft` do contêiner com `overflow:hidden`, que o navegador mexe sozinho. `verificar.mjs` acusa `a11y-foco-fora-da-tela`.
+- **Nada fica invisível esperando a rolagem.** Animação de entrada move, gira ou cresce; não parte de `opacity: 0`. Captura de página inteira, leitor de tela e quem rola rápido não podem perder conteúdo.
+- **Tamanho real:** fixe o trilho só em tela larga e alta (por exemplo, a partir de 1025 × 600) e empilhe abaixo disso.
+- **Biblioteca servida pelo projeto, com versão fixa,** como as fontes (`references/recursos/bibliotecas.md`).
+- **Mostre e verifique:** `scripts/rolagem.mjs` captura a página em vários pontos da rolagem, com e sem movimento reduzido.
+
 ## No processo do kit
 
 Vem do teste de 01/11/2026 (`docs/testes/2026-11-01-oficina/relatorio.md`, no repositório do kit).
 
 - **A home é a tela principal** das três direções.
 - **Estados da etapa 5.** Site estático não carrega dados. No lugar de carregando e sucesso, confira que tudo funciona sem JavaScript e que há página de erro (404) com saída para o início e para a ação principal. O vazio, quando existe, diz o que fazer.
-- **Entrega mínima:** página de privacidade, SEO local, `og:image` com o endereço completo, ícone de aba e de celular. Dado do negócio que o dono não confirmou fica como "a preencher".
+- **Entrega mínima:** página de privacidade, SEO local, `og:image` com o endereço completo, ícone de aba e de celular. Dado do negócio que o dono não confirmou fica como "a preencher". Para a `og:image` (1200 × 630), monte uma página HTML com a marca e capture-a. PDF publicado, como currículo ou cardápio, segue a regra de dado pessoal de `references/marca/conteudo.md`.
 - **Barra fixa no celular:** se ela traz a ação principal, tire o mesmo botão da primeira dobra (`g-acao-repetida`).
 - **Foto que ainda não existe:** espaço do tamanho exato, listado em `design/midia.md`. Conferido o texto sobre ele, marque com `data-conferido="a11y-contraste-imagem"`.
 
@@ -1503,6 +1611,16 @@ Tudo aqui afeta decisões de tela. O que não souber, marque como "não sei" e s
 - **publicos:** [] <!-- Liste os que valem, mesmo como hipótese: surdos-libras, pouca-leitura, idosos, baixa-visao, pessoas-cegas, daltonismo, dislexia, cognitivo, mobilidade. Em site público, inclua surdos-libras: a base é um botão de VLibras e português simples, sem vídeo. Ver references/qualidade/publicos.md -->
 - **superficie:** <publica ou interna>
 - **Aparelho e situação:** <celular na mão, computador o dia todo, sol, pressa, uma mão só>
+- **expressao:** <sobrio, marcante ou espetaculo; só em superfície de marca. Ver references/marca/criatividade.md>
+
+## Provas
+<!-- Site, landing e portfólio. Leia todas as fontes antes de preencher (references/marca/conteudo.md). Só fato com fonte. -->
+
+| Fato verificável | O que prova | Fonte | Pode publicar? |
+| --- | --- | --- | --- |
+| <ex.: 568 testes automatizados aprovados> | <ex.: entende além do protótipo> | <README, currículo, medição> | <sim, só como habilidade, não> |
+
+**O que cada público precisa acreditar:** <crença → prova que sustenta, da mais decisiva para a menos>
 
 ## O que precisam fazer
 - **Tarefa mais frequente:** <verbo e objeto; quantas vezes por dia>

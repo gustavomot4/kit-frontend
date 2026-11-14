@@ -21,6 +21,14 @@ Avisos continuam nos outros exemplos, como fonte comum, texto na primeira dobra 
 5. Da [auditoria de 31/10](auditorias/2026-10-31/relatorio.md): as mudanças 1, 2, 4 a 7, 9 e 10 e as perguntas ao dono. Da mudança 8, o desvio contra o `DESIGN.md` cobre cor e fonte, e falta tamanho ([o que já foi feito](testes/2026-10-31-correcoes-verificador/relatorio.md)).
 6. Da [mudança 3](testes/2026-10-31-ritual-completo/relatorio.md): repetir o ritual com as correções, em mais briefs e com controle sem kit. Conferir o gesto de "linha com marcos", que apareceu em 3 de 3 telas, e o possível falso alarme de `a11y-letra-200` com media queries em `rem`.
 7. Do [teste da oficina](testes/2026-11-01-oficina/relatorio.md): repetir com a 3.2.0 num sistema de trabalho, com pessoas do público e com controle sem kit.
+8. Do [teste do portfólio](testes/2026-11-13-portfolio/relatorio.md), as mudanças 6 a 11 do quadro:
+   - exceção aceita para qualquer aviso no `DESIGN.md`, com o `data-conferido` lembrado no aviso de contraste sobre imagem;
+   - `--rodada` nos scripts das direções e uma etapa de fusão;
+   - orientação de retrato;
+   - entrega de site estático (`og:image`, ícone, PDF);
+   - fonte que não pode aparecer, na Conduta;
+   - escolha cega com folhas de contato e prompt pronto.
+   Falta também ligar `rolagem.mjs` à `escolha-cega.mjs` e à `prancha.mjs`, e repetir as mudanças 1 a 3 num site de marca de outro setor.
 
 ## Decisões em aberto
 

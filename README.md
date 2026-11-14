@@ -15,7 +15,9 @@ Artefatos que qualquer agente de código usa para criar frontend com a sua cara,
 | Reinventar o que já existe | [Padrões](skill/kit-frontend/references/) tirados do [benchmark](docs/pesquisa/benchmark.md) |
 | Tela correta, mas sem impacto | [Criatividade](skill/kit-frontend/references/marca/criatividade.md), medida [nos sites que você admira](docs/pesquisa/referencias-sites.md) |
 | Marca que só aparece na home | [Estudo de identidade e sistemas](docs/pesquisa/identidade-e-sistemas.md): sete referências novas, regras compartilhadas e aplicação nos componentes |
-| Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/recursos/bibliotecas.md) |
+| Sem imagem, animação nem 3D | [Catálogo de bibliotecas e geração de mídia](skill/kit-frontend/references/recursos/bibliotecas.md), [nível de expressão](skill/kit-frontend/references/marca/criatividade.md#depois-o-nível-de-expressão) perguntado na etapa 1 e [regras de movimento](skill/kit-frontend/references/padroes/landing.md#movimento) |
+| Movimento que a captura parada não mostra | [Quadros de rolagem](skill/kit-frontend/scripts/rolagem.mjs), com e sem movimento reduzido, e checagem de foco fora da tela no verificador |
+| Site bonito com texto que não vende | [Conteúdo como argumento](skill/kit-frontend/references/marca/conteudo.md): inventário de provas antes do brief e afirmações com prova |
 
 Princípio: **convenção na interação, identidade na expressão.** Como navegar e preencher segue o que as pessoas conhecem; tipografia, cor, forma e voz são do produto.
 
@@ -32,6 +34,8 @@ Depois, dentro de cada projeto:
 ```bash
 node ../kit-frontend/bin/kit.mjs instalar
 ```
+
+O `../kit-frontend` supõe o clone na pasta ao lado do projeto. Se o kit estiver em outro lugar, inclusive dentro do projeto, troque pelo caminho real (por exemplo, `node kit-frontend/bin/kit.mjs instalar`). O erro `Cannot find module ... kit.mjs` quer dizer caminho errado.
 
 Isso coloca a skill em `.agents/skills/kit-frontend/`, cria as pontes de cada agente detectado e `design/correcoes.md`. Nada do projeto é sobrescrito: blocos em arquivos existentes ficam entre marcadores, e `DESIGN.md`, `PRODUTO.md` e `design/correcoes.md` nunca são tocados.
 

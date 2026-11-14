@@ -9,6 +9,16 @@ Tudo aqui afeta decisões de tela. O que não souber, marque como "não sei" e s
 - **publicos:** [] <!-- Liste os que valem, mesmo como hipótese: surdos-libras, pouca-leitura, idosos, baixa-visao, pessoas-cegas, daltonismo, dislexia, cognitivo, mobilidade. Em site público, inclua surdos-libras: a base é um botão de VLibras e português simples, sem vídeo. Ver references/qualidade/publicos.md -->
 - **superficie:** <publica ou interna>
 - **Aparelho e situação:** <celular na mão, computador o dia todo, sol, pressa, uma mão só>
+- **expressao:** <sobrio, marcante ou espetaculo; só em superfície de marca. Ver references/marca/criatividade.md>
+
+## Provas
+<!-- Site, landing e portfólio. Leia todas as fontes antes de preencher (references/marca/conteudo.md). Só fato com fonte. -->
+
+| Fato verificável | O que prova | Fonte | Pode publicar? |
+| --- | --- | --- | --- |
+| <ex.: 568 testes automatizados aprovados> | <ex.: entende além do protótipo> | <README, currículo, medição> | <sim, só como habilidade, não> |
+
+**O que cada público precisa acreditar:** <crença → prova que sustenta, da mais decisiva para a menos>
 
 ## O que precisam fazer
 - **Tarefa mais frequente:** <verbo e objeto; quantas vezes por dia>
